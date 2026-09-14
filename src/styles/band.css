@@ -1,0 +1,584 @@
+/* Чёрная полоса: схема трассы и машина */
+.band {
+  background: var(--band);
+  color: var(--on-band);
+}
+
+.band__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: var(--s-xl);
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 28px var(--gutter) 36px;
+}
+
+.band__track,
+.band__car {
+  display: grid;
+  align-content: start;
+  gap: var(--s-md);
+  min-width: 0;
+}
+
+.band__car {
+  padding-left: var(--s-xl);
+  border-left: 1px solid var(--band-line);
+}
+
+.band__note {
+  max-width: 62ch;
+  color: var(--on-band-mute);
+  font-size: 13px;
+}
+
+/* Кнопка выбора (трасса, машина) */
+.picker {
+  position: relative;
+}
+
+.picker__trigger {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: baseline;
+  column-gap: 12px;
+  width: 100%;
+  min-height: 56px;
+  padding: 14px 16px;
+  border: 1px solid var(--band-line);
+  border-radius: var(--r-control);
+  background: var(--band-surface);
+  color: var(--on-band);
+  text-align: left;
+}
+
+.picker__trigger:hover,
+.picker__trigger[aria-expanded='true'] {
+  border-color: var(--on-band);
+}
+
+.picker__kind {
+  color: var(--on-band-mute);
+  font-size: 13px;
+}
+
+.picker__value {
+  overflow: hidden;
+  font-size: 22px;
+  font-weight: 720;
+  font-stretch: 62%;
+  line-height: 1.1;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.picker__meta {
+  color: var(--on-band-mute);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.picker__chevron {
+  align-self: center;
+  width: 12px;
+  height: 12px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+}
+
+.picker__trigger[aria-expanded='true'] .picker__chevron {
+  transform: rotate(180deg);
+}
+
+/* Панель выбора */
+.picker__panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 60;
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr);
+  width: min(940px, calc(100vw - 2 * var(--gutter)));
+  max-height: min(72vh, 680px);
+  background: var(--canvas);
+  color: var(--ink);
+  border: 1px solid var(--ink);
+  animation: panel-in 140ms ease-out;
+}
+
+.picker__panel--cars {
+  right: 0;
+  left: auto;
+  width: min(520px, calc(100vw - 2 * var(--gutter)));
+}
+
+@keyframes panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+.picker__search {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.picker__search:focus-within {
+  box-shadow: inset 0 -2px 0 var(--ink);
+}
+
+.picker__search svg {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1.8;
+}
+
+.picker__search input {
+  flex: 1;
+  min-width: 0;
+  height: 52px;
+  border: 0;
+  background: none;
+  font-size: 17px;
+  outline: none;
+}
+
+.picker__search input::placeholder {
+  color: var(--ash);
+}
+
+.picker__search input::-webkit-search-cancel-button {
+  cursor: pointer;
+}
+
+.picker__count {
+  color: var(--mute);
+  font-size: 13px;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.picker__scope {
+  padding: 10px 16px 0;
+  color: var(--mute);
+  font-size: 12px;
+}
+
+.picker__empty {
+  grid-column: 1 / -1;
+  padding: 24px 16px;
+  color: var(--mute);
+  font-size: 14px;
+}
+
+.car-list {
+  padding: 6px 0 8px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.car-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    'brand cat'
+    'model engine';
+  column-gap: 16px;
+  padding: 9px 16px 10px;
+  border-top: 1px solid var(--line);
+  cursor: pointer;
+}
+
+.car-row:first-child {
+  border-top: 0;
+}
+
+.car-row.is-active {
+  background: var(--surface);
+}
+
+.car-row.is-selected {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.car-row.is-selected.is-active {
+  box-shadow: inset 0 0 0 2px var(--ink);
+}
+
+.car-row__brand {
+  grid-area: brand;
+  color: var(--mute);
+  font-size: 12px;
+}
+
+.car-row__model {
+  grid-area: model;
+  color: var(--ink);
+  font-size: 20px;
+  font-weight: 700;
+  font-stretch: 62%;
+  line-height: 1.15;
+}
+
+.car-row__engine {
+  grid-area: engine;
+  align-self: end;
+  color: var(--mute);
+  font-size: 13px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.car-row__cat {
+  grid-area: cat;
+  color: var(--mute);
+  font-size: 12px;
+  text-align: right;
+}
+
+.car-row.is-selected .car-row__brand,
+.car-row.is-selected .car-row__engine,
+.car-row.is-selected .car-row__cat {
+  color: var(--on-accent);
+}
+
+.track-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(196px, 1fr));
+  align-content: start;
+  gap: 10px;
+  padding: 16px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.picker__panel--tracks {
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+.track-tile {
+  position: relative;
+  aspect-ratio: 5 / 4;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  cursor: pointer;
+}
+
+.track-tile.is-active {
+  border-color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--ink);
+}
+
+.track-tile.is-selected .track-map__caption {
+  background: var(--accent);
+}
+
+.track-tile.is-selected .track-map__country {
+  color: var(--on-accent);
+}
+
+/* Схема трассы */
+.track-map {
+  position: relative;
+  min-width: 0;
+}
+
+.track-map__svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.track-map__line,
+.track-map__under {
+  fill: none;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.track-map--tile {
+  position: absolute;
+  inset: 0;
+}
+
+.track-map--tile .track-map__svg {
+  position: absolute;
+  inset: 12px 14px 50px;
+  width: calc(100% - 28px);
+  height: calc(100% - 62px);
+}
+
+.track-map--tile .track-map__line {
+  stroke: var(--ink);
+  stroke-width: 16;
+}
+
+.track-map--tile .track-map__caption {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 7px 10px 8px;
+  background: var(--surface);
+}
+
+.track-map--tile .track-map__name {
+  display: block;
+  font-size: 19px;
+  font-weight: 740;
+  font-stretch: 58%;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+.track-map__country {
+  display: block;
+  color: var(--mute);
+  font-size: 12px;
+  line-height: 1.3;
+}
+
+.track-map--hero {
+  height: clamp(280px, 34vw, 470px);
+}
+
+.track-map--hero .track-map__svg {
+  padding: 8px 0 0 12%;
+}
+
+.track-map--hero .track-map__under {
+  stroke: var(--band-asphalt);
+  stroke-width: 26;
+}
+
+.track-map--hero .track-map__line {
+  stroke: var(--on-band);
+  stroke-width: 5;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: track-draw 1300ms cubic-bezier(0.55, 0, 0.25, 1) 80ms forwards;
+}
+
+@keyframes track-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track-map--hero .track-map__line {
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
+    animation: none;
+  }
+}
+
+.track-map--hero .track-map__caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  max-width: 88%;
+  pointer-events: none;
+}
+
+.track-map--hero .track-map__name {
+  display: block;
+  color: var(--on-band);
+  font-size: clamp(52px, 7.4vw, 116px);
+  font-weight: 820;
+  font-stretch: 40%;
+  line-height: 0.84;
+  letter-spacing: -0.005em;
+  text-wrap: balance;
+  paint-order: stroke fill;
+  -webkit-text-stroke: 10px var(--band);
+}
+
+.track-map__north {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: var(--on-band-mute);
+  font-size: 13px;
+}
+
+.wind {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--on-band-mute);
+  font-size: 13px;
+  line-height: 1.25;
+}
+
+.wind svg {
+  width: 34px;
+  height: 34px;
+  fill: none;
+  stroke: var(--on-band);
+  stroke-width: 2.4;
+  transition: transform 300ms ease;
+}
+
+/* Факты */
+.facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 32px;
+}
+
+.facts dt {
+  color: var(--on-band-mute);
+  font-size: 13px;
+}
+
+.facts dd {
+  font-size: 22px;
+  font-weight: 700;
+  font-stretch: 62%;
+  line-height: 1.15;
+  font-variant-numeric: tabular-nums;
+}
+
+.facts--car {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 24px;
+}
+
+.facts--car dd {
+  font-size: 20px;
+}
+
+.car-card {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  align-items: center;
+  gap: var(--s-lg);
+  padding-top: var(--s-sm);
+}
+
+/* Машина сверху */
+.car-glyph__body,
+.car-glyph__cabin {
+  fill: none;
+}
+
+.car-glyph--band {
+  width: 120px;
+  height: auto;
+}
+
+.car-glyph--band .car-glyph__body {
+  fill: var(--band);
+  stroke: var(--on-band);
+  stroke-width: 2;
+}
+
+.car-glyph--band .car-glyph__cabin {
+  stroke: var(--band-line);
+  stroke-width: 2;
+}
+
+.car-glyph--band .car-glyph__engine {
+  fill: var(--on-band-mute);
+}
+
+.car-glyph--band .car-glyph__wheel {
+  fill: var(--on-band);
+}
+
+@media (max-width: 960px) {
+  .band__inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--s-lg);
+  }
+
+  .band__car {
+    padding: var(--s-lg) 0 0;
+    border-top: 1px solid var(--band-line);
+    border-left: 0;
+  }
+
+  .picker__panel--cars {
+    right: auto;
+    left: 0;
+  }
+
+  .track-map--hero {
+    height: clamp(260px, 62vw, 440px);
+  }
+}
+
+@media (max-width: 720px) {
+  .picker__panel,
+  .picker__panel--cars {
+    position: fixed;
+    inset: 8px;
+    width: auto;
+    max-height: none;
+  }
+
+  .picker__trigger {
+    grid-template-columns: minmax(0, 1fr) auto;
+    row-gap: 2px;
+  }
+
+  .picker__kind,
+  .picker__meta {
+    grid-column: 1;
+  }
+
+  .picker__value {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .picker__chevron {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+  }
+
+  .track-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    padding: 12px;
+  }
+
+  .track-map--hero .track-map__svg {
+    padding: 28px 0 0;
+  }
+
+  .track-map--hero .track-map__name {
+    -webkit-text-stroke-width: 7px;
+  }
+
+  .facts {
+    gap: 10px 20px;
+  }
+
+  .facts dd {
+    font-size: 19px;
+  }
+
+  .car-card {
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: var(--s-md);
+  }
+
+  .car-glyph--band {
+    width: 64px;
+  }
+}

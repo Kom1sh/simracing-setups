@@ -1,0 +1,40 @@
+/* Токены из DESIGN.md. Меняются здесь, а не в компонентах. */
+:root {
+  --canvas: #ffffff;
+  --surface: #f5f5f5;
+  --surface-strong: #ebebeb;
+  --ink: #000000;
+  --body: #222222;
+  --mute: #5e5e5e;
+  --ash: #8a8a8a;
+  --line: #e2e2e2;
+  --control-border: #8a8a8a;
+  --accent: #ffed00;
+  --on-accent: #000000;
+  --band: #000000;
+  --band-surface: #1c1c1c;
+  --band-asphalt: #2b2b2b;
+  --band-line: #3d3d3d;
+  --on-band: #ffffff;
+  --on-band-mute: #a8a8a8;
+  --alert: #b3261e;
+
+  --font: 'Roboto Flex Variable', 'Roboto Flex', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --r-control: 2px;
+
+  --s-xs: 4px;
+  --s-sm: 8px;
+  --s-md: 16px;
+  --s-lg: 24px;
+  --s-xl: 40px;
+  --s-xxl: 64px;
+
+  --page-max: 1440px;
+  --gutter: clamp(16px, 3vw, 40px);
+  --topbar-h: 56px;
+  --tabs-h: 57px;
+  --sticky-top: calc(var(--topbar-h) + var(--tabs-h));
+
+  color-scheme: light;
+}
