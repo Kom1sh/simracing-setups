@@ -1,0 +1,75 @@
+Список: данные и коучинг (US). Сиды: racing telemetry, lap time, driver coaching, racing coach, telemetry analysis, ghost lap, track titan, garage 61. Ahrefs, 23.09.2026. List ID c2658cdfa16ddd747827611b76ff0504
+
+ВНИМАНИЕ: «lap time» и «driver coaching» сильно омонимичны — тянут реальные Нюрбургринг-рекорды (Porsche/Ford/Ferrari lap times, автолюбительский контент, не про коучинг), медицину (lap band surgery — бариатрия), грузоперевозки (truck/fleet driver coaching — сертификация дальнобойщиков), даже детское "tummy time". Реальный симрейсинг-коучинг — это малая часть общего SV.
+
+[Matching terms — итог, ВКЛЮЧАЯ шум]
+keywords	4230
+SV	13000
+GSV	29000
+
+[By terms — топ-25, много шума]
+term	SV
+time	8700
+lap	8600
+nurburgring	2300
+driver	1900
+coaching	1800
+track	1600
+titan	1500
+porsche	1300
+nürburgring (вар. с умлаутом)	1200
+fastest	990
+racing	960
+rs	880
+911	850
+gt3	820
+telemetry	760
+recovery	640
+sim	610
+coach	570
+992	560
+ford	540
+band	500
+average	450
+ai	410
+fleet	390
+gtd	390
+
+[Keywords релевантные симрейсингу — по SV: keyword | KD | SV | GSV | GTP | parent topic]
+track titan | 0 | 350 | 3300 | 450 | track titan
+driver coaching (общее, не авто) | 0 | 250 | 500 | 250 | driver coaching
+sim racing coach | 3 | 150 | 250 | 70 | sim racing coaching
+ai sim racing coach | N/A | 100 | 150 | N/A |
+telemetry analysis | 12 | 100 | 200 | 100 | telemetry analysis
+titan track (частично irrelevant, электроника) | N/A | 100 | 350 | N/A |
+
+[Keywords НЕрелевантные, для контроля]
+tummy time on lap (дети) | 150
+porsche 911 gt3 rs 992 nürburgring lap time (авто-энтузиасты, не коучинг) | 150
+lap band recovery time (медицина) | 150
+ford mustang gtd nürburgring lap time | 150
+fastest lap time nurburgring | 150
+fleet driver coaching (грузоперевозки) | 100
+truck driver coaching (грузоперевозки) | 100
+lap band removal recovery time (медицина) | 100
+
+Вывод: реальный спрос на "коучинг/телеметрию в симрейсинге" — это буквально только "track titan" (350) + "sim racing coach"-кластер (~350) + "telemetry analysis" (100) ≈ 700-800 SV. Это на порядок меньше, чем сетапы (3600-13000 в зависимости от кластера), техника пилотажа (~11-13К релевантных) и железо (106К). Самая маленькая категория спроса из всех пяти.
+
+[Questions — итог]
+keywords	146
+SV	360
+GSV	590
+
+[Questions — топ-10 по SV: question | KD | SV | GSV | GTP]
+lap of love when is it time (нерелевантно, музыка/романтика) | N/A | 40 | 40 | N/A
+what is the recovery time for lap band surgery (медицина) | 0 | 30 | 30 | 8500
+what car has the fastest lap time at nurburgring (авто-энтузиасты) | 5 | 30 | 50 | 3200
+is track titan free | N/A | 20 | 50 | N/A
+what is driver coaching | N/A | 20 | 30 | N/A
+what is the fastest lap time on nurburgring | N/A | 20 | 20 | N/A
+how to do tummy time on lap (дети) | N/A | 20 | 30 | N/A
+how does real-time driver coaching work? | N/A | 10 | 10 | N/A
+Вопросов конкретно про симрейсинг-коучинг практически нет.
+
+[Related terms]
+Пропущено по масштабу шума — список и так самый маленький и самый зашумлённый, дополнительный Related terms не даст нового сигнала.

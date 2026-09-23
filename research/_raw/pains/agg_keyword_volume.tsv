@@ -1,0 +1,35 @@
+subreddit	query	num_threads_returned
+simracing	consistency	100
+simracing	expensive	100
+simracing	time	100
+iRacing	frustrating	100
+iRacing	consistency	100
+iRacing	wrecked	100
+iRacing	safety rating	100
+iRacing	quit	100
+ACCompetizione	setup	100
+ACCompetizione	FFB	100
+LeMansUltimateWEC	setup	100
+LeMansUltimateWEC	FFB	100
+assettocorsa	setup	100
+assettocorsa	FFB	100
+iRacing	setup	100
+iRacing	iRating	100
+iRacing	time	100
+simracing	trail braking	95
+simracing	iRating	78
+simracing	motion sickness	78
+iRacing	trail braking	69
+simracing	frustrating	58
+simracing	safety rating	58
+simracing	quit	57
+simracing	wrecked	38
+iRacing	burnout	34
+simracing	burnout	32
+ACCompetizione	frustrating	25
+iRacing	motion sickness	20
+assettocorsa	frustrating	19
+iRacing	plateau	18
+simracing	plateau	15
+LeMansUltimateWEC	frustrating	6
+simracing	can't get faster	5

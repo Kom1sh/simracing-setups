@@ -1,0 +1,87 @@
+Список: сетапы и тюнинг (US), метод semantic-core (≤10 сидов). Ahrefs, 23.09.2026.
+
+ПОПЫТКА 1 (список 9ac00f1849224ec466d11787ffa9de58, сиды: car setup, iracing setup, acc setup, lmu setup, assetto corsa setup, f1 25 setup, gt7 tune, forza tune, setup guide) — ОТБРОШЕНА: сид «setup guide» — универсальный шаблон, Matching terms дал 28 770 keywords / SV 101K / GSV 220K, но топ по SV — whatsapp business setup guide, ebb and flow hydroponics setup guide, github actions setup guide, apple iphone 13 setup guide и т.п. Сигнал по игре тонет в шаблонном «X setup guide» для любых тем.
+
+СПИСОК 2 (рабочий, list ID f36d0f8140e885ceb5a51e1c12cc023c), сиды без «setup guide»: car setup, iracing setup, acc setup, lmu setup, assetto corsa setup, f1 25 setup, gt7 tune, forza tune.
+
+[Matching terms — итог по списку целиком]
+keywords	11492
+SV	28000
+GSV	104000
+
+[By terms — топ-20]
+term	SV
+setup	24000
+car	15000
+f1	6000
+25	5500
+tune	3900
+forza	3900
+iracing	3600
+horizon	3500
+camping	1800 (шум — автокемпинг)
+best	1500
+detailing	1500 (шум — детейлинг)
+simulator	1300
+guide	980
+drift	960
+wash	880 (шум — автомойка)
+assetto	810
+corsa	810
+gaming	750 (хардварный контекст)
+acc	700
+game	680
+
+Правила очистки (по брифу): выкинуть железо (rig, desk, cockpit, wheel, pedals, pc/gaming setup, VR), выкинуть нерелевантные "car X setup" (camping, detailing, wash, office, audio, photography, garage organization, real-world sprint car chassis). Оставить только: (а) X setup, где X = iracing/acc/lmu/assetto corsa/f1 25 — подгруппа «ПК-симы»; (б) X tune, где X = gt7/forza — подгруппа «консольный тюнинг».
+
+[ПОДГРУППА ПК-симы — очищенные формулировки, по SV: keyword | SV | GSV]
+iracing setup	1200	1700
+f1 25 australia setup	250	1700
+iracing f4 setup guide	200	200
+f1 25 bahrain setup	200	1100
+iracing setup shops	200	250
+f1 25 miami setup	150	1000
+f1 25 china setup	150	1100
+f1 25 imola setup	150	800
+f1 25 austria setup	100	800
+f1 25 canada setup	100	800
+f1 25 monza setup	100	800
+f1 25 japan setup	100	800
+f1 25 monaco setup	100	800
+f1 25 silverstone setup	90	600
+f1 25 spain setup	90	600
+f1 25 setup (базовый)	90	2400
+f1 25 jeddah setup	80	450
+f1 25 mexico setup	80	500
+f1 25 brazil setup	80	600
+assetto corsa setup (базовый, отдельная проверка)	30	200
+acc setup (базовый, отдельная проверка)	20	450
+lmu setup (базовый, отдельная проверка)	10	450
+ИТОГО (захваченные формулировки, топ-22): SV ≈ 3570, GSV ≈ 18100
+Примечание: есть ещё ~8-9 непойманных f1 25 <трек> setup (Vegas, Qatar, Abu Dhabi, Zandvoort, Hungary, Spa, Baku, Singapore, Austin) с SV 40-70 каждая — не вошли в топ-50 по общему списку. Оценка полного объёма подгруппы: ≈4000-4200 SV США, ≈20000-21000 GSV.
+
+[ПОДГРУППА консольный тюнинг — очищенные формулировки, по SV: keyword | SV | GSV]
+fastest car in forza horizon 5 with tune	600	1000
+fastest car in forza horizon 6 with tune	350	600
+fastest drag car in forza horizon 5 with tune	200	300
+forza horizon 6 drift tune	100	150
+how to tune cars in forza horizon 6	100	150
+how to tune in forza horizon 6	90	100
+best drag tune for miata forza horizon 6	80	150
+forza tune (базовый, отдельная проверка)	20	100
+gt7 tune (базовый, отдельная проверка)	10	50
+ИТОГО: SV ≈ 1550, GSV ≈ 2600
+
+ГЛАВНЫЙ ВЫВОД: ПК-симы (≈3570-4200 SV) дают в 2.3-2.7 раза больше спроса, чем консольный тюнинг (≈1550 SV). GT7 отдельно практически не ищут («gt7 tune» — 10 SV) — весь консольный сигнал держится на Forza Horizon (Forza имеет открытую систему "tune" с шарингом, GT7 — встроенный ассистент настройки без явной культуры шаринга сетапов).
+
+[Исключённые как хардвар/нерелевантные, для контроля — крупнейшие]
+car simulator setup	700 (хардвар/риг, parent topic "racing simulator")
+car parking game pagani transmission setup images	400 (мобильная игра-паркинг, неотносится)
+car gaming setup	250 (явный хардвар по брифу)
+car camping setup	200 (шум)
+iracing simulator setup	150 (parent topic "computer components" — риг)
+car sim setup	150 (category "Computer hardware")
+gaming car setup	150 (хардвар)
+race car gaming setup	90 (хардвар)
+assetto corsa vr setup	80 (VR-гарнитура — хардвар)
+2 car garage setup ideas	150 (организация гаража, неотносится)

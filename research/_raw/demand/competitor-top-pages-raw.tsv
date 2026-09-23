@@ -1,0 +1,74 @@
+Site Explorer → Top pages, конкуренты. Ahrefs, 23.09.2026, сортировка по органическому трафику (Traffic), топ-10 каждого.
+
+=== coachdaveacademy.com ===
+URL | тип страницы | трафик/мес | топ-ключевик | объём ключевика
+/ (Home) | Site page | 1118 | coach dave academy | 500
+/tutorials/acc-for-dummies/ | Article/Guide | 447 | assetto corsa competizione | 6.8K
+/tutorials/acc-car-list/ | Article/Listicle | 402 | assetto corsa competizione car list | 200
+/tutorials/how-to-use-trading-paints/ | Article/How-to | 400 | trading paint | 2.9K
+/product-category/iracing-setups/ | Listing/Product | 264 | iracing setups | 150
+/tutorials/best-gr-3-cars-in-gran-turismo-7/ | Article/Listicle | 183 | best gr3 car gt7 | 300
+/tutorials (hub) | — | 168 | acc steering lock | 800
+/tutorials/beginner-guide-for-automobilista-2-ams2/ | Article/Guide | 143 | ams2 | 150
+/delta/ | Landing/Service | 142 | coach dave delta | 250
+
+Вывод по coachdaveacademy.com: топ держат обучающие гайды под конкретные игры (ACC for dummies, car list, AMS2 beginner) + утилитарный how-to про инструмент (trading paints — раскраска ливрей, не сетап). Прямая страница «iracing setups» (продукт) даёт всего 264 — меньше, чем гайд для новичков по ACC (447). «Coach Dave Delta» — отдельный коучинг/телеметрия продукт, 142 трафика (landing).
+
+=== simracingsetup.com ===
+URL | тип страницы | трафик/мес | топ-ключевик | объём ключевика
+/ (Home, listing "simracingsetups") | Listing/Product | 3033 | simracingsetups | 150
+/setups/f1-25/ | Listing/Product | 1717 | f1 setup | 300
+/product-guides/best-racing-wheel-ps5/ | Article/Review | 1175 | ps5 steering wheel | 5.7K
+/product-guides/logitech-g29-vs-g923/ | Article/Comparison | 752 | logitech g29 vs g923 | 1.1K
+/assetto-corsa/best-assetto-corsa-mods/ | Article/Listicle | 556 | assetto corsa mods | 3.9K
+/assetto-corsa/assetto-corsa-sol-install/ | Article/How-to | 540 | sol assetto corsa | 300
+/product-guides/logitech-g923-review/ | Article/Review | 492 | logitech g923 | 20.0K
+/product-guides (hub) | — | 407 | sim racing pedals | 1.0K
+/product-guides/best-budget-f1-steering-wheel/ | Article/Listicle | 339 | f1 steering wheel | 7.3K
+/assetto-corsa/assetto-corsa-custom-shaders-patch-install/ | Article/How-to | 320 | csp assetto corsa | 200
+
+Вывод по simracingsetup.com: ключевой парадокс — домен буквально называется "setup", но 7 из топ-10 страниц (1175+752+556+540+492+339+320 = 4174 из ~9331 суммарных, 45%) — это обзоры/сравнения РУЛЕЙ (железо) и гайды по установке МОДОВ, а не сами сетапы. Прямые страницы с сетапами (Home-листинг + /setups/f1-25/) дают 4750 — тоже большая доля, но живут они за счёт бренд-трафика (люди уже ищут именно simracingsetups), а не органического спроса на "car setup" в целом.
+
+=== tracktitan.io ===
+(следующий домен — см. ниже)
+
+=== driver61.com ===
+(следующий домен — см. ниже)
+
+=== tracktitan.io (замена placeholder выше) ===
+URL | тип страницы | трафик/мес | топ-ключевик | объём ключевика
+/ (Home, бренд) | Landing/Service | 476 | track titan | 400
+app.tracktitan.io/setups/iRacing | Listing/Product | 314 | hymo setups | 350
+/post/monza-track-guide | Article/Guide | 201 | monza track | 250
+/post/how-soft-medium-and-hard-tyres-differ | Article/Guide | 163 | hard tires / soft tires | 200/150
+/post/bahrain-track-guide | Article/Guide | 149 | bahrain f1 track | 350
+/which-f1-driver-are-you-track-titan-quiz | Tool/Quiz | 131 | which f1 driver are you | 150
+/post/silverstone-track-guide | Article/Guide | 119 | silverstone circuit | 4.9K
+/post/how-anti-roll-bars-affect-handling | Article/How-to | 85 | anti roll bar | 100
+/iracing-track-list | Listing/Product | 62 | iracing tracks | 300
+/track-titan-acc-setups-hymo | Landing/Service | 46 | hymo setups | 350
+
+Вывод по tracktitan.io: это SaaS-продукт про телеметрию/коучинг (не блог), но даже у него трафик держат не прямые "сетапы" (314+46=360), а контент про технику и трассы — track guides (Monza/Bahrain/Silverstone = 469) + объясняющие статьи (шины, anti-roll bar = 248). Итого технико-образовательный контент (717) почти вдвое обгоняет прямые страницы сетапов (360). Даже коучинговый бренд зарабатывает трафик на "как ездить/трасса", а не на "вот тебе сетап".
+
+=== driver61.com (замена placeholder выше) ===
+URL | тип страницы | трафик/мес | топ-ключевик | объём ключевика
+/uni/how-to-drift/ | Video/Guide | 790 | how to drift | 1.1K
+/uni/understeer/ | Article/Guide | 450 | what is understeer | 1.4K
+/sim-racing/assetto-corsa-car-list/ | Article/Listicle | 315 | assetto corsa car list | 500
+/uni/racing-line/ | Article/Guide | 216 | racing line | 600
+/Driver's (служебная) | — | 101 | track day cars / drifting | 400/8.4K
+/uni/best-value-track-day-cars/ | Article/Listicle | 79 | best track cars | 250
+/motorsport-engineering/whats-inside-an-f1-gearbox-and-how-it-works/ | Article/Guide | 66 | gearbox f1 | 250
+/uni/trail-braking/ | Article/Guide | 59 | what is trail braking | 400
+/circuit-guide/silverstone-gp/ | Article/Guide | 58 | silverstone circuit | 1.9K
+/circuit-guide/spa/ | Article/Guide | 55 | spa track map | 100
+
+Вывод по driver61.com: 100% топ-10 — техника пилотажа и трассы («University»-раздел: drift, understeer, racing line, trail braking) + engineering-контент (устройство коробки F1) + circuit guides. НИ ОДНОЙ страницы с сетапами в топ-10. Это чистое подтверждение: бренд, который зарабатывает на «как ездить», а не «что настроить», и зарабатывает — топ-страница (how-to-drift) даёт почти вдвое больше трафика, чем весь топ simracingsetup.com по сетапам f1-25 за вычетом бренд-хомпейджа.
+
+=== СВОДКА ПО 4 КОНКУРЕНТАМ (топ-10 каждого, сумма трафика по темам) ===
+- coachdaveacademy.com: обучающие гайды по играм (ACC for dummies+car list = 849) + утилита ливрей (400) + продукт-сетапы (264) + AMS2-гайд (143) + коучинг-лендинг Delta (142). Сетапы — 4-е место по трафику.
+- simracingsetup.com: несмотря на имя, большинство топ-10 — обзоры рулей (Logitech G29/G923, PS5-руль = 2419) и моды Assetto Corsa (1416); прямые сетапы (F1-25 + home-листинг) = 4750, но это в основном брендовый трафик на сам сайт.
+- tracktitan.io: track guides + объясняющие статьи (717) обгоняют прямые страницы сетапов (360).
+- driver61.com: 100% техника пилотажа и знание трасс, сетапов нет вообще в топ-10.
+
+Общий паттерн по 4 сайтам ниши: сетапы как отдельный тип контента почти нигде не лидируют по трафику — их обгоняют либо игровые гайды/листинги, либо железо/моды, либо техника пилотажа и знание трасс.

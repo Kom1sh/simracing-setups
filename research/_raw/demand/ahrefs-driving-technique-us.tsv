@@ -1,0 +1,74 @@
+Список: техника пилотажа (US). Сиды: racing line, trail braking, braking technique, oversteer, understeer, how to drive faster, racing tips, track guide, corner exit. Ahrefs, 23.09.2026. List ID ce4d38f66960c34930480ffdc3ec09a7
+
+ВНИМАНИЕ: сиды «track guide», «racing tips», «corner exit» сильно омонимичны — тянут woodworking (track saw guide — Milescraft/Makita/Kreg/circular saw), скачки с ставками (horse racing tips/betting), даже геолокацию (Central Park corner exit). Итоговые SV/GSV по списку раздуты нерелевантным спросом — считать реальным только кластер oversteer/understeer + trail braking + racing line.
+
+[Matching terms — итог, ВКЛЮЧАЯ шум]
+keywords	11306
+SV	61000
+GSV	920000
+
+[By terms — топ-20, много шума]
+term	SV
+racing	22000
+track	17000
+guide	17000
+tips	15000
+saw	11000
+horse	10000
+line	7200
+vs	5400
+today	3300
+rail	3200
+braking	2700
+milescraft	2300
+trail	2000
+circular	1700
+uk	1400
+betting	1400
+konig	1400
+best	1200
+rollers	1100
+kreg	1100
+
+[Keywords релевантные (авто/симрейсинг) — по SV: keyword | KD | SV | GSV | GTP | parent topic]
+understeer vs oversteer | 0 | 2800 | 5800 | 2300 | understeer vs oversteer
+understeer | 4 | 2600 | 8300 | 1300 | oversteer
+oversteer vs understeer | 0 | 1800 | 4300 | 3100 | understeer vs oversteer
+oversteer | 6 | 1800 | 5800 | 1600 | understeer
+what is understeer | 4 | 1400 | 2300 | 2600 | understeer vs oversteer
+trail braking | 0 | 800 | 3100 | 700 | trail braking
+racing line | 39 | 700 | 4500 | 3800 | racingline (бренд VW, не только техника)
+what is oversteer | 2 | 700 | 1300 | 2600 | understeer vs oversteer
+snap oversteer | 0 | 500 | 1100 | 200 | snap oversteer
+konig oversteer | 0 | 500 | 700 | 350 | konig oversteer (бренд дисков)
+Сумма релевантного (oversteer/understeer + trail braking + racing line, без явного шума): ~11-13K SV — это основной реальный спрос "техники пилотажа" среди англоязычных запросов общего типа (не привязанных к игре).
+
+[Keywords НЕрелевантные, для контроля — крупнейшие: keyword | SV]
+milescraft track saw guide | 1700
+track saw guide | 1000
+horse racing tips | 800 (SV) / 74000 (GSV, UK ставки)
+central park southeast corner exit location | 800
+makita track saw guide rail | 700
+horse racing betting tips | 600 (GSV 2300, доминирует UK)
+circular saw track guide | 450
+track saw parallel guide | 400
+
+[Questions — итог]
+keywords	655
+SV	5200
+GSV	9900
+
+[Questions — топ-10 по SV: question | KD | SV | GSV | GTP]
+what is understeer | 4 | 1400 | 2300 | 2600
+what is oversteer | 2 | 700 | 1300 | 2600
+what is trail braking | 0 | 400 | 700 | 600
+what is the proper technique for using regenerative braking | N/A | 300 | 300 | N/A
+what is oversteer and understeer | 3 | 150 | 400 | 2900
+what is understeer and oversteer | 4 | 150 | 500 | 2000
+what is snap oversteer | 0 | 100 | 200 | 200
+what does understeer mean | 4 | 100 | 150 | 2900
+what happens in an oversteer situation | 0 | 80 | 80 | 90
+what causes understeer | 2 | 70 | 150 | 10
+
+[Related terms]
+Пропущено — семена этого списка уже сильно омонимичны (woodworking, скачки), Related terms top100 по прошлым спискам показал ещё больше несвязанного шума. Приоритет отдан спискам 4-5.

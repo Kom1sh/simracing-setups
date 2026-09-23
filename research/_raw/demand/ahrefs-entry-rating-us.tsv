@@ -1,0 +1,73 @@
+Список: вход в хобби и рейтинг (US), list ID e59241318c5833c23b39618029d92469. Сиды: iracing beginner, sim racing for beginners, how to get into sim racing, safety rating, irating, iracing license, how to get faster sim racing, is iracing worth it. Ahrefs, 23.09.2026.
+
+[Matching terms — итог по списку целиком, ВКЛЮЧАЯ шум]
+keywords	25694
+SV	125000
+GSV	553000
+
+ПРИЧИНА ШУМА: сид «safety rating» — родовой термин, который в разы чаще означает краш-тест рейтинг автомобилей (NHTSA, IIHS, Toyota/Ford/Nissan/Kia/Hyundai...), рейтинг безопасности авиакомпаний (airlines, airlineratings) и рейтинг детских автокресел (graco, joie, nuna). Базовая проверка "safety rating" отдельно: SV 350 / GSV 1100, категория "car safety ratings" — то есть сам базовый термин почти целиком НЕ про симрейсинг.
+
+[By terms — топ-10, подтверждение шума]
+rating	123000
+safety	123000
+nhtsa	8000
+toyota	7100
+ford	6700
+nissan	5800
+kia	5600
+bronco	5300
+hyundai	5000
+airlines	4900
+
+[Очистка: подмножество keywords, содержащих "iracing" — реальный сигнал по рейтингу/лицензии]
+keywords	411
+SV	1700
+GSV	3400
+
+[iracing-подмножество — топ-16 формулировок: keyword | SV | GSV]
+iracing safety rating	100	350
+iracing beginner guide	90	150
+iracing license levels	70	100
+is iracing worth it	70	100
+iracing pro license	60	150
+iracing license promotion	50	100
+iracing safety rating calculator	50	100
+iracing safety rating chart	50	100
+how to get pro license in iracing	40	50
+safety rating iracing	30	150
+how is safety rating calculated iracing	30	40
+iracing safety rating calculation	20	20
+iracing irating	20	60
+iracing time trial safety rating	20	60
+how to get a pro license in iracing	20	20
+iracing pro license requirements	20	30
+
+[Очистка: подмножество keywords, содержащих "sim" (родовой "sim racing", без бренда iracing)]
+keywords	73
+SV	680
+GSV	1300
+
+[sim-подмножество — топ-9 формулировок: keyword | SV | GSV]
+how to get into sim racing	80	200
+how to get faster in sim racing	50	60
+best sim racing games for beginners 2026	40	90
+best sim racing setup for beginners	40	80
+how to get faster at sim racing	40	100
+best sim racing cockpit for beginners	40	80 (хардвар-адъясент, но подан как вход в хобби)
+best sim racing games for beginners	30	50
+sim racing setup for beginners	30	70
+best sim racing games for beginners 2025 2026	30	40
+
+[Базовые сиды — отдельная точная проверка: keyword | SV | GSV]
+safety rating (родовой, НЕ sim)	350	1100
+irating	100	400
+how to get into sim racing	80	200
+is iracing worth it	70	100
+iracing license	20	90
+sim racing for beginners	20	60
+iracing beginner	10	20
+how to get faster sim racing	0-10	0-10
+
+ИТОГО очищенный кластер «вход и рейтинг» (iracing-подмножество + sim-подмножество, пересечение минимально): keywords ≈484, SV ≈2380, GSV ≈4700.
+
+ВЫВОД: даже очищенный, кластер «вход и рейтинг» (≈2.4К SV) сопоставим по размеру с прицельным кластером сетапов ПК-симов (≈3.6-4К SV) и заметно меньше железа (106К SV в узком списке). Вопросы про рейтинг/лицензию (irating, safety rating, pro license) — не про сетап и не про пилотаж, отдельная категория "прогресс в системе", у которой есть свой, хоть и небольшой, спрос.
