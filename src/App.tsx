@@ -504,13 +504,6 @@ export default function App({ session, onSignOut }: { session: Session; onSignOu
         )}
       </main>
 
-      <footer className="footer">
-        <div className="footer__inner">
-          <p>{t.footerData}</p>
-          <p>{t.footerProject}</p>
-        </div>
-      </footer>
-
       <SetupsDialog
         open={dialogOpen}
         onClose={() => setDialogOpen(false)}

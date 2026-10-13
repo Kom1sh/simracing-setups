@@ -252,29 +252,6 @@ a {
   box-shadow: inset 0 0 0 1px var(--alert);
 }
 
-/* Подвал */
-.footer {
-  border-top: 1px solid var(--ink);
-  color: var(--mute);
-  font-size: 13px;
-}
-
-.footer__inner {
-  display: grid;
-  gap: 6px;
-  max-width: var(--page-max);
-  margin: 0 auto;
-  padding: 24px var(--gutter) 40px;
-}
-
-.footer p {
-  max-width: 90ch;
-}
-
-.footer a {
-  color: var(--ink);
-}
-
 /* Уведомление */
 .toast-region {
   position: fixed;
