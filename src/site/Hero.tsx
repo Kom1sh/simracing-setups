@@ -1,10 +1,12 @@
-import { SPA } from '../data/heroTrack'
 import { BASE, LOCALES, pagePath, type Locale } from '../i18n/locale'
 import type { LandingContent } from './content'
-import { parsePolyline, pointAt } from './trackGeometry'
 
-const spa = parsePolyline(SPA.path)
-const MARK = 64
+/** Картинки, которые есть в public/img на момент сборки: без файла блок выглядит нормально и без фото */
+export interface SiteImages {
+  hero?: string
+  about?: string
+  final?: string
+}
 
 export function SiteHeader({ c, lang }: { c: LandingContent; lang: Locale }) {
   return (
@@ -41,9 +43,52 @@ export function SiteHeader({ c, lang }: { c: LandingContent; lang: Locale }) {
   )
 }
 
-export function Hero({ c, lang }: { c: LandingContent; lang: Locale }) {
-  const demos = c.hero.demos
-  const first = pointAt(spa, demos[0].at)
+/** Пример ответа — та же карточка, что в кабинете: жалоба сверху, правка снизу */
+function Examples({ c }: { c: LandingContent }) {
+  const h = c.hero
+  return (
+    <div className="example" data-examples="">
+      <div className="example__tabs" role="tablist" aria-label={h.examplesLabel}>
+        {h.examples.map((e, i) => (
+          <button key={e.id} type="button" role="tab" id={`ex-tab-${e.id}`} aria-controls={`ex-${e.id}`} aria-selected={i === 0} tabIndex={i === 0 ? 0 : -1} className="example__tab">
+            {e.chip}
+          </button>
+        ))}
+      </div>
+      {h.examples.map((e, i) => (
+        <div key={e.id} id={`ex-${e.id}`} role="tabpanel" aria-labelledby={`ex-tab-${e.id}`} className="example__panel" hidden={i !== 0}>
+          <div className="example__complaint">
+            <p className="example__label">{h.complaintLabel}</p>
+            <p className="example__quote">{e.complaint}</p>
+          </div>
+          <div className="example__answer">
+            <p className="example__label">{h.answerLabel}</p>
+            <div className="example__head">
+              <p className="example__param">{e.param}</p>
+              <p className={`example__dir example__dir--${e.direction}`}>{h.directions[e.direction]}</p>
+            </div>
+            <p className="example__action">{e.action}</p>
+            <dl className="example__facts">
+              <div>
+                <dt>{h.effect}</dt>
+                <dd>{e.effect}</dd>
+              </div>
+              <div>
+                <dt>{h.watch}</dt>
+                <dd>{e.watch}</dd>
+              </div>
+            </dl>
+            <p className="example__meta">
+              {h.checked} {e.rule}
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+export function Hero({ c, lang, img }: { c: LandingContent; lang: Locale; img: SiteImages }) {
   return (
     <section className="hero" aria-labelledby="hero-title">
       <div className="hero__inner">
@@ -53,10 +98,10 @@ export function Hero({ c, lang }: { c: LandingContent; lang: Locale }) {
           </h1>
           <p className="hero__lead">{c.hero.lead}</p>
           <div className="hero__actions">
-            <a className="site-button site-button--light site-button--lg" href={pagePath('signup', lang)} data-guest="">
+            <a className="site-button site-button--lg" href={pagePath('signup', lang)} data-guest="">
               {c.hero.cta}
             </a>
-            <a className="site-button site-button--light site-button--lg" href={pagePath('app', lang)} data-user="" hidden>
+            <a className="site-button site-button--lg" href={pagePath('app', lang)} data-user="" hidden>
               {c.nav.dashboard}
             </a>
             <a className="hero__login" href={pagePath('login', lang)} data-guest="">
@@ -66,55 +111,9 @@ export function Hero({ c, lang }: { c: LandingContent; lang: Locale }) {
           <p className="hero__note">{c.hero.note}</p>
         </div>
 
-        <div className="demo" data-demo="">
-          <div className="demo__chips" role="radiogroup" aria-label={c.hero.chipsLabel}>
-            {demos.map((d, i) => {
-              const p = pointAt(spa, d.at)
-              return (
-                <button key={d.id} type="button" role="radio" aria-checked={i === 0} tabIndex={i === 0 ? 0 : -1} className="demo__chip" data-demo-id={d.id} data-at={d.at} data-x={p.x.toFixed(1)} data-y={p.y.toFixed(1)}>
-                  {d.chip}
-                </button>
-              )
-            })}
-          </div>
-
-          <figure className="demo__map">
-            <svg viewBox={SPA.viewBox} role="img" aria-label={demos[0].corner} data-demo-svg="">
-              <path className="demo__under" d={SPA.path} />
-              <path className="demo__track" d={SPA.path} pathLength={1} />
-              <rect className="demo__corner" data-demo-corner="" x={first.x - MARK / 2} y={first.y - MARK / 2} width={MARK} height={MARK} />
-              <rect className="demo__car" data-demo-car="" x={first.x - 13} y={first.y - 13} width={26} height={26} />
-            </svg>
-          </figure>
-
-          <div className="radio">
-            {demos.map((d, i) => (
-              <div key={d.id} className="radio__msg" data-demo-panel={d.id} hidden={i !== 0}>
-                <p className="radio__corner">{d.corner}</p>
-                <p className="radio__you">
-                  <span className="radio__who">{c.hero.you}</span>
-                  {d.quote}
-                </p>
-                <div className="radio__answer">
-                  <p className="radio__who">
-                    {c.hero.assistant}, {c.hero.demoLabel.toLowerCase()}
-                  </p>
-                  <p className="radio__param">{d.param}</p>
-                  <p className="radio__change">{d.change}</p>
-                  <dl className="radio__facts">
-                    <div>
-                      <dt>{c.hero.effect}</dt>
-                      <dd>{d.effect}</dd>
-                    </div>
-                    <div>
-                      <dt>{c.hero.watch}</dt>
-                      <dd>{d.watch}</dd>
-                    </div>
-                  </dl>
-                </div>
-              </div>
-            ))}
-          </div>
+        <div className={img.hero ? 'hero__visual has-photo' : 'hero__visual'}>
+          {img.hero && <img className="hero__photo" src={img.hero} width={1024} height={1536} alt={c.hero.photoAlt} fetchPriority="high" />}
+          <Examples c={c} />
         </div>
       </div>
     </section>

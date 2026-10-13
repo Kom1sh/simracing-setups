@@ -2,12 +2,15 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import { absoluteUrl, BASE, LOCALES, type Locale } from '../i18n/locale'
 import { content } from './content'
 import { Landing } from './Landing'
+import type { SiteImages } from './Hero'
 
 /** Пререндер: лендинги /en/ и /ru/, корень с выбором языка, оболочки кабинета и входа, sitemap, 404 */
 
 export interface Assets {
   /** Теги скриптов и стилей клиентской сборки */
   head: string
+  /** Фото из public/img, которые есть на момент сборки (ищут prerender.mjs и dev-сервер) */
+  images?: SiteImages
 }
 
 const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
@@ -46,7 +49,7 @@ function structuredData(lang: Locale): string {
 export function renderLanding(lang: Locale, assets: Assets): string {
   const c = content[lang]
   const og = absoluteUrl(`${BASE}og-${lang}.png`)
-  const body = renderToStaticMarkup(<Landing c={c} lang={lang} />)
+  const body = renderToStaticMarkup(<Landing c={c} lang={lang} img={assets.images ?? {}} />)
   return `<!doctype html>
 <html lang="${lang}">
   <head>

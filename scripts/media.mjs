@@ -28,21 +28,23 @@ for (const lang of ['en', 'ru']) {
   await q.goto(`${BASE}${lang}/`)
   await q.evaluate(() => {
     const title = document.querySelector('.hero__title').textContent
-    const svg = document.querySelector('[data-demo-svg]').outerHTML
-    const param = document.querySelector('.radio__param').textContent
-    const change = document.querySelector('.radio__change').textContent
     const mark = document.querySelector('.site-mark').innerHTML
-    document.body.innerHTML = `
-      <div style="position:fixed;inset:0;background:#000;color:#fff;display:grid;grid-template-columns:1fr 330px;gap:40px;padding:56px 64px;font-family:var(--font)">
-        <div style="display:grid;align-content:space-between">
-          <p style="font-size:30px;font-weight:820;font-stretch:48%;line-height:1">${mark.replace('<span>', '<span style="color:#a8a8a8;font-size:17px;font-weight:460;font-stretch:100%;margin-left:10px">')}</p>
-          <h1 style="font-size:118px;font-weight:720;font-stretch:36%;line-height:0.86;margin:0;text-wrap:balance">${title}</h1>
-          <p style="font-size:22px;color:#d4d4d4">${param} <b style="color:#fff;font-size:40px;font-weight:740;font-stretch:40%;margin-left:8px">${change}</b></p>
-        </div>
-        <div class="og-map" style="display:grid;place-items:center">${svg}</div>
+    const card = document.querySelector('.example').cloneNode(true)
+    card.querySelector('.example__tabs').remove()
+    card.querySelector('.example__meta').remove()
+    card.querySelector('.example__facts > div:last-child').remove()
+    card.querySelector('.example__facts').style.gridTemplateColumns = '1fr'
+    card.style.cssText = 'width:470px;align-self:center'
+    const page = document.createElement('div')
+    page.style.cssText = 'position:fixed;inset:0;background:#fff;display:grid;grid-template-columns:1fr 470px;gap:48px;padding:56px 64px;font-family:var(--font);color:#000'
+    page.innerHTML = `
+      <div style="display:grid;align-content:space-between">
+        <p style="font-size:28px;font-weight:820;font-stretch:48%;line-height:1">${mark.replace('<span>', '<span style="color:#5e5e5e;font-size:16px;font-weight:460;font-stretch:100%;margin-left:10px">')}</p>
+        <h1 style="font-size:58px;font-weight:700;line-height:1.04;letter-spacing:-0.015em;margin:0;text-wrap:balance">${title}</h1>
+        <p style="width:72px;height:8px;background:#ffed00"></p>
       </div>`
-    const s = document.querySelector(".og-map svg")
-    s.style.cssText = 'width:100%;height:518px'
+    page.append(card)
+    document.body.replaceChildren(page)
   })
   await q.evaluate(() => document.fonts.ready)
   await q.screenshot({ path: `public/og-${lang}.png` })

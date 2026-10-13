@@ -151,8 +151,8 @@ await check('лендинг: один h1, hreflang, валидный JSON-LD', a
 
 await check('лендинг: пример в hero переключается', async () => {
   await page.goto(`${BASE}en/`)
-  await page.getByRole('radio', { name: 'Loose on exit' }).click()
-  await page.locator('.radio').getByText('Traction control', { exact: true }).waitFor()
+  await page.getByRole('tab', { name: 'Loose on exit' }).click()
+  await page.locator('.example').getByText('Traction control', { exact: true }).waitFor()
 })
 
 await check('нет ошибок JS', async () => expect(errors.length === 0, errors.join(' | ')))
