@@ -3,6 +3,7 @@ import '../styles/tokens.css'
 import './site-base.css'
 import './site-hero.css'
 import './site-sections.css'
+import './site-sections-2.css'
 
 /** Шапка для вошедших: вместо «Войти» и «Создать аккаунт» — «Открыть кабинет» */
 function applySession() {

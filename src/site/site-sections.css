@@ -1,4 +1,4 @@
-/* Блоки страницы: светлые, серые и тёмные чередуются; заголовок слева, пояснение справа */
+/* Блоки страницы: светлые, серые и тёмные чередуются; заголовок и пояснение под ним */
 
 .band--light {
   background: #fff;
@@ -21,50 +21,23 @@
 .band__inner {
   max-width: var(--page-max);
   margin: 0 auto;
-  padding: clamp(72px, 9vw, 128px) var(--gutter);
+  padding: clamp(72px, 9vw, 120px) var(--gutter);
 }
 
 .band__head {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  align-items: end;
-  gap: var(--s-md) var(--s-xl);
-  margin-bottom: clamp(32px, 4vw, 56px);
-}
-
-.band__head .title-2 {
-  max-width: 18ch;
+  gap: var(--s-md);
+  max-width: 760px;
+  margin-bottom: clamp(32px, 4vw, 48px);
 }
 
 .band__intro {
-  max-width: 52ch;
+  max-width: 60ch;
   color: var(--l-mute);
 }
 
 .band--dark .band__intro {
   color: var(--l-mute-dark);
-}
-
-/* Карточка */
-.card {
-  display: grid;
-  align-content: start;
-  gap: 10px;
-  padding: 26px;
-  border-radius: var(--l-radius-lg);
-  background: var(--l-grey);
-  font-size: 16px;
-  line-height: 1.55;
-}
-
-.band--grey .card {
-  background: #fff;
-}
-
-.card__label {
-  margin-top: 6px;
-  color: var(--l-mute);
-  font-size: 13px;
 }
 
 /* Что такое сетап: текст слева, фото с карточкой справа */
@@ -117,113 +90,61 @@
   font-stretch: 112%;
 }
 
-/* Шаги */
+/* Шаги: фото вписано в карточку, номер — на фото */
 .steps {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--s-lg);
+  gap: var(--s-md);
 }
 
 .step {
   display: grid;
   align-content: start;
-  gap: var(--s-md);
-  padding: 24px;
+  gap: 8px;
+  padding: 10px 10px 22px;
   border-radius: var(--l-radius-lg);
   background: #fff;
-  font-size: 16px;
+  font-size: 15px;
   line-height: 1.55;
 }
 
+.step__media {
+  position: relative;
+  margin-bottom: 10px;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  border-radius: 14px;
+  background: var(--l-graphite);
+}
+
+.step__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .step__num {
+  position: absolute;
+  top: 12px;
+  left: 12px;
   display: grid;
   place-items: center;
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
-  background: var(--l-ink);
-  color: #fff;
+  background: var(--accent);
+  color: #000;
   font-size: 16px;
   font-weight: 800;
 }
 
-.mini {
-  display: grid;
-  gap: 8px;
-  min-height: 150px;
-  align-content: center;
-  padding: 16px;
-  border-radius: 14px;
-  background: var(--l-grey);
-  font-size: 13px;
-  line-height: 1.35;
+.step .title-3,
+.step p {
+  padding-inline: 10px;
 }
 
-.mini__row {
-  padding: 8px 12px;
-  border-radius: 10px;
-  background: #fff;
-  color: var(--l-ink);
-  font-weight: 500;
-}
-
-.mini__row.is-on {
-  background: var(--accent);
-  font-weight: 700;
-}
-
-.mini__seg {
-  display: flex;
-  gap: 4px;
-  padding: 4px;
-  border-radius: 10px;
-  background: #fff;
-}
-
-.mini__seg span {
-  flex: 1;
-  padding: 6px 4px;
-  border-radius: 7px;
-  color: var(--l-mute);
-  text-align: center;
-  white-space: nowrap;
-}
-
-.mini__seg .is-on {
-  background: var(--accent);
-  color: #000;
-  font-weight: 700;
-}
-
-.mini__head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 6px;
-  color: var(--l-ink);
-  font-size: 15px;
-  font-weight: 800;
-  font-stretch: 112%;
-}
-
-.mini__head b {
-  padding: 3px 9px;
-  border-radius: 999px;
-  background: var(--l-ink);
-  color: #fff;
-  font-size: 11px;
-  font-weight: 700;
-  font-stretch: 100%;
-}
-
-.mini__strong {
-  color: var(--l-ink);
-  font-weight: 600;
-}
-
-.mini__mute {
-  color: var(--l-mute);
+.step .title-3 {
+  font-size: 18px;
 }
 
 /* Схемы поворачиваемости на тёмном */
@@ -317,233 +238,117 @@
   border-top: 2px dashed #9aa0aa;
 }
 
-/* Симптомы и принципы */
+/* Симптомы: компактные карточки с точной мини-схемой */
 .symptom-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--s-md);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
 }
 
-.rule-grid {
+.sym {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--s-md);
-}
-
-/* Цифры */
-.numbers {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--s-lg);
-}
-
-.numbers__item {
-  display: grid;
-  align-content: start;
-  gap: var(--s-sm);
-  padding-top: var(--s-lg);
-  border-top: 4px solid var(--accent);
-}
-
-.numbers__item dt {
-  color: var(--l-ink);
-  font-size: clamp(44px, 4.6vw, 68px);
-  font-weight: 800;
-  font-stretch: 118%;
-  line-height: 1;
-  letter-spacing: -0.02em;
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
-
-.numbers__item dd {
-  font-size: 16px;
-  line-height: 1.55;
-}
-
-.numbers__source {
-  margin-top: var(--s-xl);
-  color: var(--l-mute);
-  font-size: 13px;
-}
-
-/* Кабинет */
-.preview img {
-  width: 100%;
-  border: 1px solid var(--l-graphite-line);
-  border-radius: var(--l-radius-lg);
-}
-
-.preview__foot {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--s-lg);
-  margin-top: var(--s-lg);
-}
-
-/* Вопросы */
-.faq {
-  display: grid;
-  gap: 10px;
-  max-width: 880px;
-}
-
-.faq__item {
-  padding: 0 24px;
-  border-radius: 16px;
+  grid-template-rows: auto auto 1fr auto;
+  padding: 10px 10px 18px;
+  border-radius: 18px;
   background: var(--l-grey);
 }
 
-.faq__item summary {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--s-md);
-  padding: 20px 0;
-  cursor: pointer;
-  list-style: none;
+.sym__diagram {
+  height: 140px;
+  padding: 8px;
+  border-radius: 12px;
+  background: var(--l-graphite);
 }
 
-.faq__item summary::-webkit-details-marker {
-  display: none;
-}
-
-.faq__item summary::after {
-  content: '+';
-  flex: none;
-  display: grid;
-  place-items: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: #fff;
-  color: var(--l-ink);
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 1;
-}
-
-.faq__item[open] summary::after {
-  content: '−';
-  background: var(--accent);
-}
-
-.faq__item h3 {
-  color: var(--l-ink);
-  font-size: 18px;
-  font-weight: 750;
-  font-stretch: 108%;
-  line-height: 1.3;
-}
-
-.faq__item p {
-  max-width: 68ch;
-  padding-bottom: 22px;
-  font-size: 16px;
-}
-
-/* Финал: машина на всю ширину, текст слева на затемнении */
-.final {
-  position: relative;
-  overflow: hidden;
-  background: var(--l-black);
-  color: #fff;
-}
-
-.final__photo {
-  position: absolute;
-  inset: 0;
+.sd {
+  display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: 70% 50%;
 }
 
-.final.has-photo::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: linear-gradient(90deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.6) 40%, rgba(0, 0, 0, 0) 75%);
+.sd__road {
+  fill: none;
+  stroke: #3b404b;
+  stroke-width: 22;
 }
 
-.final__inner {
-  position: relative;
-  z-index: 2;
-  display: grid;
-  justify-items: start;
-  gap: var(--s-lg);
-  max-width: var(--page-max);
-  margin: 0 auto;
-  padding: clamp(96px, 12vw, 176px) var(--gutter);
+.sd__zone {
+  fill: none;
+  stroke: rgba(255, 237, 0, 0.3);
+  stroke-width: 22;
 }
 
-.final .title-1 {
-  max-width: 12ch;
-  color: #fff;
-  font-size: clamp(40px, 5.2vw, 76px);
+.sd__planned {
+  fill: none;
+  stroke: #8a8f99;
+  stroke-width: 1.5;
+  stroke-dasharray: 4 4;
 }
 
-.final__text {
-  max-width: 40ch;
-  color: rgba(255, 255, 255, 0.82);
-  font-size: 19px;
+.sd__actual {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 3;
+  stroke-linecap: round;
 }
 
-/* Фото в карточках и блоках — появляются, если файл есть в public/img */
-.card__photo,
-.step__photo {
-  width: calc(100% + 52px);
-  max-width: none;
-  margin: -26px -26px 8px;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-  border-radius: var(--l-radius-lg) var(--l-radius-lg) 0 0;
+.sd__car,
+.sd__body {
+  fill: #fff;
 }
 
-.step__photo {
-  width: calc(100% + 48px);
-  margin: -24px -24px 0;
+.sd__nose {
+  fill: var(--accent);
 }
 
-.band__photo {
-  width: 100%;
-  margin-bottom: var(--s-lg);
-  aspect-ratio: 3 / 1;
-  object-fit: cover;
-  border-radius: var(--l-radius-lg);
+.sd__skid {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.55);
+  stroke-width: 2;
 }
 
-@media (max-width: 1000px) {
-  .band__head,
-  .about__inner {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .steps,
-  .rule-grid,
-  .numbers {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .about__card {
-    left: 12px;
-  }
+.sd__ground {
+  fill: none;
+  stroke: #8a8f99;
+  stroke-width: 2;
 }
 
-@media (max-width: 760px) {
-  .handling,
-  .symptom-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
+.sd__wheel {
+  fill: var(--l-graphite);
+  stroke: #fff;
+  stroke-width: 2;
+}
 
-  .final.has-photo::before {
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.55) 55%, rgba(0, 0, 0, 0.15) 100%);
-  }
+.sd__sparks {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
 
-  .final__inner {
-    padding-top: 220px;
-  }
+.sym__title {
+  margin: 14px 6px 6px;
+  color: var(--l-ink);
+  font-size: 17px;
+  font-weight: 750;
+  font-stretch: 106%;
+  line-height: 1.25;
+}
+
+.sym__text {
+  margin-inline: 6px;
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+
+.sym__params {
+  margin: 12px 6px 0;
+  color: var(--l-mute);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.sym__params span {
+  color: var(--l-ink);
+  font-weight: 600;
 }
