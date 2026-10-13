@@ -1,0 +1,109 @@
+/* Аккаунт в шапке кабинета */
+.user-menu {
+  position: relative;
+}
+
+.user-menu__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 0 0 4px;
+  border: 0;
+  background: none;
+  font-size: 14px;
+  font-weight: 560;
+}
+
+.user-menu__trigger:hover .user-menu__name {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.user-menu__badge {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  background: var(--ink);
+  color: var(--canvas);
+  border-radius: var(--r-control);
+  font-size: 15px;
+  font-weight: 800;
+  font-stretch: 60%;
+}
+
+.user-menu__name {
+  max-width: 14ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-menu__panel {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 30;
+  display: grid;
+  gap: 4px;
+  min-width: 240px;
+  padding: 12px;
+  border: 1px solid var(--ink);
+  background: var(--canvas);
+}
+
+.user-menu__who {
+  display: grid;
+  gap: 2px;
+  padding: 4px 4px 10px;
+  border-bottom: 1px solid var(--line);
+  font-size: 14px;
+}
+
+.user-menu__who span {
+  color: var(--mute);
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.user-menu__langs {
+  display: flex;
+  gap: 4px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.user-menu__langs a {
+  padding: 6px 10px;
+  border: 1px solid var(--control-border);
+  border-radius: var(--r-control);
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.user-menu__langs a.is-selected {
+  border-color: var(--ink);
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: 600;
+}
+
+.user-menu__link {
+  padding: 8px 4px;
+  border: 0;
+  background: none;
+  font-size: 14px;
+  text-align: left;
+  text-decoration: none;
+}
+
+.user-menu__link:hover {
+  background: var(--surface);
+}
+
+@media (max-width: 720px) {
+  .user-menu__name {
+    display: none;
+  }
+}

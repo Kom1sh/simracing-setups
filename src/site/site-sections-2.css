@@ -1,0 +1,319 @@
+/* Нижняя половина страницы: правила, цифры, кабинет, вопросы, финал */
+
+/* Правила: фото инженера на весь блок, затемнение слева, три правила внизу */
+.rules {
+  position: relative;
+  overflow: hidden;
+  background: var(--l-black);
+  color: #fff;
+}
+
+.rules__photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 62% 40%;
+}
+
+.rules.has-photo::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.72) 40%, rgba(0, 0, 0, 0.3) 100%),
+    linear-gradient(0deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0) 55%);
+}
+
+.rules__inner {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: clamp(48px, 7vw, 96px);
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: clamp(88px, 10vw, 140px) var(--gutter) clamp(56px, 6vw, 80px);
+}
+
+.rules__head {
+  display: grid;
+  gap: var(--s-md);
+  max-width: 620px;
+}
+
+.rules .title-2,
+.rules .title-3 {
+  color: #fff;
+}
+
+.rules__intro {
+  max-width: 52ch;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.rules__list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.rules__item {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  padding: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+  background: rgba(20, 22, 27, 0.82);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.rules__item p {
+  color: #c7cad1;
+}
+
+.rules__check {
+  width: 30px;
+  height: 30px;
+}
+
+.rules__check rect {
+  fill: var(--accent);
+}
+
+.rules__check path {
+  fill: none;
+  stroke: #000;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Цифры */
+.numbers {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s-lg);
+}
+
+.numbers__item {
+  display: grid;
+  align-content: start;
+  gap: var(--s-sm);
+  padding-top: var(--s-lg);
+  border-top: 4px solid var(--accent);
+}
+
+.numbers__item dt {
+  color: var(--l-ink);
+  font-size: clamp(44px, 4.6vw, 68px);
+  font-weight: 800;
+  font-stretch: 118%;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.numbers__item dd {
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.numbers__source {
+  margin-top: var(--s-xl);
+  color: var(--l-mute);
+  font-size: 13px;
+}
+
+/* Кабинет */
+.preview img {
+  width: 100%;
+  border: 1px solid var(--l-graphite-line);
+  border-radius: var(--l-radius-lg);
+}
+
+.preview__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-lg);
+  margin-top: var(--s-lg);
+}
+
+/* Вопросы: заголовок слева, вопросы справа */
+.faq-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  align-items: start;
+  gap: var(--s-xl) clamp(32px, 5vw, 80px);
+}
+
+.faq-layout__title {
+  position: sticky;
+  top: 104px;
+}
+
+.faq {
+  display: grid;
+  gap: 10px;
+}
+
+.faq__item {
+  padding: 0 24px;
+  border-radius: 16px;
+  background: var(--l-grey);
+}
+
+.faq__item summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-md);
+  padding: 20px 0;
+  cursor: pointer;
+  list-style: none;
+}
+
+.faq__item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq__item summary::after {
+  content: '+';
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--l-ink);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.faq__item[open] summary::after {
+  content: '−';
+  background: var(--accent);
+}
+
+.faq__item h3 {
+  color: var(--l-ink);
+  font-size: 18px;
+  font-weight: 750;
+  font-stretch: 108%;
+  line-height: 1.3;
+}
+
+.faq__item p {
+  max-width: 68ch;
+  padding-bottom: 22px;
+  font-size: 16px;
+}
+
+/* Финал: машина на всю ширину, текст слева, снизу фото уходит в чёрный подвал */
+.final {
+  position: relative;
+  overflow: hidden;
+  background: var(--l-black);
+  color: #fff;
+}
+
+.final__photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 70% 50%;
+}
+
+.final.has-photo::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.6) 40%, rgba(0, 0, 0, 0) 75%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0) 45%, rgba(0, 0, 0, 0.75) 80%, #000 100%);
+}
+
+.final__inner {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  justify-items: start;
+  gap: var(--s-lg);
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: clamp(110px, 13vw, 190px) var(--gutter) clamp(120px, 14vw, 200px);
+}
+
+.final .title-1 {
+  max-width: 12ch;
+  color: #fff;
+  font-size: clamp(40px, 5.2vw, 76px);
+}
+
+.final__text {
+  max-width: 42ch;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 19px;
+}
+
+@media (max-width: 1100px) {
+  .symptom-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1000px) {
+  .about__inner,
+  .faq-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .faq-layout__title {
+    position: static;
+  }
+
+  .steps,
+  .numbers,
+  .rules__list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .about__card {
+    left: 12px;
+  }
+}
+
+@media (max-width: 760px) {
+  .handling {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .rules.has-photo::before {
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.75) 60%, rgba(0, 0, 0, 0.5) 100%);
+  }
+
+  .final.has-photo::before {
+    background: linear-gradient(0deg, #000 0%, rgba(0, 0, 0, 0.7) 50%, rgba(0, 0, 0, 0.2) 100%);
+  }
+
+  .final__inner {
+    padding-top: 220px;
+  }
+}
+
+@media (max-width: 520px) {
+  .symptom-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

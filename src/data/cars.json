@@ -1,0 +1,629 @@
+[
+  {
+    "id": "ferrari-296-gt3",
+    "category": "gt3",
+    "brand": "Ferrari",
+    "model": "296 GT3",
+    "year": 2023,
+    "engine": { "litres": 3.0, "layout": "V6", "aspiration": "twin-turbo" },
+    "enginePosition": "mid",
+    "abs": null,
+    "tc": null,
+    "sources": [
+      "https://www.gt-world-challenge-europe.com/news/2378/ferrari-296-gt3-a-v6-for-a-new-sporting-history",
+      "https://en.wikipedia.org/wiki/Ferrari_296",
+      "https://de.wikipedia.org/wiki/Ferrari_296_GT3"
+    ],
+    "notes": "Дебют — 24 часа Дайтоны 2023. Расположение мотора — по дорожной 296. ABS и антипробуксовка не подтверждены: ferrari.com не открылся."
+  },
+  {
+    "id": "porsche-911-gt3-r-992",
+    "category": "gt3",
+    "brand": "Porsche",
+    "model": "911 GT3 R (992)",
+    "year": 2023,
+    "engine": { "litres": 4.2, "layout": "flat-6", "aspiration": "na" },
+    "enginePosition": "rear",
+    "abs": true,
+    "tc": true,
+    "sources": [
+      "https://newsroom.porsche.com/en/2022/motorsports/porsche-911-gt3-r-generation-992-customer-racing-car-premiere-29201.html",
+      "https://en.wikipedia.org/wiki/Porsche_911_GT3"
+    ],
+    "notes": "Версия 992.1, дебют — 24 часа Дайтоны 2023. Мотор 4194 см³ без наддува, сзади, наклонён вперёд на 5,5°. ABS Bosch пятого поколения и антипробуксовка Porsche; регулировка водителем прямо подтверждена только для баланса тормозов. Обновлённая 992.2 GT3 R гоняется с 2026 — это другая версия."
+  },
+  {
+    "id": "bmw-m4-gt3",
+    "category": "gt3",
+    "brand": "BMW",
+    "model": "M4 GT3",
+    "year": 2022,
+    "engine": { "litres": 3.0, "layout": "I6", "aspiration": "twin-turbo" },
+    "enginePosition": "front",
+    "abs": true,
+    "tc": true,
+    "sources": [
+      "https://www.press.bmwgroup.com/usa/article/detail/T0334417EN_US/bmw-m-motorsports-presents-the-new-bmw-m4-gt3?language=en_US",
+      "https://en.wikipedia.org/wiki/BMW_M4"
+    ],
+    "notes": "Клиентские гонки с 2022; до омологации выезжала в NLS 26.06.2021. ABS и антипробуксовка переключаются с руля. «Битурбо» — по названию M TwinPower Turbo, расположение мотора — по дорожной M4."
+  },
+  {
+    "id": "mercedes-amg-gt3-evo",
+    "category": "gt3",
+    "brand": "Mercedes-AMG",
+    "model": "GT3 Evo",
+    "year": 2020,
+    "engine": { "litres": 6.2, "layout": "V8", "aspiration": "na" },
+    "enginePosition": "front-mid",
+    "abs": true,
+    "tc": true,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Mercedes-AMG_GT",
+      "https://de.wikipedia.org/wiki/Mercedes-AMG_GT3",
+      "https://mercedes-benz-media.co.uk/assets/applications/original/46467-20240817-pi-mercedes-amg-gt3-130y-en.pdf"
+    ],
+    "notes": "Регулируемые ABS и антипробуксовка подтверждены листком AMG на спецверсию GT3 Edition 130Y, построенную на базовой GT3. AMG пишет «6.3», фактический объём M159 — 6208 см³."
+  },
+  {
+    "id": "audi-r8-lms-gt3-evo-ii",
+    "category": "gt3",
+    "brand": "Audi",
+    "model": "R8 LMS GT3 evo II",
+    "year": 2022,
+    "engine": { "litres": 5.2, "layout": "V10", "aspiration": "na" },
+    "enginePosition": "mid",
+    "abs": true,
+    "tc": true,
+    "sources": [
+      "https://www.audi.com/en/press-releases/second-evolution-of-the-audi-r8-lms-gt3-14114",
+      "https://uploads.audi.com/system/production/uploaded_files/19514/file/259808bc1b08337b8b1096c2f4008a6fcde1be67/Technische_Daten_Audi_R8_LMS_GT3_2021_GB.pdf"
+    ],
+    "notes": "Клиентам — к сезону 2022, заводские гонки Audi планировала ещё в 2021. ABS и антипробуксовка — по 12 ступеней."
+  },
+  {
+    "id": "lamborghini-huracan-gt3-evo2",
+    "category": "gt3",
+    "brand": "Lamborghini",
+    "model": "Huracán GT3 EVO2",
+    "year": 2023,
+    "engine": { "litres": 5.2, "layout": "V10", "aspiration": "na" },
+    "enginePosition": "mid",
+    "abs": true,
+    "tc": true,
+    "sources": [
+      "https://www.gt-world-challenge-europe.com/news/2296/lamborghini-squadra-corse-presents-the-new-huracan-gt3-evo2-the-racing-version-of-huracan-sto",
+      "https://de.wikipedia.org/wiki/Lamborghini_Hurac%C3%A1n_GT3",
+      "https://en.wikipedia.org/wiki/Lamborghini_Hurac%C3%A1n"
+    ],
+    "notes": "Дебют — 24 часа Дайтоны 2023. Регулировка ABS и антипробуксовки водителем прямо не подтверждена."
+  },
+  {
+    "id": "mclaren-720s-gt3-evo",
+    "category": "gt3",
+    "brand": "McLaren",
+    "model": "720S GT3 Evo",
+    "year": 2023,
+    "engine": { "litres": 4.0, "layout": "V8", "aspiration": "twin-turbo" },
+    "enginePosition": "mid",
+    "abs": null,
+    "tc": null,
+    "sources": [
+      "https://www.gt-world-challenge-europe.com/news/2474/mclaren-confirms-new-720s-gt3-evo-for-2023-debut",
+      "https://en.wikipedia.org/wiki/McLaren_720S"
+    ],
+    "notes": "Мотор и его расположение — по дорожной 720S. ABS и антипробуксовка не подтверждены: пресс-релиз McLaren не открылся."
+  },
+  {
+    "id": "aston-martin-vantage-amr-gt3-evo",
+    "category": "gt3",
+    "brand": "Aston Martin",
+    "model": "Vantage AMR GT3 Evo",
+    "year": 2024,
+    "engine": { "litres": 4.0, "layout": "V8", "aspiration": "twin-turbo" },
+    "enginePosition": "front-mid",
+    "abs": null,
+    "tc": null,
+    "sources": [
+      "https://media.astonmartin.com/state-of-the-art-aston-martin-vantage-gt3-spearheads-new-era-in-top-flight-gt-racing/",
+      "https://media.astonmartin.com/new-aston-martin-vantage-gt3-building-momentum-as-2024-wec-and-imsa-campaigns-continue/",
+      "https://en.wikipedia.org/wiki/Aston_Martin_Vantage_(2018)"
+    ],
+    "notes": "Машина 2024 года; у Aston Martin называется «Vantage GT3», «Vantage AMR GT3 Evo» — название в симуляторах. Дебют — WEC, Лусаил 2024. Расположение мотора — по дорожной Vantage. ABS в Википедии описан для прошлой Vantage GT3, поэтому не заполнен."
+  },
+  {
+    "id": "ford-mustang-gt3",
+    "category": "gt3",
+    "brand": "Ford",
+    "model": "Mustang GT3",
+    "year": 2024,
+    "engine": { "litres": 5.4, "layout": "V8", "aspiration": "na" },
+    "enginePosition": "front",
+    "abs": null,
+    "tc": null,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Ford_Mustang_GT3",
+      "https://www.multimatic.com/press/ford-mustang-gt3-unveiled-at-le-mans",
+      "https://www.ford.com/performance/mustang-gt3/"
+    ],
+    "notes": "Дебют — 24 часа Дайтоны 2024. Мотор спереди, коробка-трансэксл сзади."
+  },
+  {
+    "id": "chevrolet-corvette-z06-gt3r",
+    "category": "gt3",
+    "brand": "Chevrolet",
+    "model": "Corvette Z06 GT3.R",
+    "year": 2024,
+    "engine": { "litres": 5.5, "layout": "V8", "aspiration": "na" },
+    "enginePosition": "mid",
+    "abs": null,
+    "tc": null,
+    "sources": [
+      "https://news.gm.com/home.detail.html/Pages/news/us/en/2023/jan/0127-corvette-racing.html",
+      "https://news.gm.com/home.detail.html/Pages/topic/us/en/2025/mar/0314-z06.html",
+      "https://en.wikipedia.org/wiki/Chevrolet_Corvette_Z06_GT3.R"
+    ],
+    "notes": "Дебют — 24 часа Дайтоны 2024."
+  },
+  {
+    "id": "honda-nsx-gt3-evo22",
+    "category": "gt3",
+    "brand": "Honda",
+    "model": "NSX GT3 Evo22",
+    "year": 2022,
+    "engine": { "litres": 3.5, "layout": "V6", "aspiration": "twin-turbo" },
+    "enginePosition": "mid",
+    "abs": true,
+    "tc": null,
+    "sources": [
+      "https://www.acura.ca/-/media/Images/ExperienceAcura/Motorsports/PDF/NSX-GT3-EVO22-Brochure-2021.pdf",
+      "https://jasmotorsport.com/racing-cars/honda-nsx-gt3-evo-22",
+      "https://en.wikipedia.org/wiki/Honda_NSX_(second_generation)"
+    ],
+    "notes": "В Северной Америке — Acura NSX GT3 Evo22. ABS Bosch M5 по брошюре; антипробуксовка в спецификациях не указана."
+  },
+  {
+    "id": "nissan-gt-r-nismo-gt3-2018",
+    "category": "gt3",
+    "brand": "Nissan",
+    "model": "GT-R Nismo GT3 (2018)",
+    "year": null,
+    "engine": { "litres": 3.8, "layout": "V6", "aspiration": "twin-turbo" },
+    "enginePosition": "front-mid",
+    "abs": true,
+    "tc": true,
+    "sources": [
+      "https://usa.nissannews.com/en-US/releases/2018-nissan-gt-r-nismo-gt3-to-go-on-sale",
+      "https://www.nismo.co.jp/en/products/customerracing/racingcar.html",
+      "https://en.wikipedia.org/wiki/Nissan_GT-R_in_motorsport"
+    ],
+    "notes": "GT3-версия GT-R гоняется с 2011; поставки версии 2018 — примерно с января 2019, первая гонка этой версии не найдена. Мотор сдвинут на 150 мм назад. ABS — по упоминанию «улучшенного ABS» в обновлении 2020 года."
+  },
+  {
+    "id": "bentley-continental-gt3-2018",
+    "category": "gt3",
+    "brand": "Bentley",
+    "model": "Continental GT3 (2018)",
+    "year": 2018,
+    "engine": { "litres": 4.0, "layout": "V8", "aspiration": "twin-turbo" },
+    "enginePosition": "front",
+    "abs": null,
+    "tc": null,
+    "sources": [
+      "https://www.bentleymedia.com/en/heritage-collection/2019-continental-gt3",
+      "https://www.intercontinentalgtchallenge.com/news/1099/bentley-reveals-new-continental-gt3-for-2018-intercontinental-gt-challenge",
+      "https://de.wikipedia.org/wiki/Bentley_Continental_GT3"
+    ],
+    "notes": "Второе поколение, дебют — Монца 2018. Мотор опущен на 86 мм и сдвинут на 90 мм назад. ABS и антипробуксовка в Википедии описаны для первого поколения, поэтому не заполнены."
+  },
+  {
+    "id": "ferrari-488-gt3-evo-2020",
+    "category": "gt3",
+    "brand": "Ferrari",
+    "model": "488 GT3 Evo 2020",
+    "year": 2020,
+    "engine": { "litres": 3.9, "layout": "V8", "aspiration": "twin-turbo" },
+    "enginePosition": "mid",
+    "abs": null,
+    "tc": null,
+    "sources": [
+      "https://de.wikipedia.org/wiki/Ferrari_488_GT3",
+      "https://en.wikipedia.org/wiki/Ferrari_488"
+    ],
+    "notes": "Расположение мотора — по дорожной 488. ABS и антипробуксовка упомянуты только в копии пресс-релиза Ferrari на netcarshow.com — источник не из списка, ferrari.com не открылся."
+  },
+  {
+    "id": "porsche-911-gt3-r-991-2",
+    "category": "gt3",
+    "brand": "Porsche",
+    "model": "911 GT3 R (991.2)",
+    "year": 2019,
+    "engine": { "litres": 4.0, "layout": "flat-6", "aspiration": "na" },
+    "enginePosition": "rear",
+    "abs": true,
+    "tc": true,
+    "sources": [
+      "https://newsroom.porsche.com/en/motorsports/porsche-911-gt3-r-customer-racer-gt3-series-2019-racing-911-gt3-rs-aerodynamics-safety-15335.html",
+      "https://en.wikipedia.org/wiki/Porsche_911_GT3"
+    ],
+    "notes": "ABS Bosch пятого поколения, антипробуксовка PMTC. Регулировка водителем прямо подтверждена только для баланса тормозов."
+  },
+  {
+    "id": "bmw-m6-gt3",
+    "category": "gt3",
+    "brand": "BMW",
+    "model": "M6 GT3",
+    "year": 2016,
+    "engine": { "litres": 4.4, "layout": "V8", "aspiration": "twin-turbo" },
+    "enginePosition": "front",
+    "abs": true,
+    "tc": true,
+    "sources": [
+      "https://www.press.bmwgroup.com/global/article/detail/T0234285EN/bmw-presents-the-bmw-m6-gt3-at-the-iaa-cars-2015-in-frankfurt?language=en",
+      "https://www.bmwgroup-classic.com/en/company/museum/touring-cars/popup/M6-gt3.html",
+      "https://de.wikipedia.org/wiki/BMW_M6_GT3",
+      "https://en.wikipedia.org/wiki/BMW_M6"
+    ],
+    "notes": "Расположение мотора — по дорожной M6."
+  },
+  {
+    "id": "lexus-rc-f-gt3",
+    "category": "gt3",
+    "brand": "Lexus",
+    "model": "RC F GT3",
+    "year": 2017,
+    "engine": { "litres": 5.4, "layout": "V8", "aspiration": "na" },
+    "enginePosition": "front",
+    "abs": null,
+    "tc": null,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Lexus_RC",
+      "https://pressroom.lexus.com/rc-f-gt3-finishes-on-the-podium-at-rolex-24-at-daytona/"
+    ],
+    "notes": "Дебют — 24 часа Дайтоны 2017. Мотор 2UR-GSE с увеличенным ходом поршня."
+  },
+  {
+    "id": "porsche-718-cayman-gt4-rs-clubsport",
+    "category": "gt4",
+    "brand": "Porsche",
+    "model": "718 Cayman GT4 RS Clubsport",
+    "year": 2022,
+    "engine": { "litres": 4.0, "layout": "flat-6", "aspiration": "na" },
+    "enginePosition": "mid",
+    "abs": true,
+    "tc": true,
+    "sources": [
+      "https://newsroom.porsche.com/en/2021/products/porsche-718-cayman-gt4-rs-clubsport-la-auto-show-26461.html",
+      "https://newsroom.porsche.com/en/2025/motorsports/porsche-718-cayman-gt4-rs-clubsport-customer-racing-car-38642.html"
+    ],
+    "notes": "ABS и антипробуксовка включаются переключателем водителя."
+  },
+  {
+    "id": "bmw-m4-gt4-g82",
+    "category": "gt4",
+    "brand": "BMW",
+    "model": "M4 GT4 (G82)",
+    "year": 2023,
+    "engine": { "litres": 3.0, "layout": "I6", "aspiration": "twin-turbo" },
+    "enginePosition": "front",
+    "abs": null,
+    "tc": true,
+    "sources": [
+      "https://www.press.bmwgroup.com/global/article/detail/T0400374EN/presentation-of-the-new-bmw-m4-gt4-with-bmw-m-motorsport-design-heralds-sales-phase?language=en",
+      "https://en.wikipedia.org/wiki/BMW_M4"
+    ],
+    "notes": "Омологация SRO — июнь 2022, первый сезон — 2023. Антипробуксовка на 10 ступеней; ABS в пресс-релизах BMW не упомянут. «Битурбо» и расположение мотора — по дорожной M4."
+  },
+  {
+    "id": "mercedes-amg-gt4",
+    "category": "gt4",
+    "brand": "Mercedes-AMG",
+    "model": "GT4",
+    "year": 2017,
+    "engine": { "litres": 4.0, "layout": "V8", "aspiration": "twin-turbo" },
+    "enginePosition": "front-mid",
+    "abs": true,
+    "tc": true,
+    "sources": [
+      "https://media.mbusa.com/releases/release-f64df5efcf40bb28fb4d418ddc150120-customer-racing-premiere-at-spa-francorchamps",
+      "https://media.mbusa.com/releases/release-a032a098f6a8a0623ddb31dd520311dc-customer-racing-test-races-mercedes-amg-gt4"
+    ],
+    "notes": "Омологация SRO — 30.07.2017, первая гонка — VLN в августе 2017, но ещё в классе SPX; поставки клиентам с конца 2017. ABS многоступенчатый; регулируемость антипробуксовки не указана."
+  },
+  {
+    "id": "aston-martin-vantage-amr-gt4",
+    "category": "gt4",
+    "brand": "Aston Martin",
+    "model": "Vantage AMR GT4 (2018)",
+    "year": 2019,
+    "engine": { "litres": 4.0, "layout": "V8", "aspiration": "twin-turbo" },
+    "enginePosition": "front-mid",
+    "abs": null,
+    "tc": null,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Aston_Martin_Vantage_(2018)",
+      "https://media.astonmartin.com/new-aston-martin-vantage-gt4-completes-top-flight-line-up-of-production-based-gt-racers/"
+    ],
+    "notes": "Год спорный: Википедия называет дебютом 24 часа Нюрбургринга 2019, Aston Martin пишет о запуске в 2018, а сайт NLS показывает машину на VLN8 в октябре 2018 (источник не из списка). Расположение мотора — по дорожной Vantage."
+  },
+  {
+    "id": "audi-r8-lms-gt4",
+    "category": "gt4",
+    "brand": "Audi",
+    "model": "R8 LMS GT4",
+    "year": 2017,
+    "engine": { "litres": 5.2, "layout": "V10", "aspiration": "na" },
+    "enginePosition": "mid",
+    "abs": true,
+    "tc": true,
+    "sources": [
+      "https://www.audi.com/en/audi-r8-lms-gt4-2020-12224/audi-r8-lms-gt4-even-easier-and-safer-to-drive-12227",
+      "https://en.wikipedia.org/wiki/Audi_R8_(Type_4S)"
+    ],
+    "notes": "Представлена и омологирована в апреле 2017, первая гонка не подтверждена. Регулировка ABS на 8 уровней и антипробуксовки — с обновления 2020 года. Расположение мотора — по дорожной R8."
+  },
+  {
+    "id": "mclaren-artura-gt4",
+    "category": "gt4",
+    "brand": "McLaren",
+    "model": "Artura GT4",
+    "year": 2023,
+    "engine": { "litres": 3.0, "layout": "V6", "aspiration": "twin-turbo" },
+    "enginePosition": "mid",
+    "abs": null,
+    "tc": null,
+    "sources": [
+      "https://en.wikipedia.org/wiki/McLaren_Artura",
+      "https://www.gt4europeanseries.com/news/228/mclaren-shows-off-new-artura-gt4-concept"
+    ],
+    "notes": "Дебют — Michelin Pilot Challenge, Дайтона 2023. Расположение мотора — по дорожной Artura."
+  },
+  {
+    "id": "ford-mustang-gt4-s550",
+    "category": "gt4",
+    "brand": "Ford",
+    "model": "Mustang GT4 (S550)",
+    "year": 2017,
+    "engine": { "litres": 5.2, "layout": "V8", "aspiration": "na" },
+    "enginePosition": "front",
+    "abs": true,
+    "tc": null,
+    "sources": [
+      "https://www.multimaticmotorsports.com/cars/mustang-gt4-gen6/"
+    ],
+    "notes": "Дебют — Дайтона 2017. Мотор 5,2 V8 Ford Performance и Roush Yates; 5,0 стоит на Mustang GT4 2024 года (S650)."
+  },
+  {
+    "id": "toyota-gr-supra-gt4",
+    "category": "gt4",
+    "brand": "Toyota",
+    "model": "GR Supra GT4",
+    "year": 2020,
+    "engine": { "litres": 3.0, "layout": "I6", "aspiration": "turbo" },
+    "enginePosition": "front",
+    "abs": true,
+    "tc": true,
+    "sources": [
+      "https://global.toyota/en/newsroom/toyota/30434801.html",
+      "https://www.gt4europeanseries.com/news/52/gt4-european-series-ready-to-get-2020-season-underway-at-imola",
+      "https://en.wikipedia.org/wiki/Toyota_Supra_(J29/DB)"
+    ],
+    "notes": "Один турбонаддув twin-scroll, не битурбо. Продажи с марта 2020. Расположение мотора — по дорожной Supra."
+  },
+  {
+    "id": "alpine-a110-gt4",
+    "category": "gt4",
+    "brand": "Alpine",
+    "model": "A110 GT4",
+    "year": 2018,
+    "engine": { "litres": 1.8, "layout": "I4", "aspiration": "turbo" },
+    "enginePosition": "mid",
+    "abs": null,
+    "tc": null,
+    "sources": [
+      "https://media.alpinecars.com/alpine-reveals-the-a110-gt4/",
+      "https://en.wikipedia.org/wiki/Alpine_A110_(2017)"
+    ],
+    "notes": "Выступает со второй половины 2018. Регулируемые ABS и антипробуксовка подтверждены только для версии GT4+ 2025 года. Расположение мотора — по дорожной A110."
+  },
+  {
+    "id": "chevrolet-camaro-gt4r",
+    "category": "gt4",
+    "brand": "Chevrolet",
+    "model": "Camaro GT4.R",
+    "year": 2017,
+    "engine": { "litres": 6.2, "layout": "V8", "aspiration": "na" },
+    "enginePosition": "front",
+    "abs": null,
+    "tc": null,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Chevrolet_Camaro_(sixth_generation)"
+    ],
+    "notes": "Омологация — март 2017, первая гонка не подтверждена. Расположение мотора — по дорожной Camaro."
+  },
+  {
+    "id": "porsche-911-gt2-rs-clubsport",
+    "category": "gt2",
+    "brand": "Porsche",
+    "model": "911 GT2 RS Clubsport",
+    "year": 2019,
+    "engine": { "litres": 3.8, "layout": "flat-6", "aspiration": "twin-turbo" },
+    "enginePosition": "rear",
+    "abs": true,
+    "tc": true,
+    "sources": [
+      "https://newsroom.porsche.com/en/products/porsche-911-gt2rs-clubsport-world-premiere-los-angeles-technical-description-16520.html",
+      "https://en.wikipedia.org/wiki/SRO_GT2",
+      "https://en.wikipedia.org/wiki/Porsche_911_GT2"
+    ],
+    "notes": "Омологация SRO GT2-001 — 2018, первые гонки — 2019. ABS и антипробуксовка настраиваются переключателем на консоли. Clubsport 25 (30 штук, 2021) — трековая версия без омологации GT2."
+  },
+  {
+    "id": "audi-r8-lms-gt2",
+    "category": "gt2",
+    "brand": "Audi",
+    "model": "R8 LMS GT2",
+    "year": 2019,
+    "engine": { "litres": 5.2, "layout": "V10", "aspiration": "na" },
+    "enginePosition": "mid",
+    "abs": true,
+    "tc": true,
+    "sources": [
+      "https://web.archive.org/web/2020/https://www.audi-mediacenter.com/en/audi-r8-lms-gt2-2019-11782/the-audi-r8-lms-gt2-the-most-powerful-audi-r8-lms-of-all-time-11785",
+      "https://en.wikipedia.org/wiki/2019_Blancpain_GT_Sports_Club",
+      "https://en.wikipedia.org/wiki/SRO_GT2",
+      "https://en.wikipedia.org/wiki/Audi_R8_(Type_4S)"
+    ],
+    "notes": "Дебют — GT Sports Club, Барселона, 29.09.2019. ABS и антипробуксовка — 4 уровня. Расположение мотора — по дорожной R8."
+  },
+  {
+    "id": "mercedes-amg-gt2",
+    "category": "gt2",
+    "brand": "Mercedes-AMG",
+    "model": "GT2",
+    "year": 2023,
+    "engine": { "litres": 4.0, "layout": "V8", "aspiration": "twin-turbo" },
+    "enginePosition": "front-mid",
+    "abs": true,
+    "tc": true,
+    "sources": [
+      "https://web.archive.org/web/2024/https://www.mercedes-amg.com/en/mercedes-amg-gt2",
+      "https://en.wikipedia.org/wiki/Mercedes-AMG_GT"
+    ],
+    "notes": "Дебют — GT2 European Series, Монца 2023. Антипробуксовка многоступенчатая; регулируемость ABS не указана. Расположение мотора — по дорожной AMG GT."
+  },
+  {
+    "id": "ktm-x-bow-gt2",
+    "category": "gt2",
+    "brand": "KTM",
+    "model": "X-Bow GT2",
+    "year": 2021,
+    "engine": { "litres": 2.5, "layout": "I5", "aspiration": "turbo" },
+    "enginePosition": "mid",
+    "abs": true,
+    "tc": true,
+    "sources": [
+      "https://web.archive.org/web/20201201052942/https://www.ktm.com/de-de/models/x-bow/x-bow-gt2-concept2020.html",
+      "https://www.ktm.com/en-us/X-BOW/x-bow-news/ktm-sportcar-gmbh-presents-ktm-x-bow-gt2-concept0.html",
+      "https://en.wikipedia.org/wiki/KTM_X-Bow",
+      "https://en.wikipedia.org/wiki/2021_GT2_European_Series"
+    ],
+    "notes": "Представлена в 2020 как X-Bow GT2 Concept, омологирована и дебютировала в GT2 European Series 2021. Мотор Audi 2,5 TFSI. Антипробуксовка на 8 ступеней, ABS Continental на 10."
+  },
+  {
+    "id": "maserati-mc20-gt2",
+    "category": "gt2",
+    "brand": "Maserati",
+    "model": "MC20 GT2",
+    "year": 2023,
+    "engine": { "litres": 3.0, "layout": "V6", "aspiration": "twin-turbo" },
+    "enginePosition": "mid",
+    "abs": true,
+    "tc": true,
+    "sources": [
+      "https://web.archive.org/web/2024/https://www.maserati.com/global/en/corse/gt2/gt2-technical-specifications",
+      "https://en.wikipedia.org/wiki/Maserati_MC20",
+      "https://en.wikipedia.org/wiki/SRO_GT2"
+    ],
+    "notes": "Дебют — финал GT2 European Series 2023. ABS регулируемый; регулируемость антипробуксовки не указана."
+  },
+  {
+    "id": "porsche-911-gt3-cup-992",
+    "category": "cup",
+    "brand": "Porsche",
+    "model": "911 GT3 Cup (992)",
+    "year": 2021,
+    "engine": { "litres": 4.0, "layout": "flat-6", "aspiration": "na" },
+    "enginePosition": "rear",
+    "abs": false,
+    "tc": false,
+    "sources": [
+      "https://newsroom.porsche.com/en/2020/motorsports/porsche-911-gt3-cup-new-model-season-2021-premiere-23150.html"
+    ],
+    "notes": "ABS и антипробуксовка заложены в систему как опции и включаются цифровым кодом, но в Porsche Mobil 1 Supercup и большинстве Carrera Cup выключены — поэтому «нет»."
+  },
+  {
+    "id": "porsche-911-gt3-cup-991-2",
+    "category": "cup",
+    "brand": "Porsche",
+    "model": "911 GT3 Cup (991.2)",
+    "year": 2017,
+    "engine": { "litres": 4.0, "layout": "flat-6", "aspiration": "na" },
+    "enginePosition": "rear",
+    "abs": false,
+    "tc": null,
+    "sources": [
+      "https://newsroom.porsche.com/en/products/porsche-911-gt3-cup-2016-new-edition-racing-car-motorsports-13026.html",
+      "https://newsroom.porsche.com/en_US/motorsport/us-media-guide/race-cars/porsche-911-gt3-cup.html",
+      "https://web.archive.org/web/2019/https://www.porsche.com/international/motorsportandevents/motorsport/customerracing/racingcars/911-gt3-cup/featuresandspecs/"
+    ],
+    "notes": "ABS нет, в спецификации только проводка и датчики под его установку. Антипробуксовки в спецификации нет, но прямо это не сказано."
+  },
+  {
+    "id": "ferrari-296-challenge",
+    "category": "cup",
+    "brand": "Ferrari",
+    "model": "296 Challenge",
+    "year": 2024,
+    "engine": { "litres": 3.0, "layout": "V6", "aspiration": "twin-turbo" },
+    "enginePosition": "mid",
+    "abs": true,
+    "tc": true,
+    "sources": [
+      "https://web.archive.org/web/2024id_/https://cdn.ferrari.com/cms/network/media/pdf/Ferrari%20296%20Challenge_gbr.pdf",
+      "https://en.wikipedia.org/wiki/Ferrari_296"
+    ],
+    "notes": "Гибридная часть снята. Расположение мотора — по дорожной 296."
+  },
+  {
+    "id": "ferrari-488-challenge-evo",
+    "category": "cup",
+    "brand": "Ferrari",
+    "model": "488 Challenge Evo",
+    "year": 2020,
+    "engine": { "litres": 3.9, "layout": "V8", "aspiration": "twin-turbo" },
+    "enginePosition": "mid",
+    "abs": true,
+    "tc": true,
+    "sources": [
+      "https://web.archive.org/web/2020/https://races.ferrari.com/en/finalimondiali2019/news/ferrari-488-challenge-evo/",
+      "https://web.archive.org/web/2023/https://www.ferrari.com/en-EN/history/garage/2019/488-challenge-evo",
+      "https://en.wikipedia.org/wiki/Ferrari_488"
+    ],
+    "notes": "ABS — 4 режима на манеттино (два сухих, два дождевых); антипробуксовка F1-TCS с настройками. Наддув и расположение мотора — по дорожной 488."
+  },
+  {
+    "id": "lamborghini-huracan-super-trofeo-evo2",
+    "category": "cup",
+    "brand": "Lamborghini",
+    "model": "Huracán Super Trofeo EVO2",
+    "year": 2022,
+    "engine": { "litres": 5.2, "layout": "V10", "aspiration": "na" },
+    "enginePosition": "mid",
+    "abs": true,
+    "tc": true,
+    "sources": [
+      "https://web.archive.org/web/2023/https://www.lamborghini.com/en-en/motorsport/motorsport-models/hurac%C3%A1n-super-trofeo-evo2",
+      "https://web.archive.org/web/2022/https://www.lamborghini.com/en-en/motorsport/news/lamborghini-announces-2022-super-trofeo-europe-calendar-huracan-st-evo2-to-make-debut-at-imola",
+      "https://en.wikipedia.org/wiki/Lamborghini_Hurac%C3%A1n"
+    ],
+    "notes": "Представлена в мае 2021, дебют — Super Trofeo Europe, Имола 2022. ABS — 12 положений, антипробуксовка — 9, ручками на руле."
+  },
+  {
+    "id": "bmw-m2-cs-racing",
+    "category": "cup",
+    "brand": "BMW",
+    "model": "M2 CS Racing",
+    "year": 2019,
+    "engine": { "litres": 3.0, "layout": "I6", "aspiration": "twin-turbo" },
+    "enginePosition": "front",
+    "abs": true,
+    "tc": null,
+    "sources": [
+      "https://www.press.bmwgroup.com/usa/article/detail/T0303705EN_US/strong-brothers:-bmw-m-gmbh-and-bmw-m-motorsport-present-new-bmw-m2-cs-and-bmw-m2-cs-racing?language=en_US",
+      "https://web.archive.org/web/2022/https://www.bmw-m.com/en/fastlane/motorsport/race-cars/bmw-m2-cs-racing.html",
+      "https://en.wikipedia.org/wiki/BMW_M2"
+    ],
+    "notes": "Первая гонка — 5-й этап VLN 2019, поставки клиентам с середины 2020. BMW пишет только о стабилизации DSC, не об антипробуксовке. «Битурбо» и расположение мотора — по дорожной M2."
+  }
+]

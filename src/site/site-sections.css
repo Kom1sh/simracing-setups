@@ -1,0 +1,354 @@
+/* Блоки страницы: светлые, серые и тёмные чередуются; заголовок и пояснение под ним */
+
+.band--light {
+  background: #fff;
+}
+
+.band--grey {
+  background: var(--l-grey);
+}
+
+.band--dark {
+  background: var(--l-graphite);
+  color: #d5d8de;
+}
+
+.band--dark .title-2,
+.band--dark .title-3 {
+  color: #fff;
+}
+
+.band__inner {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: clamp(72px, 9vw, 120px) var(--gutter);
+}
+
+.band__head {
+  display: grid;
+  gap: var(--s-md);
+  max-width: 760px;
+  margin-bottom: clamp(32px, 4vw, 48px);
+}
+
+.band__intro {
+  max-width: 60ch;
+  color: var(--l-mute);
+}
+
+.band--dark .band__intro {
+  color: var(--l-mute-dark);
+}
+
+/* Что такое сетап: текст слева, фото с карточкой справа */
+.about__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  align-items: center;
+  gap: var(--s-xl) clamp(40px, 6vw, 96px);
+}
+
+.about__text {
+  display: grid;
+  gap: var(--s-md);
+}
+
+.about__text .title-2 {
+  margin-bottom: var(--s-sm);
+}
+
+.about__media {
+  position: relative;
+}
+
+.about__media img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: var(--l-radius-lg);
+}
+
+.about__card {
+  position: absolute;
+  left: clamp(-24px, -2vw, -12px);
+  bottom: 24px;
+  display: grid;
+  gap: 2px;
+  max-width: 300px;
+  padding: 16px 18px;
+  border-radius: 16px;
+  background: #fff;
+  color: var(--l-body);
+  font-size: 15px;
+  line-height: 1.4;
+  box-shadow: 0 0 0 1px var(--l-line);
+}
+
+.about__card b {
+  color: var(--l-ink);
+  font-weight: 800;
+  font-stretch: 112%;
+}
+
+/* Шаги: фото вписано в карточку, номер — на фото */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s-md);
+}
+
+.step {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  padding: 10px 10px 22px;
+  border-radius: var(--l-radius-lg);
+  background: #fff;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.step__media {
+  position: relative;
+  margin-bottom: 10px;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  border-radius: 14px;
+  background: var(--l-graphite);
+}
+
+.step__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.step__num {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #000;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.step .title-3,
+.step p {
+  padding-inline: 10px;
+}
+
+.step .title-3 {
+  font-size: 18px;
+}
+
+/* Схемы поворачиваемости на тёмном */
+.handling {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-lg);
+}
+
+.handling__item {
+  display: grid;
+  gap: var(--s-lg);
+  align-content: start;
+  padding: 24px;
+  border: 1px solid var(--l-graphite-line);
+  border-radius: var(--l-radius-lg);
+  background: var(--l-graphite-2);
+}
+
+.handling__item figcaption {
+  display: grid;
+  gap: 8px;
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.handling__svg {
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+  background: var(--l-graphite);
+}
+
+.handling__road {
+  fill: none;
+  stroke: #3b404b;
+  stroke-width: 60;
+}
+
+.handling__edge {
+  fill: none;
+  stroke: #262a32;
+  stroke-width: 56;
+}
+
+.handling__planned {
+  fill: none;
+  stroke: #9aa0aa;
+  stroke-width: 2.5;
+  stroke-dasharray: 7 6;
+}
+
+.handling__actual {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 4.5;
+  stroke-linecap: round;
+}
+
+.handling__car {
+  fill: #fff;
+}
+
+.handling__nose {
+  fill: var(--accent);
+}
+
+.handling__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-sm) var(--s-lg);
+  margin-top: var(--s-lg);
+  color: var(--l-mute-dark);
+  font-size: 14px;
+}
+
+.handling__key {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.handling__key::before {
+  content: '';
+  width: 32px;
+  border-top: 4px solid var(--accent);
+  border-radius: 2px;
+}
+
+.handling__key--planned::before {
+  border-top: 2px dashed #9aa0aa;
+}
+
+/* Симптомы: компактные карточки с точной мини-схемой */
+.symptom-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.sym {
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  padding: 10px 10px 18px;
+  border-radius: 18px;
+  background: var(--l-grey);
+}
+
+.sym__diagram {
+  height: 140px;
+  padding: 8px;
+  border-radius: 12px;
+  background: var(--l-graphite);
+}
+
+.sd {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.sd__road {
+  fill: none;
+  stroke: #3b404b;
+  stroke-width: 22;
+}
+
+.sd__zone {
+  fill: none;
+  stroke: rgba(255, 237, 0, 0.3);
+  stroke-width: 22;
+}
+
+.sd__planned {
+  fill: none;
+  stroke: #8a8f99;
+  stroke-width: 1.5;
+  stroke-dasharray: 4 4;
+}
+
+.sd__actual {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.sd__car,
+.sd__body {
+  fill: #fff;
+}
+
+.sd__nose {
+  fill: var(--accent);
+}
+
+.sd__skid {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.55);
+  stroke-width: 2;
+}
+
+.sd__ground {
+  fill: none;
+  stroke: #8a8f99;
+  stroke-width: 2;
+}
+
+.sd__wheel {
+  fill: var(--l-graphite);
+  stroke: #fff;
+  stroke-width: 2;
+}
+
+.sd__sparks {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.sym__title {
+  margin: 14px 6px 6px;
+  color: var(--l-ink);
+  font-size: 17px;
+  font-weight: 750;
+  font-stretch: 106%;
+  line-height: 1.25;
+}
+
+.sym__text {
+  margin-inline: 6px;
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+
+.sym__params {
+  margin: 12px 6px 0;
+  color: var(--l-mute);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.sym__params span {
+  color: var(--l-ink);
+  font-weight: 600;
+}

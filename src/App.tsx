@@ -1,0 +1,535 @@
+import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react'
+import carsData from './data/cars.json'
+import { trackMeta } from './data/trackMeta'
+import { carSetupGroups, categories, conditionGroups, ENGINE_POSITION, trackSearchTerms, tracks, WIND_NAMES } from './data/localized'
+import type { Car, CategoryId, Param, ParamValue, Values } from './data/types'
+import { baseValues, countParams, listChanges, sanitize } from './lib/params'
+import { formatNumber, parseLapTime } from './lib/format'
+import { planFuel } from './lib/fuel'
+import { runChecks } from './lib/checks'
+import { readJSON, writeJSON } from './lib/storage'
+import { engineText } from './lib/cars'
+import { TrackMap, directionText } from './components/TrackMap'
+import { TrackPicker } from './components/TrackPicker'
+import { CarPicker } from './components/CarPicker'
+import { CarGlyph, Segmented } from './components/controls'
+import { SettingsPanel } from './components/SettingsPanel'
+import { Summary } from './components/Summary'
+import { SetupsDialog } from './components/SetupsDialog'
+import { UserMenu } from './components/UserMenu'
+import { AssistantPanel } from './assistant/AssistantPanel'
+import { t } from './i18n/dashboard'
+import { pagePath } from './i18n/locale'
+import type { Session } from './lib/session'
+
+const cars = carsData as Car[]
+
+const LEGACY_DRAFT_KEY = 'simracing-setups:draft:v1'
+const LEGACY_SAVED_KEY = 'simracing-setups:saved:v1'
+const FILE_FORMAT = 'simracing-setups/v1'
+const TANK_MAX = 120
+
+type Tab = 'track' | 'car' | 'assistant'
+const TABS: Tab[] = ['track', 'car', 'assistant']
+
+interface Draft {
+  savedId: string | null
+  name: string
+  nameEdited: boolean
+  trackId: string
+  carId: string
+  conditions: Values
+  setup: Values
+  symmetric: Record<string, boolean>
+  lapTime: string
+  perLap: string
+}
+
+interface Saved extends Draft {
+  id: string
+  savedAt: string
+}
+
+const trackById = (id: string) => tracks.find((t) => t.id === id)
+const carById = (id: string) => cars.find((c) => c.id === id)
+
+function conditionsForTrack(trackId: string, current?: Values): Values {
+  const meta = trackMeta[trackId]
+  const base = current ?? baseValues(conditionGroups)
+  return meta ? { ...base, downforce: meta.downforce, bumps: meta.bumps, kerbs: meta.kerbs } : base
+}
+
+function autoName(track: { name: string }, car: Car) {
+  return `${track.name}, ${car.brand} ${car.model}`
+}
+
+function freshDraft(): Draft {
+  const track = trackById('spa') ?? tracks[0]
+  const car = carById('ferrari-296-gt3') ?? cars.find((c) => c.category === 'gt3') ?? cars[0]
+  return {
+    savedId: null,
+    name: autoName(track, car),
+    nameEdited: false,
+    trackId: track.id,
+    carId: car.id,
+    conditions: conditionsForTrack(track.id),
+    setup: baseValues(carSetupGroups),
+    symmetric: {},
+    lapTime: '',
+    perLap: '',
+  }
+}
+
+/** Всё, что пришло из хранилища или файла, проверяем и чиним */
+function repairDraft(raw: Partial<Draft> | null): Draft | null {
+  if (!raw || typeof raw !== 'object') return null
+  const fresh = freshDraft()
+  const track = (raw.trackId && trackById(raw.trackId)) || trackById(fresh.trackId)!
+  const car = (raw.carId && carById(raw.carId)) || carById(fresh.carId)!
+  return {
+    savedId: typeof raw.savedId === 'string' ? raw.savedId : null,
+    name: typeof raw.name === 'string' && raw.name.trim() ? raw.name : autoName(track, car),
+    nameEdited: raw.nameEdited === true,
+    trackId: track.id,
+    carId: car.id,
+    conditions: sanitize(conditionGroups, raw.conditions),
+    setup: sanitize(carSetupGroups, raw.setup),
+    symmetric: raw.symmetric && typeof raw.symmetric === 'object' ? raw.symmetric : {},
+    lapTime: typeof raw.lapTime === 'string' ? raw.lapTime : '',
+    perLap: typeof raw.perLap === 'string' ? raw.perLap : '',
+  }
+}
+
+function parseLitres(s: string): number | null {
+  const t = s.trim().replace(',', '.')
+  if (!t) return null
+  const n = Number(t)
+  return Number.isFinite(n) && n > 0 && n < 30 ? n : null
+}
+
+export default function App({ session, onSignOut }: { session: Session; onSignOut: () => void }) {
+  // Сетапы у каждого аккаунта свои; старые, сохранённые до входа, достаются первому, кто войдёт
+  const DRAFT_KEY = `${LEGACY_DRAFT_KEY}:${session.email}`
+  const SAVED_KEY = `${LEGACY_SAVED_KEY}:${session.email}`
+  const [draft, setDraft] = useState<Draft>(() => repairDraft(readJSON<Draft>(DRAFT_KEY) ?? readJSON<Draft>(LEGACY_DRAFT_KEY)) ?? freshDraft())
+  const [saved, setSaved] = useState<Saved[]>(() => {
+    const list = readJSON<Saved[]>(SAVED_KEY) ?? readJSON<Saved[]>(LEGACY_SAVED_KEY)
+    return Array.isArray(list) ? list.filter((s) => s && typeof s.id === 'string') : []
+  })
+  const [tab, setTab] = useState<Tab>('track')
+  const [dialogOpen, setDialogOpen] = useState(false)
+  const [toast, setToast] = useState<{ text: string; key: number } | null>(null)
+  const lastCarByCategory = useRef<Partial<Record<CategoryId, string>>>({})
+  const tabsRef = useRef<HTMLDivElement>(null)
+
+  const track = trackById(draft.trackId)!
+  const car = carById(draft.carId)!
+  const category = car.category
+  const categoryInfo = categories.find((c) => c.id === category)!
+
+  useEffect(() => {
+    writeJSON(DRAFT_KEY, draft)
+  }, [draft, DRAFT_KEY])
+
+  useEffect(() => {
+    if (!toast) return
+    const t = window.setTimeout(() => setToast(null), 4000)
+    return () => window.clearTimeout(t)
+  }, [toast])
+
+  const say = (text: string) => setToast({ text, key: Date.now() })
+
+  const update = useCallback((patch: Partial<Draft> | ((d: Draft) => Partial<Draft>)) => {
+    setDraft((d) => {
+      const p = typeof patch === 'function' ? patch(d) : patch
+      const next = { ...d, ...p }
+      if (!next.nameEdited) {
+        const t = trackById(next.trackId)
+        const c = carById(next.carId)
+        if (t && c) next.name = autoName(t, c)
+      }
+      return next
+    })
+  }, [])
+
+  const visible = useCallback(
+    (p: Param) => {
+      if (p.requires === 'abs') return car.abs !== false
+      if (p.requires === 'tc') return car.tc !== false
+      return true
+    },
+    [car],
+  )
+
+  const changes = useMemo(() => listChanges(carSetupGroups, draft.setup, visible), [draft.setup, visible])
+  const totalParams = useMemo(() => countParams(carSetupGroups, visible), [visible])
+
+  const lapSeconds = parseLapTime(draft.lapTime)
+  const perLap = parseLitres(draft.perLap)
+  const plan = lapSeconds && perLap ? planFuel(draft.conditions.duration as number, lapSeconds, perLap, draft.conditions.pitStops as number, TANK_MAX) : null
+  const checks = runChecks(draft.conditions, draft.setup, plan, plan !== null)
+
+  const chooseTrack = (id: string) => {
+    update((d) => ({ trackId: id, conditions: conditionsForTrack(id, d.conditions) }))
+  }
+
+  const chooseCar = (id: string) => {
+    const c = carById(id)
+    if (!c) return
+    lastCarByCategory.current[c.category] = id
+    update({ carId: id })
+  }
+
+  const chooseCategory = (id: string) => {
+    const cat = id as CategoryId
+    if (cat === category) return
+    lastCarByCategory.current[category] = car.id
+    const next = lastCarByCategory.current[cat] ?? cars.find((c) => c.category === cat)?.id
+    if (next) update({ carId: next })
+  }
+
+  const switchTab = (next: Tab, focus = false) => {
+    setTab(next)
+    const bar = tabsRef.current
+    if (bar && bar.getBoundingClientRect().top < 0) bar.scrollIntoView({ block: 'start' })
+    if (focus) document.getElementById(`tab-${next}`)?.focus()
+  }
+
+  const onTabKey = (e: KeyboardEvent) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+      e.preventDefault()
+      const i = TABS.indexOf(tab) + (e.key === 'ArrowRight' ? 1 : -1)
+      switchTab(TABS[(i + TABS.length) % TABS.length], true)
+    }
+  }
+
+  const openGroup = (groupId: string) => {
+    setTab('car')
+    requestAnimationFrame(() => {
+      const el = document.getElementById(`car-${groupId}`)
+      el?.scrollIntoView({ block: 'start' })
+      el?.querySelector<HTMLElement>('h2')?.focus({ preventScroll: true })
+    })
+  }
+
+  const persistSaved = (list: Saved[]) => {
+    setSaved(list)
+    return writeJSON(SAVED_KEY, list)
+  }
+
+  const save = () => {
+    const id = draft.savedId && saved.some((s) => s.id === draft.savedId) ? draft.savedId : crypto.randomUUID()
+    const entry: Saved = { ...draft, savedId: id, id, savedAt: new Date().toISOString() }
+    const list = [entry, ...saved.filter((s) => s.id !== id)]
+    const ok = persistSaved(list)
+    setDraft((d) => ({ ...d, savedId: id }))
+    say(ok ? t.toast.saved(draft.name) : t.toast.saveFailed)
+  }
+
+  const load = (id: string) => {
+    const s = saved.find((x) => x.id === id)
+    const repaired = repairDraft(s ?? null)
+    if (!repaired) return
+    setDraft({ ...repaired, savedId: id })
+    setDialogOpen(false)
+    say(t.toast.opened(repaired.name))
+  }
+
+  const remove = (id: string) => {
+    const s = saved.find((x) => x.id === id)
+    persistSaved(saved.filter((x) => x.id !== id))
+    if (draft.savedId === id) setDraft((d) => ({ ...d, savedId: null }))
+    if (s) say(t.toast.removed(s.name))
+  }
+
+  const exportFile = () => {
+    const payload = {
+      format: FILE_FORMAT,
+      exportedAt: new Date().toISOString(),
+      name: draft.name,
+      track: { id: track.id, name: track.name },
+      car: { id: car.id, name: `${car.brand} ${car.model}`, category },
+      conditions: draft.conditions,
+      setup: draft.setup,
+      symmetric: draft.symmetric,
+      fuel: { lapTime: draft.lapTime, perLap: draft.perLap },
+    }
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `setup-${track.id}-${car.id}.json`
+    a.click()
+    URL.revokeObjectURL(url)
+    say(t.toast.downloaded)
+  }
+
+  const importFile = async (file: File) => {
+    let data: Record<string, unknown>
+    try {
+      data = JSON.parse(await file.text())
+    } catch {
+      say(t.toast.notJson)
+      return
+    }
+    if (data?.format !== FILE_FORMAT) {
+      say(t.toast.notOurs)
+      return
+    }
+    const trackId = (data.track as { id?: string } | undefined)?.id
+    const carId = (data.car as { id?: string } | undefined)?.id
+    const fuel = (data.fuel ?? {}) as { lapTime?: string; perLap?: string }
+    const repaired = repairDraft({
+      name: data.name as string,
+      nameEdited: true,
+      trackId,
+      carId,
+      conditions: data.conditions as Values,
+      setup: data.setup as Values,
+      symmetric: data.symmetric as Record<string, boolean>,
+      lapTime: fuel.lapTime,
+      perLap: fuel.perLap,
+    })
+    if (!repaired) return
+    setDraft(repaired)
+    const noTrack = !!trackId && !trackById(trackId)
+    const noCar = !!carId && !carById(carId)
+    say(noTrack || noCar ? t.toast.partly(noTrack, noCar) : t.toast.loaded(repaired.name))
+  }
+
+  const setValue = (key: 'conditions' | 'setup') => (id: string, v: ParamValue) => update((d) => ({ [key]: { ...d[key], [id]: v } }))
+
+  const electronics =
+    car.abs === false && car.tc === false
+      ? t.elec.none
+      : car.abs === true && car.tc === true
+        ? t.elec.both
+        : car.abs === false
+          ? car.tc === true
+            ? t.elec.tcOnly
+            : t.elec.noAbs
+          : car.tc === false
+            ? car.abs === true
+              ? t.elec.absOnly
+              : t.elec.noTc
+            : null
+
+  const windFrom = Number(draft.conditions.windFrom)
+  const altitude = track.altitudeM
+
+  return (
+    <>
+      <a className="skip-link" href="#workspace">
+        {t.skip}
+      </a>
+      <header className="topbar">
+        <div className="topbar__inner">
+          <a className="wordmark" href={pagePath('home')}>
+            {t.wordmark[0]} <span>{t.wordmark[1]}</span>
+          </a>
+          <div className="topbar__actions">
+            <button type="button" className="button button--ghost" onClick={() => setDialogOpen(true)}>
+              {t.mySetups}
+              {saved.length > 0 && <span className="count">{saved.length}</span>}
+            </button>
+            <button type="button" className="button button--primary topbar__save" onClick={save}>
+              {t.save}
+            </button>
+            <UserMenu session={session} onSignOut={onSignOut} />
+          </div>
+        </div>
+      </header>
+
+      <section className="band" aria-label={t.bandLabel}>
+        <div className="band__inner">
+          <div className="band__track">
+            <TrackPicker tracks={tracks} aliases={trackSearchTerms} value={track} onChange={chooseTrack} />
+            <TrackMap track={track} variant="hero" wind={{ from: windFrom, speed: draft.conditions.windSpeed as number, name: WIND_NAMES[String(windFrom)] }} />
+            <dl className="facts">
+              <div>
+                <dt>{t.lapLength}</dt>
+                <dd>
+                  {formatNumber(track.lengthKm, 3)} {t.km}
+                </dd>
+              </div>
+              {track.turns !== null && (
+                <div>
+                  <dt>{t.turns}</dt>
+                  <dd>{track.turns}</dd>
+                </div>
+              )}
+              {directionText(track) && (
+                <div>
+                  <dt>{t.direction}</dt>
+                  <dd>{directionText(track)}</dd>
+                </div>
+              )}
+              <div>
+                <dt>{t.layout}</dt>
+                <dd>{track.layout}</dd>
+              </div>
+              {altitude !== undefined && (
+                <div>
+                  <dt>{t.altitude}</dt>
+                  <dd>
+                    {formatNumber(altitude)} {t.m}
+                  </dd>
+                </div>
+              )}
+            </dl>
+            {trackMeta[track.id]?.layoutNote && <p className="band__note">{trackMeta[track.id].layoutNote}</p>}
+          </div>
+
+          <div className="band__car">
+            <Segmented tone="band" size="lg" label={t.carCategory} value={category} options={categories.map((c) => ({ value: c.id, label: c.label }))} onChange={chooseCategory} />
+            <CarPicker cars={cars} category={category} value={car} onChange={chooseCar} />
+            <div className="car-card">
+              <CarGlyph engine={car.enginePosition} className="car-glyph car-glyph--band" />
+              <dl className="facts facts--car">
+                {engineText(car) && (
+                  <div>
+                    <dt>{t.engine}</dt>
+                    <dd>{engineText(car)}</dd>
+                  </div>
+                )}
+                {car.enginePosition && (
+                  <div>
+                    <dt>{t.enginePos}</dt>
+                    <dd>{ENGINE_POSITION[car.enginePosition]}</dd>
+                  </div>
+                )}
+                {car.year && (
+                  <div>
+                    <dt>{t.debut}</dt>
+                    <dd>{car.year}</dd>
+                  </div>
+                )}
+                {electronics && (
+                  <div>
+                    <dt>{t.electronics}</dt>
+                    <dd>{electronics}</dd>
+                  </div>
+                )}
+              </dl>
+            </div>
+            {categoryInfo.note && <p className="band__note">{categoryInfo.note}</p>}
+          </div>
+        </div>
+      </section>
+
+      <div className="tabs" ref={tabsRef}>
+        <div className="tabs__inner" role="tablist" aria-label={t.settingsTabs}>
+          {TABS.map((id) => (
+            <button
+              key={id}
+              id={`tab-${id}`}
+              type="button"
+              role="tab"
+              aria-selected={tab === id}
+              aria-controls={`panel-${id}`}
+              tabIndex={tab === id ? 0 : -1}
+              className="tab"
+              onClick={() => switchTab(id)}
+              onKeyDown={onTabKey}
+            >
+              {id === 'track' ? t.tabTrack : id === 'car' ? t.tabCar : t.tabAssistant}
+              {id === 'car' && changes.length > 0 && <span className="tab__count">{changes.length}</span>}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <main id="workspace" className={tab === 'assistant' ? 'workspace workspace--wide' : 'workspace'}>
+        <div id={`panel-${tab}`} role="tabpanel" aria-labelledby={`tab-${tab}`} className="workspace__panel">
+          {tab === 'track' && (
+            <SettingsPanel
+              key="track"
+              idPrefix="track"
+              groups={conditionGroups}
+              values={draft.conditions}
+              onChange={setValue('conditions')}
+              intro={
+                <p className="settings__intro">
+                  {t.trackIntro(track.name)}
+                </p>
+              }
+            />
+          )}
+          {tab === 'car' && (
+            <SettingsPanel
+              key="car"
+              idPrefix="car"
+              groups={carSetupGroups}
+              values={draft.setup}
+              onChange={setValue('setup')}
+              visible={visible}
+              showDelta
+              symmetric={draft.symmetric}
+              onSymmetricChange={(id, v) => update((d) => ({ symmetric: { ...d.symmetric, [id]: v } }))}
+              intro={
+                <p className="settings__intro">
+                  {t.carIntro(`${car.brand} ${car.model}`)}
+                </p>
+              }
+            />
+          )}
+          {tab === 'assistant' && <AssistantPanel />}
+        </div>
+
+        {tab !== 'assistant' && (
+        <Summary
+          name={draft.name}
+          onNameChange={(v) => update({ name: v, nameEdited: v.trim().length > 0 })}
+          changes={changes}
+          totalParams={totalParams}
+          onResetAll={() => update({ setup: baseValues(carSetupGroups) })}
+          onOpenChange={openGroup}
+          lapTime={draft.lapTime}
+          perLap={draft.perLap}
+          onLapTime={(v) => update({ lapTime: v })}
+          onPerLap={(v) => update({ perLap: v })}
+          lapValid={!draft.lapTime.trim() || lapSeconds !== null}
+          perLapValid={!draft.perLap.trim() || perLap !== null}
+          plan={plan}
+          durationMin={draft.conditions.duration as number}
+          pitStops={draft.conditions.pitStops as number}
+          isRace={draft.conditions.sessionType === 'race'}
+          fuelLoaded={draft.setup.fuel as number}
+          onFill={(l) => update((d) => ({ setup: { ...d.setup, fuel: l } }))}
+          checks={checks}
+          onSave={save}
+          onExport={exportFile}
+          onImport={importFile}
+        />
+        )}
+      </main>
+
+      <SetupsDialog
+        open={dialogOpen}
+        onClose={() => setDialogOpen(false)}
+        onLoad={load}
+        onDelete={remove}
+        items={saved.map((s) => {
+          const tr = trackById(s.trackId)
+          const c = carById(s.carId)
+          return {
+            id: s.id,
+            name: s.name,
+            trackName: tr?.name ?? t.trackGone,
+            carName: c ? `${c.brand} ${c.model}` : t.carGone,
+            savedAt: s.savedAt,
+            changes: listChanges(carSetupGroups, sanitize(carSetupGroups, s.setup)).length,
+          }
+        })}
+      />
+
+      <div className="toast-region" aria-live="polite">
+        {toast && (
+          <p key={toast.key} className="toast">
+            {toast.text}
+          </p>
+        )}
+      </div>
+    </>
+  )
+}

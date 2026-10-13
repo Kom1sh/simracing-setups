@@ -1,0 +1,298 @@
+/* Числовое поле со степпером */
+.numfield {
+  display: inline-grid;
+  grid-template-columns: 36px auto 36px;
+  height: 40px;
+  border: 1px solid var(--control-border);
+  border-radius: var(--r-control);
+  background: var(--canvas);
+}
+
+.numfield:focus-within {
+  border-color: var(--ink);
+}
+
+.numfield__step {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink);
+}
+
+.numfield__step:hover:not(:disabled) {
+  background: var(--surface);
+}
+
+.numfield__step:disabled {
+  color: var(--ash);
+  cursor: default;
+}
+
+.numfield__step svg {
+  width: 12px;
+  height: 12px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+}
+
+.numfield__box {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  padding: 0 8px;
+  border-inline: 1px solid var(--line);
+  cursor: text;
+}
+
+.numfield__input {
+  width: 7ch;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font-size: 20px;
+  font-weight: 640;
+  font-stretch: 75%;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  outline: none;
+}
+
+.numfield__box:focus-within {
+  box-shadow: inset 0 -2px 0 var(--ink);
+}
+
+.numfield__unit {
+  color: var(--mute);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.numfield--compact {
+  grid-template-columns: 30px auto 30px;
+  height: 36px;
+}
+
+.numfield--compact .numfield__box {
+  padding: 0 6px;
+}
+
+.numfield--compact .numfield__input {
+  width: 5.6ch;
+  font-size: 18px;
+}
+
+/* Ползунок: бегунок жёлтый — это текущее выбранное значение */
+.slider {
+  width: 100%;
+  height: 22px;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+  appearance: none;
+}
+
+.slider:focus-visible {
+  outline: none;
+}
+
+.slider::-webkit-slider-runnable-track {
+  height: 2px;
+  background: linear-gradient(to right, var(--ink) var(--fill), var(--control-border) var(--fill));
+}
+
+.slider::-webkit-slider-thumb {
+  width: 16px;
+  height: 16px;
+  margin-top: -7px;
+  border: 2px solid var(--ink);
+  border-radius: var(--r-control);
+  background: var(--accent);
+  appearance: none;
+}
+
+.slider:focus-visible::-webkit-slider-thumb {
+  box-shadow: 0 0 0 2px var(--canvas), 0 0 0 4px var(--ink);
+}
+
+.slider::-moz-range-track {
+  height: 2px;
+  background: var(--control-border);
+}
+
+.slider::-moz-range-progress {
+  height: 2px;
+  background: var(--ink);
+}
+
+.slider::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--ink);
+  border-radius: var(--r-control);
+  background: var(--accent);
+}
+
+.slider:focus-visible::-moz-range-thumb {
+  box-shadow: 0 0 0 2px var(--canvas), 0 0 0 4px var(--ink);
+}
+
+/* Варианты */
+.segmented {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.segmented__option {
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--control-border);
+  border-radius: var(--r-control);
+  background: var(--canvas);
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.segmented__option:hover {
+  border-color: var(--ink);
+}
+
+.segmented__option[aria-checked='true'] {
+  border-color: var(--ink);
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: 650;
+}
+
+.segmented--band {
+  gap: 0;
+  flex-wrap: nowrap;
+}
+
+.segmented--band .segmented__option {
+  flex: 1;
+  min-height: 44px;
+  margin-left: -1px;
+  border-color: var(--band-line);
+  border-radius: 0;
+  background: transparent;
+  color: var(--on-band);
+  font-size: 18px;
+  font-weight: 680;
+  font-stretch: 70%;
+}
+
+.segmented--band .segmented__option:first-child {
+  margin-left: 0;
+  border-radius: var(--r-control) 0 0 var(--r-control);
+}
+
+.segmented--band .segmented__option:last-child {
+  border-radius: 0 var(--r-control) var(--r-control) 0;
+}
+
+.segmented--band .segmented__option:hover {
+  position: relative;
+  border-color: var(--on-band);
+}
+
+.segmented--band .segmented__option[aria-checked='true'] {
+  position: relative;
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+/* Переключатель */
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.toggle input {
+  position: relative;
+  flex: none;
+  width: 36px;
+  height: 20px;
+  margin: 0;
+  border: 1px solid var(--ink);
+  border-radius: var(--r-control);
+  background: var(--canvas);
+  cursor: pointer;
+  appearance: none;
+}
+
+.toggle input::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  background: var(--ink);
+  transition: transform 140ms ease;
+}
+
+.toggle input:checked {
+  background: var(--accent);
+}
+
+.toggle input:checked::after {
+  transform: translateX(16px);
+}
+
+.toggle label {
+  cursor: pointer;
+}
+
+/* Быстрый выбор */
+.presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.preset {
+  height: 30px;
+  padding: 0 10px;
+  border: 1px solid var(--control-border);
+  border-radius: var(--r-control);
+  background: var(--canvas);
+  font-size: 13px;
+}
+
+.preset:hover {
+  border-color: var(--ink);
+}
+
+.preset.is-selected {
+  border-color: var(--ink);
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: 600;
+}
+
+/* Разница с базой */
+.delta {
+  min-width: 4.5ch;
+  font-size: 13px;
+  font-weight: 620;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.changed-mark {
+  flex: none;
+  width: 7px;
+  height: 7px;
+  background: var(--ink);
+}
