@@ -1,13 +1,15 @@
 // Крупные снимки отдельных блоков для просмотра глазами: node scripts/shots.mjs [url]
 import { chromium } from 'playwright-core'
+import { withSession } from './session.mjs'
 import { mkdirSync } from 'node:fs'
 
-const BASE = process.argv[2] ?? 'http://localhost:4173/simracing-setups/'
+const BASE = process.argv[2] ?? 'http://localhost:4173/simracing-setups/ru/app/'
 mkdirSync('.qa/shots', { recursive: true })
 const browser = await chromium.launch({ channel: 'chrome', headless: true })
 
 async function run(width, height, name, steps) {
   const ctx = await browser.newContext({ viewport: { width, height }, reducedMotion: 'reduce', deviceScaleFactor: 1 })
+  await withSession(ctx, BASE)
   const page = await ctx.newPage()
   await page.goto(BASE)
   await page.evaluate(() => localStorage.clear())

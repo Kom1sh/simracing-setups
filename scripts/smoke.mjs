@@ -1,10 +1,12 @@
 // Проверка поведения кабинета в браузере: node scripts/smoke.mjs [url]
 import { chromium } from 'playwright-core'
+import { withSession } from './session.mjs'
 import { readFileSync } from 'node:fs'
 
-const BASE = process.argv[2] ?? 'http://localhost:4173/simracing-setups/'
+const BASE = process.argv[2] ?? 'http://localhost:4173/simracing-setups/ru/app/'
 const browser = await chromium.launch({ channel: 'chrome', headless: true })
 const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, acceptDownloads: true, reducedMotion: 'reduce' })
+await withSession(ctx, BASE)
 const page = await ctx.newPage()
 const errors = []
 page.on('pageerror', (e) => errors.push(String(e)))

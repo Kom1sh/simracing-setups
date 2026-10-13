@@ -3,6 +3,7 @@ import type { Param, ParamValue } from '../data/types'
 import { baseValue, sameValue, slotRange } from '../lib/params'
 import { formatDuration, formatNumber, formatSigned, formatTimeOfDay, rainLabel } from '../lib/format'
 import { CarGlyph, NumberField, Segmented, Slider, Toggle } from './controls'
+import { w } from '../i18n/dashboard'
 
 interface Props {
   param: Param
@@ -43,12 +44,12 @@ export function ParamRow({ param: p, value, onChange, symmetric = true, onSymmet
     <div className="param__head">
       <div className="param__title">
         <span id={labelId} className="param__label">
-          {showDelta && changed && <span className="changed-mark" title="Отличается от базы" />}
+          {showDelta && changed && <span className="changed-mark" title={w.differs} />}
           {p.label}
         </span>
         {showDelta && changed && (
           <button type="button" className="text-button" onClick={() => onChange(base)}>
-            Вернуть базу
+            {w.resetOne}
           </button>
         )}
       </div>
@@ -90,7 +91,7 @@ export function ParamRow({ param: p, value, onChange, symmetric = true, onSymmet
         </div>
         <Slider value={v} min={p.range.min} max={p.range.max} step={p.step} label={p.label} valueText={scalarText(p, v)} onChange={onChange} />
         {p.presets && (
-          <div className="presets" role="group" aria-label={`${p.label}: быстрый выбор`}>
+          <div className="presets" role="group" aria-label={w.quickPick(p.label)}>
             {p.presets.map((pr) => (
               <button
                 key={pr.value}
@@ -113,7 +114,7 @@ export function ParamRow({ param: p, value, onChange, symmetric = true, onSymmet
     const bases = base as number[]
     control = (
       <div className="axle">
-        {['Перед', 'Зад'].map((name, i) => {
+        {w.axle.map((name, i) => {
           const r = slotRange(p, i)
           const set = (x: number) => onChange(arr.map((old, j) => (j === i ? x : old)))
           return (
@@ -127,7 +128,7 @@ export function ParamRow({ param: p, value, onChange, symmetric = true, onSymmet
         })}
         {p.id === 'rideHeight' && (
           <p className="axle__derived">
-            Наклон кузова <strong>{formatSigned(arr[1] - arr[0])} мм</strong>
+            {w.rake} <strong>{formatSigned(arr[1] - arr[0])} {w.mm}</strong>
           </p>
         )}
       </div>
@@ -137,8 +138,8 @@ export function ParamRow({ param: p, value, onChange, symmetric = true, onSymmet
   if (p.kind === 'corners') {
     const arr = value as number[]
     const bases = base as number[]
-    const names = ['Передняя левая', 'Передняя правая', 'Задняя левая', 'Задняя правая']
-    const short = ['ПЛ', 'ПП', 'ЗЛ', 'ЗП']
+    const names = w.wheels
+    const short = w.wheelsShort
     const set = (i: number, x: number) => {
       const next = [...arr]
       next[i] = x
@@ -171,8 +172,8 @@ export function ParamRow({ param: p, value, onChange, symmetric = true, onSymmet
           {cell(3)}
         </div>
         <div className="corners__foot">
-          {p.unit && <span className="corners__unit">Значения в {p.unit === '°' ? 'градусах' : p.unit}</span>}
-          {onSymmetricChange && <Toggle checked={symmetric} label="Слева и справа одинаково" onChange={onSymmetricChange} />}
+          {p.unit && <span className="corners__unit">{w.valuesIn(p.unit)}</span>}
+          {onSymmetricChange && <Toggle checked={symmetric} label={w.symmetric} onChange={onSymmetricChange} />}
         </div>
       </div>
     )

@@ -1,11 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react'
-import tracksData from './data/tracks.json'
 import carsData from './data/cars.json'
-import { trackMeta, trackAliases } from './data/trackMeta'
-import { carSetupGroups } from './data/carSetup'
-import { conditionGroups, WIND_NAMES } from './data/conditions'
-import { categories, ENGINE_POSITION } from './data/categories'
-import type { Car, CategoryId, Param, ParamValue, Track, Values } from './data/types'
+import { trackMeta } from './data/trackMeta'
+import { carSetupGroups, categories, conditionGroups, ENGINE_POSITION, trackSearchTerms, tracks, WIND_NAMES } from './data/localized'
+import type { Car, CategoryId, Param, ParamValue, Values } from './data/types'
 import { baseValues, countParams, listChanges, sanitize } from './lib/params'
 import { formatNumber, parseLapTime } from './lib/format'
 import { planFuel } from './lib/fuel'
@@ -19,16 +16,21 @@ import { CarGlyph, Segmented } from './components/controls'
 import { SettingsPanel } from './components/SettingsPanel'
 import { Summary } from './components/Summary'
 import { SetupsDialog } from './components/SetupsDialog'
+import { UserMenu } from './components/UserMenu'
+import { AssistantPanel } from './assistant/AssistantPanel'
+import { t } from './i18n/dashboard'
+import { pagePath } from './i18n/locale'
+import type { Session } from './lib/session'
 
-const tracks = (tracksData as Track[]).slice().sort((a, b) => a.name.localeCompare(b.name, 'ru'))
 const cars = carsData as Car[]
 
-const DRAFT_KEY = 'simracing-setups:draft:v1'
-const SAVED_KEY = 'simracing-setups:saved:v1'
+const LEGACY_DRAFT_KEY = 'simracing-setups:draft:v1'
+const LEGACY_SAVED_KEY = 'simracing-setups:saved:v1'
 const FILE_FORMAT = 'simracing-setups/v1'
 const TANK_MAX = 120
 
-type Tab = 'track' | 'car'
+type Tab = 'track' | 'car' | 'assistant'
+const TABS: Tab[] = ['track', 'car', 'assistant']
 
 interface Draft {
   savedId: string | null
@@ -57,7 +59,7 @@ function conditionsForTrack(trackId: string, current?: Values): Values {
   return meta ? { ...base, downforce: meta.downforce, bumps: meta.bumps, kerbs: meta.kerbs } : base
 }
 
-function autoName(track: Track, car: Car) {
+function autoName(track: { name: string }, car: Car) {
   return `${track.name}, ${car.brand} ${car.model}`
 }
 
@@ -105,10 +107,13 @@ function parseLitres(s: string): number | null {
   return Number.isFinite(n) && n > 0 && n < 30 ? n : null
 }
 
-export default function App() {
-  const [draft, setDraft] = useState<Draft>(() => repairDraft(readJSON<Draft>(DRAFT_KEY)) ?? freshDraft())
+export default function App({ session, onSignOut }: { session: Session; onSignOut: () => void }) {
+  // Сетапы у каждого аккаунта свои; старые, сохранённые до входа, достаются первому, кто войдёт
+  const DRAFT_KEY = `${LEGACY_DRAFT_KEY}:${session.email}`
+  const SAVED_KEY = `${LEGACY_SAVED_KEY}:${session.email}`
+  const [draft, setDraft] = useState<Draft>(() => repairDraft(readJSON<Draft>(DRAFT_KEY) ?? readJSON<Draft>(LEGACY_DRAFT_KEY)) ?? freshDraft())
   const [saved, setSaved] = useState<Saved[]>(() => {
-    const list = readJSON<Saved[]>(SAVED_KEY)
+    const list = readJSON<Saved[]>(SAVED_KEY) ?? readJSON<Saved[]>(LEGACY_SAVED_KEY)
     return Array.isArray(list) ? list.filter((s) => s && typeof s.id === 'string') : []
   })
   const [tab, setTab] = useState<Tab>('track')
@@ -124,7 +129,7 @@ export default function App() {
 
   useEffect(() => {
     writeJSON(DRAFT_KEY, draft)
-  }, [draft])
+  }, [draft, DRAFT_KEY])
 
   useEffect(() => {
     if (!toast) return
@@ -193,7 +198,8 @@ export default function App() {
   const onTabKey = (e: KeyboardEvent) => {
     if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
       e.preventDefault()
-      switchTab(tab === 'track' ? 'car' : 'track', true)
+      const i = TABS.indexOf(tab) + (e.key === 'ArrowRight' ? 1 : -1)
+      switchTab(TABS[(i + TABS.length) % TABS.length], true)
     }
   }
 
@@ -217,7 +223,7 @@ export default function App() {
     const list = [entry, ...saved.filter((s) => s.id !== id)]
     const ok = persistSaved(list)
     setDraft((d) => ({ ...d, savedId: id }))
-    say(ok ? `Сетап «${draft.name}» сохранён` : 'Браузер не дал сохранить сетап. Скачайте его файлом из сводки.')
+    say(ok ? t.toast.saved(draft.name) : t.toast.saveFailed)
   }
 
   const load = (id: string) => {
@@ -226,14 +232,14 @@ export default function App() {
     if (!repaired) return
     setDraft({ ...repaired, savedId: id })
     setDialogOpen(false)
-    say(`Открыт сетап «${repaired.name}»`)
+    say(t.toast.opened(repaired.name))
   }
 
   const remove = (id: string) => {
     const s = saved.find((x) => x.id === id)
     persistSaved(saved.filter((x) => x.id !== id))
     if (draft.savedId === id) setDraft((d) => ({ ...d, savedId: null }))
-    if (s) say(`Сетап «${s.name}» удалён`)
+    if (s) say(t.toast.removed(s.name))
   }
 
   const exportFile = () => {
@@ -255,7 +261,7 @@ export default function App() {
     a.download = `setup-${track.id}-${car.id}.json`
     a.click()
     URL.revokeObjectURL(url)
-    say('Файл сетапа скачан')
+    say(t.toast.downloaded)
   }
 
   const importFile = async (file: File) => {
@@ -263,11 +269,11 @@ export default function App() {
     try {
       data = JSON.parse(await file.text())
     } catch {
-      say('Файл не читается: внутри не JSON.')
+      say(t.toast.notJson)
       return
     }
     if (data?.format !== FILE_FORMAT) {
-      say('Это не сетап этого кабинета: в файле нет отметки simracing-setups/v1.')
+      say(t.toast.notOurs)
       return
     }
     const trackId = (data.track as { id?: string } | undefined)?.id
@@ -286,25 +292,26 @@ export default function App() {
     })
     if (!repaired) return
     setDraft(repaired)
-    const missing = [trackId && !trackById(trackId) ? 'трассы' : '', carId && !carById(carId) ? 'машины' : ''].filter(Boolean)
-    say(missing.length ? `Сетап загружен, но ${missing.join(' и ')} из файла здесь нет — оставили текущие.` : `Загружен сетап «${repaired.name}»`)
+    const noTrack = !!trackId && !trackById(trackId)
+    const noCar = !!carId && !carById(carId)
+    say(noTrack || noCar ? t.toast.partly(noTrack, noCar) : t.toast.loaded(repaired.name))
   }
 
   const setValue = (key: 'conditions' | 'setup') => (id: string, v: ParamValue) => update((d) => ({ [key]: { ...d[key], [id]: v } }))
 
   const electronics =
     car.abs === false && car.tc === false
-      ? 'Без ABS и антипробуксовки'
+      ? t.elec.none
       : car.abs === true && car.tc === true
-        ? 'ABS и антипробуксовка'
+        ? t.elec.both
         : car.abs === false
           ? car.tc === true
-            ? 'Антипробуксовка, без ABS'
-            : 'Без ABS'
+            ? t.elec.tcOnly
+            : t.elec.noAbs
           : car.tc === false
             ? car.abs === true
-              ? 'ABS, без антипробуксовки'
-              : 'Без антипробуксовки'
+              ? t.elec.absOnly
+              : t.elec.noTc
             : null
 
   const windFrom = Number(draft.conditions.windFrom)
@@ -313,54 +320,60 @@ export default function App() {
   return (
     <>
       <a className="skip-link" href="#workspace">
-        К настройкам
+        {t.skip}
       </a>
       <header className="topbar">
         <div className="topbar__inner">
-          <p className="wordmark">
-            Сетапы <span>для симрейсинга</span>
-          </p>
+          <a className="wordmark" href={pagePath('home')}>
+            {t.wordmark[0]} <span>{t.wordmark[1]}</span>
+          </a>
           <div className="topbar__actions">
             <button type="button" className="button button--ghost" onClick={() => setDialogOpen(true)}>
-              Мои сетапы{saved.length > 0 && <span className="count">{saved.length}</span>}
+              {t.mySetups}
+              {saved.length > 0 && <span className="count">{saved.length}</span>}
             </button>
             <button type="button" className="button button--primary topbar__save" onClick={save}>
-              Сохранить
+              {t.save}
             </button>
+            <UserMenu session={session} onSignOut={onSignOut} />
           </div>
         </div>
       </header>
 
-      <section className="band" aria-label="Трасса и машина">
+      <section className="band" aria-label={t.bandLabel}>
         <div className="band__inner">
           <div className="band__track">
-            <TrackPicker tracks={tracks} aliases={trackAliases} value={track} onChange={chooseTrack} />
+            <TrackPicker tracks={tracks} aliases={trackSearchTerms} value={track} onChange={chooseTrack} />
             <TrackMap track={track} variant="hero" wind={{ from: windFrom, speed: draft.conditions.windSpeed as number, name: WIND_NAMES[String(windFrom)] }} />
             <dl className="facts">
               <div>
-                <dt>Длина круга</dt>
-                <dd>{formatNumber(track.lengthKm, 3)} км</dd>
+                <dt>{t.lapLength}</dt>
+                <dd>
+                  {formatNumber(track.lengthKm, 3)} {t.km}
+                </dd>
               </div>
               {track.turns !== null && (
                 <div>
-                  <dt>Поворотов</dt>
+                  <dt>{t.turns}</dt>
                   <dd>{track.turns}</dd>
                 </div>
               )}
               {directionText(track) && (
                 <div>
-                  <dt>Направление</dt>
+                  <dt>{t.direction}</dt>
                   <dd>{directionText(track)}</dd>
                 </div>
               )}
               <div>
-                <dt>Конфигурация</dt>
+                <dt>{t.layout}</dt>
                 <dd>{track.layout}</dd>
               </div>
               {altitude !== undefined && (
                 <div>
-                  <dt>Над уровнем моря</dt>
-                  <dd>{formatNumber(altitude)} м</dd>
+                  <dt>{t.altitude}</dt>
+                  <dd>
+                    {formatNumber(altitude)} {t.m}
+                  </dd>
                 </div>
               )}
             </dl>
@@ -368,32 +381,32 @@ export default function App() {
           </div>
 
           <div className="band__car">
-            <Segmented tone="band" size="lg" label="Категория машины" value={category} options={categories.map((c) => ({ value: c.id, label: c.label }))} onChange={chooseCategory} />
+            <Segmented tone="band" size="lg" label={t.carCategory} value={category} options={categories.map((c) => ({ value: c.id, label: c.label }))} onChange={chooseCategory} />
             <CarPicker cars={cars} category={category} value={car} onChange={chooseCar} />
             <div className="car-card">
               <CarGlyph engine={car.enginePosition} className="car-glyph car-glyph--band" />
               <dl className="facts facts--car">
                 {engineText(car) && (
                   <div>
-                    <dt>Двигатель</dt>
+                    <dt>{t.engine}</dt>
                     <dd>{engineText(car)}</dd>
                   </div>
                 )}
                 {car.enginePosition && (
                   <div>
-                    <dt>Где двигатель</dt>
+                    <dt>{t.enginePos}</dt>
                     <dd>{ENGINE_POSITION[car.enginePosition]}</dd>
                   </div>
                 )}
                 {car.year && (
                   <div>
-                    <dt>Дебют в классе</dt>
+                    <dt>{t.debut}</dt>
                     <dd>{car.year}</dd>
                   </div>
                 )}
                 {electronics && (
                   <div>
-                    <dt>Электроника</dt>
+                    <dt>{t.electronics}</dt>
                     <dd>{electronics}</dd>
                   </div>
                 )}
@@ -405,20 +418,30 @@ export default function App() {
       </section>
 
       <div className="tabs" ref={tabsRef}>
-        <div className="tabs__inner" role="tablist" aria-label="Настройки">
-          <button id="tab-track" type="button" role="tab" aria-selected={tab === 'track'} aria-controls="panel-track" tabIndex={tab === 'track' ? 0 : -1} className="tab" onClick={() => switchTab('track')} onKeyDown={onTabKey}>
-            Трасса и погода
-          </button>
-          <button id="tab-car" type="button" role="tab" aria-selected={tab === 'car'} aria-controls="panel-car" tabIndex={tab === 'car' ? 0 : -1} className="tab" onClick={() => switchTab('car')} onKeyDown={onTabKey}>
-            Машина
-            {changes.length > 0 && <span className="tab__count">{changes.length}</span>}
-          </button>
+        <div className="tabs__inner" role="tablist" aria-label={t.settingsTabs}>
+          {TABS.map((id) => (
+            <button
+              key={id}
+              id={`tab-${id}`}
+              type="button"
+              role="tab"
+              aria-selected={tab === id}
+              aria-controls={`panel-${id}`}
+              tabIndex={tab === id ? 0 : -1}
+              className="tab"
+              onClick={() => switchTab(id)}
+              onKeyDown={onTabKey}
+            >
+              {id === 'track' ? t.tabTrack : id === 'car' ? t.tabCar : t.tabAssistant}
+              {id === 'car' && changes.length > 0 && <span className="tab__count">{changes.length}</span>}
+            </button>
+          ))}
         </div>
       </div>
 
-      <main id="workspace" className="workspace">
+      <main id="workspace" className={tab === 'assistant' ? 'workspace workspace--wide' : 'workspace'}>
         <div id={`panel-${tab}`} role="tabpanel" aria-labelledby={`tab-${tab}`} className="workspace__panel">
-          {tab === 'track' ? (
+          {tab === 'track' && (
             <SettingsPanel
               key="track"
               idPrefix="track"
@@ -427,11 +450,12 @@ export default function App() {
               onChange={setValue('conditions')}
               intro={
                 <p className="settings__intro">
-                  Условия для <strong>{track.name}</strong>. Характер трассы подставляется при её выборе, погоду и сессию задаёте сами.
+                  {t.trackIntro(track.name)}
                 </p>
               }
             />
-          ) : (
+          )}
+          {tab === 'car' && (
             <SettingsPanel
               key="car"
               idPrefix="car"
@@ -444,13 +468,27 @@ export default function App() {
               onSymmetricChange={(id, v) => update((d) => ({ symmetric: { ...d.symmetric, [id]: v } }))}
               intro={
                 <p className="settings__intro">
-                  Регулировки <strong>{car.brand} {car.model}</strong>. Диапазоны и база — общий шаблон класса GT3: у машины в конкретном симуляторе границы свои.
+                  {t.carIntro(`${car.brand} ${car.model}`)}
                 </p>
               }
             />
           )}
+          {tab === 'assistant' && (
+            <AssistantPanel
+              car={car}
+              track={track}
+              conditions={draft.conditions}
+              conditionGroups={conditionGroups}
+              setup={draft.setup}
+              setupGroups={carSetupGroups}
+              onSetValue={setValue('setup')}
+              onEditConditions={() => switchTab('track', true)}
+              say={say}
+            />
+          )}
         </div>
 
+        {tab !== 'assistant' && (
         <Summary
           name={draft.name}
           onNameChange={(v) => update({ name: v, nameEdited: v.trim().length > 0 })}
@@ -475,17 +513,13 @@ export default function App() {
           onExport={exportFile}
           onImport={importFile}
         />
+        )}
       </main>
 
       <footer className="footer">
         <div className="footer__inner">
-          <p>
-            Схемы трасс: <a href="https://github.com/bacinger/f1-circuits">bacinger/f1-circuits</a> (MIT) и данные{' '}
-            <a href="https://www.openstreetmap.org/copyright">© участники OpenStreetMap</a> (ODbL). Длина и число поворотов — по открытым источникам, характер трассы — оценка.
-          </p>
-          <p>
-            Учебный проект. Код — <a href="https://github.com/Kom1sh/simracing-setups">github.com/Kom1sh/simracing-setups</a>.
-          </p>
+          <p>{t.footerData}</p>
+          <p>{t.footerProject}</p>
         </div>
       </footer>
 
@@ -495,13 +529,13 @@ export default function App() {
         onLoad={load}
         onDelete={remove}
         items={saved.map((s) => {
-          const t = trackById(s.trackId)
+          const tr = trackById(s.trackId)
           const c = carById(s.carId)
           return {
             id: s.id,
             name: s.name,
-            trackName: t?.name ?? 'трасса удалена',
-            carName: c ? `${c.brand} ${c.model}` : 'машина удалена',
+            trackName: tr?.name ?? t.trackGone,
+            carName: c ? `${c.brand} ${c.model}` : t.carGone,
             savedAt: s.savedAt,
             changes: listChanges(carSetupGroups, sanitize(carSetupGroups, s.setup)).length,
           }

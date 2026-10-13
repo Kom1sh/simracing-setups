@@ -395,7 +395,7 @@
   display: block;
   color: var(--on-band);
   font-size: clamp(52px, 7.4vw, 116px);
-  font-weight: 820;
+  font-weight: 760;
   font-stretch: 40%;
   line-height: 0.84;
   letter-spacing: -0.005em;

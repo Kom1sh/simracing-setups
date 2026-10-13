@@ -1,0 +1,384 @@
+/* Разделы под hero: белый каталог, заголовок слева, содержимое справа, как группы в кабинете */
+
+.sec {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  align-items: start;
+  gap: var(--s-xl) clamp(32px, 5vw, 80px);
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: clamp(64px, 8vw, 112px) var(--gutter);
+}
+
+.sec + .sec {
+  border-top: 1px solid var(--line);
+}
+
+.sec--surface {
+  background: var(--surface);
+  box-shadow: 0 0 0 100vmax var(--surface);
+  clip-path: inset(0 -100vmax);
+}
+
+.sec--surface + .sec,
+.sec + .sec--surface {
+  border-top: 0;
+}
+
+.sec__head {
+  position: sticky;
+  top: 96px;
+  display: grid;
+  gap: var(--s-md);
+  justify-items: start;
+}
+
+.sec__title {
+  color: var(--ink);
+  font-size: clamp(38px, 4.4vw, 64px);
+  font-weight: 720;
+  font-stretch: 44%;
+  line-height: 0.92;
+  text-wrap: balance;
+}
+
+.sec__intro {
+  max-width: 42ch;
+  color: var(--mute);
+}
+
+/* Шаги — настоящая последовательность, поэтому с номерами */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s-lg);
+}
+
+.step {
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  gap: 10px;
+  padding-top: var(--s-md);
+  border-top: 2px solid var(--ink);
+}
+
+.step__num {
+  color: var(--ink);
+  font-size: 64px;
+  font-weight: 740;
+  font-stretch: 36%;
+  line-height: 0.85;
+}
+
+.step__title {
+  color: var(--ink);
+  font-size: 22px;
+  font-weight: 700;
+  font-stretch: 68%;
+  line-height: 1.05;
+}
+
+.step__text {
+  color: var(--body);
+  font-size: 16px;
+}
+
+.ui {
+  display: grid;
+  gap: 8px;
+  margin-top: var(--s-sm);
+  padding: 14px;
+  border: 1px solid var(--line);
+  font-size: 13px;
+}
+
+.ui__seg {
+  display: flex;
+  border: 1px solid var(--control-border);
+  border-radius: var(--r-control);
+}
+
+.ui__seg span {
+  flex: 1;
+  padding: 6px 4px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.ui__seg span + span {
+  border-left: 1px solid var(--line);
+}
+
+.ui__seg .is-selected,
+.ui__row.is-selected {
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: 600;
+}
+
+.ui__row {
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--line);
+}
+
+.ui__line {
+  color: var(--mute);
+}
+
+.ui__param {
+  color: var(--ink);
+  font-size: 16px;
+  font-weight: 700;
+  font-stretch: 70%;
+}
+
+.ui__change {
+  color: var(--ink);
+  font-size: 40px;
+  font-weight: 740;
+  font-stretch: 40%;
+  line-height: 0.9;
+}
+
+/* Симптомы — каталог, как строки регулировок */
+.symptom-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: var(--s-xl);
+}
+
+.sym {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  padding: var(--s-lg) 0;
+  border-top: 1px solid var(--line);
+}
+
+.sym__title {
+  color: var(--ink);
+  font-size: 24px;
+  font-weight: 700;
+  font-stretch: 64%;
+  line-height: 1.05;
+}
+
+.sym__text {
+  font-size: 16px;
+}
+
+.sym__label {
+  margin-top: 4px;
+  color: var(--mute);
+  font-size: 13px;
+}
+
+.sym__params {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.sym__params li {
+  padding: 3px 8px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-control);
+  background: var(--canvas);
+  font-size: 13px;
+}
+
+/* Правила */
+.rules {
+  display: grid;
+  gap: var(--s-xl);
+}
+
+.rule {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: var(--s-lg);
+  padding-top: var(--s-md);
+  border-top: 2px solid var(--ink);
+}
+
+.rule__title {
+  color: var(--ink);
+  font-size: 28px;
+  font-weight: 760;
+  font-stretch: 56%;
+  line-height: 1;
+}
+
+/* Цифры исследования — таблица, а не плитки */
+.numbers dl {
+  display: grid;
+}
+
+.numbers__row {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: var(--s-lg);
+  align-items: baseline;
+  padding: var(--s-lg) 0;
+  border-top: 1px solid var(--line);
+}
+
+.numbers__row dt {
+  color: var(--ink);
+  font-size: clamp(48px, 5vw, 72px);
+  font-weight: 720;
+  font-stretch: 38%;
+  line-height: 0.9;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.numbers__row dd {
+  max-width: 58ch;
+}
+
+.numbers__source {
+  padding-top: var(--s-md);
+  border-top: 1px solid var(--line);
+  color: var(--mute);
+  font-size: 13px;
+}
+
+/* Превью кабинета */
+.preview__points {
+  display: grid;
+  width: 100%;
+  border-top: 1px solid var(--line);
+}
+
+.preview__points li {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 15px;
+}
+
+.preview__shot img {
+  width: 100%;
+  border: 1px solid var(--ink);
+}
+
+/* Вопросы */
+.faq {
+  display: grid;
+  border-top: 1px solid var(--line);
+}
+
+.faq__item {
+  border-bottom: 1px solid var(--line);
+}
+
+.faq__item summary {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-md);
+  padding: 18px 0;
+  cursor: pointer;
+  list-style: none;
+}
+
+.faq__item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq__item summary::after {
+  content: '+';
+  flex: none;
+  color: var(--ink);
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 0.8;
+}
+
+.faq__item[open] summary::after {
+  content: '−';
+}
+
+.faq__item h3 {
+  color: var(--ink);
+  font-size: 20px;
+  font-weight: 650;
+  font-stretch: 80%;
+  line-height: 1.2;
+}
+
+.faq__item p {
+  max-width: 68ch;
+  padding-bottom: var(--s-lg);
+}
+
+/* Финал */
+.final {
+  display: grid;
+  justify-items: start;
+  gap: var(--s-lg);
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: clamp(64px, 8vw, 120px) var(--gutter);
+  border-top: 2px solid var(--ink);
+}
+
+.final__title {
+  max-width: 14ch;
+  color: var(--ink);
+  font-size: clamp(56px, 8.4vw, 136px);
+  font-weight: 720;
+  font-stretch: 36%;
+  line-height: 0.86;
+  text-wrap: balance;
+}
+
+.final__text {
+  max-width: 48ch;
+  font-size: 19px;
+}
+
+@media (max-width: 1100px) {
+  .sec {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sec__head {
+    position: static;
+  }
+
+  .steps {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .step {
+    grid-template-columns: 64px minmax(0, 1fr);
+    grid-template-rows: none;
+    column-gap: var(--s-md);
+  }
+
+  .step__num {
+    grid-row: span 3;
+  }
+
+  .step .ui {
+    grid-column: 2;
+    max-width: 420px;
+  }
+}
+
+@media (max-width: 720px) {
+  .symptom-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .rule {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--s-sm);
+  }
+
+  .numbers__row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--s-sm);
+  }
+}

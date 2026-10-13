@@ -3,7 +3,8 @@ import type { Check } from '../lib/checks'
 import type { FuelPlan } from '../lib/fuel'
 import type { Change } from '../lib/params'
 import { slotName } from '../lib/params'
-import { formatDuration, formatNumber, plural } from '../lib/format'
+import { formatDuration, formatNumber } from '../lib/format'
+import { w } from '../i18n/dashboard'
 
 interface Props {
   name: string
@@ -34,6 +35,19 @@ function valueText(v: unknown, decimals: number) {
   return typeof v === 'number' ? formatNumber(v, decimals) : String(v)
 }
 
+/** «За 1 ч — 30 кругов…»: числа жирным, порядок слов задаёт словарь */
+function FuelPlanText({ parts }: { parts: string[] }) {
+  return (
+    <p>
+      {parts[0]}
+      <strong>{parts[1]}</strong>
+      {parts[2]}
+      <strong>{parts[3]}</strong>
+      {parts[4]}
+    </p>
+  )
+}
+
 export function Summary(props: Props) {
   const { changes, plan } = props
   const nameId = useId()
@@ -42,10 +56,10 @@ export function Summary(props: Props) {
   const visibleChanges = showAll ? changes : changes.slice(0, 6)
 
   return (
-    <aside className="summary" aria-label="Сводка сетапа">
+    <aside className="summary" aria-label={w.summary}>
       <div className="summary__block">
         <label className="summary__label" htmlFor={nameId}>
-          Название сетапа
+          {w.setupName}
         </label>
         <textarea
           id={nameId}
@@ -60,10 +74,10 @@ export function Summary(props: Props) {
 
       <div className="summary__block">
         <h3 className="summary__title">
-          {changes.length === 0 ? 'Сетап как в базе' : `Изменено ${changes.length} ${plural(changes.length, 'значение', 'значения', 'значений')} из ${props.totalParams}`}
+          {changes.length === 0 ? w.asBase : w.changedOf(changes.length, props.totalParams)}
         </h3>
         {changes.length === 0 ? (
-          <p className="summary__muted">Меняйте регулировки во вкладке «Машина» — изменения появятся здесь.</p>
+          <p className="summary__muted">{w.noChanges}</p>
         ) : (
           <>
             <ul className="changes">
@@ -89,11 +103,11 @@ export function Summary(props: Props) {
             <div className="summary__row">
               {changes.length > 6 && (
                 <button type="button" className="text-button" onClick={() => setShowAll(!showAll)}>
-                  {showAll ? 'Свернуть' : `Показать все ${changes.length}`}
+                  {showAll ? w.collapse : w.showAll(changes.length)}
                 </button>
               )}
               <button type="button" className="text-button" onClick={props.onResetAll}>
-                Вернуть всё к базе
+                {w.resetAll}
               </button>
             </div>
           </>
@@ -101,54 +115,51 @@ export function Summary(props: Props) {
       </div>
 
       <div className="summary__block">
-        <h3 className="summary__title">Топливо на гонку</h3>
+        <h3 className="summary__title">{w.fuelTitle}</h3>
         <div className="fuel-inputs">
           <label className="field">
-            <span>Время круга</span>
-            <input className={props.lapValid ? 'text-input' : 'text-input is-invalid'} inputMode="decimal" placeholder="1:58,400" value={props.lapTime} onChange={(e) => props.onLapTime(e.target.value)} />
+            <span>{w.lapTime}</span>
+            <input className={props.lapValid ? 'text-input' : 'text-input is-invalid'} inputMode="decimal" placeholder={w.lapPlaceholder} value={props.lapTime} onChange={(e) => props.onLapTime(e.target.value)} />
           </label>
           <label className="field">
-            <span>Расход за круг, л</span>
-            <input className={props.perLapValid ? 'text-input' : 'text-input is-invalid'} inputMode="decimal" placeholder="3,2" value={props.perLap} onChange={(e) => props.onPerLap(e.target.value)} />
+            <span>{w.perLap}</span>
+            <input className={props.perLapValid ? 'text-input' : 'text-input is-invalid'} inputMode="decimal" placeholder={w.perLapPlaceholder} value={props.perLap} onChange={(e) => props.onPerLap(e.target.value)} />
           </label>
         </div>
         {!plan && (
           <p className="summary__muted">
             {props.lapValid && props.perLapValid
-              ? 'Впишите время круга и расход — посчитаем, сколько залить.'
-              : 'Время круга пишется как 1:58,400, расход — числом, например 3,2.'}
+              ? w.fuelHint
+              : w.fuelFormat}
           </p>
         )}
         {plan && (
           <div className="fuel-plan">
-            <p>
-              За {formatDuration(props.durationMin)} — <strong>{plan.laps}</strong> {plural(plan.laps, 'круг', 'круга', 'кругов')}, с кругом запаса нужно{' '}
-              <strong>{formatNumber(plan.total)} л</strong>.
-            </p>
+            <FuelPlanText parts={w.fuelPlan(formatDuration(props.durationMin), plan.laps, formatNumber(plan.total))} />
             {props.pitStops > 0 && (
               <p className="summary__muted">
                 {props.pitStops === 1
-                  ? `Если заправиться на пит-стопе — по ${formatNumber(plan.perStint)} л на каждый из двух отрезков.`
-                  : `Если заправляться на каждом пит-стопе — по ${formatNumber(plan.perStint)} л на каждый из ${plan.stints} отрезков.`}
+                  ? w.oneStop(formatNumber(plan.perStint))
+                  : w.manyStops(formatNumber(plan.perStint), plan.stints)}
               </p>
             )}
-            {!plan.fitsTank && <p className="summary__muted">В бак столько не влезет: без дозаправки не доехать.</p>}
-            {!props.isRace && <p className="summary__muted">Сейчас выбрана не гонка — расчёт для справки.</p>}
+            {!plan.fitsTank && <p className="summary__muted">{w.noTank}</p>}
+            {!props.isRace && <p className="summary__muted">{w.notRace}</p>}
             {props.fuelLoaded !== plan.atStart ? (
               <button type="button" className="button button--ghost" onClick={() => props.onFill(plan.atStart)}>
-                Залить {formatNumber(plan.atStart)} л на старт
+                {w.fill(formatNumber(plan.atStart))}
               </button>
             ) : (
-              <p className="summary__ok">В баке {formatNumber(plan.atStart)} л — как нужно.</p>
+              <p className="summary__ok">{w.filled(formatNumber(plan.atStart))}</p>
             )}
           </div>
         )}
       </div>
 
       <div className="summary__block">
-        <h3 className="summary__title">Проверка сетапа</h3>
+        <h3 className="summary__title">{w.checksTitle}</h3>
         {props.checks.length === 0 ? (
-          <p className="summary__muted">Противоречий между условиями и сетапом не нашли.</p>
+          <p className="summary__muted">{w.noIssues}</p>
         ) : (
           <ul className="checks">
             {props.checks.map((c) => (
@@ -160,14 +171,14 @@ export function Summary(props: Props) {
 
       <div className="summary__actions">
         <button type="button" className="button button--primary" onClick={props.onSave}>
-          Сохранить сетап
+          {w.saveSetup}
         </button>
         <div className="summary__row">
           <button type="button" className="button button--ghost" onClick={props.onExport}>
-            Скачать файл
+            {w.download}
           </button>
           <button type="button" className="button button--ghost" onClick={() => fileRef.current?.click()}>
-            Загрузить файл
+            {w.upload}
           </button>
           <input
             ref={fileRef}

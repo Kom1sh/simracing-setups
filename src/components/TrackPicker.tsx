@@ -1,6 +1,7 @@
+import { t, w } from '../i18n/dashboard'
 import { useEffect, useId, useMemo, useRef, useState, type KeyboardEvent } from 'react'
 import type { Track } from '../data/types'
-import { normalizeSearch, plural } from '../lib/format'
+import { normalizeSearch } from '../lib/format'
 import { TrackMap } from './TrackMap'
 import { usePopover } from './usePopover'
 
@@ -91,7 +92,7 @@ export function TrackPicker({ tracks, aliases, value, onChange }: Props) {
         aria-expanded={open}
         onClick={toggle}
       >
-        <span className="picker__kind">Трасса</span>
+        <span className="picker__kind">{w.track}</span>
         <span className="picker__value">{value.name}</span>
         <span className="picker__meta">{value.country}</span>
         <svg className="picker__chevron" viewBox="0 0 12 12" aria-hidden="true">
@@ -100,7 +101,7 @@ export function TrackPicker({ tracks, aliases, value, onChange }: Props) {
       </button>
 
       {open && (
-        <div className="picker__panel picker__panel--tracks" role="dialog" aria-label="Выбор трассы">
+        <div className="picker__panel picker__panel--tracks" role="dialog" aria-label={w.chooseTrack}>
           <div className="picker__search">
             <svg viewBox="0 0 20 20" aria-hidden="true">
               <circle cx="8.5" cy="8.5" r="5.5" />
@@ -115,7 +116,7 @@ export function TrackPicker({ tracks, aliases, value, onChange }: Props) {
               aria-controls={listId}
               aria-activedescendant={results[active] ? `${listId}-${results[active].id}` : undefined}
               aria-autocomplete="list"
-              placeholder="Название трассы или страна"
+              placeholder={w.trackSearch}
               value={query}
               onChange={(e) => {
                 setQuery(e.target.value)
@@ -124,10 +125,10 @@ export function TrackPicker({ tracks, aliases, value, onChange }: Props) {
               onKeyDown={onKey}
             />
             <span className="picker__count" aria-live="polite">
-              {results.length} {plural(results.length, 'трасса', 'трассы', 'трасс')}
+              {t.nTracks(results.length)}
             </span>
           </div>
-          <div className="track-grid" id={listId} role="listbox" aria-label="Трассы" ref={listRef}>
+          <div className="track-grid" id={listId} role="listbox" aria-label={w.tracksList} ref={listRef}>
             {results.map((t, i) => (
               <div
                 key={t.id}
@@ -144,7 +145,7 @@ export function TrackPicker({ tracks, aliases, value, onChange }: Props) {
             ))}
             {results.length === 0 && (
               <p className="picker__empty">
-                Трассы «{query}» в списке нет. Ищем по русскому и оригинальному названию и по стране — попробуйте «Спа», «Monza» или «Италия».
+                {w.noTrack(query)}
               </p>
             )}
           </div>

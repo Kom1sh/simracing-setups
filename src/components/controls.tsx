@@ -1,3 +1,5 @@
+import { locale } from '../i18n/locale'
+import { w } from '../i18n/dashboard'
 import { useEffect, useId, useRef, useState, type KeyboardEvent } from 'react'
 import { clamp, snap } from '../lib/params'
 import { formatNumber, formatTimeOfDay } from '../lib/format'
@@ -29,7 +31,7 @@ function parse(text: string, format?: 'time'): number | null {
     if (h > 23 || min > 59) return null
     return h * 60 + min
   }
-  const n = Number(t.replace(/\s/g, '').replace(',', '.').replace('−', '-'))
+  const n = Number(t.replace(/\s/g, '').replace(locale === 'ru' ? ',' : /,/g, locale === 'ru' ? '.' : '').replace('−', '-'))
   return Number.isFinite(n) ? n : null
 }
 
@@ -69,7 +71,7 @@ export function NumberField({ value, min, max, step, decimals, unit, format, lab
       <button
         type="button"
         className="numfield__step"
-        aria-label={`${label}: меньше`}
+        aria-label={w.less(label)}
         disabled={value <= min}
         onClick={() => commit(value - step)}
       >
@@ -100,7 +102,7 @@ export function NumberField({ value, min, max, step, decimals, unit, format, lab
       <button
         type="button"
         className="numfield__step"
-        aria-label={`${label}: больше`}
+        aria-label={w.more(label)}
         disabled={value >= max}
         onClick={() => commit(value + step)}
       >

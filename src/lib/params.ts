@@ -1,3 +1,4 @@
+import { w } from '../i18n/dashboard'
 import type { Param, ParamGroup, ParamValue, Range, Values } from '../data/types'
 
 export function clamp(v: number, min: number, max: number) {
@@ -75,11 +76,9 @@ export interface Change {
   to: ParamValue
 }
 
-const CORNER = ['ПЛ', 'ПП', 'ЗЛ', 'ЗП']
-const AXLE = ['перед', 'зад']
 
 export function slotName(p: Param, index: number) {
-  return p.kind === 'corners' ? CORNER[index] : AXLE[index]
+  return p.kind === 'corners' ? w.wheelsShort[index] : w.axleShort[index]
 }
 
 export function listChanges(groups: ParamGroup[], values: Values, visible: (p: Param) => boolean = () => true): Change[] {
