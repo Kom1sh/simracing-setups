@@ -1,9 +1,8 @@
-import '../styles/font.css'
+import './site-font.css'
 import '../styles/tokens.css'
 import './site-base.css'
 import './site-hero.css'
 import './site-sections.css'
-import './site-blocks.css'
 
 /** Шапка для вошедших: вместо «Войти» и «Создать аккаунт» — «Открыть кабинет» */
 function applySession() {

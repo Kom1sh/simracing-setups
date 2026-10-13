@@ -23,7 +23,7 @@ const head = [...read('site.html').matchAll(/<script\b[^>]*><\/script>|<link\b[^
 if (!head.includes('<script')) throw new Error('В dist/site.html нет скрипта лендинга')
 
 // Шрифт заголовка нужен сразу: латиница на обоих языках, кириллица — на русском
-const fonts = readdirSync(resolve(dist, 'assets')).filter((f) => /^roboto-flex-(latin|cyrillic)-.*\.woff2$/.test(f))
+const fonts = readdirSync(resolve(dist, 'assets')).filter((f) => /^roboto-flex-wide-(latin|cyrillic)-.*\.woff2$/.test(f))
 const preload = (lang) =>
   fonts
     .filter((f) => f.includes('latin') || lang === 'ru')
