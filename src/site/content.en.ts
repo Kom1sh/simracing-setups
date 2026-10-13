@@ -47,7 +47,6 @@ export const en: LandingContent = {
   },
   demo: {
     title: 'How the assistant answers',
-    intro: 'Pick an example. On the left is what the driver writes in their own words, on the right the change from a rule: what to adjust, what to expect and what to watch for.',
   },
   about: {
     title: 'What a setup is, and where the assistant helps',
@@ -132,5 +131,15 @@ export const en: LandingContent = {
     ],
   },
   final: { title: 'Bring us your worst corner', text: 'Create an account and describe what the car does in the corner that costs you the most time.', cta: 'Try it free', photoAlt: 'A race car cornering at sunset' },
-  footer: { project: 'A university project by a student team.', code: 'Code on GitHub', data: 'Track maps: bacinger/f1-circuits (MIT) and © OpenStreetMap contributors (ODbL).' },
+  footer: {
+    tagline: 'An iRacing setup assistant: from a symptom to a specific change.',
+    product: 'Product',
+    account: 'Account',
+    language: 'Language',
+    example: 'Example answer',
+    cabinet: 'Dashboard',
+    copyright: '© 2026 Setups for sim racing',
+    maps: 'Track maps:',
+    mapsOsm: '© OpenStreetMap contributors',
+  },
 }

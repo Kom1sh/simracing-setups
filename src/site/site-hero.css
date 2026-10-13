@@ -18,6 +18,10 @@
   outline-color: #fff;
 }
 
+.hero__picture {
+  display: contents;
+}
+
 .hero__photo {
   position: absolute;
   top: 0;
@@ -88,20 +92,11 @@
 }
 
 .demo__head {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  align-items: end;
-  gap: var(--s-md) var(--s-xl);
   margin-bottom: var(--s-xl);
 }
 
 .demo .title-2 {
   color: #fff;
-}
-
-.demo__intro {
-  max-width: 52ch;
-  color: var(--l-mute-dark);
 }
 
 .example {
@@ -260,7 +255,6 @@
     padding-top: 0;
   }
 
-  .demo__head,
   .example__panel {
     grid-template-columns: minmax(0, 1fr);
   }

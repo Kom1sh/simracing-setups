@@ -105,6 +105,7 @@ export function Landing({ c, lang, img }: { c: LandingContent; lang: Locale; img
           <ol className="steps">
             {c.how.steps.map((s, i) => (
               <li key={s.title} className="step">
+                {img[`step-${i + 1}`] && <img className="step__photo" src={img[`step-${i + 1}`]} width={1536} height={1024} loading="lazy" decoding="async" alt="" />}
                 <span className="step__num" aria-hidden="true">
                   {i + 1}
                 </span>
@@ -137,7 +138,8 @@ export function Landing({ c, lang, img }: { c: LandingContent; lang: Locale; img
         <Band id="symptoms" tone="light" title={c.symptoms.title} intro={c.symptoms.intro} labelId="symptoms-title">
           <div className="symptom-grid">
             {c.symptoms.items.map((s) => (
-              <article key={s.id} id={s.id} className="card">
+              <article key={s.id} id={s.id} className={img[`symptom-${s.id}`] ? 'card has-photo' : 'card'}>
+                {img[`symptom-${s.id}`] && <img className="card__photo" src={img[`symptom-${s.id}`]} width={1536} height={1024} loading="lazy" decoding="async" alt="" />}
                 <h3 className="title-3">{s.title}</h3>
                 <p>{s.text}</p>
                 <p className="card__label">{c.symptoms.paramsLabel}</p>
@@ -152,6 +154,7 @@ export function Landing({ c, lang, img }: { c: LandingContent; lang: Locale; img
         </Band>
 
         <Band tone="grey" title={c.rules.title} intro={c.rules.intro} labelId="rules-title">
+          {img.rules && <img className="band__photo" src={img.rules} width={1536} height={1024} loading="lazy" decoding="async" alt="" />}
           <ul className="rule-grid">
             {c.rules.items.map((r) => (
               <li key={r.title} className="card">
@@ -222,22 +225,43 @@ export function Landing({ c, lang, img }: { c: LandingContent; lang: Locale; img
 
       <footer className="site-foot">
         <div className="site-foot__inner">
-          <p className="site-foot__brand">
-            <Mark />
-            {c.meta.siteName}
-          </p>
-          <p>{c.footer.project}</p>
-          <p>
-            <a href="https://github.com/Kom1sh/simracing-setups">{c.footer.code}</a>
-          </p>
-          <p>{c.footer.data}</p>
-          <nav className="lang lang--foot" aria-label={c.nav.language}>
+          <div className="site-foot__about">
+            <a className="site-foot__brand" href={pagePath('home', lang)}>
+              <Mark />
+              {c.meta.siteName}
+            </a>
+            <p>{c.footer.tagline}</p>
+            <a className="btn btn--accent" href={pagePath('signup', lang)}>
+              {c.hero.cta}
+            </a>
+          </div>
+          <nav className="site-foot__col" aria-label={c.footer.product}>
+            <p className="site-foot__title">{c.footer.product}</p>
+            <a href="#example">{c.footer.example}</a>
+            <a href="#how">{c.nav.how}</a>
+            <a href="#symptoms">{c.nav.symptoms}</a>
+            <a href="#faq">{c.nav.faq}</a>
+          </nav>
+          <nav className="site-foot__col" aria-label={c.footer.account}>
+            <p className="site-foot__title">{c.footer.account}</p>
+            <a href={pagePath('login', lang)}>{c.nav.login}</a>
+            <a href={pagePath('signup', lang)}>{c.nav.signup}</a>
+            <a href={pagePath('app', lang)}>{c.footer.cabinet}</a>
+          </nav>
+          <nav className="site-foot__col" aria-label={c.footer.language}>
+            <p className="site-foot__title">{c.footer.language}</p>
             {LOCALES.map((l) => (
-              <a key={l} href={`${BASE}${l}/`} hrefLang={l} lang={l} aria-current={l === lang ? 'page' : undefined} className={l === lang ? 'is-selected' : undefined}>
+              <a key={l} href={`${BASE}${l}/`} hrefLang={l} lang={l} aria-current={l === lang ? 'page' : undefined}>
                 {l === 'en' ? 'English' : 'Русский'}
               </a>
             ))}
           </nav>
+        </div>
+        <div className="site-foot__bottom">
+          <p>{c.footer.copyright}</p>
+          <p>
+            {c.footer.maps} <a href="https://www.openstreetmap.org/copyright">{c.footer.mapsOsm}</a>, <a href="https://github.com/bacinger/f1-circuits">bacinger/f1-circuits</a>
+          </p>
         </div>
       </footer>
     </>
