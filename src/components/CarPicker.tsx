@@ -1,6 +1,7 @@
+import { w } from '../i18n/dashboard'
 import { useEffect, useId, useMemo, useRef, useState, type KeyboardEvent } from 'react'
 import type { Car, CategoryId } from '../data/types'
-import { categories } from '../data/categories'
+import { categories } from '../data/localized'
 import { normalizeSearch } from '../lib/format'
 import { engineText } from '../lib/cars'
 import { usePopover } from './usePopover'
@@ -72,7 +73,7 @@ export function CarPicker({ cars, category, value, onChange }: Props) {
         aria-expanded={open}
         onClick={toggle}
       >
-        <span className="picker__kind">Машина</span>
+        <span className="picker__kind">{w.car}</span>
         <span className="picker__value">
           {value.brand} {value.model}
         </span>
@@ -83,7 +84,7 @@ export function CarPicker({ cars, category, value, onChange }: Props) {
       </button>
 
       {open && (
-        <div className="picker__panel picker__panel--cars" role="dialog" aria-label="Выбор машины">
+        <div className="picker__panel picker__panel--cars" role="dialog" aria-label={w.chooseCar}>
           <div className="picker__search">
             <svg viewBox="0 0 20 20" aria-hidden="true">
               <circle cx="8.5" cy="8.5" r="5.5" />
@@ -98,7 +99,7 @@ export function CarPicker({ cars, category, value, onChange }: Props) {
               aria-controls={listId}
               aria-activedescendant={results[active] ? `${listId}-${results[active].id}` : undefined}
               aria-autocomplete="list"
-              placeholder="Марка или модель"
+              placeholder={w.carSearch}
               value={query}
               onChange={(e) => {
                 setQuery(e.target.value)
@@ -107,8 +108,8 @@ export function CarPicker({ cars, category, value, onChange }: Props) {
               onKeyDown={onKey}
             />
           </div>
-          <p className="picker__scope">{query ? 'Ищем во всех категориях' : `Категория ${categoryLabel(category)}`}</p>
-          <ul className="car-list" id={listId} role="listbox" aria-label="Машины" ref={listRef}>
+          <p className="picker__scope">{query ? w.allCategories : w.inCategory(categoryLabel(category))}</p>
+          <ul className="car-list" id={listId} role="listbox" aria-label={w.carsList} ref={listRef}>
             {results.map((c, i) => (
               <li
                 key={c.id}
@@ -126,7 +127,7 @@ export function CarPicker({ cars, category, value, onChange }: Props) {
                 {query && <span className="car-row__cat">{categoryLabel(c.category)}</span>}
               </li>
             ))}
-            {results.length === 0 && <li className="picker__empty">Такой машины нет. Попробуйте марку: «Porsche», «BMW», «Ferrari».</li>}
+            {results.length === 0 && <li className="picker__empty">{w.noCar}</li>}
           </ul>
         </div>
       )}

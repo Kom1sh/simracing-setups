@@ -1,15 +1,18 @@
+import { locale } from '../i18n/locale'
+
+const isRu = locale === 'ru'
 const cache = new Map<number, Intl.NumberFormat>()
 
 function formatter(decimals: number) {
   let f = cache.get(decimals)
   if (!f) {
-    f = new Intl.NumberFormat('ru-RU', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })
+    f = new Intl.NumberFormat(isRu ? 'ru-RU' : 'en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })
     cache.set(decimals, f)
   }
   return f
 }
 
-/** Число по-русски: запятая, узкий пробел в тысячах, настоящий минус */
+/** Число на языке страницы: по-русски запятая и пробел в тысячах, всегда настоящий минус */
 export function formatNumber(value: number, decimals = 0): string {
   return formatter(decimals)
     .format(value)
@@ -33,16 +36,18 @@ export function formatTimeOfDay(minutes: number): string {
 export function formatDuration(minutes: number): string {
   const h = Math.floor(minutes / 60)
   const m = minutes % 60
-  if (h === 0) return `${m} мин`
-  if (m === 0) return `${h} ч`
-  return `${h} ч ${m} мин`
+  const [hh, mm] = isRu ? ['ч', 'мин'] : ['h', 'min']
+  if (h === 0) return `${m} ${mm}`
+  if (m === 0) return `${h} ${hh}`
+  return `${h} ${hh} ${m} ${mm}`
 }
 
 export function rainLabel(percent: number): string {
-  if (percent <= 0) return 'сухо'
-  if (percent <= 25) return 'морось'
-  if (percent <= 60) return 'дождь'
-  return 'ливень'
+  const [dry, drizzle, rain, downpour] = isRu ? ['сухо', 'морось', 'дождь', 'ливень'] : ['dry', 'drizzle', 'rain', 'downpour']
+  if (percent <= 0) return dry
+  if (percent <= 25) return drizzle
+  if (percent <= 60) return rain
+  return downpour
 }
 
 /** «1:47,350» → секунды; понимает «1:47», «107,35» */
@@ -63,7 +68,7 @@ export function parseLapTime(input: string): number | null {
 export function formatLapTime(seconds: number): string {
   const min = Math.floor(seconds / 60)
   const sec = seconds - min * 60
-  return `${min}:${sec.toFixed(3).padStart(6, '0').replace('.', ',')}`
+  return `${min}:${sec.toFixed(3).padStart(6, '0').replace('.', isRu ? ',' : '.')}`
 }
 
 export function plural(n: number, one: string, few: string, many: string): string {

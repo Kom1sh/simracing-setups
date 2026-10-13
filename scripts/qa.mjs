@@ -1,9 +1,10 @@
 // Проверка вёрстки: снимки ключевых состояний и геометрия (прокрутка вбок, обрезанный текст, вылет за блок, наложения).
 // Запуск: npm run build && npx vite preview --port 4173, затем node scripts/qa.mjs [url]
 import { chromium } from 'playwright-core'
+import { withSession } from './session.mjs'
 import { mkdirSync, writeFileSync } from 'node:fs'
 
-const BASE = process.argv[2] ?? 'http://localhost:4173/simracing-setups/'
+const BASE = process.argv[2] ?? 'http://localhost:4173/simracing-setups/ru/app/'
 const OUT = '.qa'
 mkdirSync(OUT, { recursive: true })
 
@@ -96,6 +97,7 @@ let failures = 0
 
 for (const vp of viewports) {
   const context = await browser.newContext({ viewport: { width: vp.width, height: vp.height }, reducedMotion: 'reduce', locale: 'ru-RU' })
+  await withSession(context, BASE)
   const page = await context.newPage()
   const errors = []
   page.on('pageerror', (e) => errors.push(String(e)))

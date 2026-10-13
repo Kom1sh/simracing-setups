@@ -110,6 +110,7 @@ a {
   display: flex;
   align-items: baseline;
   gap: 10px;
+  text-decoration: none;
   color: var(--ink);
   font-size: 26px;
   font-weight: 820;
@@ -304,6 +305,32 @@ a {
 @media (max-width: 720px) {
   .wordmark span {
     display: none;
+  }
+}
+
+/* Шапка с меню аккаунта на телефоне: плотнее, но все действия на месте */
+@media (max-width: 480px) {
+  .topbar__inner {
+    gap: var(--s-sm);
+  }
+
+  .topbar__actions {
+    gap: 4px;
+  }
+
+  .topbar__actions .button {
+    padding: 0 10px;
+    font-size: 13px;
+  }
+
+  .topbar__actions .count {
+    min-width: 18px;
+    height: 18px;
+    font-size: 11px;
+  }
+
+  .wordmark {
+    font-size: 22px;
   }
 }
 

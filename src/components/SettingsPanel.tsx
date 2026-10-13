@@ -1,3 +1,4 @@
+import { t, w } from '../i18n/dashboard'
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import type { Param, ParamGroup, ParamValue, Values } from '../data/types'
 import { listChanges } from '../lib/params'
@@ -46,7 +47,7 @@ export function SettingsPanel({ idPrefix, groups, values, onChange, visible = ()
 
   return (
     <div className="settings">
-      <nav className="subnav" aria-label="Группы настроек">
+      <nav className="subnav" aria-label={w.groupsNav}>
         <ul>
           {shown.map((g) => {
             const n = showDelta ? listChanges([g], values, visible).length : 0
@@ -55,7 +56,7 @@ export function SettingsPanel({ idPrefix, groups, values, onChange, visible = ()
                 <button type="button" className={g.id === current ? 'subnav__link is-current' : 'subnav__link'} aria-current={g.id === current ? 'true' : undefined} onClick={() => jump(g.id)}>
                   <span>{g.title}</span>
                   {n > 0 && (
-                    <span className="subnav__count" aria-label={`изменено ${n}`}>
+                    <span className="subnav__count" aria-label={t.nChanged(n)}>
                       {n}
                     </span>
                   )}

@@ -1,13 +1,8 @@
+import { w } from '../i18n/dashboard'
 import type { Track } from '../data/types'
 
-const DIRECTION: Record<string, string> = {
-  cw: 'по часовой стрелке',
-  ccw: 'против часовой стрелки',
-  fig8: 'восьмёрка',
-}
-
 export function directionText(track: Track) {
-  return track.direction ? DIRECTION[track.direction] : null
+  return track.direction ? w.dir[track.direction] : null
 }
 
 /** Схема трассы с названием поверх. В полосе рисуется крупно и прорисовывается при смене трассы. */
@@ -22,7 +17,7 @@ export function TrackMap({
 }) {
   return (
     <figure className={`track-map track-map--${variant}`}>
-      <svg className="track-map__svg" viewBox={track.viewBox} preserveAspectRatio="xMidYMid meet" role="img" aria-label={`Схема трассы ${track.name}`}>
+      <svg className="track-map__svg" viewBox={track.viewBox} preserveAspectRatio="xMidYMid meet" role="img" aria-label={w.trackMapLabel(track.name)}>
         {variant === 'hero' && <path className="track-map__under" d={track.path} />}
         <path key={variant === 'hero' ? track.id : undefined} className="track-map__line" d={track.path} pathLength={1} />
       </svg>
@@ -31,19 +26,19 @@ export function TrackMap({
         {variant === 'tile' && <span className="track-map__country">{track.country}</span>}
       </figcaption>
       {variant === 'hero' && wind && wind.speed > 0 && (
-        <div className="wind" aria-label={`Ветер ${wind.speed} км/ч, ${wind.name}`}>
+        <div className="wind" aria-label={w.windLabel(wind.speed, wind.name)}>
           {/* Стрелка нарисована вниз (на юг); ветер «откуда» X дует в сторону X + 180°, поэтому поворот ровно на X */}
           <svg viewBox="0 0 40 40" aria-hidden="true" style={{ transform: `rotate(${wind.from}deg)` }}>
             <path d="M20 6v26M12 24l8 8 8-8" />
           </svg>
           <span>
-            {wind.speed} км/ч
+            {wind.speed} {w.kmh}
             <br />
             {wind.name}
           </span>
         </div>
       )}
-      {variant === 'hero' && <span className="track-map__north" aria-hidden="true">С ↑</span>}
+      {variant === 'hero' && <span className="track-map__north" aria-hidden="true">{w.north}</span>}
     </figure>
   )
 }

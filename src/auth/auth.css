@@ -1,0 +1,238 @@
+/* Вход и регистрация: чёрная полоса со схемой трассы слева, белая форма справа */
+
+.auth {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.auth__band {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: var(--s-xl);
+  padding: var(--s-lg) var(--gutter) var(--s-xl);
+  background: var(--band);
+  color: var(--on-band);
+}
+
+.auth__wordmark {
+  justify-self: start;
+  color: var(--on-band-mute);
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.auth__wordmark:hover {
+  color: var(--on-band);
+  text-decoration: underline;
+}
+
+.auth__band :focus-visible {
+  outline-color: var(--on-band);
+}
+
+.auth__map {
+  align-self: center;
+  justify-self: center;
+  width: 100%;
+  max-width: 340px;
+  max-height: 48vh;
+}
+
+.auth__map path {
+  fill: none;
+  stroke: var(--on-band);
+  stroke-width: 9;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.auth__pitch {
+  display: grid;
+  gap: var(--s-lg);
+}
+
+.auth__band-title {
+  max-width: 12ch;
+  font-size: clamp(40px, 4.4vw, 64px);
+  font-weight: 740;
+  font-stretch: 44%;
+  line-height: 0.9;
+}
+
+.auth__points {
+  display: grid;
+  border-top: 1px solid var(--band-line);
+}
+
+.auth__points li {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--band-line);
+  color: var(--on-band-mute);
+}
+
+.auth__main {
+  display: grid;
+  place-items: center;
+  padding: var(--s-xl) var(--gutter);
+}
+
+.auth__form {
+  display: grid;
+  gap: 20px;
+  width: min(400px, 100%);
+}
+
+.auth__title {
+  color: var(--ink);
+  font-size: 44px;
+  font-weight: 780;
+  font-stretch: 55%;
+  line-height: 0.95;
+}
+
+.auth__alert {
+  padding: 10px 12px;
+  border-left: 3px solid var(--alert);
+  background: var(--surface);
+  color: var(--alert);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.auth__alert a {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.auth__field {
+  display: grid;
+  gap: 6px;
+}
+
+.auth__field label {
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.auth .text-input {
+  width: 100%;
+  height: 44px;
+  font-size: 16px;
+}
+
+.auth__password {
+  position: relative;
+}
+
+.auth__password .text-input {
+  padding-right: 80px;
+}
+
+.auth__password .text-button {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+}
+
+.auth__hint {
+  min-height: 1lh;
+  color: var(--mute);
+  font-size: 13px;
+}
+
+.auth__hint:empty {
+  display: none;
+}
+
+.auth__hint.is-error {
+  color: var(--alert);
+  font-weight: 500;
+}
+
+.auth__check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.auth__check input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: var(--ink);
+}
+
+.auth__submit {
+  width: 100%;
+  height: 48px;
+  font-size: 16px;
+}
+
+.auth__submit:disabled {
+  background: var(--mute);
+  border-color: var(--mute);
+  cursor: progress;
+}
+
+.auth__switch {
+  font-size: 15px;
+}
+
+.auth__switch a {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.auth__note {
+  padding-top: var(--s-md);
+  border-top: 1px solid var(--line);
+  color: var(--mute);
+  font-size: 13px;
+}
+
+@media (max-width: 860px) {
+  .auth {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+
+  .auth__band {
+    grid-template-columns: minmax(0, 1fr) 96px;
+    grid-template-rows: auto auto;
+    gap: var(--s-md);
+    padding-block: var(--s-md) var(--s-lg);
+  }
+
+  .auth__wordmark {
+    grid-column: 1 / -1;
+  }
+
+  .auth__map {
+    grid-column: 2;
+    grid-row: 2;
+    max-height: 120px;
+  }
+
+  .auth__pitch {
+    grid-row: 2;
+  }
+
+  .auth__band-title {
+    font-size: 34px;
+  }
+
+  .auth__points {
+    display: none;
+  }
+
+  .auth__main {
+    place-items: start center;
+    padding-top: var(--s-lg);
+  }
+}

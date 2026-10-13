@@ -1,0 +1,280 @@
+/* Лендинг: основа. Токены общие с кабинетом (styles/tokens.css), правила — в DESIGN.md */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-top: 80px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--canvas);
+  color: var(--body);
+  font-family: var(--font);
+  font-size: 17px;
+  font-weight: 420;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+p,
+dl,
+dd,
+ul,
+ol,
+figure {
+  margin: 0;
+}
+
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-underline-offset: 3px;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 100;
+  padding: 8px 12px;
+  background: var(--ink);
+  color: var(--canvas);
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+/* Шапка — белая, как в кабинете; под ней чёрная полоса hero */
+.site-top {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--canvas);
+  border-bottom: 1px solid var(--line);
+}
+
+.site-top__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--s-lg);
+  max-width: var(--page-max);
+  height: 63px;
+  margin: 0 auto;
+  padding-inline: var(--gutter);
+}
+
+.site-mark {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  color: var(--ink);
+  font-size: 26px;
+  font-weight: 820;
+  font-stretch: 48%;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.site-mark span {
+  color: var(--mute);
+  font-size: 14px;
+  font-weight: 460;
+  font-stretch: 100%;
+}
+
+.site-nav {
+  display: flex;
+  gap: var(--s-lg);
+  margin-left: var(--s-md);
+  font-size: 15px;
+}
+
+.site-nav a {
+  text-decoration: none;
+}
+
+.site-nav a:hover {
+  text-decoration: underline;
+}
+
+.site-top__end {
+  display: flex;
+  align-items: center;
+  gap: var(--s-md);
+  margin-left: auto;
+}
+
+.site-link {
+  font-size: 15px;
+  font-weight: 560;
+}
+
+/* Действие — чёрное; на чёрной полосе — белое. Жёлтым только выбранное. */
+.site-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 16px;
+  border: 1px solid var(--ink);
+  border-radius: var(--r-control);
+  background: var(--ink);
+  color: var(--canvas);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.site-button:hover {
+  background: #333;
+}
+
+.site-button--lg {
+  height: 52px;
+  padding: 0 24px;
+  font-size: 16px;
+}
+
+.site-button--light {
+  border-color: var(--on-band);
+  background: var(--on-band);
+  color: var(--ink);
+}
+
+.site-button--light:hover {
+  background: #dcdcdc;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.lang {
+  display: flex;
+  gap: 2px;
+}
+
+.lang a {
+  display: inline-grid;
+  place-items: center;
+  min-width: 34px;
+  height: 30px;
+  padding: 0 6px;
+  border: 1px solid transparent;
+  border-radius: var(--r-control);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.lang a:hover {
+  border-color: var(--control-border);
+}
+
+.lang a.is-selected {
+  border-color: var(--ink);
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+/* Подвал */
+.site-foot {
+  background: var(--surface);
+  color: var(--mute);
+  font-size: 14px;
+}
+
+.site-foot__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-sm) var(--s-xl);
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: var(--s-xl) var(--gutter);
+}
+
+.site-foot a {
+  color: var(--ink);
+}
+
+.lang--foot {
+  margin-left: auto;
+}
+
+.lang--foot a {
+  min-width: 0;
+  padding: 0 10px;
+}
+
+@media (max-width: 960px) {
+  .site-nav {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .site-top__inner {
+    gap: var(--s-sm);
+  }
+
+  .site-mark span,
+  .site-top .site-link {
+    display: none;
+  }
+
+  .site-top__end {
+    gap: var(--s-sm);
+  }
+
+  .lang--foot {
+    margin-left: 0;
+  }
+}
+
+p,
+dd {
+  text-wrap: pretty;
+}
