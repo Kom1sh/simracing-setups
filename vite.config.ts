@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from 'node:fs'
+import { readdirSync, readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { defineConfig, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
@@ -6,12 +6,13 @@ import react from '@vitejs/plugin-react'
 // Сайт живёт на GitHub Pages по адресу kom1sh.github.io/simracing-setups/
 const BASE = '/simracing-setups/'
 
-/** Фото лендинга из public/img — то же правило, что в scripts/prerender.mjs */
+/** Фото лендинга из public/img по имени файла — то же правило, что в scripts/prerender.mjs */
 function siteImages() {
   const images: Record<string, string> = {}
-  for (const name of ['hero', 'about', 'final']) {
-    const file = ['webp', 'jpg'].map((ext) => `${name}.${ext}`).find((f) => existsSync(resolve('public/img', f)))
-    if (file) images[name] = `${BASE}img/${file}`
+  const files = readdirSync(resolve('public/img')).sort((x, y) => (y.endsWith('.webp') ? 1 : 0) - (x.endsWith('.webp') ? 1 : 0))
+  for (const f of files) {
+    const m = f.match(/^([a-z0-9-]+)\.(webp|jpg)$/)
+    if (m && !images[m[1]]) images[m[1]] = `${BASE}img/${f}`
   }
   return images
 }

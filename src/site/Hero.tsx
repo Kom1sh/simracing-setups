@@ -2,11 +2,7 @@ import { BASE, LOCALES, pagePath, type Locale } from '../i18n/locale'
 import type { LandingContent } from './content'
 
 /** Картинки, которые есть в public/img на момент сборки: без файла блок выглядит нормально и без фото */
-export interface SiteImages {
-  hero?: string
-  about?: string
-  final?: string
-}
+export type SiteImages = Record<string, string | undefined>
 
 /** Знак: жёлтый квадрат с поворотом — поворот и есть то место, где теряется время */
 export function Mark() {
@@ -57,7 +53,12 @@ export function SiteHeader({ c, lang }: { c: LandingContent; lang: Locale }) {
 export function Hero({ c, lang, img }: { c: LandingContent; lang: Locale; img: SiteImages }) {
   return (
     <section className="hero" aria-labelledby="hero-title">
-      {img.hero && <img className="hero__photo" src={img.hero} width={1024} height={1536} alt={c.hero.photoAlt} fetchPriority="high" />}
+      {img.hero && (
+        <picture className="hero__picture">
+          {img['hero-wide'] && <source media="(max-width: 1000px)" srcSet={img['hero-wide']} width={1536} height={1024} />}
+          <img className="hero__photo" src={img.hero} width={1024} height={1536} alt={c.hero.photoAlt} fetchPriority="high" />
+        </picture>
+      )}
       <div className="hero__inner">
         <h1 id="hero-title" className="hero__title">
           {c.hero.title}
@@ -91,7 +92,6 @@ export function Demo({ c, lang }: { c: LandingContent; lang: Locale }) {
           <h2 id="demo-title" className="title-2">
             {c.demo.title}
           </h2>
-          <p className="demo__intro">{c.demo.intro}</p>
         </div>
         <div className="example" data-examples="">
           <div className="example__tabs" role="tablist" aria-label={h.examplesLabel}>

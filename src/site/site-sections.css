@@ -492,6 +492,30 @@
   font-size: 19px;
 }
 
+/* Фото в карточках и блоках — появляются, если файл есть в public/img */
+.card__photo,
+.step__photo {
+  width: calc(100% + 52px);
+  max-width: none;
+  margin: -26px -26px 8px;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: var(--l-radius-lg) var(--l-radius-lg) 0 0;
+}
+
+.step__photo {
+  width: calc(100% + 48px);
+  margin: -24px -24px 0;
+}
+
+.band__photo {
+  width: 100%;
+  margin-bottom: var(--s-lg);
+  aspect-ratio: 21 / 9;
+  object-fit: cover;
+  border-radius: var(--l-radius-lg);
+}
+
 @media (max-width: 1000px) {
   .band__head,
   .about__inner {

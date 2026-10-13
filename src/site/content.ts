@@ -36,7 +36,7 @@ export interface LandingContent {
     photoAlt: string
     examples: HeroExample[]
   }
-  demo: { title: string; intro: string }
+  demo: { title: string }
   about: { title: string; paragraphs: string[]; photoAlt: string; card: { label: string; text: string } }
   how: { title: string; intro: string; steps: { title: string; text: string }[] }
   handling: {
@@ -52,7 +52,7 @@ export interface LandingContent {
   preview: { title: string; text: string; points: string[]; alt: string; cta: string }
   faq: { title: string; items: { q: string; a: string }[] }
   final: { title: string; text: string; cta: string; photoAlt: string }
-  footer: { project: string; code: string; data: string }
+  footer: { tagline: string; product: string; account: string; language: string; example: string; cabinet: string; copyright: string; maps: string; mapsOsm: string }
 }
 
 export const content: Record<Locale, LandingContent> = { en, ru }

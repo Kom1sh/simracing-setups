@@ -307,25 +307,28 @@ dd {
   color: #d5d8de;
 }
 
-/* Подвал — чёрный */
+/* Подвал — чёрный: о продукте, колонки ссылок, нижняя строка */
 .site-foot {
   background: var(--l-black);
   color: var(--l-mute-dark);
-  font-size: 14px;
+  font-size: 15px;
 }
 
 .site-foot__inner {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--s-md) var(--s-xl);
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) repeat(3, minmax(0, 1fr));
+  gap: var(--s-xl);
   max-width: var(--page-max);
   margin: 0 auto;
-  padding: var(--s-xl) var(--gutter);
+  padding: clamp(56px, 7vw, 88px) var(--gutter) var(--s-xl);
 }
 
-.site-foot a {
-  color: #fff;
+.site-foot__about {
+  display: grid;
+  justify-items: start;
+  align-content: start;
+  gap: var(--s-md);
+  max-width: 36ch;
 }
 
 .site-foot__brand {
@@ -333,27 +336,68 @@ dd {
   align-items: center;
   gap: 10px;
   color: #fff;
+  font-size: 20px;
   font-weight: 800;
-  font-stretch: 115%;
+  font-stretch: 118%;
+  line-height: 1.1;
+  text-decoration: none;
+  white-space: nowrap;
 }
 
-.lang--foot {
-  margin-left: auto;
-  background: var(--l-graphite-2);
+.site-foot__col {
+  display: grid;
+  align-content: start;
+  gap: 10px;
 }
 
-.lang--foot a {
+.site-foot__title {
+  margin-bottom: 4px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.site-foot__col a {
+  color: var(--l-mute-dark);
+  text-decoration: none;
+}
+
+.site-foot__col a:hover,
+.site-foot__col a[aria-current='page'] {
+  color: #fff;
+}
+
+.site-foot__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--s-sm) var(--s-lg);
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: var(--s-lg) var(--gutter) var(--s-xl);
+  border-top: 1px solid var(--l-graphite-line);
+  font-size: 13px;
+}
+
+.site-foot__bottom a {
   color: var(--l-mute-dark);
 }
 
-.lang--foot a.is-selected {
-  background: var(--accent);
-  color: #000;
+.site-foot__bottom a:hover {
+  color: #fff;
 }
 
 @media (max-width: 1000px) {
   .site-nav {
     display: none;
+  }
+
+  .site-foot__inner {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .site-foot__about {
+    grid-column: 1 / -1;
   }
 }
 
@@ -376,7 +420,11 @@ dd {
     font-size: 19px;
   }
 
-  .lang--foot {
-    margin-left: 0;
+  .site-foot__inner {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .site-foot__about {
+    grid-column: 1 / -1;
   }
 }

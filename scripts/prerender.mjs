@@ -1,6 +1,6 @@
 // После vite build: раскладывает страницы по языкам, пишет корень, sitemap и 404.
 // Рендер берёт из SSR-сборки src/site/render.tsx (.ssr/render.js).
-import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 import { pathToFileURL } from 'node:url'
 
@@ -30,11 +30,11 @@ const preload = (lang) =>
     .map((f) => `<link rel="preload" as="font" type="font/woff2" crossorigin href="/simracing-setups/assets/${f}" />`)
     .join('\n    ')
 
-// Фото для лендинга (ТЗ — в README): что лежит в public/img, то и попадёт на страницу
+// Фото для лендинга (ТЗ — docs/images-brief.md): всё из public/img по имени файла, WebP важнее JPG
 const images = {}
-for (const name of ['hero', 'about', 'final']) {
-  const file = ['webp', 'jpg'].map((ext) => `${name}.${ext}`).find((f) => existsSync(resolve('public/img', f)))
-  if (file) images[name] = `/simracing-setups/img/${file}`
+for (const f of readdirSync(resolve('public/img')).sort((x, y) => (y.endsWith('.webp') ? 1 : 0) - (x.endsWith('.webp') ? 1 : 0))) {
+  const m = f.match(/^([a-z0-9-]+)\.(webp|jpg)$/)
+  if (m && !images[m[1]]) images[m[1]] = `/simracing-setups/img/${f}`
 }
 
 for (const lang of ['en', 'ru']) {
