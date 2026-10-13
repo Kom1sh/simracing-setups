@@ -68,6 +68,7 @@
   aspect-ratio: 4 / 5;
   max-height: 640px;
   object-fit: cover;
+  object-position: 50% 12%;
 }
 
 .hero__visual.has-photo .example {
@@ -199,7 +200,8 @@
   }
 
   .hero__visual.has-photo .example {
-    position: static;
+    position: relative;
+    z-index: 1;
     width: auto;
     margin: -48px 16px 0;
   }
