@@ -1,7 +1,6 @@
 import { useEffect, useId, useState, type FormEvent } from 'react'
 import { at } from '../i18n/auth'
 import { pagePath } from '../i18n/locale'
-import { SPA } from '../data/heroTrack'
 import { getSession, isValidEmail, PASSWORD_MIN, safeNext, signIn, signUp, type AuthError } from '../lib/session'
 
 type Mode = 'login' | 'signup'
@@ -64,9 +63,6 @@ export function AuthPage({ mode }: { mode: Mode }) {
         <a className="auth__wordmark" href={pagePath('home')}>
           {at.back}
         </a>
-        <svg className="auth__map" viewBox={SPA.viewBox} aria-hidden="true">
-          <path d={SPA.path} />
-        </svg>
         <div className="auth__pitch">
           <p className="auth__band-title">{at.bandTitle}</p>
           <ul className="auth__points">
