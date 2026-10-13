@@ -473,19 +473,7 @@ export default function App({ session, onSignOut }: { session: Session; onSignOu
               }
             />
           )}
-          {tab === 'assistant' && (
-            <AssistantPanel
-              car={car}
-              track={track}
-              conditions={draft.conditions}
-              conditionGroups={conditionGroups}
-              setup={draft.setup}
-              setupGroups={carSetupGroups}
-              onSetValue={setValue('setup')}
-              onEditConditions={() => switchTab('track', true)}
-              say={say}
-            />
-          )}
+          {tab === 'assistant' && <AssistantPanel />}
         </div>
 
         {tab !== 'assistant' && (

@@ -1,35 +1,29 @@
-import { forwardRef } from 'react'
+import { forwardRef, type ReactNode } from 'react'
 import { a } from '../i18n/dashboard'
-import type { ParamGroup, Values } from '../data/types'
-import { planChange } from './apply'
 import { RecommendationCard } from './RecommendationCard'
-import type { ApiResult, Recommendation } from './types'
+import type { ApiResult } from './types'
 
 interface Props {
   loading: boolean
   result: ApiResult | null
-  demo: boolean
   apiUrl: string | null
-  groups: ParamGroup[]
-  setup: Values
-  applied: Record<string, unknown>
-  onApply: (rec: Recommendation) => void
-  onUndo: (rec: Recommendation) => void
   onRetry: () => void
   onEdit: () => void
 }
 
-/** Правая колонка ассистента: одно из состояний — ожидание, поиск, найдено, не найдено, ошибка */
-export const AssistantResults = forwardRef<HTMLHeadingElement, Props>(function AssistantResults(props, titleRef) {
-  const { loading, result } = props
+/** EGO-02: правая колонка — ожидание, поиск, найдено, правила нет, ошибка */
+export const AssistantResults = forwardRef<HTMLHeadingElement, Props>(function AssistantResults({ loading, result, apiUrl, onRetry, onEdit }, titleRef) {
+  const title = (text: string) => (
+    <h2 ref={titleRef} tabIndex={-1} className="answer__title">
+      {text}
+    </h2>
+  )
 
-  let body: React.ReactNode
+  let body: ReactNode
   if (loading) {
     body = (
       <div className="answer answer--loading">
-        <h2 ref={titleRef} tabIndex={-1} className="answer__title">
-          {a.loading}
-        </h2>
+        {title(a.loading)}
         <div className="answer__skeleton" aria-hidden="true">
           <span />
           <span />
@@ -40,62 +34,46 @@ export const AssistantResults = forwardRef<HTMLHeadingElement, Props>(function A
   } else if (!result) {
     body = (
       <div className="answer answer--idle">
-        <h2 ref={titleRef} tabIndex={-1} className="answer__title">
-          {a.idleTitle}
-        </h2>
+        {title(a.idleTitle)}
         <p className="answer__text">{a.idleText}</p>
       </div>
     )
-  } else if (result.kind === 'found') {
-    const recs = result.data.recommendations
+  } else if (result.kind === 'match') {
     body = (
       <div className="answer answer--found">
-        <h2 ref={titleRef} tabIndex={-1} className="answer__title">
-          {a.foundTitle(recs.length)}
-        </h2>
+        {title(a.foundTitle(result.recommendations.length))}
         <p className="answer__text">{a.foundHint}</p>
         <div className="answer__list">
-          {recs.map((rec) => (
-            <RecommendationCard
-              key={rec.rule_id}
-              rec={rec}
-              plan={planChange(props.groups, props.setup, rec)}
-              applied={rec.rule_id in props.applied}
-              onApply={() => props.onApply(rec)}
-              onUndo={() => props.onUndo(rec)}
-            />
+          {result.recommendations.map((rec) => (
+            <RecommendationCard key={rec.rule_id} rec={rec} demo={result.demo} />
           ))}
         </div>
       </div>
     )
-  } else if (result.kind === 'not_found') {
+  } else if (result.kind === 'no_match') {
     body = (
       <div className="answer answer--empty">
-        <h2 ref={titleRef} tabIndex={-1} className="answer__title">
-          {a.notFoundTitle}
-        </h2>
-        <p className="answer__text">{result.data.message || a.notFoundText}</p>
-        <button type="button" className="button button--ghost" onClick={props.onEdit}>
+        {title(a.notFoundTitle)}
+        <p className="answer__text">{result.message || a.notFoundText}</p>
+        <button type="button" className="button button--ghost" onClick={onEdit}>
           {a.editRequest}
         </button>
       </div>
     )
   } else {
-    const [title, text] =
+    const [heading, text] =
       result.kind === 'network'
         ? [a.networkTitle, a.networkText]
         : result.kind === 'server'
-          ? [a.serverTitle(result.status), a.serverText]
+          ? [a.serverTitle(result.status), result.message || a.serverText]
           : result.kind === 'validation'
-            ? [a.validationTitle, a.validationText]
+            ? [a.validationTitle, result.message || a.validationText]
             : [a.badResponseTitle, a.badResponseText]
     body = (
       <div className="answer answer--error" role="alert">
-        <h2 ref={titleRef} tabIndex={-1} className="answer__title">
-          {title}
-        </h2>
+        {title(heading)}
         <p className="answer__text">{text}</p>
-        {result.kind === 'validation' && (
+        {result.kind === 'validation' && result.fields.length > 0 && (
           <ul className="answer__fields">
             {result.fields.map((f, i) => (
               <li key={i}>
@@ -104,7 +82,7 @@ export const AssistantResults = forwardRef<HTMLHeadingElement, Props>(function A
             ))}
           </ul>
         )}
-        <button type="button" className="button button--primary" onClick={result.kind === 'validation' ? props.onEdit : props.onRetry}>
+        <button type="button" className="button button--primary" onClick={result.kind === 'validation' ? onEdit : onRetry}>
           {result.kind === 'validation' ? a.editRequest : a.retry}
         </button>
       </div>
@@ -113,7 +91,7 @@ export const AssistantResults = forwardRef<HTMLHeadingElement, Props>(function A
 
   return (
     <section className="assistant__results" aria-live="polite" aria-busy={loading}>
-      {props.demo ? <p className="assistant__mode">{a.demo}</p> : props.apiUrl && <p className="assistant__mode assistant__mode--live">{a.apiLabel(props.apiUrl)}</p>}
+      {apiUrl ? <p className="assistant__mode assistant__mode--live">{a.apiLabel(apiUrl)}</p> : <p className="assistant__mode">{a.demo}</p>}
       {body}
     </section>
   )

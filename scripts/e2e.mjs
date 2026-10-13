@@ -27,7 +27,7 @@ const ask = async (symptom, phase) => {
   await page.getByRole('tab', { name: 'Assistant' }).click()
   await page.getByText(symptom, { exact: true }).click()
   if (phase) await page.getByRole('radio', { name: phase }).click()
-  await page.getByRole('button', { name: 'Find changes' }).click()
+  await page.getByRole('button', { name: 'Find a change' }).click()
 }
 
 await check('кабинет без сессии уводит на вход', async () => {
@@ -72,21 +72,30 @@ await check('выход, неверный пароль, вход', async () => {
   await page.waitForURL(/\/en\/app\/$/)
 })
 
-await check('ассистент: без симптома не отправляет', async () => {
+await check('ассистент: пустую жалобу не отправляет', async () => {
   await page.goto(app())
   await page.getByRole('tab', { name: 'Assistant' }).click()
-  await page.getByRole('button', { name: 'Find changes' }).click()
-  await page.getByText('Choose what the car is doing.').waitFor()
+  await page.getByRole('button', { name: 'Find a change' }).click()
+  await page.getByText('Choose a quick pick or describe the problem in a few words.').waitFor()
 })
 
-await check('ассистент: найдено, применить и отменить', async () => {
+await check('ассистент: подсказки собирают жалобу, найдено', async () => {
   await page.goto(app())
-  await ask('Understeer', 'Mid-corner')
+  await page.getByRole('tab', { name: 'Assistant' }).click()
+  await page.getByText('Understeer', { exact: true }).click()
+  await page.getByRole('radio', { name: 'Mid-corner' }).click()
+  await page.getByText('«Недостаточная поворачиваемость в середине поворота»').waitFor()
+  await page.getByRole('button', { name: 'Find a change' }).click()
   await page.getByRole('heading', { name: /^Found/ }).waitFor()
-  await page.getByRole('button', { name: 'Apply to setup' }).first().click()
-  await page.getByText(/→ .*Test it on track/).waitFor()
-  await page.getByRole('button', { name: 'Undo' }).first().click()
-  await page.getByText(/change undone/).waitFor()
+  await page.locator('.rec').first().getByText('Decrease').waitFor()
+})
+
+await check('ассистент: жалоба своими словами', async () => {
+  await page.goto(app())
+  await page.getByRole('tab', { name: 'Assistant' }).click()
+  await page.getByLabel('In your own words').fill('машину подбрасывает на бордюрах в шикане')
+  await page.getByRole('button', { name: 'Find a change' }).click()
+  await page.getByRole('heading', { name: /^Found/ }).waitFor()
 })
 
 await check('ассистент: правила нет', async () => {
@@ -106,6 +115,17 @@ if (!API) {
     await page.goto(app('?mock=offline'))
     await ask('Wheelspin on exit')
     await page.getByRole('heading', { name: 'The server is not responding' }).waitFor()
+  })
+}
+
+if (API) {
+  await check('ассистент: 500 от бэкенда с его сообщением (фейковый бэкенд: «#500» в жалобе)', async () => {
+    await page.goto(app())
+    await page.getByRole('tab', { name: 'Assistant' }).click()
+    await page.getByLabel('In your own words').fill('#500 проверка ошибки')
+    await page.getByRole('button', { name: 'Find a change' }).click()
+    await page.getByRole('heading', { name: 'Server error (500)' }).waitFor()
+    await page.getByText('Внутренняя ошибка сервера, попробуйте повторить запрос позже').waitFor()
   })
 }
 
