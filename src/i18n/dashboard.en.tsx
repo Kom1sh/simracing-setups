@@ -54,17 +54,6 @@ export const en: typeof ru = {
   },
   trackGone: 'track removed',
   carGone: 'car removed',
-  footerData: (
-    <>
-      Track maps: <a href="https://github.com/bacinger/f1-circuits">bacinger/f1-circuits</a> (MIT) and{' '}
-      <a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors</a> (ODbL). Lap length and turn count come from open sources; track character is an estimate.
-    </>
-  ),
-  footerProject: (
-    <>
-      A university project. Code: <a href="https://github.com/Kom1sh/simracing-setups">github.com/Kom1sh/simracing-setups</a>.
-    </>
-  ),
   user: {
     menu: 'Account',
     signOut: 'Log out',

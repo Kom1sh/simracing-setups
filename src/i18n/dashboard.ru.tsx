@@ -55,17 +55,6 @@ export const ru = {
   },
   trackGone: 'трасса удалена',
   carGone: 'машина удалена',
-  footerData: (
-    <>
-      Схемы трасс: <a href="https://github.com/bacinger/f1-circuits">bacinger/f1-circuits</a> (MIT) и данные{' '}
-      <a href="https://www.openstreetmap.org/copyright">© участники OpenStreetMap</a> (ODbL). Длина и число поворотов — по открытым источникам, характер трассы — оценка.
-    </>
-  ),
-  footerProject: (
-    <>
-      Учебный проект. Код — <a href="https://github.com/Kom1sh/simracing-setups">github.com/Kom1sh/simracing-setups</a>.
-    </>
-  ),
   user: {
     menu: 'Аккаунт',
     signOut: 'Выйти',
