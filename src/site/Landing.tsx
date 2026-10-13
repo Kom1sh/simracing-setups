@@ -2,56 +2,10 @@ import type { ReactNode } from 'react'
 import { BASE, LOCALES, pagePath, type Locale } from '../i18n/locale'
 import type { LandingContent } from './content'
 import { HandlingDiagram } from './HandlingDiagram'
+import { SymptomDiagram } from './SymptomDiagram'
 import { Demo, Hero, Mark, SiteHeader, type SiteImages } from './Hero'
 
-const PHASES = { en: ['Entry', 'Mid-corner', 'Exit'], ru: ['Вход', 'Середина', 'Выход'] }
-const CLASSES = { en: ['GT3', 'GT4', 'GT2', 'Cup'], ru: ['GT3', 'GT4', 'GT2', 'Кубковые'] }
-
-/** Мини-интерфейсы в карточках шагов — показать, а не описать */
-function StepVisual({ step, c, lang }: { step: number; c: LandingContent; lang: Locale }) {
-  const ex = c.hero.examples
-  if (step === 0)
-    return (
-      <div className="mini" aria-hidden="true">
-        {ex.map((e, i) => (
-          <span key={e.id} className={i === 0 ? 'mini__row is-on' : 'mini__row'}>
-            {e.chip}
-          </span>
-        ))}
-        <span className="mini__seg">
-          {PHASES[lang].map((x, i) => (
-            <span key={x} className={i === 1 ? 'is-on' : undefined}>
-              {x}
-            </span>
-          ))}
-        </span>
-      </div>
-    )
-  if (step === 1)
-    return (
-      <div className="mini" aria-hidden="true">
-        <span className="mini__head">
-          {ex[0].param} <b>{c.hero.directions[ex[0].direction]}</b>
-        </span>
-        <span className="mini__strong">{ex[0].action}</span>
-        <span className="mini__mute">{ex[0].effect}</span>
-      </div>
-    )
-  return (
-    <div className="mini" aria-hidden="true">
-      <span className="mini__seg">
-        {CLASSES[lang].map((x, i) => (
-          <span key={x} className={i === 0 ? 'is-on' : undefined}>
-            {x}
-          </span>
-        ))}
-      </span>
-      <span className="mini__mute">{lang === 'ru' ? 'Спа-Франкоршам, 7,004 км' : 'Spa-Francorchamps, 7.004 km'}</span>
-    </div>
-  )
-}
-
-/** Блок страницы: тон фона и заголовок слева, пояснение справа — как у girlvoice.ai */
+/** Блок страницы: тон фона, заголовок и пояснение под ним */
 function Band({ id, tone, title, intro, children, labelId }: { id?: string; tone: 'light' | 'grey' | 'dark'; title: string; intro?: string; children: ReactNode; labelId: string }) {
   return (
     <section id={id} className={`band band--${tone}`} aria-labelledby={labelId}>
@@ -105,11 +59,12 @@ export function Landing({ c, lang, img }: { c: LandingContent; lang: Locale; img
           <ol className="steps">
             {c.how.steps.map((s, i) => (
               <li key={s.title} className="step">
-                {img[`step-${i + 1}`] && <img className="step__photo" src={img[`step-${i + 1}`]} width={1536} height={1024} loading="lazy" decoding="async" alt="" />}
-                <span className="step__num" aria-hidden="true">
-                  {i + 1}
-                </span>
-                <StepVisual step={i} c={c} lang={lang} />
+                <div className="step__media">
+                  {img[`step-${i + 1}`] && <img src={img[`step-${i + 1}`]} width={1200} height={660} loading="lazy" decoding="async" alt="" />}
+                  <span className="step__num" aria-hidden="true">
+                    {i + 1}
+                  </span>
+                </div>
                 <h3 className="title-3">{s.title}</h3>
                 <p>{s.text}</p>
               </li>
@@ -138,32 +93,43 @@ export function Landing({ c, lang, img }: { c: LandingContent; lang: Locale; img
         <Band id="symptoms" tone="light" title={c.symptoms.title} intro={c.symptoms.intro} labelId="symptoms-title">
           <div className="symptom-grid">
             {c.symptoms.items.map((s) => (
-              <article key={s.id} id={s.id} className={img[`symptom-${s.id}`] ? 'card has-photo' : 'card'}>
-                {img[`symptom-${s.id}`] && <img className="card__photo" src={img[`symptom-${s.id}`]} width={1536} height={1024} loading="lazy" decoding="async" alt="" />}
-                <h3 className="title-3">{s.title}</h3>
-                <p>{s.text}</p>
-                <p className="card__label">{c.symptoms.paramsLabel}</p>
-                <ul className="tags">
-                  {s.params.map((p) => (
-                    <li key={p}>{p}</li>
-                  ))}
-                </ul>
+              <article key={s.id} id={s.id} className="sym">
+                <div className="sym__diagram">
+                  <SymptomDiagram id={s.id} />
+                </div>
+                <h3 className="sym__title">{s.title}</h3>
+                <p className="sym__text">{s.text}</p>
+                <p className="sym__params">
+                  <span>{c.symptoms.paramsLabel}:</span> {s.params.join(', ')}
+                </p>
               </article>
             ))}
           </div>
         </Band>
 
-        <Band tone="grey" title={c.rules.title} intro={c.rules.intro} labelId="rules-title">
-          {img.rules && <img className="band__photo" src={img.rules} width={1536} height={1024} loading="lazy" decoding="async" alt="" />}
-          <ul className="rule-grid">
-            {c.rules.items.map((r) => (
-              <li key={r.title} className="card">
-                <h3 className="title-3">{r.title}</h3>
-                <p>{r.text}</p>
-              </li>
-            ))}
-          </ul>
-        </Band>
+        <section className={img.rules ? 'rules has-photo' : 'rules'} aria-labelledby="rules-title">
+          {img.rules && <img className="rules__photo" src={img.rules} width={1516} height={458} loading="lazy" decoding="async" alt="" />}
+          <div className="rules__inner">
+            <div className="rules__head">
+              <h2 id="rules-title" className="title-2">
+                {c.rules.title}
+              </h2>
+              <p className="rules__intro">{c.rules.intro}</p>
+            </div>
+            <ul className="rules__list">
+              {c.rules.items.map((r) => (
+                <li key={r.title} className="rules__item">
+                  <svg className="rules__check" viewBox="0 0 24 24" aria-hidden="true">
+                    <rect width="24" height="24" rx="7" />
+                    <path d="M7 12.5l3.2 3.2L17 9" />
+                  </svg>
+                  <h3 className="title-3">{r.title}</h3>
+                  <p>{r.text}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
 
         <Band tone="light" title={c.numbers.title} intro={c.numbers.intro} labelId="numbers-title">
           <dl className="numbers">
@@ -193,18 +159,23 @@ export function Landing({ c, lang, img }: { c: LandingContent; lang: Locale; img
           </div>
         </Band>
 
-        <Band id="faq" tone="light" title={c.faq.title} labelId="faq-title">
-          <div className="faq">
-            {c.faq.items.map((f, i) => (
-              <details key={f.q} className="faq__item" open={i === 0}>
-                <summary>
-                  <h3>{f.q}</h3>
-                </summary>
-                <p>{f.a}</p>
-              </details>
-            ))}
+        <section id="faq" className="band band--light" aria-labelledby="faq-title">
+          <div className="band__inner faq-layout">
+            <h2 id="faq-title" className="title-2 faq-layout__title">
+              {c.faq.title}
+            </h2>
+            <div className="faq">
+              {c.faq.items.map((f, i) => (
+                <details key={f.q} className="faq__item" open={i === 0}>
+                  <summary>
+                    <h3>{f.q}</h3>
+                  </summary>
+                  <p>{f.a}</p>
+                </details>
+              ))}
+            </div>
           </div>
-        </Band>
+        </section>
 
         <section className={img.final ? 'final has-photo' : 'final'} aria-labelledby="final-title">
           {img.final && <img className="final__photo" src={img.final} width={1536} height={1024} loading="lazy" decoding="async" alt={c.final.photoAlt} />}

@@ -119,7 +119,7 @@ export const en: LandingContent = {
     cta: 'Open the dashboard',
   },
   faq: {
-    title: 'Questions',
+    title: 'Common questions',
     items: [
       { q: 'What is understeer, and what is oversteer?', a: 'Understeer is when the front tyres lose grip first and the car runs wide of the line you steer. Oversteer is when the rear tyres lose grip first and the back of the car slides out. Where in the corner it happens, on entry, mid-corner or on exit, points to different setup changes.' },
       { q: 'Which sims and cars does it support?', a: 'The dashboard covers GT3, GT4, GT2 and cup cars on 28 circuits with a general GT3 adjustment template, so there are no separate LMU or ACC setups yet. The first assistant rules cover one car on iRacing ovals.' },
@@ -130,7 +130,7 @@ export const en: LandingContent = {
       { q: 'Who is building it?', a: 'A student team of six, sim racers, developers and analysts, as a university product project. The code is open on GitHub.' },
     ],
   },
-  final: { title: 'Bring us your worst corner', text: 'Create an account and describe what the car does in the corner that costs you the most time.', cta: 'Try it free', photoAlt: 'A race car cornering at sunset' },
+  final: { title: 'Start with one change', text: 'Describe what the car does wrong and the assistant will tell you which adjustment to change. Free, all you need is an email.', cta: 'Try it free', photoAlt: 'A race car cornering at sunset' },
   footer: {
     tagline: 'An iRacing setup assistant: from a symptom to a specific change.',
     product: 'Product',
