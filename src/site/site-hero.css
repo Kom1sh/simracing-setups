@@ -1,39 +1,35 @@
-/* Hero: единственная чёрная полоса страницы. Смелость — здесь: узкий гигантский заголовок и живая схема трассы. */
+/* Hero: понятный заголовок обычной ширины слева, пример ответа (и фото, если есть) справа */
 
 .hero {
-  background: var(--band);
-  color: var(--on-band);
-}
-
-.hero :focus-visible {
-  outline-color: var(--on-band);
+  border-bottom: 1px solid var(--line);
 }
 
 .hero__inner {
   display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
   align-items: center;
   gap: var(--s-xl) clamp(32px, 5vw, 80px);
   max-width: var(--page-max);
   margin: 0 auto;
-  padding: clamp(40px, 6vw, 88px) var(--gutter) clamp(48px, 6vw, 88px);
+  padding: clamp(40px, 6vw, 88px) var(--gutter);
 }
 
 .hero__title {
-  font-size: clamp(64px, 11vw, 184px);
-  font-weight: 720;
-  font-stretch: 36%;
-  line-height: 0.86;
-  letter-spacing: 0.005em;
+  max-width: 17ch;
+  color: var(--ink);
+  font-size: clamp(36px, 4.6vw, 64px);
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: -0.015em;
   text-wrap: balance;
 }
 
 .hero__lead {
-  max-width: 46ch;
-  margin-top: clamp(24px, 3vw, 40px);
-  color: #d4d4d4;
-  font-size: clamp(17px, 1.4vw, 19px);
-  line-height: 1.5;
+  max-width: 52ch;
+  margin-top: var(--s-lg);
+  color: var(--body);
+  font-size: clamp(17px, 1.35vw, 19px);
+  line-height: 1.55;
 }
 
 .hero__actions {
@@ -51,210 +47,166 @@
 
 .hero__note {
   margin-top: var(--s-md);
-  color: var(--on-band-mute);
+  color: var(--mute);
   font-size: 14px;
 }
 
-/* Пример: симптомы, схема Спа, ответ ассистента */
-.demo {
-  display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
-  grid-template-areas:
-    'chips chips'
-    'map radio';
-  gap: var(--s-lg) var(--s-lg);
-  align-items: start;
+/* Правая колонка: серое поле с карточкой; с фото — карточка заходит на снимок */
+.hero__visual {
+  position: relative;
+  padding: clamp(20px, 3vw, 40px);
+  background: var(--surface);
 }
 
-.demo__chips {
-  grid-area: chips;
+.hero__visual.has-photo {
+  padding: 0 0 0 clamp(24px, 4vw, 64px);
+  background: none;
+}
+
+.hero__photo {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  max-height: 640px;
+  object-fit: cover;
+}
+
+.hero__visual.has-photo .example {
+  position: absolute;
+  bottom: clamp(-32px, -2vw, -16px);
+  left: 0;
+  width: min(440px, 88%);
+}
+
+/* Пример: вкладки, жалоба, ответ — как карточка в кабинете */
+.example {
+  display: grid;
+  gap: var(--s-md);
+  padding: 20px;
+  border: 1px solid var(--ink);
+  background: var(--canvas);
+}
+
+.example__tabs {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
 }
 
-.demo__chip {
-  height: 36px;
-  padding: 0 12px;
-  border: 1px solid var(--band-line);
+.example__tab {
+  min-height: 32px;
+  padding: 4px 10px;
+  border: 1px solid var(--control-border);
   border-radius: var(--r-control);
-  background: transparent;
-  color: var(--on-band);
-  font-size: 14px;
+  background: var(--canvas);
+  font-size: 13px;
   font-weight: 560;
 }
 
-.demo__chip:hover {
-  border-color: var(--on-band-mute);
+.example__tab:hover {
+  border-color: var(--ink);
 }
 
-.demo__chip[aria-checked='true'] {
-  border-color: var(--accent);
+.example__tab[aria-selected='true'] {
+  border-color: var(--ink);
   background: var(--accent);
   color: var(--on-accent);
 }
 
-.demo__map {
-  grid-area: map;
-}
-
-.demo__map svg {
-  display: block;
-  width: 100%;
-  height: auto;
-  max-height: 440px;
-  overflow: visible;
-}
-
-.demo__under {
-  fill: none;
-  stroke: var(--band-asphalt);
-  stroke-width: 34;
-  stroke-linejoin: round;
-  stroke-linecap: round;
-}
-
-.demo__track {
-  fill: none;
-  stroke: var(--on-band);
-  stroke-width: 6;
-  stroke-linejoin: round;
-  stroke-linecap: round;
-}
-
-.demo__corner {
-  fill: none;
-  stroke: var(--accent);
-  stroke-width: 9;
-}
-
-.demo__car {
-  fill: var(--on-band);
-  stroke: var(--band);
-  stroke-width: 5;
-}
-
-.demo.is-driving .demo__corner {
-  opacity: 0.35;
-}
-
-.radio {
-  grid-area: radio;
-  min-width: 0;
-}
-
-.radio__msg {
+.example__panel {
   display: grid;
   gap: var(--s-md);
 }
 
-.radio__corner {
-  color: var(--on-band-mute);
-  font-size: 13px;
-}
-
-.radio__who {
-  display: block;
+.example__label {
   margin-bottom: 4px;
-  color: var(--on-band-mute);
+  color: var(--mute);
   font-size: 13px;
-  font-weight: 420;
 }
 
-.radio__you {
+.example__quote {
   padding-left: 12px;
-  border-left: 2px solid var(--band-line);
-  color: #e6e6e6;
+  border-left: 3px solid var(--line);
+  color: var(--ink);
   font-size: 16px;
 }
 
-.radio__answer {
+.example__answer {
   padding-top: var(--s-md);
-  border-top: 2px solid var(--on-band);
+  border-top: 2px solid var(--ink);
 }
 
-.radio__param {
+.example__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px var(--s-md);
+}
+
+.example__param {
+  color: var(--ink);
   font-size: 22px;
-  font-weight: 700;
-  font-stretch: 68%;
-  line-height: 1.05;
+  font-weight: 720;
+  line-height: 1.15;
 }
 
-.radio__change {
-  margin-top: 4px;
-  font-size: clamp(44px, 4.6vw, 64px);
-  font-weight: 740;
-  font-stretch: 40%;
-  line-height: 0.9;
-  font-variant-numeric: tabular-nums;
-}
-
-.radio__facts {
-  display: grid;
-  gap: 10px;
-  margin-top: var(--s-md);
-  font-size: 15px;
-}
-
-.radio__facts dt {
-  color: var(--on-band-mute);
+.example__dir {
+  padding: 2px 8px;
+  background: var(--ink);
+  color: var(--canvas);
+  border-radius: var(--r-control);
   font-size: 13px;
+  font-weight: 600;
 }
 
-/* Один заход при загрузке: прорисовка схемы, машина выезжает, затем ответ. Без анимации — всё сразу. */
-@media (prefers-reduced-motion: no-preference) {
-  .js .demo__track {
-    stroke-dasharray: 1;
-    animation: track-draw 1.3s cubic-bezier(0.6, 0, 0.3, 1) both;
-  }
-
-  .js .demo__car {
-    animation: appear 0.2s ease-out 0.9s both;
-  }
-
-  .js .demo__corner,
-  .js .radio {
-    animation: appear 0.45s ease-out 2.4s both;
-  }
+.example__action {
+  margin-top: 6px;
+  color: var(--ink);
+  font-size: 16px;
+  font-weight: 560;
 }
 
-@keyframes track-draw {
-  from {
-    stroke-dashoffset: 1;
-  }
-  to {
-    stroke-dashoffset: 0;
-  }
+.example__facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-md);
+  margin-top: var(--s-md);
+  font-size: 14px;
 }
 
-@keyframes appear {
-  from {
-    opacity: 0;
-  }
+.example__facts dt {
+  color: var(--mute);
+  font-size: 12px;
 }
 
-@media (max-width: 1100px) {
+.example__meta {
+  margin-top: var(--s-md);
+  color: var(--mute);
+  font-size: 12px;
+}
+
+@media (max-width: 1000px) {
   .hero__inner {
     grid-template-columns: minmax(0, 1fr);
   }
 
+  .hero__visual.has-photo {
+    padding: 0;
+  }
 
-  .demo {
-    max-width: 640px;
+  .hero__photo {
+    aspect-ratio: 3 / 2;
+  }
+
+  .hero__visual.has-photo .example {
+    position: static;
+    width: auto;
+    margin: -48px 16px 0;
   }
 }
 
-@media (max-width: 560px) {
-  .demo {
-    grid-template-columns: 112px minmax(0, 1fr);
-    gap: var(--s-md);
-  }
-
-  .demo__map svg {
-    max-height: 180px;
-  }
-
-  .radio__you {
-    font-size: 15px;
+@media (max-width: 520px) {
+  .example__facts {
+    grid-template-columns: minmax(0, 1fr);
   }
 }

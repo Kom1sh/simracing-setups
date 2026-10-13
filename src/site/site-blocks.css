@@ -1,0 +1,141 @@
+/* Блоки, которых нет в кабинете: что такое сетап, схемы поворачиваемости, финал с фото */
+
+.about__body {
+  display: grid;
+  gap: var(--s-md);
+  font-size: 18px;
+}
+
+.about__body p {
+  max-width: 68ch;
+}
+
+.about__photo {
+  width: 100%;
+  margin-top: var(--s-md);
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+/* Недостаточная и избыточная поворачиваемость */
+.handling {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-lg) var(--s-xl);
+}
+
+.handling__item {
+  display: grid;
+  gap: var(--s-md);
+  align-content: start;
+}
+
+.handling__svg {
+  width: 100%;
+  height: auto;
+  padding: var(--s-md);
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.handling__road {
+  fill: none;
+  stroke: #c9c9c9;
+  stroke-width: 60;
+}
+
+.handling__edge {
+  fill: none;
+  stroke: var(--canvas);
+  stroke-width: 56;
+}
+
+.handling__planned {
+  fill: none;
+  stroke: var(--mute);
+  stroke-width: 2.5;
+  stroke-dasharray: 7 6;
+}
+
+.handling__actual {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+.handling__car {
+  fill: var(--ink);
+}
+
+.handling__nose {
+  fill: var(--accent);
+}
+
+.handling__item figcaption {
+  display: grid;
+  gap: 6px;
+}
+
+.handling__title {
+  color: var(--ink);
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.handling__legend {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-sm) var(--s-lg);
+  color: var(--mute);
+  font-size: 14px;
+}
+
+.handling__key {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.handling__key::before {
+  content: '';
+  width: 32px;
+  border-top: 3px solid var(--ink);
+}
+
+.handling__key--planned::before {
+  border-top: 2px dashed var(--mute);
+}
+
+/* Финал: с фото — две колонки */
+.final.has-photo {
+  grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
+  align-items: center;
+  column-gap: clamp(32px, 5vw, 80px);
+}
+
+.final__inner {
+  display: grid;
+  justify-items: start;
+  gap: var(--s-lg);
+}
+
+.final__photo {
+  order: 2;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+@media (max-width: 860px) {
+  .handling,
+  .final.has-photo {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .final__photo {
+    order: 0;
+  }
+}

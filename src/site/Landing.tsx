@@ -1,31 +1,20 @@
 import { BASE, LOCALES, pagePath, type Locale } from '../i18n/locale'
 import type { LandingContent } from './content'
-import { Hero, SiteHeader } from './Hero'
+import { HandlingDiagram } from './HandlingDiagram'
+import { Hero, SiteHeader, type SiteImages } from './Hero'
 
 const PHASES = { en: ['Entry', 'Mid-corner', 'Exit'], ru: ['Вход', 'Середина', 'Выход'] }
 const CLASSES = { en: ['GT3', 'GT4', 'GT2', 'Cup'], ru: ['GT3', 'GT4', 'GT2', 'Кубковые'] }
 
-/** Маленькие куски интерфейса кабинета рядом с шагами — показать, а не описать */
+/** Маленькие куски интерфейса рядом с шагами — показать, а не описать */
 function StepVisual({ step, c, lang }: { step: number; c: LandingContent; lang: Locale }) {
-  if (step === 2)
-    return (
-      <div className="ui ui--pick" aria-hidden="true">
-        <span className="ui__seg">
-          {CLASSES[lang].map((x, i) => (
-            <span key={x} className={i === 0 ? 'is-selected' : undefined}>
-              {x}
-            </span>
-          ))}
-        </span>
-        <span className="ui__line">{lang === 'ru' ? 'Спа-Франкоршам, 7,004 км' : 'Spa-Francorchamps, 7.004 km'}</span>
-      </div>
-    )
+  const ex = c.hero.examples
   if (step === 0)
     return (
-      <div className="ui ui--symptom" aria-hidden="true">
-        {c.hero.demos.map((d, i) => (
-          <span key={d.id} className={i === 0 ? 'ui__row is-selected' : 'ui__row'}>
-            {d.chip}
+      <div className="ui" aria-hidden="true">
+        {ex.map((e, i) => (
+          <span key={e.id} className={i === 0 ? 'ui__row is-selected' : 'ui__row'}>
+            {e.chip}
           </span>
         ))}
         <span className="ui__seg">
@@ -37,17 +26,42 @@ function StepVisual({ step, c, lang }: { step: number; c: LandingContent; lang: 
         </span>
       </div>
     )
-  const d = c.hero.demos[0]
+  if (step === 1)
+    return (
+      <div className="ui" aria-hidden="true">
+        <span className="ui__param">
+          {ex[0].param} <b>{c.hero.directions[ex[0].direction]}</b>
+        </span>
+        <span>{ex[0].action}</span>
+        <span className="ui__line">{ex[0].effect}</span>
+      </div>
+    )
   return (
-    <div className="ui ui--answer" aria-hidden="true">
-      <span className="ui__param">{d.param}</span>
-      <span className="ui__change">{d.change}</span>
-      <span className="ui__line">{d.effect}</span>
+    <div className="ui" aria-hidden="true">
+      <span className="ui__seg">
+        {CLASSES[lang].map((x, i) => (
+          <span key={x} className={i === 0 ? 'is-selected' : undefined}>
+            {x}
+          </span>
+        ))}
+      </span>
+      <span className="ui__line">{lang === 'ru' ? 'Спа-Франкоршам, 7,004 км' : 'Spa-Francorchamps, 7.004 km'}</span>
     </div>
   )
 }
 
-export function Landing({ c, lang }: { c: LandingContent; lang: Locale }) {
+function SectionHead({ id, title, intro }: { id: string; title: string; intro?: string }) {
+  return (
+    <div className="sec__head">
+      <h2 id={id} className="sec__title">
+        {title}
+      </h2>
+      {intro && <p className="sec__intro">{intro}</p>}
+    </div>
+  )
+}
+
+export function Landing({ c, lang, img }: { c: LandingContent; lang: Locale; img: SiteImages }) {
   return (
     <>
       <a className="skip-link" href="#main">
@@ -55,15 +69,20 @@ export function Landing({ c, lang }: { c: LandingContent; lang: Locale }) {
       </a>
       <SiteHeader c={c} lang={lang} />
       <main id="main">
-        <Hero c={c} lang={lang} />
+        <Hero c={c} lang={lang} img={img} />
+
+        <section className={img.about ? 'sec about has-photo' : 'sec about'} aria-labelledby="about-title">
+          <SectionHead id="about-title" title={c.about.title} />
+          <div className="about__body">
+            {c.about.paragraphs.map((p) => (
+              <p key={p}>{p}</p>
+            ))}
+            {img.about && <img className="about__photo" src={img.about} width={1536} height={1024} loading="lazy" decoding="async" alt={c.about.photoAlt} />}
+          </div>
+        </section>
 
         <section id="how" className="sec" aria-labelledby="how-title">
-          <div className="sec__head">
-            <h2 id="how-title" className="sec__title">
-              {c.how.title}
-            </h2>
-            <p className="sec__intro">{c.how.intro}</p>
-          </div>
+          <SectionHead id="how-title" title={c.how.title} intro={c.how.intro} />
           <ol className="steps">
             {c.how.steps.map((s, i) => (
               <li key={s.title} className="step">
@@ -78,13 +97,27 @@ export function Landing({ c, lang }: { c: LandingContent; lang: Locale }) {
           </ol>
         </section>
 
-        <section id="symptoms" className="sec" aria-labelledby="symptoms-title">
-          <div className="sec__head">
-            <h2 id="symptoms-title" className="sec__title">
-              {c.symptoms.title}
-            </h2>
-            <p className="sec__intro">{c.symptoms.intro}</p>
+        <section className="sec" aria-labelledby="handling-title">
+          <SectionHead id="handling-title" title={c.handling.title} intro={c.handling.intro} />
+          <div className="handling">
+            {c.handling.items.map((h) => (
+              <figure key={h.id} className="handling__item">
+                <HandlingDiagram kind={h.id} title={h.title} />
+                <figcaption>
+                  <h3 className="handling__title">{h.title}</h3>
+                  <p>{h.text}</p>
+                </figcaption>
+              </figure>
+            ))}
+            <p className="handling__legend">
+              <span className="handling__key handling__key--planned">{c.handling.planned}</span>
+              <span className="handling__key handling__key--actual">{c.handling.actual}</span>
+            </p>
           </div>
+        </section>
+
+        <section id="symptoms" className="sec" aria-labelledby="symptoms-title">
+          <SectionHead id="symptoms-title" title={c.symptoms.title} intro={c.symptoms.intro} />
           <div className="symptom-list">
             {c.symptoms.items.map((s) => (
               <article key={s.id} id={s.id} className="sym">
@@ -102,12 +135,7 @@ export function Landing({ c, lang }: { c: LandingContent; lang: Locale }) {
         </section>
 
         <section className="sec sec--surface" aria-labelledby="rules-title">
-          <div className="sec__head">
-            <h2 id="rules-title" className="sec__title">
-              {c.rules.title}
-            </h2>
-            <p className="sec__intro">{c.rules.intro}</p>
-          </div>
+          <SectionHead id="rules-title" title={c.rules.title} intro={c.rules.intro} />
           <ul className="rules">
             {c.rules.items.map((r) => (
               <li key={r.title} className="rule">
@@ -119,12 +147,7 @@ export function Landing({ c, lang }: { c: LandingContent; lang: Locale }) {
         </section>
 
         <section className="sec" aria-labelledby="numbers-title">
-          <div className="sec__head">
-            <h2 id="numbers-title" className="sec__title">
-              {c.numbers.title}
-            </h2>
-            <p className="sec__intro">{c.numbers.intro}</p>
-          </div>
+          <SectionHead id="numbers-title" title={c.numbers.title} intro={c.numbers.intro} />
           <div className="numbers">
             <dl>
               {c.numbers.rows.map((r) => (
@@ -159,11 +182,7 @@ export function Landing({ c, lang }: { c: LandingContent; lang: Locale }) {
         </section>
 
         <section id="faq" className="sec" aria-labelledby="faq-title">
-          <div className="sec__head">
-            <h2 id="faq-title" className="sec__title">
-              {c.faq.title}
-            </h2>
-          </div>
+          <SectionHead id="faq-title" title={c.faq.title} />
           <div className="faq">
             {c.faq.items.map((f, i) => (
               <details key={f.q} className="faq__item" open={i === 0}>
@@ -176,17 +195,20 @@ export function Landing({ c, lang }: { c: LandingContent; lang: Locale }) {
           </div>
         </section>
 
-        <section className="final" aria-labelledby="final-title">
-          <h2 id="final-title" className="final__title">
-            {c.final.title}
-          </h2>
-          <p className="final__text">{c.final.text}</p>
-          <a className="site-button site-button--lg" href={pagePath('signup', lang)} data-guest="">
-            {c.final.cta}
-          </a>
-          <a className="site-button site-button--lg" href={pagePath('app', lang)} data-user="" hidden>
-            {c.nav.dashboard}
-          </a>
+        <section className={img.final ? 'final has-photo' : 'final'} aria-labelledby="final-title">
+          {img.final && <img className="final__photo" src={img.final} width={1536} height={1024} loading="lazy" decoding="async" alt={c.final.photoAlt} />}
+          <div className="final__inner">
+            <h2 id="final-title" className="final__title">
+              {c.final.title}
+            </h2>
+            <p className="final__text">{c.final.text}</p>
+            <a className="site-button site-button--lg" href={pagePath('signup', lang)} data-guest="">
+              {c.final.cta}
+            </a>
+            <a className="site-button site-button--lg" href={pagePath('app', lang)} data-user="" hidden>
+              {c.nav.dashboard}
+            </a>
+          </div>
         </section>
       </main>
 
