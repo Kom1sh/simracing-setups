@@ -3,14 +3,14 @@ import type { LandingContent } from './content'
 export const en: LandingContent = {
   meta: {
     title: 'iRacing setup help by symptom: fix understeer and oversteer',
-    description: 'Describe what your car does (understeer on entry, loose on exit, nervous under braking) and get 1–3 iRacing setup changes in clicks, with the expected effect.',
+    description: 'Describe what your car does, from understeer on entry to a loose rear on exit, and get an iRacing setup change from a checked rule with its effect and limits.',
     ogAlt: 'Spa-Francorchamps track map with a setup change for understeer at Pouhon',
     siteName: 'Setups for sim racing',
   },
   nav: { skip: 'Skip to content', how: 'How it works', symptoms: 'Symptoms', faq: 'Questions', login: 'Log in', signup: 'Create account', dashboard: 'Open dashboard', language: 'Language' },
   hero: {
     title: 'Fix your iRacing setup by symptom',
-    lead: 'Tell it what the car does: pushing wide on entry, stepping out on exit, nervous under braking. You get one to three changes in clicks, what each should do and what to watch for.',
+    lead: 'Tell it what the car does: pushing wide on entry, stepping out on exit, nervous under braking. You get a setup change from a checked rule: what to adjust and by how much, what it should do and what to watch for.',
     cta: 'Create an account',
     login: 'Log in',
     note: 'Free while we are testing.',
@@ -42,9 +42,9 @@ export const en: LandingContent = {
     title: 'How it works',
     intro: 'The assistant sits on top of the usual iRacing setup screen. You keep driving your own setup and change it one step at a time.',
     steps: [
-      { title: 'Pick the car, track and conditions', text: 'GT3, GT4, GT2 and cup cars on 28 circuits. Air and track temperature, rubber on the racing line and water on track.' },
-      { title: 'Describe the symptom', text: 'Choose what the car does and where in the corner: entry, middle or exit. Add a sentence in your own words if you like.' },
-      { title: 'Apply one change and drive', text: 'You get one to three changes in clicks with the expected effect. Apply one, run three to five laps and compare.' },
+      { title: 'Describe the problem', text: 'Pick what the car does and where in the corner, or just write it in your own words.' },
+      { title: 'Get a change from a checked rule', text: 'What to adjust and by how much, the expected effect and the limits. If no checked rule fits, you are told so.' },
+      { title: 'Change one thing and drive', text: 'Make the change in the garage, run three to five laps and compare. Keep your setups in the dashboard.' },
     ],
   },
   symptoms: {
@@ -68,7 +68,7 @@ export const en: LandingContent = {
     items: [
       { title: 'Only rules with a source', text: 'Every answer comes from a rule with a source and a review status. Rules nobody has checked do not reach you.' },
       { title: '“No match” is an answer too', text: 'If no rule fits your car and symptom, the assistant says so instead of inventing a tip.' },
-      { title: 'Changes stay inside the ranges', text: 'Send your current setup and no change pushes an adjustment past the end of its range.' },
+      { title: 'Every answer is traceable', text: 'Each recommendation comes with its rule ID and basis, so you can see where it came from.' },
     ],
   },
   numbers: {
@@ -83,7 +83,7 @@ export const en: LandingContent = {
   },
   preview: {
     title: 'The dashboard behind it',
-    text: 'Track and weather, every GT3 adjustment grouped like the garage, a race fuel plan and a check for contradictions such as slicks in the rain. The assistant reads all of it.',
+    text: 'Track and weather, every GT3 adjustment grouped like the garage, a race fuel plan and a check for contradictions such as slicks in the rain. The assistant has its own tab next to it.',
     points: ['28 circuits with real track maps', 'GT3, GT4, GT2 and cup cars', 'Fuel plan for races up to 24 hours', 'Setups saved to your account and as files'],
     alt: 'The setup dashboard: Spa-Francorchamps track map, car choice and the tyre adjustments',
     cta: 'Open the dashboard',
@@ -92,14 +92,14 @@ export const en: LandingContent = {
     title: 'Questions',
     items: [
       { q: 'What is understeer, and what is oversteer?', a: 'Understeer is when the front tyres lose grip first and the car runs wide of the line you steer. Oversteer is when the rear tyres lose grip first and the back of the car slides out. Where in the corner it happens, on entry, mid-corner or on exit, points to different setup changes.' },
-      { q: 'Which sims and cars does it support?', a: 'The dashboard covers GT3, GT4, GT2 and cup cars on 28 circuits with a general GT3 adjustment template, so there are no separate LMU or ACC setups yet. Assistant rules are being written for iRacing first.' },
-      { q: 'Is this an AI chatbot?', a: 'No. The assistant matches your symptom against a base of setup rules, and each rule has a source and a review status. No language model writes the advice, and if no rule fits, it tells you so.' },
-      { q: 'Will it edit my .sto setup file?', a: 'Not yet. You get changes in clicks and steps to make in the garage. In the dashboard you can apply a change to your saved setup with one button and undo it.' },
+      { q: 'Which sims and cars does it support?', a: 'The dashboard covers GT3, GT4, GT2 and cup cars on 28 circuits with a general GT3 adjustment template, so there are no separate LMU or ACC setups yet. The first assistant rules cover one car on iRacing ovals.' },
+      { q: 'Is this an AI chatbot?', a: 'No. The assistant looks for a rule whose condition matches your complaint, and only rules that passed a review are used. No language model writes the advice, and if no rule fits, it tells you so.' },
+      { q: 'Will it edit my .sto setup file?', a: 'Not yet. You get the change to make in the garage: which adjustment, which way and by how much.' },
       { q: 'Where are my account and setups stored?', a: 'For now, in your browser: the account in a cookie and setups in local storage. Clearing site data removes them. Server accounts will arrive with the backend.' },
       { q: 'How much does it cost?', a: 'Nothing while we are testing it.' },
       { q: 'Who is building it?', a: 'A student team of six, sim racers, developers and analysts, as a university product project. The code is open on GitHub.' },
     ],
   },
-  final: { title: 'Bring us your worst corner', text: 'Create an account, pick your car and track, and describe what the car does there.', cta: 'Create an account' },
+  final: { title: 'Bring us your worst corner', text: 'Create an account and describe what the car does in the corner that costs you the most time.', cta: 'Create an account' },
   footer: { project: 'A university project by a student team.', code: 'Code on GitHub', data: 'Track maps: bacinger/f1-circuits (MIT) and © OpenStreetMap contributors (ODbL).' },
 }

@@ -7,7 +7,7 @@ const CLASSES = { en: ['GT3', 'GT4', 'GT2', 'Cup'], ru: ['GT3', 'GT4', 'GT2', '�
 
 /** Маленькие куски интерфейса кабинета рядом с шагами — показать, а не описать */
 function StepVisual({ step, c, lang }: { step: number; c: LandingContent; lang: Locale }) {
-  if (step === 0)
+  if (step === 2)
     return (
       <div className="ui ui--pick" aria-hidden="true">
         <span className="ui__seg">
@@ -20,7 +20,7 @@ function StepVisual({ step, c, lang }: { step: number; c: LandingContent; lang: 
         <span className="ui__line">{lang === 'ru' ? 'Спа-Франкоршам, 7,004 км' : 'Spa-Francorchamps, 7.004 km'}</span>
       </div>
     )
-  if (step === 1)
+  if (step === 0)
     return (
       <div className="ui ui--symptom" aria-hidden="true">
         {c.hero.demos.map((d, i) => (
@@ -42,9 +42,7 @@ function StepVisual({ step, c, lang }: { step: number; c: LandingContent; lang: 
     <div className="ui ui--answer" aria-hidden="true">
       <span className="ui__param">{d.param}</span>
       <span className="ui__change">{d.change}</span>
-      <span className="ui__line">
-        <s>5</s> 4
-      </span>
+      <span className="ui__line">{d.effect}</span>
     </div>
   )
 }
