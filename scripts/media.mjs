@@ -28,22 +28,20 @@ for (const lang of ['en', 'ru']) {
   await q.goto(`${BASE}${lang}/`)
   await q.evaluate(() => {
     const title = document.querySelector('.hero__title').textContent
-    const mark = document.querySelector('.site-mark').innerHTML
-    const card = document.querySelector('.example').cloneNode(true)
-    card.querySelector('.example__tabs').remove()
-    card.querySelector('.example__meta').remove()
-    card.querySelector('.example__facts > div:last-child').remove()
-    card.querySelector('.example__facts').style.gridTemplateColumns = '1fr'
-    card.style.cssText = 'width:470px;align-self:center'
+    const sub = document.querySelector('.hero__sub').textContent
+    const mark = document.querySelector('.site-mark').outerHTML
+    const photo = document.querySelector('.hero__photo')
     const page = document.createElement('div')
-    page.style.cssText = 'position:fixed;inset:0;background:#fff;display:grid;grid-template-columns:1fr 470px;gap:48px;padding:56px 64px;font-family:var(--font);color:#000'
+    page.style.cssText = 'position:fixed;inset:0;overflow:hidden;background:#000;color:#fff;font-family:var(--font)'
     page.innerHTML = `
-      <div style="display:grid;align-content:space-between">
-        <p style="font-size:28px;font-weight:820;font-stretch:48%;line-height:1">${mark.replace('<span>', '<span style="color:#5e5e5e;font-size:16px;font-weight:460;font-stretch:100%;margin-left:10px">')}</p>
-        <h1 style="font-size:58px;font-weight:700;line-height:1.04;letter-spacing:-0.015em;margin:0;text-wrap:balance">${title}</h1>
-        <p style="width:72px;height:8px;background:#ffed00"></p>
+      ${photo ? `<img src="${photo.src}" style="position:absolute;top:0;right:0;width:58%;height:100%;object-fit:cover;object-position:50% 18%;-webkit-mask-image:linear-gradient(to right,transparent,#000 45%);mask-image:linear-gradient(to right,transparent,#000 45%)">` : ''}
+      <div style="position:relative;display:grid;align-content:space-between;height:100%;padding:56px 64px">
+        <div>${mark.replace(`class="site-mark"`, `class="site-mark" style="color:#fff"`)}</div>
+        <div>
+          <h1 style="margin:0;max-width:11ch;font-size:92px;font-weight:800;font-stretch:125%;line-height:.95;letter-spacing:-.02em">${title}</h1>
+          <p style="margin:24px 0 0;max-width:30ch;color:#b9bdc6;font-size:26px;font-weight:700;font-stretch:108%;line-height:1.3">${sub}</p>
+        </div>
       </div>`
-    page.append(card)
     document.body.replaceChildren(page)
   })
   await q.evaluate(() => document.fonts.ready)

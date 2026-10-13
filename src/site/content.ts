@@ -20,8 +20,10 @@ export interface LandingContent {
   nav: { skip: string; how: string; symptoms: string; faq: string; login: string; signup: string; dashboard: string; language: string }
   hero: {
     title: string
+    sub: string
     lead: string
     cta: string
+    secondary: string
     login: string
     note: string
     examplesLabel: string
@@ -34,7 +36,8 @@ export interface LandingContent {
     photoAlt: string
     examples: HeroExample[]
   }
-  about: { title: string; paragraphs: string[]; photoAlt: string }
+  demo: { title: string; intro: string }
+  about: { title: string; paragraphs: string[]; photoAlt: string; card: { label: string; text: string } }
   how: { title: string; intro: string; steps: { title: string; text: string }[] }
   handling: {
     title: string

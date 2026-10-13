@@ -9,9 +9,11 @@ export const en: LandingContent = {
   },
   nav: { skip: 'Skip to content', how: 'How it works', symptoms: 'Symptoms', faq: 'Questions', login: 'Log in', signup: 'Create account', dashboard: 'Open dashboard', language: 'Language' },
   hero: {
-    title: 'What to change in your iRacing setup when the car misbehaves',
+    title: 'iRacing setups without the guesswork',
+    sub: 'A setup assistant that goes from a symptom to a specific change',
     lead: 'Describe the problem in your own words: the front pushes wide on entry, the rear steps out on exit, the car is nervous under braking. The assistant finds a checked rule and tells you which adjustment to change, what to expect and what to watch for.',
     cta: 'Try it free',
+    secondary: 'See an example',
     login: 'Log in',
     note: 'Free while we are testing. All you need is an email.',
     examplesLabel: 'Examples',
@@ -43,6 +45,10 @@ export const en: LandingContent = {
       },
     ],
   },
+  demo: {
+    title: 'How the assistant answers',
+    intro: 'Pick an example. On the left is what the driver writes in their own words, on the right the change from a rule: what to adjust, what to expect and what to watch for.',
+  },
   about: {
     title: 'What a setup is, and where the assistant helps',
     paragraphs: [
@@ -51,6 +57,7 @@ export const en: LandingContent = {
       'The assistant helps with that step: you describe what the car does wrong, and it suggests one specific change from a base of rules reviewed by the team’s expert.',
     ],
     photoAlt: 'Gloved hands on a sim racing wheel',
+    card: { label: 'One change at a time', text: 'Change it, run 3–5 laps, compare' },
   },
   how: {
     title: 'How it works',

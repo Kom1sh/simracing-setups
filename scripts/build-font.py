@@ -17,10 +17,14 @@ SRC = Path('node_modules/@fontsource-variable/roboto-flex/files')
 OUT = Path('src/fonts')
 OUT.mkdir(exist_ok=True)
 
-for part in ('latin', 'cyrillic'):
-    font = TTFont(SRC / f'roboto-flex-{part}-standard-normal.woff2')
-    font = instancer.instantiateVariableFont(font, {'slnt': 0, 'wght': (400, 900), 'wdth': (25, 100)})
-    font.flavor = 'woff2'
-    target = OUT / f'roboto-flex-{part}.woff2'
-    font.save(target)
-    print(f'{target}: {target.stat().st_size // 1024} KB')
+# Кабинет — узкие ширины (wdth 25–100), лендинг — широкие (wdth 100–130), как Archivo Expanded у girlvoice.ai
+VARIANTS = {'': (25, 100), '-wide': (100, 130)}
+
+for suffix, wdth in VARIANTS.items():
+    for part in ('latin', 'cyrillic'):
+        font = TTFont(SRC / f'roboto-flex-{part}-standard-normal.woff2')
+        font = instancer.instantiateVariableFont(font, {'slnt': 0, 'wght': (400, 900), 'wdth': wdth})
+        font.flavor = 'woff2'
+        target = OUT / f'roboto-flex{suffix}-{part}.woff2'
+        font.save(target)
+        print(f'{target}: {target.stat().st_size // 1024} KB')
