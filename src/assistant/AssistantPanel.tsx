@@ -1,14 +1,14 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { a } from '../i18n/dashboard'
 import { apiBase, requestRecommendations } from './api'
-import { AssistantForm, type AskDraft } from './AssistantForm'
+import { AssistantForm, type AskDraft, type AskErrors } from './AssistantForm'
 import { AssistantResults } from './AssistantResults'
-import { composeSymptom, SYMPTOM_MAX, SYMPTOM_MIN, type ApiResult, type RecommendationRequest } from './types'
+import { CARS, COMMENT_MAX, COMMENT_MIN, TRACKS, type ApiResult, type RecommendationRequest } from './types'
 
-/** EGO-04: форма → POST /api/v1/recommendations → состояния ответа и карточки рекомендаций */
+/** EGO-04: форма → POST /api/v1/recommendations (ALE-03) → состояния ответа и карточки рекомендаций */
 export function AssistantPanel() {
-  const [draft, setDraft] = useState<AskDraft>({ symptom: null, phase: null, speed: 'any', comment: '' })
-  const [error, setError] = useState<string | null>(null)
+  const [draft, setDraft] = useState<AskDraft>({ car: CARS[0], track: TRACKS[0], symptom: null, phase: null, stint: 'any', comment: '' })
+  const [errors, setErrors] = useState<AskErrors>({})
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState<ApiResult | null>(null)
   const abortRef = useRef<AbortController | null>(null)
@@ -16,7 +16,6 @@ export function AssistantPanel() {
   const titleRef = useRef<HTMLHeadingElement>(null)
   const formRef = useRef<HTMLDivElement>(null)
   const apiUrl = useMemo(() => apiBase(), [])
-  const composed = composeSymptom(draft.symptom, draft.phase, draft.speed, draft.comment)
 
   useEffect(() => () => abortRef.current?.abort(), [])
 
@@ -40,19 +39,31 @@ export function AssistantPanel() {
     })
   }
 
-  /** Проверка формы до отправки — те же границы 3–500 знаков, что у бэкенда */
+  /** Проверка до отправки — те же правила, что у бэкенда: симптом и фаза обязательны, комментарий 3–500 знаков */
   const submit = () => {
-    const text = composed.trim()
-    const problem = text.length < SYMPTOM_MIN ? a.textRequired : text.length > SYMPTOM_MAX ? a.tooLong(text.length - SYMPTOM_MAX) : null
-    setError(problem)
-    if (problem) {
-      formRef.current?.querySelector<HTMLElement>('textarea')?.focus()
+    const comment = draft.comment.trim()
+    const next: AskErrors = {}
+    if (!draft.symptom) next.symptom = a.symptomRequired
+    if (!draft.phase) next.phase = a.phaseRequired
+    if (comment.length < COMMENT_MIN || comment.length > COMMENT_MAX) next.comment = a.commentRequired
+    setErrors(next)
+    if (!draft.symptom || !draft.phase || next.comment) {
+      const form = formRef.current
+      const target = next.symptom ? form?.querySelector<HTMLElement>('input[name="symptom"]') : next.phase ? form?.querySelector<HTMLElement>('[data-field="phase"] [role="radio"]') : form?.querySelector<HTMLElement>('textarea')
+      target?.focus()
       return
     }
-    void send({ symptom: text })
+    void send({
+      car: draft.car,
+      track: draft.track,
+      symptom_type: draft.symptom,
+      corner_phase: draft.phase,
+      comment,
+      stint_moment: draft.stint === 'any' ? null : draft.stint,
+    })
   }
 
-  const edit = () => formRef.current?.querySelector<HTMLElement>('textarea')?.focus()
+  const edit = () => formRef.current?.querySelector<HTMLElement>('input[name="symptom"]:checked, input[name="symptom"]')?.focus()
 
   return (
     <div className="assistant">
@@ -61,10 +72,13 @@ export function AssistantPanel() {
           draft={draft}
           onChange={(patch) => {
             setDraft((d) => ({ ...d, ...patch }))
-            setError(null)
+            setErrors((e) => ({
+              symptom: patch.symptom ? undefined : e.symptom,
+              phase: patch.phase ? undefined : e.phase,
+              comment: patch.comment !== undefined ? undefined : e.comment,
+            }))
           }}
-          composed={composed}
-          error={error}
+          errors={errors}
           loading={loading}
           onSubmit={submit}
         />

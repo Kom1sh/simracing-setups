@@ -1,7 +1,6 @@
 import { a } from '../i18n/dashboard'
+import { paramLabel } from './params'
 import type { Recommendation } from './types'
-
-const capital = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
 
 /** EGO-03: одна рекомендация из ответа — всё, что прислал бэкенд, без своей логики */
 export function RecommendationCard({ rec, demo }: { rec: Recommendation; demo: boolean }) {
@@ -10,7 +9,7 @@ export function RecommendationCard({ rec, demo }: { rec: Recommendation; demo: b
     <article className="rec" aria-labelledby={titleId}>
       <header className="rec__head">
         <h3 id={titleId} className="rec__param">
-          {capital(rec.parameter)}
+          {paramLabel(rec.parameter)}
         </h3>
         <p className={`rec__change rec__change--${rec.direction}`}>{a.direction[rec.direction]}</p>
         <p className="rec__what">{rec.change_description}</p>

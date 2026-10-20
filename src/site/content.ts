@@ -46,7 +46,7 @@ export interface LandingContent {
     actual: string
     items: { id: 'understeer' | 'oversteer'; title: string; text: string }[]
   }
-  symptoms: { title: string; intro: string; paramsLabel: string; items: { id: string; title: string; text: string; params: string[] }[] }
+  symptoms: { title: string; intro: string; paramsLabel: string; soonLabel: string; items: { id: string; title: string; text: string; params: string[]; soon?: boolean }[] }
   rules: { title: string; intro: string; items: { title: string; text: string }[] }
   numbers: { title: string; intro: string; rows: { value: string; text: string }[]; source: string }
   preview: { title: string; text: string; points: string[]; alt: string; cta: string }

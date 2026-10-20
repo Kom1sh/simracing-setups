@@ -119,43 +119,15 @@
   resize: vertical;
 }
 
-.ask__clear {
-  justify-self: start;
-}
 
-.ask__preview {
-  display: grid;
-  gap: 6px;
-  padding: 12px 14px;
-  border-left: 3px solid var(--ink);
-  background: var(--surface);
-}
 
-.ask__preview-label {
-  display: flex;
-  justify-content: space-between;
-  gap: var(--s-md);
-  color: var(--mute);
-  font-size: 13px;
-}
 
 .ask__count {
   font-variant-numeric: tabular-nums;
 }
 
-.ask__count.is-over {
-  color: var(--alert);
-  font-weight: 600;
-}
 
-.ask__preview-text {
-  color: var(--ink);
-  overflow-wrap: anywhere;
-}
 
-.ask__preview-text.is-empty {
-  color: var(--mute);
-}
 
 .ask__note {
   color: var(--mute);
@@ -404,5 +376,35 @@
 
   .answer__title {
     font-size: 26px;
+  }
+}
+
+/* ALE-03: машина и трасса, номер запроса */
+.ask__pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--s-md);
+}
+
+.ask__select {
+  width: 100%;
+  min-width: 0;
+  padding-right: 32px;
+  text-overflow: ellipsis;
+}
+
+.ask__note + .ask__field {
+  margin-top: calc(var(--s-sm) * -1);
+}
+
+.answer__meta {
+  color: var(--mute);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 520px) {
+  .ask__pair {
+    grid-template-columns: minmax(0, 1fr);
   }
 }

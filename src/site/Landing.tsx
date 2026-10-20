@@ -93,9 +93,10 @@ export function Landing({ c, lang, img }: { c: LandingContent; lang: Locale; img
         <Band id="symptoms" tone="light" title={c.symptoms.title} intro={c.symptoms.intro} labelId="symptoms-title">
           <div className="symptom-grid">
             {c.symptoms.items.map((s) => (
-              <article key={s.id} id={s.id} className="sym">
+              <article key={s.id} id={s.id} className={s.soon ? 'sym is-soon' : 'sym'}>
                 <div className="sym__diagram">
                   <SymptomDiagram id={s.id} />
+                  {s.soon && <span className="sym__soon">{c.symptoms.soonLabel}</span>}
                 </div>
                 <h3 className="sym__title">{s.title}</h3>
                 <p className="sym__text">{s.text}</p>

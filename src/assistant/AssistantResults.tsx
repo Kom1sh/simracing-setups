@@ -43,6 +43,7 @@ export const AssistantResults = forwardRef<HTMLHeadingElement, Props>(function A
       <div className="answer answer--found">
         {title(a.foundTitle(result.recommendations.length))}
         <p className="answer__text">{a.foundHint}</p>
+        {result.requestId && <p className="answer__meta">{a.requestId(result.requestId)}</p>}
         <div className="answer__list">
           {result.recommendations.map((rec) => (
             <RecommendationCard key={rec.rule_id} rec={rec} demo={result.demo} />
@@ -54,7 +55,8 @@ export const AssistantResults = forwardRef<HTMLHeadingElement, Props>(function A
     body = (
       <div className="answer answer--empty">
         {title(a.notFoundTitle)}
-        <p className="answer__text">{result.message || a.notFoundText}</p>
+        <p className="answer__text">{a.notFoundText}</p>
+        {result.requestId && <p className="answer__meta">{a.requestId(result.requestId)}</p>}
         <button type="button" className="button button--ghost" onClick={onEdit}>
           {a.editRequest}
         </button>

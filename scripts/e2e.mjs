@@ -23,10 +23,12 @@ const expect = (cond, msg) => {
   if (!cond) throw new Error(msg)
 }
 const app = (q = '') => `${BASE}en/app/${q}${API ? `${q ? '&' : '?'}api=${encodeURIComponent(API)}` : ''}`
-const ask = async (symptom, phase) => {
+const ask = async ({ symptom, phase, stint, comment = 'Машина плохо поворачивает в этом месте' }) => {
   await page.getByRole('tab', { name: 'Assistant' }).click()
-  await page.getByText(symptom, { exact: true }).click()
+  if (symptom) await page.getByText(symptom, { exact: true }).click()
   if (phase) await page.getByRole('radio', { name: phase }).click()
+  if (stint) await page.getByRole('radio', { name: stint }).click()
+  if (comment) await page.getByLabel('Describe it in your own words').fill(comment)
   await page.getByRole('button', { name: 'Find a change' }).click()
 }
 
@@ -72,60 +74,46 @@ await check('выход, неверный пароль, вход', async () => {
   await page.waitForURL(/\/en\/app\/$/)
 })
 
-await check('ассистент: пустую жалобу не отправляет', async () => {
+await check('ассистент: пустую форму не отправляет', async () => {
   await page.goto(app())
-  await page.getByRole('tab', { name: 'Assistant' }).click()
-  await page.getByRole('button', { name: 'Find a change' }).click()
-  await page.getByText('Choose a quick pick or describe the problem in a few words.').waitFor()
+  await ask({ comment: '' })
+  await page.getByText('Choose what the car is doing.').waitFor()
+  await page.getByText('Choose where in the corner it happens.').waitFor()
+  await page.getByText('Describe the problem in a few words.').waitFor()
 })
 
-await check('ассистент: подсказки собирают жалобу, найдено', async () => {
+await check('ассистент: найдено (недостаточная на входе, с начала заезда)', async () => {
   await page.goto(app())
-  await page.getByRole('tab', { name: 'Assistant' }).click()
-  await page.getByText('Understeer', { exact: true }).click()
-  await page.getByRole('radio', { name: 'Mid-corner' }).click()
-  await page.getByText('«Недостаточная поворачиваемость в середине поворота»').waitFor()
-  await page.getByRole('button', { name: 'Find a change' }).click()
+  await ask({ symptom: 'Understeer', phase: 'Entry', stint: 'From the start' })
   await page.getByRole('heading', { name: /^Found/ }).waitFor()
   await page.locator('.rec').first().getByText('Decrease').waitFor()
+  await page.locator('.rec').first().getByText('Brake bias', { exact: true }).waitFor()
+  await page.getByText(/^Request [0-9a-f]{8}$/).waitFor()
 })
 
-await check('ассистент: жалоба своими словами', async () => {
+await check('ассистент: правила нет (избыточная в середине)', async () => {
   await page.goto(app())
-  await page.getByRole('tab', { name: 'Assistant' }).click()
-  await page.getByLabel('In your own words').fill('машину подбрасывает на бордюрах в шикане')
-  await page.getByRole('button', { name: 'Find a change' }).click()
-  await page.getByRole('heading', { name: /^Found/ }).waitFor()
-})
-
-await check('ассистент: правила нет', async () => {
-  await page.goto(app())
-  await ask('Tyres overheat')
+  await ask({ symptom: 'Oversteer', phase: 'Mid-corner', stint: 'After a few laps' })
   await page.getByRole('heading', { name: 'No matching rule' }).waitFor()
+})
+
+await check('ассистент: «Any time» отправляет stint_moment null и не ломает бэкенд', async () => {
+  await page.goto(app())
+  await ask({ symptom: 'Understeer', phase: 'Entry', stint: 'Any time' })
+  await page.getByRole('heading', { name: /^Found|No matching rule/ }).waitFor({ timeout: 8000 })
 })
 
 if (!API) {
   await check('ассистент: ошибка сервера и повтор', async () => {
     await page.goto(app('?mock=error'))
-    await ask('Wheelspin on exit')
+    await ask({ symptom: 'Oversteer', phase: 'Exit' })
     await page.getByRole('heading', { name: 'Server error (500)' }).waitFor()
     await page.getByRole('button', { name: 'Try again' }).waitFor()
   })
   await check('ассистент: нет сети', async () => {
     await page.goto(app('?mock=offline'))
-    await ask('Wheelspin on exit')
+    await ask({ symptom: 'Oversteer', phase: 'Exit' })
     await page.getByRole('heading', { name: 'The server is not responding' }).waitFor()
-  })
-}
-
-if (API) {
-  await check('ассистент: 500 от бэкенда с его сообщением (фейковый бэкенд: «#500» в жалобе)', async () => {
-    await page.goto(app())
-    await page.getByRole('tab', { name: 'Assistant' }).click()
-    await page.getByLabel('In your own words').fill('#500 проверка ошибки')
-    await page.getByRole('button', { name: 'Find a change' }).click()
-    await page.getByRole('heading', { name: 'Server error (500)' }).waitFor()
-    await page.getByText('Внутренняя ошибка сервера, попробуйте повторить запрос позже').waitFor()
   })
 }
 

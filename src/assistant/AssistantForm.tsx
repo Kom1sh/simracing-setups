@@ -1,30 +1,30 @@
 import { useId } from 'react'
 import { a } from '../i18n/dashboard'
 import { Segmented } from '../components/controls'
-import { CORNER_PHASES, CORNER_SPEEDS, PHASED_SYMPTOMS, SYMPTOM_MAX, SYMPTOMS, type CornerPhase, type CornerSpeed, type Symptom } from './types'
+import { CARS, COMMENT_MAX, CORNER_PHASES, STINT_MOMENTS, SYMPTOM_TYPES, TRACKS, type CornerPhase, type StintMoment, type SymptomType } from './types'
 
 export interface AskDraft {
-  symptom: Symptom | null
+  car: string
+  track: string
+  symptom: SymptomType | null
   phase: CornerPhase | null
-  speed: CornerSpeed
+  stint: StintMoment | 'any'
   comment: string
 }
+
+export type AskErrors = { symptom?: string; phase?: string; comment?: string }
 
 interface Props {
   draft: AskDraft
   onChange: (patch: Partial<AskDraft>) => void
-  /** Текст, который уйдёт в поле symptom */
-  composed: string
-  error: string | null
+  errors: AskErrors
   loading: boolean
   onSubmit: () => void
 }
 
-/** EGO-01: подсказки и свой текст → одна жалоба в поле symptom (контракт KIR-02) */
-export function AssistantForm({ draft, onChange, composed, error, loading, onSubmit }: Props) {
-  const ids = { comment: useId(), preview: useId(), error: useId() }
-  const phased = draft.symptom !== null && PHASED_SYMPTOMS.includes(draft.symptom)
-  const over = composed.length > SYMPTOM_MAX
+/** EGO-01: поля формы → тело POST /api/v1/recommendations по контракту ALE-03 */
+export function AssistantForm({ draft, onChange, errors, loading, onSubmit }: Props) {
+  const ids = { car: useId(), track: useId(), symptom: useId(), phase: useId(), comment: useId(), count: useId(), commentError: useId() }
 
   return (
     <form
@@ -37,12 +37,38 @@ export function AssistantForm({ draft, onChange, composed, error, loading, onSub
     >
       <p className="ask__intro">{a.intro}</p>
 
-      <fieldset className="ask__field">
-        <legend className="ask__legend">
-          {a.symptomLabel} <span className="ask__optional">{a.symptomNote}</span>
-        </legend>
+      <div className="ask__pair">
+        <div className="ask__field">
+          <label className="ask__legend" htmlFor={ids.car}>
+            {a.car}
+          </label>
+          <select id={ids.car} className="text-input ask__select" value={draft.car} onChange={(e) => onChange({ car: e.target.value })}>
+            {CARS.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="ask__field">
+          <label className="ask__legend" htmlFor={ids.track}>
+            {a.track}
+          </label>
+          <select id={ids.track} className="text-input ask__select" value={draft.track} onChange={(e) => onChange({ track: e.target.value })}>
+            {TRACKS.map((t) => (
+              <option key={t} value={t}>
+                {t}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+      <p className="ask__note">{a.scope}</p>
+
+      <fieldset className="ask__field" aria-describedby={errors.symptom ? ids.symptom : undefined}>
+        <legend className="ask__legend">{a.symptomLabel}</legend>
         <div className="symptoms">
-          {SYMPTOMS.map((s) => (
+          {SYMPTOM_TYPES.map((s) => (
             <label key={s} className={draft.symptom === s ? 'symptom is-selected' : 'symptom'}>
               <input type="radio" name="symptom" value={s} checked={draft.symptom === s} onChange={() => onChange({ symptom: s })} />
               <span className="symptom__name">{a.symptoms[s][0]}</span>
@@ -50,26 +76,32 @@ export function AssistantForm({ draft, onChange, composed, error, loading, onSub
             </label>
           ))}
         </div>
-        {draft.symptom && (
-          <button type="button" className="text-button ask__clear" onClick={() => onChange({ symptom: null, phase: null })}>
-            {a.clearSymptom}
-          </button>
+        {errors.symptom && (
+          <p id={ids.symptom} className="field-error">
+            {errors.symptom}
+          </p>
         )}
       </fieldset>
 
-      {phased && (
-        <div className="ask__field">
-          <p className="ask__legend">{a.phaseLabel}</p>
-          <Segmented value={draft.phase ?? ''} label={a.phaseLabel} options={CORNER_PHASES.map((p) => ({ value: p, label: a.phases[p] }))} onChange={(v) => onChange({ phase: v as CornerPhase })} />
-        </div>
-      )}
+      <div className="ask__field" data-field="phase">
+        <p className="ask__legend">{a.phaseLabel}</p>
+        <Segmented value={draft.phase ?? ''} label={a.phaseLabel} options={CORNER_PHASES.map((p) => ({ value: p, label: a.phases[p] }))} onChange={(v) => onChange({ phase: v as CornerPhase })} />
+        {errors.phase && (
+          <p id={ids.phase} className="field-error">
+            {errors.phase}
+          </p>
+        )}
+      </div>
 
-      {draft.symptom && (
-        <div className="ask__field">
-          <p className="ask__legend">{a.speedLabel}</p>
-          <Segmented value={draft.speed} label={a.speedLabel} options={CORNER_SPEEDS.map((s) => ({ value: s, label: a.speeds[s] }))} onChange={(v) => onChange({ speed: v as CornerSpeed })} />
-        </div>
-      )}
+      <div className="ask__field">
+        <p className="ask__legend">{a.stintLabel}</p>
+        <Segmented
+          value={draft.stint}
+          label={a.stintLabel}
+          options={(['any', ...STINT_MOMENTS] as const).map((s) => ({ value: s, label: a.stints[s] }))}
+          onChange={(v) => onChange({ stint: v as StintMoment | 'any' })}
+        />
+      </div>
 
       <div className="ask__field">
         <label className="ask__legend" htmlFor={ids.comment}>
@@ -77,31 +109,24 @@ export function AssistantForm({ draft, onChange, composed, error, loading, onSub
         </label>
         <textarea
           id={ids.comment}
-          className={error ? 'text-input ask__comment is-invalid' : 'text-input ask__comment'}
+          className={errors.comment ? 'text-input ask__comment is-invalid' : 'text-input ask__comment'}
           rows={3}
-          maxLength={SYMPTOM_MAX}
+          maxLength={COMMENT_MAX}
           placeholder={a.commentPlaceholder}
           value={draft.comment}
-          aria-invalid={!!error}
-          aria-describedby={`${ids.preview}${error ? ` ${ids.error}` : ''}`}
+          aria-invalid={!!errors.comment}
+          aria-describedby={`${ids.count}${errors.comment ? ` ${ids.commentError}` : ''}`}
           onChange={(e) => onChange({ comment: e.target.value })}
         />
-      </div>
-
-      <div className="ask__preview" id={ids.preview}>
-        <p className="ask__preview-label">
-          {a.preview}
-          <span className={over ? 'ask__count is-over' : 'ask__count'}>{a.counter(composed.length, SYMPTOM_MAX)}</span>
+        <p id={ids.count} className="ask__count">
+          {a.counter(draft.comment.length, COMMENT_MAX)}
         </p>
-        <p className={composed ? 'ask__preview-text' : 'ask__preview-text is-empty'}>{composed ? `«${composed}»` : a.previewEmpty}</p>
-        {a.languageNote && <p className="ask__note">{a.languageNote}</p>}
+        {errors.comment && (
+          <p id={ids.commentError} className="field-error">
+            {errors.comment}
+          </p>
+        )}
       </div>
-
-      {error && (
-        <p id={ids.error} className="field-error" role="alert">
-          {error}
-        </p>
-      )}
 
       <button type="submit" className="button button--primary ask__submit" disabled={loading}>
         {loading ? a.submitting : a.submit}

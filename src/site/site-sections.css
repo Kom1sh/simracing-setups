@@ -254,10 +254,28 @@
 }
 
 .sym__diagram {
+  position: relative;
   height: 140px;
   padding: 8px;
   border-radius: 12px;
   background: var(--l-graphite);
+}
+
+.sym__soon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.14);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: 0.01em;
+}
+
+.sym.is-soon .sd {
+  opacity: 0.55;
 }
 
 .sd {
