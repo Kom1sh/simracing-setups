@@ -1,0 +1,26 @@
+# API рекомендаций (FastAPI, бэкенд ALE-03) на hq.
+# Код — /opt/simracing-api/src, база SQLite — в рабочей папке /var/lib/simracing-api
+# (путь к базе в бэкенде относительный: ./simracing.db). Выкладка — scripts/deploy-hq.sh api
+[Unit]
+Description=Simracing setups API
+After=network.target
+
+[Service]
+User=simracing
+Group=simracing
+WorkingDirectory=/var/lib/simracing-api
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStart=/opt/simracing-api/venv/bin/uvicorn main:app --app-dir /opt/simracing-api/src --host 127.0.0.1 --port 8100 --proxy-headers --no-server-header
+Restart=on-failure
+RestartSec=3
+
+# На hq меньше гигабайта памяти, рядом Ultracker: бэкенду хватает ~70 МБ
+MemoryMax=200M
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectHome=yes
+ProtectSystem=strict
+ReadWritePaths=/var/lib/simracing-api
+
+[Install]
+WantedBy=multi-user.target

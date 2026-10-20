@@ -3,8 +3,9 @@ import { resolve } from 'node:path'
 import { defineConfig, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// Сайт живёт на GitHub Pages по адресу kom1sh.github.io/simracing-setups/
-const BASE = '/simracing-setups/'
+// По умолчанию сайт живёт на GitHub Pages: kom1sh.github.io/simracing-setups/.
+// Для своего сервера — SITE_BASE=/ (см. scripts/deploy-hq.sh)
+const BASE = process.env.SITE_BASE ?? '/simracing-setups/'
 
 /** Фото лендинга из public/img по имени файла — то же правило, что в scripts/prerender.mjs */
 function siteImages() {

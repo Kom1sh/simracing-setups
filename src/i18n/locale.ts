@@ -3,10 +3,10 @@ export type Locale = 'en' | 'ru'
 
 export const LOCALES: Locale[] = ['en', 'ru']
 
-/** Корень сайта на GitHub Pages: /simracing-setups/ */
+/** Корень сайта: /simracing-setups/ на GitHub Pages, / на своём сервере */
 export const BASE = import.meta.env.BASE_URL
 
-export const SITE_ORIGIN = 'https://kom1sh.github.io'
+export const SITE_ORIGIN = (import.meta.env.VITE_SITE_ORIGIN as string | undefined) ?? 'https://kom1sh.github.io'
 
 export function detectLocale(pathname: string): Locale {
   return /\/ru(\/|$)/.test(pathname) ? 'ru' : 'en'
