@@ -40,8 +40,12 @@ export const assistantRu = {
   badResponseTitle: 'Непонятный ответ сервера',
   badResponseText: 'Ответ пришёл не в формате контракта API. Сообщите разработчикам бэкенда.',
   retry: 'Повторить',
-  demo: 'Демо-режим: бэкенд ещё не подключён. Ответы — примеры правил из фронтенда, экспертом они не проверены.',
-  apiLabel: (url: string) => `Ассистент подключён к ${url}`,
+  health: {
+    checking: 'Проверяем связь с сервером правил…',
+    online: 'Сервер правил на связи',
+    offline: 'Сервер правил сейчас не отвечает. Запрос можно отправить, но ответ может не прийти.',
+  } as Record<'checking' | 'online' | 'offline', string>,
+  customApi: (url: string) => `адрес задан вручную: ${url}`,
   requestId: (id: string) => `Запрос ${id.slice(0, 8)}`,
   // Карточка
   direction: { increase: 'Увеличить', decrease: 'Уменьшить' } as Record<string, string>,
@@ -49,6 +53,5 @@ export const assistantRu = {
   limits: 'За чем следить',
   basis: 'Основание',
   checked: 'Проверенное правило',
-  demoRule: 'Демо-правило',
   rule: (id: string) => `Правило ${id}`,
 }

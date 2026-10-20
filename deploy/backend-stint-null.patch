@@ -1,0 +1,40 @@
+diff -ru -x __pycache__ -x *.db -x .pytest_cache simracing/app/db/models.py simracing-fixed/app/db/models.py
+--- simracing/app/db/models.py	2026-10-19 09:04:24
++++ simracing-fixed/app/db/models.py	2026-10-20 19:35:06
+@@ -61,7 +61,7 @@
+     track: Mapped[str] = mapped_column()
+     symptom_type: Mapped[str] = mapped_column()
+     corner_phase: Mapped[str] = mapped_column()
+-    stint_moment: Mapped[str] = mapped_column()
++    stint_moment: Mapped[str | None] = mapped_column(nullable=True)
+     comment: Mapped[str] = mapped_column()
+     status: Mapped[str] = mapped_column()
+     rule_ids: Mapped[list[str]] = mapped_column(
+diff -ru -x __pycache__ -x *.db -x .pytest_cache simracing/tests/test_recommendations_api.py simracing-fixed/tests/test_recommendations_api.py
+--- simracing/tests/test_recommendations_api.py	2026-10-19 08:52:32
++++ simracing-fixed/tests/test_recommendations_api.py	2026-10-20 19:34:57
+@@ -140,6 +140,24 @@
+     assert recommendation["direction"] == "decrease"
+ 
+ 
++
++@pytest.mark.parametrize("stint", ["null", "missing"])
++def test_recommendations_without_stint_moment(client, payload, seed_rule, stint):
++    # «Не важно» на фронте: stint_moment необязательный — null или поле не передано
++    seed_rule()
++    if stint == "null":
++        payload["stint_moment"] = None
++    else:
++        del payload["stint_moment"]
++
++    response = client.post(
++        "/api/v1/recommendations",
++        json=payload,
++    )
++
++    assert response.status_code == 200
++    assert response.json()["status"] == "match"
++
+ def test_recommendations_no_match(client, payload):
+     response = client.post(
+         "/api/v1/recommendations",

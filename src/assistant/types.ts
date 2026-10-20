@@ -67,7 +67,7 @@ export interface ApiError {
 }
 
 export type ApiResult =
-  | { kind: 'match'; requestId: string | null; recommendations: Recommendation[]; demo: boolean }
+  | { kind: 'match'; requestId: string | null; recommendations: Recommendation[] }
   | { kind: 'no_match'; requestId: string | null; message: string | null }
   | { kind: 'validation'; message: string | null; fields: { field: string; message: string }[] }
   | { kind: 'server'; status: number; message: string | null }

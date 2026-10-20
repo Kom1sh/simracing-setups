@@ -1,10 +1,14 @@
-// Сквозная проверка через интерфейс (EGO-05): вход, кабинет, ассистент во всех состояниях, лендинг.
-// npm run build && npx vite preview --port 4173 && node scripts/e2e.mjs
-// Пока бэкенда нет, ассистент отвечает заглушкой; с живым API: node scripts/e2e.mjs <base> http://localhost:8000
+// Сквозная проверка (EGO-05): контракт API, вход, кабинет, ассистент с настоящим бэкендом во всех состояниях, лендинг.
+//   npm run build && npx vite preview --port 4173 && node scripts/e2e.mjs [сайт] [api]
+// api — бэкенд для ассистента, по умолчанию боевой. Ошибку сервера проверяем подменой одного ответа в браузере
+// (с публичного сайта Chrome не пускает к localhost), обрыв связи — на закрытом порту.
 import { chromium } from 'playwright-core'
 
 const BASE = process.argv[2] ?? 'http://localhost:4173/simracing-setups/'
-const API = process.argv[3]
+const API = (process.argv[3] ?? 'https://simracing.egorprotasov.ru').replace(/\/+$/, '')
+const DEAD = 'http://127.0.0.1:9'
+const PAGES_ORIGIN = 'https://kom1sh.github.io'
+
 const browser = await chromium.launch({ channel: 'chrome', headless: true })
 const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 }, reducedMotion: 'reduce' })
 const page = await ctx.newPage()
@@ -22,7 +26,10 @@ const check = async (name, fn) => {
 const expect = (cond, msg) => {
   if (!cond) throw new Error(msg)
 }
-const app = (q = '') => `${BASE}en/app/${q}${API ? `${q ? '&' : '?'}api=${encodeURIComponent(API)}` : ''}`
+const app = (api = API) => `${BASE}en/app/?api=${encodeURIComponent(api)}`
+const request = (body) =>
+  fetch(`${API}/api/v1/recommendations`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+const valid = { car: 'NASCAR Cup Series Next Gen (Gen 7)', track: 'Daytona International Speedway', symptom_type: 'understeer', corner_phase: 'entry', comment: 'e2e: проверка контракта' }
 const ask = async ({ symptom, phase, stint, comment = 'Машина плохо поворачивает в этом месте' }) => {
   await page.getByRole('tab', { name: 'Assistant' }).click()
   if (symptom) await page.getByText(symptom, { exact: true }).click()
@@ -31,6 +38,32 @@ const ask = async ({ symptom, phase, stint, comment = 'Машина плохо �
   if (comment) await page.getByLabel('Describe it in your own words').fill(comment)
   await page.getByRole('button', { name: 'Find a change' }).click()
 }
+
+await check('API: /health', async () => {
+  const res = await fetch(`${API}/health`)
+  expect(res.ok && (await res.json()).status === 'ok', `ответ ${res.status}`)
+})
+
+await check('API: «Не важно» — stint_moment null отвечает 200', async () => {
+  const res = await request({ ...valid, stint_moment: null })
+  const body = await res.json()
+  expect(res.status === 200 && ['match', 'no_match'].includes(body.status) && body.request_id, `ответ ${res.status} ${JSON.stringify(body).slice(0, 80)}`)
+})
+
+await check('API: 400 с полями при неверных данных', async () => {
+  const res = await request({ ...valid, symptom_type: 'unknown', comment: 'ab' })
+  const body = await res.json()
+  expect(res.status === 400 && body.error?.code === 'validation_error', `ответ ${res.status}`)
+  expect('comment' in body.error.fields && 'symptom_type' in body.error.fields, `поля: ${Object.keys(body.error.fields)}`)
+})
+
+await check('API: CORS пускает GitHub Pages', async () => {
+  const res = await fetch(`${API}/api/v1/recommendations`, {
+    method: 'OPTIONS',
+    headers: { Origin: PAGES_ORIGIN, 'Access-Control-Request-Method': 'POST', 'Access-Control-Request-Headers': 'content-type' },
+  })
+  expect(res.ok && res.headers.get('access-control-allow-origin') === PAGES_ORIGIN, `ответ ${res.status}, allow-origin ${res.headers.get('access-control-allow-origin')}`)
+})
 
 await check('кабинет без сессии уводит на вход', async () => {
   await page.goto(`${BASE}en/app/`)
@@ -74,6 +107,24 @@ await check('выход, неверный пароль, вход', async () => {
   await page.waitForURL(/\/en\/app\/$/)
 })
 
+await check('ассистент: сервер на связи', async () => {
+  await page.goto(app())
+  await page.getByRole('tab', { name: 'Assistant' }).click()
+  await page.getByText('Rules server is online').waitFor()
+})
+
+await check('ассистент: без ?api ходит в боевой бэкенд', async () => {
+  const fresh = await ctx.newPage()
+  try {
+    await fresh.goto(`${BASE}en/app/`)
+    await fresh.getByRole('tab', { name: 'Assistant' }).click()
+    await fresh.getByText('Rules server is online').waitFor()
+    expect(!(await fresh.getByText(/custom address/).count()), 'адрес задан вручную, хотя ?api не было')
+  } finally {
+    await fresh.close()
+  }
+})
+
 await check('ассистент: пустую форму не отправляет', async () => {
   await page.goto(app())
   await ask({ comment: '' })
@@ -89,6 +140,7 @@ await check('ассистент: найдено (недостаточная на
   await page.locator('.rec').first().getByText('Decrease').waitFor()
   await page.locator('.rec').first().getByText('Brake bias', { exact: true }).waitFor()
   await page.getByText(/^Request [0-9a-f]{8}$/).waitFor()
+  await page.locator('.rec').first().getByText('Checked rule').waitFor()
 })
 
 await check('ассистент: правила нет (избыточная в середине)', async () => {
@@ -97,25 +149,32 @@ await check('ассистент: правила нет (избыточная в 
   await page.getByRole('heading', { name: 'No matching rule' }).waitFor()
 })
 
-await check('ассистент: «Any time» отправляет stint_moment null и не ломает бэкенд', async () => {
+await check('ассистент: «Any time» (stint_moment null) находит правило', async () => {
   await page.goto(app())
   await ask({ symptom: 'Understeer', phase: 'Entry', stint: 'Any time' })
-  await page.getByRole('heading', { name: /^Found|No matching rule/ }).waitFor({ timeout: 8000 })
+  await page.getByRole('heading', { name: /^Found/ }).waitFor({ timeout: 8000 })
 })
 
-if (!API) {
-  await check('ассистент: ошибка сервера и повтор', async () => {
-    await page.goto(app('?mock=error'))
-    await ask({ symptom: 'Oversteer', phase: 'Exit' })
-    await page.getByRole('heading', { name: 'Server error (500)' }).waitFor()
-    await page.getByRole('button', { name: 'Try again' }).waitFor()
-  })
-  await check('ассистент: нет сети', async () => {
-    await page.goto(app('?mock=offline'))
-    await ask({ symptom: 'Oversteer', phase: 'Exit' })
-    await page.getByRole('heading', { name: 'The server is not responding' }).waitFor()
-  })
-}
+await check('ассистент: ошибка сервера, повтор уходит в бэкенд', async () => {
+  await page.goto(app())
+  const url = `${API}/api/v1/recommendations`
+  const internal = { status: 'error', error: { code: 'internal_error', message: 'Внутренняя ошибка сервера' } }
+  await page.route(url, (route) => route.fulfill({ status: 500, contentType: 'application/json', body: JSON.stringify(internal) }), { times: 1 })
+  await ask({ symptom: 'Oversteer', phase: 'Exit' })
+  await page.getByRole('heading', { name: 'Server error (500)' }).waitFor()
+  await page.getByText('Внутренняя ошибка сервера').waitFor()
+  await page.getByRole('button', { name: 'Try again' }).click()
+  await page.getByRole('heading', { name: /^Found|No matching rule/ }).waitFor()
+})
+
+await check('ассистент: сервер недоступен', async () => {
+  await page.goto(app(DEAD))
+  await page.getByRole('tab', { name: 'Assistant' }).click()
+  await page.getByText('The rules server is not responding right now', { exact: false }).waitFor()
+  await page.getByText(`custom address: ${DEAD}`).waitFor()
+  await ask({ symptom: 'Oversteer', phase: 'Exit' })
+  await page.getByRole('heading', { name: 'The server is not responding' }).waitFor()
+})
 
 await check('язык: из меню аккаунта на русский', async () => {
   await page.goto(app())

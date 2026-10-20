@@ -3,16 +3,20 @@ import { a } from '../i18n/dashboard'
 import { RecommendationCard } from './RecommendationCard'
 import type { ApiResult } from './types'
 
+export type Health = 'checking' | 'online' | 'offline'
+
 interface Props {
   loading: boolean
   result: ApiResult | null
-  apiUrl: string | null
+  health: Health
+  /** Адрес, заданный вручную через ?api= — показываем, чтобы не перепутать с боевым */
+  customApi: string | null
   onRetry: () => void
   onEdit: () => void
 }
 
 /** EGO-02: правая колонка — ожидание, поиск, найдено, правила нет, ошибка */
-export const AssistantResults = forwardRef<HTMLHeadingElement, Props>(function AssistantResults({ loading, result, apiUrl, onRetry, onEdit }, titleRef) {
+export const AssistantResults = forwardRef<HTMLHeadingElement, Props>(function AssistantResults({ loading, result, health, customApi, onRetry, onEdit }, titleRef) {
   const title = (text: string) => (
     <h2 ref={titleRef} tabIndex={-1} className="answer__title">
       {text}
@@ -46,7 +50,7 @@ export const AssistantResults = forwardRef<HTMLHeadingElement, Props>(function A
         {result.requestId && <p className="answer__meta">{a.requestId(result.requestId)}</p>}
         <div className="answer__list">
           {result.recommendations.map((rec) => (
-            <RecommendationCard key={rec.rule_id} rec={rec} demo={result.demo} />
+            <RecommendationCard key={rec.rule_id} rec={rec} />
           ))}
         </div>
       </div>
@@ -93,7 +97,10 @@ export const AssistantResults = forwardRef<HTMLHeadingElement, Props>(function A
 
   return (
     <section className="assistant__results" aria-live="polite" aria-busy={loading}>
-      {apiUrl ? <p className="assistant__mode assistant__mode--live">{a.apiLabel(apiUrl)}</p> : <p className="assistant__mode">{a.demo}</p>}
+      <p className={`assistant__mode assistant__mode--${health}`}>
+        {a.health[health]}
+        {customApi && <span className="assistant__api">{a.customApi(customApi)}</span>}
+      </p>
       {body}
     </section>
   )

@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { a } from '../i18n/dashboard'
-import { apiBase, requestRecommendations } from './api'
+import { checkHealth, customApi, requestRecommendations } from './api'
 import { AssistantForm, type AskDraft, type AskErrors } from './AssistantForm'
-import { AssistantResults } from './AssistantResults'
+import { AssistantResults, type Health } from './AssistantResults'
 import { CARS, COMMENT_MAX, COMMENT_MIN, TRACKS, type ApiResult, type RecommendationRequest } from './types'
 
 /** EGO-04: форма → POST /api/v1/recommendations (ALE-03) → состояния ответа и карточки рекомендаций */
@@ -15,9 +15,17 @@ export function AssistantPanel() {
   const lastRequest = useRef<RecommendationRequest | null>(null)
   const titleRef = useRef<HTMLHeadingElement>(null)
   const formRef = useRef<HTMLDivElement>(null)
-  const apiUrl = useMemo(() => apiBase(), [])
+  const custom = useMemo(() => customApi(), [])
+  const [health, setHealth] = useState<Health>('checking')
 
   useEffect(() => () => abortRef.current?.abort(), [])
+
+  // Связь с сервером видна сразу, до первого запроса
+  useEffect(() => {
+    const controller = new AbortController()
+    checkHealth(controller.signal).then((ok) => setHealth(ok ? 'online' : 'offline'), () => {})
+    return () => controller.abort()
+  }, [])
 
   const send = async (req: RecommendationRequest) => {
     abortRef.current?.abort()
@@ -27,7 +35,9 @@ export function AssistantPanel() {
     setLoading(true)
     requestAnimationFrame(() => titleRef.current?.focus({ preventScroll: true }))
     try {
-      setResult(await requestRecommendations(req, controller.signal))
+      const next = await requestRecommendations(req, controller.signal)
+      setResult(next)
+      setHealth(next.kind === 'network' ? 'offline' : 'online')
     } catch {
       return // запрос отменён новым
     } finally {
@@ -83,7 +93,7 @@ export function AssistantPanel() {
           onSubmit={submit}
         />
       </div>
-      <AssistantResults ref={titleRef} loading={loading} result={result} apiUrl={apiUrl} onRetry={() => lastRequest.current && void send(lastRequest.current)} onEdit={edit} />
+      <AssistantResults ref={titleRef} loading={loading} result={result} health={health} customApi={custom} onRetry={() => lastRequest.current && void send(lastRequest.current)} onEdit={edit} />
     </div>
   )
 }

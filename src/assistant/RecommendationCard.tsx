@@ -3,7 +3,7 @@ import { paramLabel } from './params'
 import type { Recommendation } from './types'
 
 /** EGO-03: одна рекомендация из ответа — всё, что прислал бэкенд, без своей логики */
-export function RecommendationCard({ rec, demo }: { rec: Recommendation; demo: boolean }) {
+export function RecommendationCard({ rec }: { rec: Recommendation }) {
   const titleId = `rec-${rec.rule_id}`
   return (
     <article className="rec" aria-labelledby={titleId}>
@@ -30,7 +30,7 @@ export function RecommendationCard({ rec, demo }: { rec: Recommendation; demo: b
 
       <footer className="rec__foot">
         <p className="rec__meta">
-          <span className={demo ? 'rec__status' : 'rec__status is-verified'}>{demo ? a.demoRule : a.checked}</span>
+          <span className="rec__status is-verified">{a.checked}</span>
           <span>{a.rule(rec.rule_id)}</span>
           {rec.basis && (
             <span>

@@ -1,28 +1,40 @@
-import { locale } from '../i18n/locale'
 import type { ApiError, ApiResult, Recommendation, RecommendationRequest } from './types'
-import { COMMENT_MAX, COMMENT_MIN } from './types'
-import { demoRules } from './demoRules'
 
 const API_KEY = 'simracing-setups:api'
 const TIMEOUT_MS = 15_000
+const HEALTH_TIMEOUT_MS = 5_000
+/** Боевой бэкенд на hq (docs/deploy.md); CORS открыт для GitHub Pages */
+const DEFAULT_API = 'https://simracing.egorprotasov.ru'
 
-/**
- * Адрес бэкенда: ?api=http://localhost:8000 (запоминается в браузере, ?api=demo сбрасывает),
- * иначе VITE_API_URL при сборке. Нет адреса — работает заглушка с демо-правилами.
- */
-export function apiBase(): string | null {
+const trim = (url: string) => url.replace(/\/+$/, '')
+
+/** Адрес, заданный вручную: ?api=http://localhost:8000 — действует до закрытия вкладки, ?api= без значения сбрасывает */
+export function customApi(): string | null {
   const fromQuery = new URLSearchParams(window.location.search).get('api')
   try {
-    if (fromQuery === 'demo') window.localStorage.removeItem(API_KEY)
-    else if (fromQuery) window.localStorage.setItem(API_KEY, fromQuery)
-    const stored = window.localStorage.getItem(API_KEY)
-    if (stored) return stored.replace(/\/+$/, '')
+    if (fromQuery === '') window.sessionStorage.removeItem(API_KEY)
+    else if (fromQuery) window.sessionStorage.setItem(API_KEY, trim(fromQuery))
+    return window.sessionStorage.getItem(API_KEY)
   } catch {
-    if (fromQuery && fromQuery !== 'demo') return fromQuery.replace(/\/+$/, '')
+    return fromQuery ? trim(fromQuery) : null
   }
-  if (fromQuery === 'demo') return null
-  const env = import.meta.env.VITE_API_URL as string | undefined
-  return env ? env.replace(/\/+$/, '') : null
+}
+
+/** Адрес бэкенда: заданный вручную, иначе VITE_API_URL при сборке, иначе боевой */
+export function apiBase(): string {
+  return customApi() ?? trim((import.meta.env.VITE_API_URL as string | undefined) || DEFAULT_API)
+}
+
+/** GET /health — сервер на связи, если ответил {"status": "ok"} */
+export async function checkHealth(signal: AbortSignal): Promise<boolean> {
+  try {
+    const res = await fetch(`${apiBase()}/health`, { signal: AbortSignal.any([signal, AbortSignal.timeout(HEALTH_TIMEOUT_MS)]) })
+    const body = (await res.json()) as { status?: unknown }
+    return res.ok && body?.status === 'ok'
+  } catch (e) {
+    if (signal.aborted) throw e
+    return false
+  }
 }
 
 const isText = (v: unknown): v is string => typeof v === 'string'
@@ -33,14 +45,14 @@ function isRecommendation(r: unknown): r is Recommendation {
 }
 
 /** 200: match с рекомендациями или no_match с сообщением; оба с request_id */
-function readOk(body: unknown, demo: boolean): ApiResult {
+function readOk(body: unknown): ApiResult {
   const data = body as { status?: string; request_id?: unknown; recommendations?: unknown[]; message?: unknown }
   const requestId = isText(data?.request_id) ? data.request_id : null
   if (data?.status === 'no_match') return { kind: 'no_match', requestId, message: isText(data.message) ? data.message : null }
   if (data?.status !== 'match' || !Array.isArray(data.recommendations) || data.recommendations.length === 0) return { kind: 'bad_response' }
   if (!data.recommendations.every(isRecommendation)) return { kind: 'bad_response' }
   const recommendations = (data.recommendations as Recommendation[]).map((r) => ({ ...r, limitations: isText(r.limitations) ? r.limitations : '', basis: isText(r.basis) ? r.basis : '' }))
-  return { kind: 'match', requestId, recommendations, demo }
+  return { kind: 'match', requestId, recommendations }
 }
 
 /** 400 по контракту: {status: 'error', error: {message, fields}}; 422 — если сработала стандартная проверка FastAPI */
@@ -59,7 +71,6 @@ function readValidation(body: unknown): ApiResult {
 
 export async function requestRecommendations(req: RecommendationRequest, signal: AbortSignal): Promise<ApiResult> {
   const base = apiBase()
-  if (!base) return mockRecommendations(req, signal)
   let res: Response
   try {
     res = await fetch(`${base}/api/v1/recommendations`, {
@@ -83,47 +94,5 @@ export async function requestRecommendations(req: RecommendationRequest, signal:
     const message = (body as ApiError)?.error?.message
     return { kind: 'server', status: res.status, message: isText(message) ? message : null }
   }
-  return readOk(body, false)
-}
-
-function wait(ms: number, signal: AbortSignal) {
-  return new Promise<void>((resolve, reject) => {
-    const id = window.setTimeout(resolve, ms)
-    signal.addEventListener('abort', () => {
-      window.clearTimeout(id)
-      reject(signal.reason)
-    })
-  })
-}
-
-/** Заглушка ведёт себя как бэкенд ALE-03. ?mock=slow — долгий ответ, ?mock=error — 500, ?mock=offline — нет сети */
-export async function mockRecommendations(req: RecommendationRequest, signal: AbortSignal): Promise<ApiResult> {
-  const mode = new URLSearchParams(window.location.search).get('mock')
-  await wait(mode === 'slow' ? 2500 : 650, signal)
-  if (mode === 'offline') return { kind: 'network' }
-  if (mode === 'error') return { kind: 'server', status: 500, message: 'Внутренняя ошибка сервера' }
-  const comment = req.comment.trim()
-  if (comment.length < COMMENT_MIN || comment.length > COMMENT_MAX) {
-    return readValidation({ status: 'error', error: { code: 'validation_error', message: 'Проверьте заполнение полей', fields: { comment: 'String should have at least 3 characters' } } })
-  }
-  const requestId = crypto.randomUUID()
-  const hits = demoRules.filter((r) => r.symptom === req.symptom_type && r.phase === req.corner_phase && (!r.stint || req.stint_moment == null || r.stint === req.stint_moment))
-  if (hits.length === 0) return readOk({ status: 'no_match', request_id: requestId, message: 'Подходящее правило не найдено.' }, true)
-  const lang = locale
-  return readOk(
-    {
-      status: 'match',
-      request_id: requestId,
-      recommendations: hits.map((r) => ({
-        rule_id: r.id,
-        parameter: r.parameter,
-        direction: r.direction,
-        change_description: r.change[lang],
-        expected_effect: r.effect[lang],
-        limitations: r.limits[lang],
-        basis: lang === 'ru' ? 'демо-правило фронтенда, не проверено экспертом' : 'frontend demo rule, not reviewed by an expert',
-      })),
-    },
-    true,
-  )
+  return readOk(body)
 }

@@ -28,6 +28,7 @@ scripts/deploy-hq.sh setup                    # первичная настро�
 - Повторная заливка бэкенда базу не трогает: `*.db` исключены, база лежит отдельно.
 - certbot дописал SSL в конфиг nginx на сервере — `deploy/nginx-simracing.conf` уже с этими блоками. Меняете конфиг — правьте файл в репозитории и запускайте `setup`.
 - Логи бэкенда: `ssh hq journalctl -u simracing-api -n 50`.
+- **Пока Родион не влил исправление «Не важно»**, накладывайте патч перед выкладкой: `patch -p1 -d ПАПКА_БЭКЕНДА < deploy/backend-stint-null.patch`. Миграция базы на hq уже сделана (бэкап — `/var/lib/simracing-api/simracing.db.bak-2026-10-20`).
 
 ## Сборка под свой домен
 
@@ -36,5 +37,5 @@ scripts/deploy-hq.sh setup                    # первичная настро�
 ## Проверено 20.10.2026
 
 - HTTPS, редирект с HTTP, `noindex` на страницах, ассетах и API
-- e2e по боевому сайту: `node scripts/e2e.mjs https://simracing.egorprotasov.ru/ https://simracing.egorprotasov.ru` — 12 из 13, падает только «Не важно» (`stint_moment: null` → 500, баг бэкенда, см. `docs/api-contract.md`)
-- На сервере версия бэкенда из архива Родиона от 20.10 и одно тестовое правило TEST-001
+- e2e по боевому сайту: `node scripts/e2e.mjs https://simracing.egorprotasov.ru/` — 21 из 21
+- На сервере бэкенд из архива Родиона от 20.10 с исправлением «Не важно» и одно тестовое правило TEST-001

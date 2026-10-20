@@ -170,9 +170,20 @@
   font-size: 13px;
 }
 
-.assistant__mode--live {
+.assistant__mode--checking,
+.assistant__mode--online {
   border-left-color: var(--control-border);
   color: var(--mute);
+}
+
+.assistant__mode--offline {
+  border-left-color: var(--alert);
+}
+
+.assistant__api {
+  margin-left: 8px;
+  color: var(--ash);
+  overflow-wrap: anywhere;
 }
 
 .answer {
@@ -380,10 +391,11 @@
 }
 
 /* ALE-03: машина и трасса, номер запроса */
+/* Машина и трасса друг под другом: названия длинные («Daytona International Speedway») и в две колонки обрезаются */
 .ask__pair {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: var(--s-md);
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
 }
 
 .ask__select {
@@ -403,8 +415,3 @@
   font-variant-numeric: tabular-nums;
 }
 
-@media (max-width: 520px) {
-  .ask__pair {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}

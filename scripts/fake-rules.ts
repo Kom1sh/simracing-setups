@@ -1,7 +1,7 @@
-import type { CornerPhase, Recommendation, StintMoment, SymptomType } from './types'
+import type { CornerPhase, Recommendation, StintMoment, SymptomType } from '../src/assistant/types.ts'
 
 /**
- * Демо-правила для заглушки, пока бэкенд не подключён. Подбираются как на бэкенде (ALE-03):
+ * Правила фейкового бэкенда (scripts/fake-backend.mjs) для e2e и разработки без Python. Подбираются как на бэкенде (ALE-03):
  * по symptom_type, corner_phase и stint_moment (правило без stint подходит к любому).
  * Это общие закономерности, а не проверенная экспертная база (FED-04, VAR-04).
  * Для избыточной в середине правила нет нарочно — так видно ответ no_match.

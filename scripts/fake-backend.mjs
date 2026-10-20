@@ -1,11 +1,11 @@
 // Фейковый бэкенд по контракту ALE-03 (как FastAPI Родиона) — гонять фронт без Python.
-// Правила — демо из src/assistant/demoRules.ts; car и track не проверяются.
+// Правила — scripts/fake-rules.ts; car и track не проверяются.
 //   node scripts/fake-backend.mjs [порт]        (нужен Node 23.6+ — он читает .ts сам)
 //   …/ru/app/?api=http://localhost:8765
 // Комментарий с «#500» вызывает внутреннюю ошибку — для проверки экрана ошибки.
 import { createServer } from 'node:http'
 import { randomUUID } from 'node:crypto'
-import { demoRules } from '../src/assistant/demoRules.ts'
+import { demoRules } from './fake-rules.ts'
 
 const PORT = Number(process.argv[2] ?? 8765)
 
