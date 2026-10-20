@@ -585,3 +585,41 @@
     width: 64px;
   }
 }
+
+/* Отметки на схеме в полосе: направление движения, старт/финиш, номера поворотов */
+.track-map__arrow {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.track-map__sf {
+  fill: var(--accent);
+}
+
+.track-map__sf-label {
+  fill: var(--on-band);
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.track-map__turn circle {
+  fill: var(--accent);
+}
+
+.track-map__turn text {
+  fill: var(--on-accent);
+  font-size: 24px;
+  font-weight: 800;
+  text-anchor: middle;
+}
+
+/* Отметки — отдельным слоем поверх названия трассы, чтобы номер поворота не прятался под ним */
+.track-map__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}

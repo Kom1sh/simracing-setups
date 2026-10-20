@@ -17,6 +17,7 @@ export const widgetsEn: typeof widgetsRu = {
   trackMapLabel: (n: string) => `${n} track map`,
   windLabel: (speed: number, name: string) => `Wind ${speed} km/h, ${name}`,
   kmh: 'km/h',
+  startFinish: 'Start / finish',
   north: 'N ↑',
   dir: { cw: 'clockwise', ccw: 'anticlockwise', fig8: 'figure of eight' },
   differs: 'Differs from baseline',

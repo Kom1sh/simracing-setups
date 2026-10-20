@@ -32,7 +32,13 @@ export function TrackPicker({ tracks, aliases, value, onChange }: Props) {
   const results = useMemo(() => {
     const q = normalizeSearch(query)
     if (!q) return tracks
-    return index.filter((e) => e.haystack.some((h) => h.includes(q))).map((e) => e.track)
+    // Сначала — где запрос стоит в начале названия или слова в нём («спа» → Спа-Франкоршам, а не «Испания»)
+    const wordStart = (h: string) => h.startsWith(q) || h.split(/[\s-]+/).some((w) => w.startsWith(q))
+    return index
+      .filter((e) => e.haystack.some((h) => h.includes(q)))
+      .map((e) => ({ e, rank: e.haystack.some(wordStart) ? 0 : 1 }))
+      .sort((a, b) => a.rank - b.rank)
+      .map(({ e }) => e.track)
   }, [query, index, tracks])
 
   const toggle = () => {

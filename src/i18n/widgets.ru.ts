@@ -18,6 +18,7 @@ export const widgetsRu = {
   trackMapLabel: (n: string) => `Схема трассы ${n}`,
   windLabel: (speed: number, name: string) => `Ветер ${speed} км/ч, ${name}`,
   kmh: 'км/ч',
+  startFinish: 'Старт / финиш',
   north: 'С ↑',
   dir: { cw: 'по часовой стрелке', ccw: 'против часовой стрелки', fig8: 'восьмёрка' } as Record<string, string>,
   // Строка регулировки

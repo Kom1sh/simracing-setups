@@ -20,6 +20,8 @@ export interface Track {
   /** Дождь в iRacing разрешён на этой конфигурации */
   rain: boolean
   iracing: { name: string; url: string }
+  /** Подписи на схеме (пока у овалов): линия старта, точка сразу после неё — направление, повороты по порядку */
+  labels?: { sf: [number, number]; sfNext: [number, number]; turns: [number, number][] }
 }
 
 export type TrackKind = 'road' | 'oval'
