@@ -349,11 +349,26 @@
 }
 
 .track-map--hero {
-  height: clamp(280px, 34vw, 470px);
+  display: flex;
+  flex-direction: column;
+  height: clamp(360px, 42vw, 590px);
 }
 
+/* Схема и слой отметок — один прямоугольник; название — строкой под ним, чтобы не перекрывать трассу */
+.track-map__stage {
+  position: relative;
+  height: 100%;
+}
+
+.track-map--hero .track-map__stage {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: auto;
+}
+
+/* Поля под отметки: номера поворотов и «Старт / финиш» стоят снаружи трассы и не должны вылезать на название */
 .track-map--hero .track-map__svg {
-  padding: 8px 0 0 12%;
+  padding: 34px 4% 34px;
 }
 
 .track-map--hero .track-map__under {
@@ -384,10 +399,7 @@
 }
 
 .track-map--hero .track-map__caption {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  max-width: 88%;
+  margin-top: 10px;
   pointer-events: none;
 }
 
@@ -522,7 +534,7 @@
   }
 
   .track-map--hero {
-    height: clamp(260px, 62vw, 440px);
+    height: clamp(380px, 92vw, 600px);
   }
 }
 
@@ -561,7 +573,7 @@
   }
 
   .track-map--hero .track-map__svg {
-    padding: 28px 0 0;
+    padding: 44px 12% 44px;
   }
 
   .track-map--hero .track-map__name {
@@ -622,4 +634,21 @@
   inset: 0;
   z-index: 1;
   pointer-events: none;
+}
+
+/* На узких экранах схема мельче — отметки и их отступы крупнее */
+.track-map__k {
+  transform: none;
+}
+
+@media (max-width: 1100px) {
+  .track-map__k {
+    transform: scale(1.5);
+  }
+}
+
+@media (max-width: 700px) {
+  .track-map__k {
+    transform: scale(2.3);
+  }
 }

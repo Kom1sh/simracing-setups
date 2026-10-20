@@ -38,40 +38,53 @@ export function TrackMap({
 
   return (
     <figure className={`track-map track-map--${variant}`}>
+      <div className="track-map__stage">
       <svg className="track-map__svg" viewBox={track.viewBox} preserveAspectRatio="xMidYMid meet" role="img" aria-label={w.trackMapLabel(track.name)}>
         {hero && <path className="track-map__under" d={track.path} />}
         <path key={hero ? track.id : undefined} className="track-map__line" d={track.path} pathLength={1} />
       </svg>
+      {geo && (
+        <svg className="track-map__svg track-map__overlay" viewBox={track.viewBox} preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+          {/* .track-map__k увеличивает отметку и её отступ от трассы на узких экранах, где схема мельче */}
+          {geo.arrows.map((a, i) => (
+            <g key={i} transform={`translate(${a.p[0]} ${a.p[1]}) rotate(${a.angle})`}>
+              <path className="track-map__arrow track-map__k" d="M-12 -10 L6 0 L-12 10" />
+            </g>
+          ))}
+          {geo.sf && (
+            <g transform={`translate(${geo.sf[0]} ${geo.sf[1]}) rotate(${geo.sfAngle})`}>
+              <rect className="track-map__sf track-map__k" x={-4} y={-22} width={8} height={44} />
+            </g>
+          )}
+          {geo.sf && (
+            <g transform={`translate(${geo.sf[0]} ${geo.sf[1]})`}>
+              <g className="track-map__k">
+                <text className="track-map__sf-label" {...textAt(offset(geo.sf, geo.c, 62))}>
+                  {w.startFinish}
+                </text>
+              </g>
+            </g>
+          )}
+          {geo.turns.map((t, i) => {
+            const [dx, dy] = offset(t, geo.c, 52)
+            return (
+              <g key={i} transform={`translate(${t[0]} ${t[1]})`}>
+                <g className="track-map__k">
+                  <g className="track-map__turn" transform={`translate(${dx} ${dy})`}>
+                    <circle r={22} />
+                    <text dy="0.35em">{i + 1}</text>
+                  </g>
+                </g>
+              </g>
+            )
+          })}
+        </svg>
+      )}
+      </div>
       <figcaption className="track-map__caption">
         <span className="track-map__name">{track.name}</span>
         {variant === 'tile' && <span className="track-map__country">{track.country}</span>}
       </figcaption>
-      {geo && (
-        <svg className="track-map__svg track-map__overlay" viewBox={track.viewBox} preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-            {geo.arrows.map((a, i) => (
-              <path key={i} className="track-map__arrow" d="M-12 -10 L6 0 L-12 10" transform={`translate(${a.p[0]} ${a.p[1]}) rotate(${a.angle})`} />
-            ))}
-            {geo.sf && (
-              <g transform={`translate(${geo.sf[0]} ${geo.sf[1]}) rotate(${geo.sfAngle})`}>
-                <rect className="track-map__sf" x={-4} y={-22} width={8} height={44} />
-              </g>
-            )}
-            {geo.sf && (
-              <text className="track-map__sf-label" {...textAt(outward(geo.sf, geo.c, 62))}>
-                {w.startFinish}
-              </text>
-            )}
-            {geo.turns.map((t, i) => {
-              const [x, y] = outward(t, geo.c, 52)
-              return (
-                <g key={i} className="track-map__turn" transform={`translate(${x} ${y})`}>
-                  <circle r={22} />
-                  <text dy="0.35em">{i + 1}</text>
-                </g>
-              )
-            })}
-        </svg>
-      )}
       {hero && wind && wind.speed > 0 && (
         <div className="wind" aria-label={w.windLabel(wind.speed, wind.name)}>
           {/* Стрелка нарисована вниз (на юг); ветер «откуда» X дует в сторону X + 180°, поэтому поворот ровно на X */}
@@ -92,4 +105,10 @@ export function TrackMap({
 
 function textAt(p: Pt) {
   return { x: p[0], y: p[1], textAnchor: 'middle' as const, dominantBaseline: 'middle' as const }
+}
+
+/** Сдвиг от точки трассы наружу от центра схемы — как вектор, чтобы масштаб увеличивал и отступ */
+function offset(p: Pt, center: Pt, by: number): Pt {
+  const q = outward(p, center, by)
+  return [q[0] - p[0], q[1] - p[1]]
 }
