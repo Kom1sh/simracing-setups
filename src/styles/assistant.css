@@ -419,3 +419,79 @@
   font-variant-numeric: tabular-nums;
 }
 
+
+/* Ассистент v2: подсказки, источник, режим, отзыв */
+.ask__hints {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.ask__sublabel {
+  margin-top: 6px;
+  color: var(--mute);
+  font-size: 13px;
+}
+
+.rec__slot {
+  margin-left: 8px;
+  color: var(--mute);
+  font-size: 0.7em;
+  font-weight: 500;
+}
+
+.rec__source {
+  margin-top: 12px;
+  font-size: 13px;
+}
+
+.rec__source summary {
+  cursor: pointer;
+  color: var(--mute);
+}
+
+.rec__source blockquote {
+  margin: 8px 0;
+  padding-left: 12px;
+  border-left: 3px solid var(--accent);
+  color: var(--body);
+  font-style: italic;
+}
+
+.rec__foot .button.is-done {
+  cursor: default;
+}
+
+.answer__mode {
+  color: var(--mute);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.answer__check {
+  padding: 10px 12px;
+  background: var(--surface);
+  font-size: 14px;
+}
+
+.feedback {
+  display: grid;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  width: 100%;
+}
+
+.feedback__q,
+.feedback__thanks {
+  font-size: 14px;
+}
+
+.feedback__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}

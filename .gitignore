@@ -5,3 +5,10 @@ dist
 .qa
 .claude/
 .ssr
+
+# Бэкенд
+backend/data/
+backend/.venv/
+backend/eval/last-report.json
+__pycache__/
+.pytest_cache/

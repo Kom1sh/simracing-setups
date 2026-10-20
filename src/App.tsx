@@ -8,6 +8,7 @@ import { formatNumber, parseLapTime } from './lib/format'
 import { planFuel } from './lib/fuel'
 import { runChecks } from './lib/checks'
 import { readJSON, writeJSON } from './lib/storage'
+import { api } from './lib/api'
 import { engineText } from './lib/cars'
 import { TrackMap, directionText } from './components/TrackMap'
 import { TrackPicker } from './components/TrackPicker'
@@ -18,6 +19,8 @@ import { Summary } from './components/Summary'
 import { SetupsDialog } from './components/SetupsDialog'
 import { UserMenu } from './components/UserMenu'
 import { AssistantPanel } from './assistant/AssistantPanel'
+import type { AdviceChange } from './assistant/types'
+import { a as at } from './i18n/dashboard'
 import { t } from './i18n/dashboard'
 import { pagePath } from './i18n/locale'
 import type { Session } from './lib/session'
@@ -107,6 +110,25 @@ function repairDraft(raw: Partial<Draft> | null): Draft | null {
   }
 }
 
+/** Сетап на сервере: имя, машина, трасса и всё остальное из черновика в data */
+interface ServerSetup {
+  id: string
+  name: string
+  car_id: string
+  track_id: string
+  data: Partial<Draft>
+  updated_at: string
+}
+
+function toServer(d: Draft) {
+  return { name: d.name, car_id: d.carId, track_id: d.trackId, data: { nameEdited: d.nameEdited, conditions: d.conditions, setup: d.setup, symmetric: d.symmetric, lapTime: d.lapTime, perLap: d.perLap } }
+}
+
+function fromServer(s: ServerSetup): Saved | null {
+  const d = repairDraft({ ...s.data, name: s.name, carId: s.car_id, trackId: s.track_id, savedId: s.id })
+  return d ? { ...d, id: s.id, savedAt: s.updated_at } : null
+}
+
 function parseLitres(s: string): number | null {
   const t = s.trim().replace(',', '.')
   if (!t) return null
@@ -119,10 +141,7 @@ export default function App({ session, onSignOut }: { session: Session; onSignOu
   const DRAFT_KEY = `${LEGACY_DRAFT_KEY}:${session.email}`
   const SAVED_KEY = `${LEGACY_SAVED_KEY}:${session.email}`
   const [draft, setDraft] = useState<Draft>(() => repairDraft(readJSON<Draft>(DRAFT_KEY) ?? readJSON<Draft>(LEGACY_DRAFT_KEY)) ?? freshDraft())
-  const [saved, setSaved] = useState<Saved[]>(() => {
-    const list = readJSON<Saved[]>(SAVED_KEY) ?? readJSON<Saved[]>(LEGACY_SAVED_KEY)
-    return Array.isArray(list) ? list.filter((s) => s && typeof s.id === 'string') : []
-  })
+  const [saved, setSaved] = useState<Saved[]>([])
   const [tab, setTab] = useState<Tab>('track')
   const [dialogOpen, setDialogOpen] = useState(false)
   const [toast, setToast] = useState<{ text: string; key: number } | null>(null)
@@ -141,6 +160,33 @@ export default function App({ session, onSignOut }: { session: Session; onSignOu
   useEffect(() => {
     writeJSON(DRAFT_KEY, draft)
   }, [draft, DRAFT_KEY])
+
+  // Сетапы — в аккаунте на сервере. Старые из этого браузера один раз переносим туда же
+  useEffect(() => {
+    let alive = true
+    void (async () => {
+      try {
+        let list = (await api<{ setups: ServerSetup[] }>('/api/v2/setups')).setups
+        const local = readJSON<Saved[]>(SAVED_KEY) ?? readJSON<Saved[]>(LEGACY_SAVED_KEY)
+        if (Array.isArray(local) && local.length) {
+          for (const old of local) {
+            const fixed = repairDraft(old)
+            if (fixed) await api('/api/v2/setups', { method: 'POST', body: toServer(fixed) })
+          }
+          writeJSON(SAVED_KEY, [])
+          writeJSON(LEGACY_SAVED_KEY, [])
+          list = (await api<{ setups: ServerSetup[] }>('/api/v2/setups')).setups
+        }
+        if (alive) setSaved(list.map(fromServer).filter((x): x is Saved => x !== null))
+      } catch {
+        if (alive) say(t.toast.listFailed)
+      }
+    })()
+    return () => {
+      alive = false
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
     if (!toast) return
@@ -240,18 +286,18 @@ export default function App({ session, onSignOut }: { session: Session; onSignOu
     })
   }
 
-  const persistSaved = (list: Saved[]) => {
-    setSaved(list)
-    return writeJSON(SAVED_KEY, list)
-  }
-
-  const save = () => {
-    const id = draft.savedId && saved.some((s) => s.id === draft.savedId) ? draft.savedId : crypto.randomUUID()
-    const entry: Saved = { ...draft, savedId: id, id, savedAt: new Date().toISOString() }
-    const list = [entry, ...saved.filter((s) => s.id !== id)]
-    const ok = persistSaved(list)
-    setDraft((d) => ({ ...d, savedId: id }))
-    say(ok ? t.toast.saved(draft.name) : t.toast.saveFailed)
+  const save = async () => {
+    const existing = draft.savedId && saved.some((s) => s.id === draft.savedId) ? draft.savedId : null
+    try {
+      const r = await api<{ setup: ServerSetup }>(existing ? `/api/v2/setups/${existing}` : '/api/v2/setups', { method: 'POST', body: toServer(draft) })
+      const entry = fromServer(r.setup)
+      if (!entry) return
+      setSaved((list) => [entry, ...list.filter((s) => s.id !== entry.id)])
+      setDraft((d) => ({ ...d, savedId: entry.id }))
+      say(t.toast.saved(draft.name))
+    } catch {
+      say(t.toast.saveFailed)
+    }
   }
 
   const load = (id: string) => {
@@ -263,9 +309,15 @@ export default function App({ session, onSignOut }: { session: Session; onSignOu
     say(t.toast.opened(repaired.name))
   }
 
-  const remove = (id: string) => {
+  const remove = async (id: string) => {
     const s = saved.find((x) => x.id === id)
-    persistSaved(saved.filter((x) => x.id !== id))
+    try {
+      await api(`/api/v2/setups/${id}/delete`, { method: 'POST' })
+    } catch {
+      say(t.toast.saveFailed)
+      return
+    }
+    setSaved((list) => list.filter((x) => x.id !== id))
     if (draft.savedId === id) setDraft((d) => ({ ...d, savedId: null }))
     if (s) say(t.toast.removed(s.name))
   }
@@ -323,6 +375,31 @@ export default function App({ session, onSignOut }: { session: Session; onSignOu
     const noTrack = !!trackId && !trackById(trackId)
     const noCar = !!carId && !carById(carId)
     say(noTrack || noCar ? t.toast.partly(noTrack, noCar) : t.toast.loaded(repaired.name))
+  }
+
+  const labels = useMemo(() => Object.fromEntries(groups.flatMap((g) => g.params.map((p) => [p.id, p.label]))), [groups])
+
+  /** Правка ассистента → черновик гаража: шаг от текущего значения, в пределах диапазона */
+  const applyAdvice = (c: AdviceChange) => {
+    const p = groups.flatMap((g) => g.params).find((x) => x.id === c.param)
+    if (!p) return
+    update((d) => {
+      const cur = d.setup[p.id]
+      let next: ParamValue = cur
+      if (p.kind === 'choice' && c.to) next = c.to
+      else if (p.kind === 'scalar' && typeof cur === 'number' && c.delta !== undefined) next = Number(Math.min(p.range.max, Math.max(p.range.min, cur + c.delta)).toFixed(p.decimals))
+      else if ((p.kind === 'axle' || p.kind === 'corners') && Array.isArray(cur) && c.delta !== undefined) {
+        next = cur.map((v, i) => {
+          if (!(c.indexes ?? []).includes(i)) return v
+          const r = p.kind === 'axle' ? (i === 0 ? p.front : p.rear) : i < 2 ? p.front : p.rear
+          return Number(Math.min(r.max, Math.max(r.min, v + c.delta!)).toFixed(p.decimals))
+        })
+      }
+      // Правка одного колеса: левое и правое больше не меняются вместе
+      const single = p.kind === 'corners' && (c.indexes ?? []).length === 1
+      return { setup: { ...d.setup, [p.id]: next }, symmetric: single ? { ...d.symmetric, [p.id]: false } : d.symmetric }
+    })
+    say(at.appliedToast(`${labels[c.param] ?? c.label} ${c.text}`))
   }
 
   const setValue = (key: 'conditions' | 'setup') => (id: string, v: ParamValue) => update((d) => ({ [key]: { ...d[key], [id]: v } }))
@@ -502,7 +579,7 @@ export default function App({ session, onSignOut }: { session: Session; onSignOu
               }
             />
           )}
-          {tab === 'assistant' && <AssistantPanel car={car} track={track} />}
+          {tab === 'assistant' && <AssistantPanel car={car} track={track} conditions={draft.conditions} setup={draft.setup} setupId={draft.savedId} labels={labels} onApply={applyAdvice} />}
         </div>
 
         {tab !== 'assistant' && (

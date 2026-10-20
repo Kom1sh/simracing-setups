@@ -138,10 +138,9 @@ await step('ввод числа руками с запятой и зажимом
   expect((await field.inputValue()) === '−1,5', `значение ${await field.inputValue()}`)
 })
 
-await step('ассистент берёт машину и трассу из шапки и предупреждает, что правил нет', async () => {
+await step('ассистент берёт машину и трассу из шапки', async () => {
   await page.getByRole('tab', { name: 'Ассистент' }).click()
   expect(await page.locator('.ask__context').getByText('Монца').isVisible(), 'нет трассы из шапки')
-  expect(await page.getByText('Правила ассистента пока написаны только для NASCAR Next Gen').isVisible(), 'нет предупреждения')
   await page.getByRole('tab', { name: /Машина/ }).click()
 })
 
@@ -151,6 +150,7 @@ await step('сохранение переживает перезагрузку',
   const trigger = await page.getByRole('button', { name: /^Трасса/ }).first().textContent()
   expect(trigger.includes('Монца'), `после перезагрузки ${trigger}`)
   await page.getByRole('button', { name: /Мои сетапы/ }).click()
+  await page.locator('.saved__item').first().waitFor()
   expect((await page.locator('.saved__item').count()) === 1, 'в списке не один сетап')
   await page.getByRole('button', { name: 'Закрыть' }).click()
   await page.getByRole('tab', { name: /Машина/ }).click()

@@ -1,0 +1,22 @@
+[
+ {"id": "nas-cross-up", "param": "crossWeight", "slot": "all", "direction": "increase", "priority": 1,
+  "fixes": [["oversteer", "entry"], ["oversteer", "exit"]],
+  "effect": {"ru": "Больше веса на левом заднем и правом переднем: вход стабильнее, выход с виража увереннее.", "en": "More weight on the left rear and right front: a more stable entry and better drive off the corner."},
+  "tradeoff": {"ru": "Слишком много — блокируется левое переднее на торможении.", "en": "Too much locks the left front under braking."},
+  "source": {"manual": "nascar-next-gen", "quote": "Higher Cross Weight values will add weight to the left-rear and right-front, both stabilizing entry and helping drive-off on corner exit."}},
+ {"id": "nas-cross-down", "param": "crossWeight", "slot": "all", "direction": "decrease", "priority": 1,
+  "fixes": [["understeer", "mid"], ["lockup", "entry"]],
+  "effect": {"ru": "Машина свободнее в повороте и охотнее поворачивает; левое переднее меньше блокируется.", "en": "The car is freer in the corner and rotates more; the left front locks less."},
+  "tradeoff": {"ru": "Слишком мало — нестабильный вход и выход.", "en": "Too little gives an unstable entry and exit."},
+  "source": {"manual": "nascar-next-gen", "quote": "Lower Cross-Weight values will help the vehicle rotate and keep it \"free\" in the corner to prevent speed from being lost, however too low can result in unstable entry and exit."}},
+ {"id": "nas-nose-down", "param": "noseWeight", "slot": "all", "direction": "decrease", "priority": 2, "speed": "slow",
+  "fixes": [["understeer", "mid"], ["understeer", "entry"]],
+  "effect": {"ru": "Задней оси легче поворачивать машину — особенно на коротких трассах.", "en": "The rear rotates the car more easily, especially on short tracks."},
+  "tradeoff": {"ru": "Меньше устойчивость на высокой скорости.", "en": "Less high-speed stability."},
+  "source": {"manual": "nascar-next-gen", "quote": "Smaller tracks will also see benefits from lower Nose Weight values, as it will allow the rear of the vehicle to rotate easier."}},
+ {"id": "nas-nose-up", "param": "noseWeight", "slot": "all", "direction": "increase", "priority": 2, "speed": "fast",
+  "fixes": [["oversteer", "mid"], ["oversteer", "entry"]],
+  "effect": {"ru": "Машина устойчивее держит направление на скорости.", "en": "The car is more directionally stable at speed."},
+  "tradeoff": {"ru": "Хуже поворачивает на коротких трассах.", "en": "It rotates less on short tracks."},
+  "source": {"manual": "nascar-next-gen", "quote": "Higher Nose Weight values result in a more directionally-stable vehicle, good for low-grip tracks and situations where the vehicle is set up with extra front downforce."}}
+]

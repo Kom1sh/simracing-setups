@@ -1,0 +1,332 @@
+[
+ {
+  "id": "road-farb-soft",
+  "classes": [
+   "gt3",
+   "gt4",
+   "cup"
+  ],
+  "param": "arbFront",
+  "slot": "all",
+  "direction": "decrease",
+  "priority": 1,
+  "fixes": [
+   [
+    "understeer",
+    "mid"
+   ],
+   [
+    "understeer",
+    "entry"
+   ],
+   [
+    "understeer",
+    "exit"
+   ]
+  ],
+  "effect": {
+   "ru": "Передний стабилизатор мягче: меньше недостаточной в повороте.",
+   "en": "Softer front anti-roll bar: less understeer in the corner."
+  },
+  "tradeoff": {
+   "ru": "Больше крен, медленнее отклик на руль.",
+   "en": "More roll, slower steering response."
+  },
+  "source": {
+   "manual": "ferrari-296-gt3",
+   "quote": "Conversely, lower values reduce the roll stiffness of the front suspension and reduce understeer."
+  }
+ },
+ {
+  "id": "road-farb-stiff",
+  "classes": [
+   "gt3",
+   "gt4",
+   "cup"
+  ],
+  "param": "arbFront",
+  "slot": "all",
+  "direction": "increase",
+  "priority": 2,
+  "fixes": [
+   [
+    "oversteer",
+    "mid"
+   ]
+  ],
+  "effect": {
+   "ru": "Передний стабилизатор жёстче: машина спокойнее, избыточная уходит.",
+   "en": "Stiffer front bar: a calmer car with less oversteer."
+  },
+  "tradeoff": {
+   "ru": "Больше недостаточной.",
+   "en": "More understeer."
+  },
+  "source": {
+   "manual": "ferrari-296-gt3",
+   "quote": "Stiffer front ARB -> More Understeer"
+  }
+ },
+ {
+  "id": "road-rarb-soft",
+  "classes": [
+   "gt3",
+   "gt4",
+   "cup"
+  ],
+  "param": "arbRear",
+  "slot": "all",
+  "direction": "decrease",
+  "priority": 1,
+  "fixes": [
+   [
+    "oversteer",
+    "mid"
+   ],
+   [
+    "oversteer",
+    "entry"
+   ]
+  ],
+  "effect": {
+   "ru": "Задний стабилизатор мягче: меньше избыточной в повороте.",
+   "en": "Softer rear anti-roll bar: less oversteer in the corner."
+  },
+  "tradeoff": {
+   "ru": "Больше крен сзади, машина ленивее поворачивает.",
+   "en": "More rear roll, a lazier car."
+  },
+  "source": {
+   "manual": "bmw-m4-g82-gt4",
+   "quote": "Conversely, reducing the ARB assembly stiffness will soften the suspension in roll, increasing body roll but decreasing mechanical oversteer."
+  }
+ },
+ {
+  "id": "road-rarb-stiff",
+  "classes": [
+   "gt3",
+   "gt4",
+   "cup"
+  ],
+  "param": "arbRear",
+  "slot": "all",
+  "direction": "increase",
+  "priority": 2,
+  "fixes": [
+   [
+    "understeer",
+    "mid"
+   ],
+   [
+    "understeer",
+    "exit"
+   ]
+  ],
+  "effect": {
+   "ru": "Задний стабилизатор жёстче: машина охотнее поворачивает.",
+   "en": "Stiffer rear bar: the car rotates more."
+  },
+  "tradeoff": {
+   "ru": "Может появиться избыточная.",
+   "en": "It can bring oversteer."
+  },
+  "source": {
+   "manual": "ferrari-296-gt3",
+   "quote": "Stiffer rear ARB -> More Oversteer"
+  }
+ },
+ {
+  "id": "road-wing-up",
+  "classes": [
+   "gt3",
+   "gt4",
+   "cup"
+  ],
+  "param": "wing",
+  "slot": "all",
+  "direction": "increase",
+  "priority": 1,
+  "speed": "fast",
+  "fixes": [
+   [
+    "oversteer",
+    "mid"
+   ],
+   [
+    "oversteer",
+    "exit"
+   ]
+  ],
+  "effect": {
+   "ru": "Больше крыла: больше прижима сзади, машина устойчивее в быстрых поворотах.",
+   "en": "More wing: more rear downforce and a steadier car in fast corners."
+  },
+  "tradeoff": {
+   "ru": "Медленнее на прямых.",
+   "en": "Slower on the straights."
+  },
+  "source": {
+   "manual": "bmw-m4-g82-gt4",
+   "quote": "Higher wing setting - More understeer, more downforce, and lower straight-line speed."
+  }
+ },
+ {
+  "id": "road-wing-down",
+  "classes": [
+   "gt3",
+   "gt4",
+   "cup"
+  ],
+  "param": "wing",
+  "slot": "all",
+  "direction": "decrease",
+  "priority": 2,
+  "speed": "fast",
+  "fixes": [
+   [
+    "understeer",
+    "mid"
+   ]
+  ],
+  "effect": {
+   "ru": "Меньше крыла: баланс сдвигается вперёд, быстрее на прямых.",
+   "en": "Less wing: the balance moves forward and the car is faster on the straights."
+  },
+  "tradeoff": {
+   "ru": "Меньше прижима и больше избыточной.",
+   "en": "Less downforce and more oversteer."
+  },
+  "source": {
+   "manual": "bmw-m4-g82-gt4",
+   "quote": "Lower wing setting - More oversteer, less downforce, and higher straight-line speed."
+  }
+ },
+ {
+  "id": "road-bias-back",
+  "classes": [
+   "gt3",
+   "gt4",
+   "cup"
+  ],
+  "param": "brakeBias",
+  "slot": "all",
+  "direction": "decrease",
+  "priority": 1,
+  "fixes": [
+   [
+    "understeer",
+    "entry"
+   ],
+   [
+    "lockup",
+    "entry"
+   ]
+  ],
+  "effect": {
+   "ru": "Баланс тормозов назад: легче повернуть на торможении, передние меньше блокируются.",
+   "en": "Brake bias rearward: easier rotation on the brakes, fewer front lock-ups."
+  },
+  "tradeoff": {
+   "ru": "Слишком назад — машина нестабильна на торможении.",
+   "en": "Too far back makes the car unstable under braking."
+  },
+  "source": {
+   "manual": "porsche-911-cup-992-2",
+   "quote": "too much and you will struggle to rotate the car on the brakes and encounter understeer, too far rearwards and the car will be unstable during the braking phase."
+  }
+ },
+ {
+  "id": "road-bias-fwd",
+  "classes": [
+   "gt3",
+   "gt4",
+   "cup"
+  ],
+  "param": "brakeBias",
+  "slot": "all",
+  "direction": "increase",
+  "priority": 1,
+  "fixes": [
+   [
+    "oversteer",
+    "entry"
+   ]
+  ],
+  "effect": {
+   "ru": "Баланс тормозов вперёд: машина стабильнее на торможении.",
+   "en": "Brake bias forward: a more stable car under braking."
+  },
+  "tradeoff": {
+   "ru": "Передние блокируются раньше.",
+   "en": "The fronts lock earlier."
+  },
+  "source": {
+   "manual": "ferrari-296-gt3",
+   "quote": "Values above 50% ... will shift the brake balance forwards increasing the tendency to lock up the front tyres but potentially increasing overall stability in braking zones."
+  }
+ },
+ {
+  "id": "road-abs-up",
+  "classes": [
+   "gt3",
+   "gt4",
+   "cup"
+  ],
+  "param": "abs",
+  "slot": "all",
+  "direction": "increase",
+  "priority": 1,
+  "fixes": [
+   [
+    "lockup",
+    "entry"
+   ]
+  ],
+  "effect": {
+   "ru": "ABS сильнее помогает и не даёт колёсам блокироваться.",
+   "en": "ABS helps more and keeps the wheels from locking."
+  },
+  "tradeoff": {
+   "ru": "Система вмешивается чаще.",
+   "en": "The system steps in more often."
+  },
+  "source": {
+   "manual": "ferrari-296-gt3",
+   "quote": "with lower values providing less assistance and higher values providing more assistance to prevent brake lockup."
+  }
+ },
+ {
+  "id": "road-tc-up",
+  "classes": [
+   "gt3",
+   "gt4",
+   "cup"
+  ],
+  "param": "tc",
+  "slot": "all",
+  "direction": "increase",
+  "priority": 1,
+  "fixes": [
+   [
+    "wheelspin",
+    "exit"
+   ],
+   [
+    "oversteer",
+    "exit"
+   ]
+  ],
+  "effect": {
+   "ru": "Антипробуксовка сильнее: меньше пробуксовки и износа задних шин на выходе.",
+   "en": "More traction control: less wheelspin and rear tyre wear on exit."
+  },
+  "tradeoff": {
+   "ru": "Если режет мощность слишком сильно — медленнее разгон.",
+   "en": "If it cuts too much power, the exit is slower."
+  },
+  "source": {
+   "manual": "ferrari-296-gt3",
+   "quote": "More intervention will result in less wheelspin and less rear tire wear but can reduce overall performance if the traction control is cutting engine torque too aggressively and stunting corner exit acceleration."
+  }
+ }
+]

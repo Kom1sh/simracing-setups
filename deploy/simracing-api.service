@@ -1,6 +1,6 @@
-# API рекомендаций (FastAPI, бэкенд ALE-03) на hq.
-# Код — /opt/simracing-api/src, база SQLite — в рабочей папке /var/lib/simracing-api
-# (путь к базе в бэкенде относительный: ./simracing.db). Выкладка — scripts/deploy-hq.sh api
+# Бэкенд «Сетапы для симрейсинга» (backend/ в репозитории) на hq.
+# Код — /opt/simracing-api/src, база SQLite и руководства iRacing — /var/lib/simracing-api.
+# Ключ Groq — /etc/simracing-api.env (GROQ_API_KEY=..., права 600). Выкладка — scripts/deploy-hq.sh api
 [Unit]
 Description=Simracing setups API
 After=network.target
@@ -8,14 +8,16 @@ After=network.target
 [Service]
 User=simracing
 Group=simracing
-WorkingDirectory=/var/lib/simracing-api
+WorkingDirectory=/opt/simracing-api/src
+EnvironmentFile=/etc/simracing-api.env
+Environment=SIMRACING_DATA_DIR=/var/lib/simracing-api
 Environment=PYTHONDONTWRITEBYTECODE=1
-ExecStart=/opt/simracing-api/venv/bin/uvicorn main:app --app-dir /opt/simracing-api/src --host 127.0.0.1 --port 8100 --proxy-headers --no-server-header
+ExecStart=/opt/simracing-api/venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8100 --proxy-headers --no-server-header
 Restart=on-failure
 RestartSec=3
 
-# На hq меньше гигабайта памяти, рядом Ultracker: бэкенду хватает ~70 МБ
-MemoryMax=200M
+# На hq меньше гигабайта памяти, рядом Ultracker: бэкенду хватает ~100 МБ
+MemoryMax=300M
 NoNewPrivileges=yes
 PrivateTmp=yes
 ProtectHome=yes

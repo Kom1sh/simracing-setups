@@ -42,7 +42,8 @@ export const en: typeof ru = {
   ),
   toast: {
     saved: (n: string) => `Setup “${n}” saved`,
-    saveFailed: 'The browser refused to save the setup. Download it as a file from the summary.',
+    saveFailed: 'The server did not save the setup. Check your connection or download it as a file from the summary.',
+    listFailed: 'Could not load your setups from the server. Reload the page.',
     opened: (n: string) => `Opened “${n}”`,
     removed: (n: string) => `Deleted “${n}”`,
     downloaded: 'Setup file downloaded',

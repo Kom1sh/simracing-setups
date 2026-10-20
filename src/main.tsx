@@ -9,25 +9,26 @@ import './styles/workspace.css'
 import './styles/assistant.css'
 import './styles/user-menu.css'
 import App from './App'
-import { getSession, signOut } from './lib/session'
+import { getSession, hasSessionHint, signOut } from './lib/session'
 import { pagePath } from './i18n/locale'
 
-const session = getSession()
-
-if (!session) {
+const toLogin = () => {
   // Кабинет только для вошедших: возвращаем сюда же после входа
   const next = window.location.pathname + window.location.search
   window.location.replace(`${pagePath('login')}?next=${encodeURIComponent(next)}`)
-} else {
+}
+
+void (hasSessionHint() ? getSession() : Promise.resolve(null)).then((session) => {
+  if (!session) return toLogin()
   createRoot(document.getElementById('root')!).render(
     <StrictMode>
       <App
         session={session}
-        onSignOut={() => {
-          signOut()
+        onSignOut={async () => {
+          await signOut()
           window.location.assign(pagePath('home'))
         }}
       />
     </StrictMode>,
   )
-}
+})

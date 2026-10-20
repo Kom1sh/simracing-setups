@@ -1,0 +1,6 @@
+[Unit]
+Description=Simracing setups: nightly database backup
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 -I /opt/simracing-api/backup.py /var/lib/simracing-api/simracing.db /var/backups/simracing

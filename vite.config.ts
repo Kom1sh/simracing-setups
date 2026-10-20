@@ -63,6 +63,9 @@ function sitePages(): Plugin {
 
 export default defineConfig({
   base: BASE,
+  // Локально API — свой бэкенд на :8000 (backend/, uvicorn), как nginx на сервере
+  server: { proxy: { '/api': 'http://127.0.0.1:8000', '/health': 'http://127.0.0.1:8000' } },
+  preview: { proxy: { '/api': 'http://127.0.0.1:8000', '/health': 'http://127.0.0.1:8000' } },
   plugins: [react(), sitePages()],
   build: {
     rollupOptions: {

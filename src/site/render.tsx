@@ -1,5 +1,5 @@
 import { renderToStaticMarkup } from 'react-dom/server'
-import { absoluteUrl, BASE, LOCALES, type Locale } from '../i18n/locale'
+import { absoluteUrl, APP_ORIGIN, BASE, LOCALES, type Locale } from '../i18n/locale'
 import { content } from './content'
 import { Landing } from './Landing'
 import type { SiteImages } from './Hero'
@@ -116,9 +116,14 @@ const SHELL_TITLES: Record<string, Record<Locale, string>> = {
 
 /** Оболочка кабинета или входа на нужном языке. Кабинет без сессии сразу уходит на вход, не мигая */
 export function localizeShell(template: string, lang: Locale, page: 'app' | 'login' | 'signup'): string {
+  // На Pages кабинета нет: страница сразу уводит на свой домен
+  if (APP_ORIGIN) {
+    const to = `${APP_ORIGIN}/${lang}/${page}/`
+    return `<!doctype html><html lang="${lang}"><head><meta charset="utf-8"><meta name="robots" content="noindex"><title>${SHELL_TITLES[page][lang]}</title><meta http-equiv="refresh" content="0; url=${to}"><script>location.replace('${to}'+location.search)</script></head><body><a href="${to}">${to}</a></body></html>`
+  }
   let html = template.replace(/<html lang="[a-z]+">/, `<html lang="${lang}">`).replace(/<title>[^<]*<\/title>/, `<title>${SHELL_TITLES[page][lang]}</title>`)
   if (page === 'app') {
-    const guard = `<script>if(!document.cookie.split('; ').some(function(c){return c.indexOf('srs_session=')===0}))location.replace('${BASE}${lang}/login/?next='+encodeURIComponent(location.pathname+location.search))</script>`
+    const guard = `<script>if(!document.cookie.split('; ').some(function(c){return c.indexOf('srs_in=')===0}))location.replace('${BASE}${lang}/login/?next='+encodeURIComponent(location.pathname+location.search))</script>`
     html = html.replace('</title>', `</title>\n    ${guard}`)
   }
   return html

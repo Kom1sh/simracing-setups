@@ -1,60 +1,45 @@
-/**
- * Контракт POST /api/v1/recommendations — версия ALE-03 (форма из шести полей),
- * по ней сделан бэкенд Родиона. Правило подбирается по symptom_type, corner_phase и stint_moment,
- * затем car и track должны точно совпасть со списком применимости правила; comment только сохраняется.
- */
+/** Ответ ИИ-ассистента: POST /api/v2/advice (backend/app/routers/advice.py) */
 
-export const COMMENT_MIN = 3
-export const COMMENT_MAX = 500
+export type Symptom = 'understeer' | 'oversteer' | 'lockup' | 'wheelspin'
+export type Phase = 'entry' | 'mid' | 'exit'
+export type When = 'any' | 'from_start' | 'after_laps'
 
-export const SYMPTOM_TYPES = ['understeer', 'oversteer'] as const
-export type SymptomType = (typeof SYMPTOM_TYPES)[number]
+export const SYMPTOMS: Symptom[] = ['understeer', 'oversteer', 'lockup', 'wheelspin']
+export const PHASES: Phase[] = ['entry', 'mid', 'exit']
+export const WHENS: When[] = ['any', 'from_start', 'after_laps']
+export const TEXT_MAX = 1000
 
-export const CORNER_PHASES = ['entry', 'mid', 'exit'] as const
-export type CornerPhase = (typeof CORNER_PHASES)[number]
-
-export const STINT_MOMENTS = ['from_start', 'after_laps'] as const
-export type StintMoment = (typeof STINT_MOMENTS)[number]
-
-/**
- * Машины и трассы MVP: одна машина на овалах iRacing. Строки должны буквально совпадать
- * с applicability в правилах базы — менять только вместе со справочником команды (VAR-02).
- */
-/**
- * Как машина называется в правилах бэкенда (applicability.car). Правила пишутся на класс NASCAR Next Gen,
- * а не на каждую из трёх машин; для остальных — имя машины в iRacing. Трасса — имя трассы в iRacing.
- */
-export const NEXT_GEN_RULES_NAME = 'NASCAR Cup Series Next Gen (Gen 7)'
-
-export interface RecommendationRequest {
-  car: string
-  track: string
-  symptom_type: SymptomType
-  corner_phase: CornerPhase
-  comment: string
-  stint_moment: StintMoment | null
-}
-
-export interface Recommendation {
-  rule_id: string
-  /** Каноническое имя параметра из словаря (VAR-02), например front_brake_bias_pct */
-  parameter: string
+export interface AdviceChange {
+  effect_id: string
+  param: string
+  label: string
+  slot: string
   direction: 'increase' | 'decrease'
-  change_description: string
-  expected_effect: string
-  limitations: string
-  basis: string
+  steps: number
+  /** Числовая правка от текущего значения; у выбора из списка — from → to */
+  delta?: number
+  indexes?: number[]
+  from?: string
+  to?: string
+  unit: string
+  text: string
+  why: string
+  watch: string
+  effect: string
+  tradeoff: string
+  source: { manual: string; title: string; url: string; quote: string }
 }
 
-export interface ApiError {
-  status: 'error'
-  error: { code: string; message: string; fields?: Record<string, string> }
+export interface Advice {
+  id: string
+  status: 'advice' | 'question' | 'unknown'
+  mode: 'ai' | 'rules'
+  model: string | null
+  summary: string
+  question: string
+  check: string
+  changes: AdviceChange[]
+  diagnosis: { symptom: Symptom; phase: Phase; when: string; speed: string } | null
+  feedback: 'better' | 'same' | 'worse' | null
+  remaining_today?: number
 }
-
-export type ApiResult =
-  | { kind: 'match'; requestId: string | null; recommendations: Recommendation[] }
-  | { kind: 'no_match'; requestId: string | null; message: string | null }
-  | { kind: 'validation'; message: string | null; fields: { field: string; message: string }[] }
-  | { kind: 'server'; status: number; message: string | null }
-  | { kind: 'network' }
-  | { kind: 'bad_response' }

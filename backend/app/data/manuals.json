@@ -1,0 +1,24 @@
+{
+ "note": "Руководства iRacing (https://www.iracing.com/resources/user-manuals/). Текст в репозиторий не кладём — сборщик скачивает PDF и режет на куски на сервере: python -m app.knowledge.build",
+ "manuals": [
+  {"id": "nascar-next-gen", "title": "NASCAR Next Gen Cars", "class": "nascar", "cars": ["nascar-next-gen-chevrolet-camaro", "nascar-next-gen-ford-mustang", "nascar-next-gen-toyota-camry"], "url": "https://s100.iracing.com/wp-content/uploads/2024/03/NASCAR-NextGen-Cars-Manual-V2.pdf"},
+  {"id": "acura-nsx-gt3-evo22", "title": "Acura NSX GT3 EVO 22", "class": "gt3", "cars": ["acura-nsx-gt3-evo22"], "url": "https://s100.iracing.com/wp-content/uploads/2024/12/Acura-GT3_Manual_V2.pdf"},
+  {"id": "aston-martin-vantage-gt3-evo", "title": "Aston Martin Vantage GT3 EVO", "class": "gt3", "cars": ["aston-martin-vantage-gt3-evo"], "url": "https://s100.iracing.com/wp-content/uploads/2026/01/Aston-Martin-GT3-Evo-V1.pdf"},
+  {"id": "audi-r8-lms-evo-ii-gt3", "title": "Audi R8 LMS EVO II GT3", "class": "gt3", "cars": ["audi-r8-lms-evo-ii-gt3"], "url": "https://s100.iracing.com/wp-content/uploads/2024/07/Audi-R8-LMS-EVO-II-GT3_Manual.pdf"},
+  {"id": "bmw-m4-gt3", "title": "BMW M4 GT3", "class": "gt3", "cars": ["bmw-m4-gt3-evo"], "url": "https://s100.iracing.com/wp-content/uploads/2024/07/BMW-M4-GT3-Manual_V3.pdf"},
+  {"id": "chevrolet-corvette-z06-gt3r", "title": "Chevrolet Corvette Z06 GT3.R", "class": "gt3", "cars": ["chevrolet-corvette-z06-gt3r"], "url": "https://s100.iracing.com/wp-content/uploads/2024/06/Chevrolet-Corvette-Z06-GT3_manual_V2.pdf"},
+  {"id": "ferrari-296-gt3", "title": "Ferrari 296 GT3", "class": "gt3", "cars": ["ferrari-296-gt3"], "url": "https://s100.iracing.com/wp-content/uploads/2024/06/Ferrari-296-GT3-V4.pdf"},
+  {"id": "ford-mustang-gt3", "title": "Ford Mustang GT3", "class": "gt3", "cars": ["ford-mustang-gt3"], "url": "https://s100.iracing.com/wp-content/uploads/2024/06/Mustang-GT3_Manual_V2.pdf"},
+  {"id": "lamborghini-huracan-gt3-evo", "title": "Lamborghini Huracán GT3 EVO", "class": "gt3", "cars": ["lamborghini-huracan-gt3-evo"], "url": "https://s100.iracing.com/wp-content/uploads/2024/07/UM-Lamborghini-Huracan-GT3-Evo-V3.pdf"},
+  {"id": "mclaren-720s-gt3-evo", "title": "McLaren 720S GT3 EVO", "class": "gt3", "cars": ["mclaren-720s-gt3-evo"], "url": "https://s100.iracing.com/wp-content/uploads/2024/09/Mclaren-720S-GT3_V2.pdf"},
+  {"id": "mercedes-amg-gt3-2020", "title": "Mercedes-AMG GT3 2020", "class": "gt3", "cars": ["mercedes-amg-gt3-2020"], "url": "https://s100.iracing.com/wp-content/uploads/2026/09/Mercedes-AMG-GT3-2020-Manual_V10.pdf"},
+  {"id": "porsche-911-gt3-r-992", "title": "Porsche 911 GT3 R (992)", "class": "gt3", "cars": ["porsche-911-gt3-r-992"], "url": "https://s100.iracing.com/wp-content/uploads/2024/09/Porsche-911-GT3-R-992_V2.pdf"},
+  {"id": "aston-martin-vantage-gt4", "title": "Aston Martin Vantage GT4", "class": "gt4", "cars": ["aston-martin-vantage-gt4"], "url": "https://s100.iracing.com/wp-content/uploads/2025/03/Aston-Vantage-GT4-Manual_V4.pdf"},
+  {"id": "bmw-m4-g82-gt4", "title": "BMW M4 G82 GT4", "class": "gt4", "cars": ["bmw-m4-g82-gt4-evo"], "url": "https://s100.iracing.com/wp-content/uploads/2024/12/BMW-M4-G82-GT4-Manual-V2.pdf"},
+  {"id": "mclaren-570s-gt4", "title": "McLaren 570S GT4", "class": "gt4", "cars": ["mclaren-570s-gt4"], "url": "https://s100.iracing.com/wp-content/uploads/2024/07/McLaren-570S-GT4-Manual-V2.pdf"},
+  {"id": "mercedes-amg-gt4", "title": "Mercedes-AMG GT4", "class": "gt4", "cars": ["mercedes-amg-gt4"], "url": "https://s100.iracing.com/wp-content/uploads/2024/07/Mercedes-AMG-GT4-Manual-V2.pdf"},
+  {"id": "porsche-718-cayman-gt4", "title": "Porsche 718 Cayman GT4 Clubsport", "class": "gt4", "cars": ["porsche-718-cayman-gt4-clubsport"], "url": "https://s100.iracing.com/wp-content/uploads/2024/07/Porsche-718-Cayman-GT4-Manual-V5.pdf"},
+  {"id": "porsche-911-cup-992-2", "title": "Porsche 911 Cup (992.2)", "class": "cup", "cars": ["porsche-911-cup-992-2"], "url": "https://s100.iracing.com/wp-content/uploads/2026/01/Porsche-Cup-992.2-V1.pdf"},
+  {"id": "ferrari-296-challenge", "title": "Ferrari 296 Challenge", "class": "cup", "cars": ["ferrari-296-challenge"], "url": "https://s100.iracing.com/wp-content/uploads/2025/06/Ferrari-296-Challenge.pdf"}
+ ]
+}

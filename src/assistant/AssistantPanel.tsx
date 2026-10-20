@@ -1,50 +1,52 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { a } from '../i18n/dashboard'
-import { checkHealth, customApi, requestRecommendations } from './api'
-import { AssistantForm, type AskDraft, type AskErrors } from './AssistantForm'
-import { AssistantResults, type Health } from './AssistantResults'
-import type { Car, Track } from '../data/types'
-import { COMMENT_MAX, COMMENT_MIN, NEXT_GEN_RULES_NAME, type ApiResult, type RecommendationRequest } from './types'
+import { locale } from '../i18n/locale'
+import { api, ApiError } from '../lib/api'
+import type { Car, Track, Values } from '../data/types'
+import { AdviceForm, type AdviceDraft } from './AdviceForm'
+import { AdviceResult, type AdviceError } from './AdviceResult'
+import type { Advice, AdviceChange } from './types'
 
-/** EGO-04: машина и трасса из шапки + форма → POST /api/v1/recommendations (ALE-03) → состояния ответа и карточки */
-export function AssistantPanel({ car, track }: { car: Car; track: Track }) {
-  const [draft, setDraft] = useState<AskDraft>({ symptom: null, phase: null, stint: 'any', comment: '' })
-  // Имена, по которым бэкенд ищет правило: класс Next Gen целиком, остальные машины и трассы — как в iRacing
-  const carForRules = car.category === 'nascar' ? NEXT_GEN_RULES_NAME : car.iracing.name
-  const trackForRules = track.iracing.name
-  const covered = car.category === 'nascar' && track.kind === 'oval'
-  const [errors, setErrors] = useState<AskErrors>({})
+interface Props {
+  car: Car
+  track: Track
+  conditions: Values
+  setup: Values
+  setupId: string | null
+  /** Названия регулировок гаража на языке страницы */
+  labels: Record<string, string>
+  onApply: (change: AdviceChange) => void
+}
+
+/** ИИ-ассистент: описание проблемы + контекст кабинета → POST /api/v2/advice → правки с источниками, «Применить», отзыв */
+export function AssistantPanel({ car, track, conditions, setup, setupId, labels, onApply }: Props) {
+  const [draft, setDraft] = useState<AdviceDraft>({ text: '', symptom: null, phase: null, when: 'any' })
+  const [formError, setFormError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
-  const [result, setResult] = useState<ApiResult | null>(null)
+  const [advice, setAdvice] = useState<Advice | null>(null)
+  const [error, setError] = useState<AdviceError>(null)
+  const [applied, setApplied] = useState<Set<string>>(new Set())
   const abortRef = useRef<AbortController | null>(null)
-  const lastRequest = useRef<RecommendationRequest | null>(null)
   const titleRef = useRef<HTMLHeadingElement>(null)
-  const formRef = useRef<HTMLDivElement>(null)
-  const custom = useMemo(() => customApi(), [])
-  const [health, setHealth] = useState<Health>('checking')
 
   useEffect(() => () => abortRef.current?.abort(), [])
 
-  // Связь с сервером видна сразу, до первого запроса
-  useEffect(() => {
-    const controller = new AbortController()
-    checkHealth(controller.signal).then((ok) => setHealth(ok ? 'online' : 'offline'), () => {})
-    return () => controller.abort()
-  }, [])
-
-  const send = async (req: RecommendationRequest) => {
+  const send = async () => {
     abortRef.current?.abort()
     const controller = new AbortController()
     abortRef.current = controller
-    lastRequest.current = req
     setLoading(true)
+    setError(null)
     requestAnimationFrame(() => titleRef.current?.focus({ preventScroll: true }))
     try {
-      const next = await requestRecommendations(req, controller.signal)
-      setResult(next)
-      setHealth(next.kind === 'network' ? 'offline' : 'online')
-    } catch {
-      return // запрос отменён новым
+      const body = { car_id: car.id, track_id: track.id, text: draft.text.trim(), symptom: draft.symptom, phase: draft.phase, when: draft.when, conditions, setup, setup_id: setupId, lang: locale }
+      const r = await api<Advice>('/api/v2/advice', { method: 'POST', body, signal: controller.signal, timeoutMs: 90_000 })
+      setAdvice(r)
+      setApplied(new Set())
+    } catch (e) {
+      if (controller.signal.aborted && !(e instanceof ApiError)) return
+      setAdvice(null)
+      setError(e instanceof ApiError ? (e.status === 429 ? 'limit' : e.status === 401 ? 'auth' : 'network') : 'network')
     } finally {
       if (abortRef.current === controller) setLoading(false)
     }
@@ -54,54 +56,49 @@ export function AssistantPanel({ car, track }: { car: Car; track: Track }) {
     })
   }
 
-  /** Проверка до отправки — те же правила, что у бэкенда: симптом и фаза обязательны, комментарий 3–500 знаков */
   const submit = () => {
-    const comment = draft.comment.trim()
-    const next: AskErrors = {}
-    if (!draft.symptom) next.symptom = a.symptomRequired
-    if (!draft.phase) next.phase = a.phaseRequired
-    if (comment.length < COMMENT_MIN || comment.length > COMMENT_MAX) next.comment = a.commentRequired
-    setErrors(next)
-    if (!draft.symptom || !draft.phase || next.comment) {
-      const form = formRef.current
-      const target = next.symptom ? form?.querySelector<HTMLElement>('input[name="symptom"]') : next.phase ? form?.querySelector<HTMLElement>('[data-field="phase"] [role="radio"]') : form?.querySelector<HTMLElement>('textarea')
-      target?.focus()
+    if (!draft.symptom && draft.text.trim().length < 5) {
+      setFormError(a.textRequired)
       return
     }
-    void send({
-      car: carForRules,
-      track: trackForRules,
-      symptom_type: draft.symptom,
-      corner_phase: draft.phase,
-      comment,
-      stint_moment: draft.stint === 'any' ? null : draft.stint,
-    })
+    setFormError(null)
+    void send()
   }
 
-  const edit = () => formRef.current?.querySelector<HTMLElement>('input[name="symptom"]:checked, input[name="symptom"]')?.focus()
+  const apply = (effectId: string) => {
+    const change = advice?.changes.find((c) => c.effect_id === effectId)
+    if (!change) return
+    onApply(change)
+    setApplied((s) => new Set(s).add(effectId))
+  }
+
+  const feedback = async (result: 'better' | 'same' | 'worse') => {
+    if (!advice) return
+    setAdvice({ ...advice, feedback: result })
+    try {
+      await api(`/api/v2/advice/${advice.id}/feedback`, { method: 'POST', body: { result, applied: applied.size > 0 } })
+    } catch {
+      // отзыв не критичен: при ошибке просто не учтётся
+    }
+  }
 
   return (
     <div className="assistant">
-      <div className="assistant__form" ref={formRef}>
-        <AssistantForm
+      <div className="assistant__form">
+        <AdviceForm
           carName={`${car.brand} ${car.model}`}
           trackName={track.name}
-          covered={covered}
           draft={draft}
+          error={formError}
+          loading={loading}
           onChange={(patch) => {
             setDraft((d) => ({ ...d, ...patch }))
-            setErrors((e) => ({
-              symptom: patch.symptom ? undefined : e.symptom,
-              phase: patch.phase ? undefined : e.phase,
-              comment: patch.comment !== undefined ? undefined : e.comment,
-            }))
+            if (formError) setFormError(null)
           }}
-          errors={errors}
-          loading={loading}
           onSubmit={submit}
         />
       </div>
-      <AssistantResults ref={titleRef} loading={loading} result={result} health={health} customApi={custom} onRetry={() => lastRequest.current && void send(lastRequest.current)} onEdit={edit} />
+      <AdviceResult ref={titleRef} loading={loading} advice={advice} error={error} labels={labels} applied={applied} onApply={apply} onFeedback={feedback} onRetry={() => void send()} />
     </div>
   )
 }

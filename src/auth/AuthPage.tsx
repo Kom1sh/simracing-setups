@@ -1,7 +1,7 @@
 import { useEffect, useId, useState, type FormEvent } from 'react'
 import { at } from '../i18n/auth'
 import { pagePath } from '../i18n/locale'
-import { getSession, isValidEmail, PASSWORD_MIN, safeNext, signIn, signUp, type AuthError } from '../lib/session'
+import { getSession, hasSessionHint, isValidEmail, PASSWORD_MIN, safeNext, signIn, signUp, type AuthError } from '../lib/session'
 
 type Mode = 'login' | 'signup'
 type FieldErrors = { name?: string; email?: string; password?: string }
@@ -23,7 +23,7 @@ export function AuthPage({ mode }: { mode: Mode }) {
 
   useEffect(() => {
     document.title = isSignup ? at.docSignup : at.docLogin
-    if (getSession()) window.location.replace(next)
+    if (hasSessionHint()) void getSession().then((s) => s && window.location.replace(next))
   }, [isSignup, next])
 
   const validate = (): FieldErrors => {

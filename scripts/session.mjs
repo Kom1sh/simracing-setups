@@ -1,7 +1,10 @@
-// Сессия для проверок кабинета: та же кука, что ставит вход (src/lib/session.ts)
+// Сессия для проверок кабинета: настоящая регистрация через API, каждый прогон — новый пользователь.
+// Кука srs_sid (httpOnly) и подсказка srs_in остаются в контексте браузера.
 export async function withSession(context, base) {
-  const value = Buffer.from(JSON.stringify({ email: 'qa@example.com', name: 'QA', since: new Date().toISOString() })).toString('base64url')
-  // Корень сайта — всё до /ru/app/: /simracing-setups/ на Pages, / на своём домене
+  // Корень сайта — всё до /ru/app/
   const root = new URL(base).href.replace(/(ru|en)\/(app\/?)?$/, '')
-  await context.addCookies([{ name: 'srs_session', value, url: root }])
+  const email = `qa-${Date.now()}-${Math.random().toString(36).slice(2, 7)}@example.com`
+  const r = await context.request.post(`${root}api/v2/auth/register`, { data: { email, name: 'QA', password: 'qa-pass-123' } })
+  if (!r.ok()) throw new Error(`регистрация для теста: ${r.status()} ${await r.text()}`)
+  return email
 }

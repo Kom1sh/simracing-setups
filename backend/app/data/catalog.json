@@ -1,0 +1,2699 @@
+{
+ "note": "Сгенерировано scripts/export-catalog.mjs из src/data — не править руками",
+ "classes": [
+  {
+   "id": "nascar",
+   "label": "NASCAR",
+   "tracks": [
+    "oval",
+    "road"
+   ],
+   "defaultTrack": "daytona",
+   "tankL": 76,
+   "note": "Next Gen Cup. Бак — 20 галлонов (76 л)."
+  },
+  {
+   "id": "gt3",
+   "label": "GT3",
+   "tracks": [
+    "road"
+   ],
+   "defaultTrack": "spa",
+   "tankL": 120
+  },
+  {
+   "id": "gt4",
+   "label": "GT4",
+   "tracks": [
+    "road"
+   ],
+   "defaultTrack": "spa",
+   "tankL": 120
+  },
+  {
+   "id": "cup",
+   "label": "Cup",
+   "tracks": [
+    "road"
+   ],
+   "defaultTrack": "spa",
+   "tankL": 100,
+   "note": "Porsche 911 Cup (992.2) и Ferrari 296 Challenge."
+  }
+ ],
+ "cars": [
+  {
+   "id": "nascar-next-gen-chevrolet-camaro",
+   "category": "nascar",
+   "brand": "Chevrolet",
+   "model": "Camaro ZL1 (Next Gen)",
+   "year": 2022,
+   "engine": {
+    "litres": 5.86,
+    "layout": "V8",
+    "aspiration": "na"
+   },
+   "enginePosition": "front",
+   "abs": false,
+   "tc": false,
+   "rain": false,
+   "iracing": {
+    "name": "Next Gen NASCAR Cup Series Chevrolet Camaro ZL1",
+    "url": "https://www.iracing.com/cars/next-gen-nascar-cup-series-chevrolet-camaro/"
+   }
+  },
+  {
+   "id": "nascar-next-gen-ford-mustang",
+   "category": "nascar",
+   "brand": "Ford",
+   "model": "Mustang (Next Gen)",
+   "year": 2022,
+   "engine": {
+    "litres": 5.86,
+    "layout": "V8",
+    "aspiration": "na"
+   },
+   "enginePosition": "front",
+   "abs": false,
+   "tc": false,
+   "rain": false,
+   "iracing": {
+    "name": "Next Gen NASCAR Cup Series Ford Mustang",
+    "url": "https://www.iracing.com/cars/next-gen-nascar-cup-series-ford-mustang/"
+   }
+  },
+  {
+   "id": "nascar-next-gen-toyota-camry",
+   "category": "nascar",
+   "brand": "Toyota",
+   "model": "Camry (Next Gen)",
+   "year": 2022,
+   "engine": {
+    "litres": 5.86,
+    "layout": "V8",
+    "aspiration": "na"
+   },
+   "enginePosition": "front",
+   "abs": false,
+   "tc": false,
+   "rain": false,
+   "iracing": {
+    "name": "Next Gen NASCAR Cup Series Toyota Camry",
+    "url": "https://www.iracing.com/cars/next-gen-nascar-cup-series-toyota-camry/"
+   }
+  },
+  {
+   "id": "acura-nsx-gt3-evo22",
+   "category": "gt3",
+   "brand": "Acura",
+   "model": "NSX GT3 EVO 22",
+   "year": 2022,
+   "engine": {
+    "litres": 3.5,
+    "layout": "V6",
+    "aspiration": "twin-turbo"
+   },
+   "enginePosition": "mid",
+   "abs": true,
+   "tc": true,
+   "rain": true,
+   "iracing": {
+    "name": "Acura NSX GT3 EVO 22",
+    "url": "https://www.iracing.com/cars/acura-nsx-gt3-evo22/"
+   }
+  },
+  {
+   "id": "aston-martin-vantage-gt3-evo",
+   "category": "gt3",
+   "brand": "Aston Martin",
+   "model": "Vantage GT3 EVO",
+   "year": 2024,
+   "engine": {
+    "litres": 4,
+    "layout": "V8",
+    "aspiration": "twin-turbo"
+   },
+   "enginePosition": "front-mid",
+   "abs": true,
+   "tc": true,
+   "rain": true,
+   "iracing": {
+    "name": "Aston Martin Vantage GT3 EVO",
+    "url": "https://www.iracing.com/cars/aston-martin-vantage-gt3-evo/"
+   }
+  },
+  {
+   "id": "audi-r8-lms-evo-ii-gt3",
+   "category": "gt3",
+   "brand": "Audi",
+   "model": "R8 LMS EVO II GT3",
+   "year": 2022,
+   "engine": {
+    "litres": 5.2,
+    "layout": "V10",
+    "aspiration": "na"
+   },
+   "enginePosition": "mid",
+   "abs": true,
+   "tc": true,
+   "rain": true,
+   "iracing": {
+    "name": "Audi R8 LMS EVO II GT3",
+    "url": "https://www.iracing.com/cars/audi-r8-lms-evo-ii-gt3/"
+   }
+  },
+  {
+   "id": "bmw-m4-gt3-evo",
+   "category": "gt3",
+   "brand": "BMW",
+   "model": "M4 GT3 EVO",
+   "year": 2025,
+   "engine": {
+    "litres": 3,
+    "layout": "I6",
+    "aspiration": "twin-turbo"
+   },
+   "enginePosition": "front-mid",
+   "abs": true,
+   "tc": true,
+   "rain": true,
+   "iracing": {
+    "name": "BMW M4 GT3 EVO",
+    "url": "https://www.iracing.com/cars/bmw-m4-gt3-evo/"
+   }
+  },
+  {
+   "id": "chevrolet-corvette-z06-gt3r",
+   "category": "gt3",
+   "brand": "Chevrolet",
+   "model": "Corvette Z06 GT3.R",
+   "year": 2024,
+   "engine": {
+    "litres": 5.5,
+    "layout": "V8",
+    "aspiration": "na"
+   },
+   "enginePosition": "mid",
+   "abs": true,
+   "tc": true,
+   "rain": true,
+   "iracing": {
+    "name": "Chevrolet Corvette Z06 GT3.R",
+    "url": "https://www.iracing.com/cars/chevrolet-corvette-z06-gt3r/"
+   }
+  },
+  {
+   "id": "ferrari-296-gt3",
+   "category": "gt3",
+   "brand": "Ferrari",
+   "model": "296 GT3",
+   "year": 2023,
+   "engine": {
+    "litres": 3,
+    "layout": "V6",
+    "aspiration": "twin-turbo"
+   },
+   "enginePosition": "mid",
+   "abs": true,
+   "tc": true,
+   "rain": true,
+   "iracing": {
+    "name": "Ferrari 296 GT3",
+    "url": "https://www.iracing.com/cars/ferrari-296-gt3/"
+   }
+  },
+  {
+   "id": "ford-mustang-gt3",
+   "category": "gt3",
+   "brand": "Ford",
+   "model": "Mustang GT3",
+   "year": 2024,
+   "engine": {
+    "litres": 5.4,
+    "layout": "V8",
+    "aspiration": "na"
+   },
+   "enginePosition": "front-mid",
+   "abs": true,
+   "tc": true,
+   "rain": true,
+   "iracing": {
+    "name": "Ford Mustang GT3",
+    "url": "https://www.iracing.com/cars/ford-mustang-gt3/"
+   }
+  },
+  {
+   "id": "lamborghini-huracan-gt3-evo",
+   "category": "gt3",
+   "brand": "Lamborghini",
+   "model": "Huracán GT3 EVO",
+   "year": 2019,
+   "engine": {
+    "litres": 5.2,
+    "layout": "V10",
+    "aspiration": "na"
+   },
+   "enginePosition": "mid",
+   "abs": true,
+   "tc": true,
+   "rain": true,
+   "iracing": {
+    "name": "Lamborghini Huracan GT3 EVO",
+    "url": "https://www.iracing.com/cars/lamborghini-huracan-gt3-evo/"
+   }
+  },
+  {
+   "id": "mclaren-720s-gt3-evo",
+   "category": "gt3",
+   "brand": "McLaren",
+   "model": "720S GT3 EVO",
+   "year": 2023,
+   "engine": {
+    "litres": 4,
+    "layout": "V8",
+    "aspiration": "twin-turbo"
+   },
+   "enginePosition": "mid",
+   "abs": true,
+   "tc": true,
+   "rain": true,
+   "iracing": {
+    "name": "McLaren 720S GT3 EVO",
+    "url": "https://www.iracing.com/cars/mclaren-720s-gt3-evo/"
+   }
+  },
+  {
+   "id": "mercedes-amg-gt3-2020",
+   "category": "gt3",
+   "brand": "Mercedes-AMG",
+   "model": "GT3 2020",
+   "year": 2020,
+   "engine": {
+    "litres": 6.2,
+    "layout": "V8",
+    "aspiration": "na"
+   },
+   "enginePosition": "front-mid",
+   "abs": true,
+   "tc": true,
+   "rain": true,
+   "iracing": {
+    "name": "Mercedes-AMG GT3 2020",
+    "url": "https://www.iracing.com/cars/mercedes-amg-gt3-2020/"
+   }
+  },
+  {
+   "id": "porsche-911-gt3-r-992",
+   "category": "gt3",
+   "brand": "Porsche",
+   "model": "911 GT3 R (992)",
+   "year": 2023,
+   "engine": {
+    "litres": 4.2,
+    "layout": "flat-6",
+    "aspiration": "na"
+   },
+   "enginePosition": "rear",
+   "abs": true,
+   "tc": true,
+   "rain": true,
+   "iracing": {
+    "name": "Porsche 911 GT3 R (992)",
+    "url": "https://www.iracing.com/cars/porsche-911-gt3-r-992/"
+   }
+  },
+  {
+   "id": "aston-martin-vantage-gt4",
+   "category": "gt4",
+   "brand": "Aston Martin",
+   "model": "Vantage GT4",
+   "year": 2018,
+   "engine": {
+    "litres": 4,
+    "layout": "V8",
+    "aspiration": "twin-turbo"
+   },
+   "enginePosition": "front-mid",
+   "abs": true,
+   "tc": true,
+   "rain": true,
+   "iracing": {
+    "name": "Aston Martin Vantage GT4",
+    "url": "https://www.iracing.com/cars/aston-martin-vantage-gt4/"
+   }
+  },
+  {
+   "id": "bmw-m4-g82-gt4-evo",
+   "category": "gt4",
+   "brand": "BMW",
+   "model": "M4 G82 GT4 EVO",
+   "year": null,
+   "engine": {
+    "litres": 3,
+    "layout": "I6",
+    "aspiration": "twin-turbo"
+   },
+   "enginePosition": "front-mid",
+   "abs": true,
+   "tc": true,
+   "rain": true,
+   "iracing": {
+    "name": "BMW M4 G82 GT4 Evo",
+    "url": "https://www.iracing.com/cars/bmw-m4-g82-gt4-evo/"
+   }
+  },
+  {
+   "id": "ford-mustang-gt4",
+   "category": "gt4",
+   "brand": "Ford",
+   "model": "Mustang GT4",
+   "year": 2024,
+   "engine": {
+    "litres": 5,
+    "layout": "V8",
+    "aspiration": "na"
+   },
+   "enginePosition": "front-mid",
+   "abs": null,
+   "tc": null,
+   "rain": true,
+   "iracing": {
+    "name": "Ford Mustang GT4",
+    "url": "https://www.iracing.com/cars/ford-mustang-gt4/"
+   }
+  },
+  {
+   "id": "mclaren-570s-gt4",
+   "category": "gt4",
+   "brand": "McLaren",
+   "model": "570S GT4",
+   "year": 2017,
+   "engine": {
+    "litres": 3.8,
+    "layout": "V8",
+    "aspiration": "twin-turbo"
+   },
+   "enginePosition": "mid",
+   "abs": true,
+   "tc": true,
+   "rain": true,
+   "iracing": {
+    "name": "McLaren 570S GT4",
+    "url": "https://www.iracing.com/cars/mclaren-570s-gt4/"
+   }
+  },
+  {
+   "id": "mercedes-amg-gt4",
+   "category": "gt4",
+   "brand": "Mercedes-AMG",
+   "model": "GT4",
+   "year": 2018,
+   "engine": {
+    "litres": 4,
+    "layout": "V8",
+    "aspiration": "twin-turbo"
+   },
+   "enginePosition": "front-mid",
+   "abs": true,
+   "tc": true,
+   "rain": true,
+   "iracing": {
+    "name": "Mercedes-AMG GT4",
+    "url": "https://www.iracing.com/cars/mercedes-amg-gt4/"
+   }
+  },
+  {
+   "id": "porsche-718-cayman-gt4-clubsport",
+   "category": "gt4",
+   "brand": "Porsche",
+   "model": "718 Cayman GT4 Clubsport",
+   "year": 2019,
+   "engine": {
+    "litres": 3.8,
+    "layout": "flat-6",
+    "aspiration": "na"
+   },
+   "enginePosition": "mid",
+   "abs": true,
+   "tc": true,
+   "rain": true,
+   "iracing": {
+    "name": "Porsche 718 Cayman GT4 Clubsport",
+    "url": "https://www.iracing.com/cars/porsche-718-cayman/"
+   }
+  },
+  {
+   "id": "porsche-911-cup-992-2",
+   "category": "cup",
+   "brand": "Porsche",
+   "model": "911 Cup (992.2)",
+   "year": 2025,
+   "engine": {
+    "litres": 4,
+    "layout": "flat-6",
+    "aspiration": "na"
+   },
+   "enginePosition": "rear",
+   "abs": true,
+   "tc": true,
+   "rain": true,
+   "iracing": {
+    "name": "Porsche 911 Cup (992.2)",
+    "url": "https://www.iracing.com/cars/porsche-911-cup-992-2/"
+   }
+  },
+  {
+   "id": "ferrari-296-challenge",
+   "category": "cup",
+   "brand": "Ferrari",
+   "model": "296 Challenge",
+   "year": 2024,
+   "engine": {
+    "litres": 3,
+    "layout": "V6",
+    "aspiration": "twin-turbo"
+   },
+   "enginePosition": "mid",
+   "abs": true,
+   "tc": true,
+   "rain": true,
+   "iracing": {
+    "name": "Ferrari 296 Challenge",
+    "url": "https://www.iracing.com/cars/ferrari-296-challenge/"
+   }
+  }
+ ],
+ "tracks": [
+  {
+   "id": "monza",
+   "name": "Монца",
+   "nameOriginal": "Autodromo Nazionale Monza",
+   "country": "Италия",
+   "layout": "Гран-при",
+   "lengthKm": 5.793,
+   "turns": 11,
+   "direction": "cw",
+   "kind": "road",
+   "rain": true,
+   "iracing": {
+    "name": "Autodromo Nazionale Monza",
+    "url": "https://www.iracing.com/tracks/autodromo-nazionale-monza/"
+   },
+   "meta": {
+    "downforce": "low",
+    "bumps": "medium",
+    "kerbs": "harsh"
+   }
+  },
+  {
+   "id": "spa",
+   "name": "Спа-Франкоршам",
+   "nameOriginal": "Circuit de Spa-Francorchamps",
+   "country": "Бельгия",
+   "layout": "Гран-при",
+   "lengthKm": 7.004,
+   "turns": 19,
+   "direction": "cw",
+   "kind": "road",
+   "rain": true,
+   "iracing": {
+    "name": "Circuit de Spa-Francorchamps",
+    "url": "https://www.iracing.com/tracks/circuit-de-spa-francorchamps/"
+   },
+   "meta": {
+    "downforce": "medium",
+    "bumps": "medium",
+    "kerbs": "medium"
+   }
+  },
+  {
+   "id": "silverstone",
+   "name": "Сильверстоун",
+   "nameOriginal": "Silverstone Circuit",
+   "country": "Великобритания",
+   "layout": "Гран-при (Arena, с 2011)",
+   "lengthKm": 5.891,
+   "turns": 18,
+   "direction": "cw",
+   "kind": "road",
+   "rain": true,
+   "iracing": {
+    "name": "Silverstone Circuit",
+    "url": "https://www.iracing.com/tracks/silverstone-circuit/"
+   },
+   "meta": {
+    "downforce": "high",
+    "bumps": "medium",
+    "kerbs": "medium"
+   }
+  },
+  {
+   "id": "nurburgring",
+   "name": "Нюрбургринг",
+   "nameOriginal": "Nürburgring",
+   "country": "Германия",
+   "layout": "GP-Strecke (Гран-при)",
+   "lengthKm": 5.148,
+   "turns": 15,
+   "direction": "cw",
+   "kind": "road",
+   "rain": true,
+   "iracing": {
+    "name": "Nurburgring Grand-Prix-Strecke",
+    "url": "https://www.iracing.com/tracks/nurburgring-grand-prix-strecke/"
+   },
+   "meta": {
+    "downforce": "high",
+    "bumps": "smooth",
+    "kerbs": "medium"
+   }
+  },
+  {
+   "id": "hungaroring",
+   "name": "Хунгароринг",
+   "nameOriginal": "Hungaroring",
+   "country": "Венгрия",
+   "layout": "Гран-при",
+   "lengthKm": 4.381,
+   "turns": 14,
+   "direction": "cw",
+   "kind": "road",
+   "rain": true,
+   "iracing": {
+    "name": "Hungaroring",
+    "url": "https://www.iracing.com/tracks/hungaroring/"
+   },
+   "meta": {
+    "downforce": "high",
+    "bumps": "smooth",
+    "kerbs": "medium"
+   }
+  },
+  {
+   "id": "zandvoort",
+   "name": "Зандворт",
+   "nameOriginal": "Circuit Zandvoort",
+   "country": "Нидерланды",
+   "layout": "Гран-при (с 2020)",
+   "lengthKm": 4.259,
+   "turns": 14,
+   "direction": "cw",
+   "kind": "road",
+   "rain": true,
+   "iracing": {
+    "name": "Circuit Park Zandvoort",
+    "url": "https://www.iracing.com/tracks/circuit-park-zandvoort/"
+   },
+   "meta": {
+    "downforce": "high",
+    "bumps": "medium",
+    "kerbs": "medium"
+   }
+  },
+  {
+   "id": "barcelona",
+   "name": "Барселона-Каталунья",
+   "nameOriginal": "Circuit de Barcelona-Catalunya",
+   "country": "Испания",
+   "layout": "Гран-при без шиканы",
+   "lengthKm": 4.657,
+   "turns": 14,
+   "direction": "cw",
+   "kind": "road",
+   "rain": true,
+   "iracing": {
+    "name": "Circuit de Barcelona-Catalunya",
+    "url": "https://www.iracing.com/tracks/circuit-de-barcelona-catalunya/"
+   },
+   "meta": {
+    "downforce": "high",
+    "bumps": "smooth",
+    "kerbs": "medium"
+   }
+  },
+  {
+   "id": "imola",
+   "name": "Имола",
+   "nameOriginal": "Autodromo Internazionale Enzo e Dino Ferrari",
+   "country": "Италия",
+   "layout": "Гран-при",
+   "lengthKm": 4.909,
+   "turns": 19,
+   "direction": "ccw",
+   "kind": "road",
+   "rain": true,
+   "iracing": {
+    "name": "Autodromo Internazionale Enzo e Dino Ferrari",
+    "url": "https://www.iracing.com/tracks/autodromo-enzo-e-dino-ferrari/"
+   },
+   "meta": {
+    "downforce": "medium",
+    "bumps": "medium",
+    "kerbs": "harsh"
+   }
+  },
+  {
+   "id": "suzuka",
+   "name": "Сузука",
+   "nameOriginal": "Suzuka International Racing Course",
+   "country": "Япония",
+   "layout": "Гран-при",
+   "lengthKm": 5.807,
+   "turns": 18,
+   "direction": "fig8",
+   "kind": "road",
+   "rain": true,
+   "iracing": {
+    "name": "Suzuka International Racing Course",
+    "url": "https://www.iracing.com/tracks/suzuka-international-racing-course/"
+   },
+   "meta": {
+    "downforce": "high",
+    "bumps": "smooth",
+    "kerbs": "medium"
+   }
+  },
+  {
+   "id": "cota",
+   "name": "Трасса Америк (COTA)",
+   "nameOriginal": "Circuit of the Americas",
+   "country": "США",
+   "layout": "Гран-при",
+   "lengthKm": 5.513,
+   "turns": 20,
+   "direction": "ccw",
+   "kind": "road",
+   "rain": true,
+   "iracing": {
+    "name": "Circuit of the Americas",
+    "url": "https://www.iracing.com/tracks/circuit-of-the-americas/"
+   },
+   "meta": {
+    "downforce": "medium",
+    "bumps": "bumpy",
+    "kerbs": "medium"
+   }
+  },
+  {
+   "id": "red-bull-ring",
+   "name": "Ред Булл Ринг",
+   "nameOriginal": "Red Bull Ring",
+   "country": "Австрия",
+   "layout": "Гран-при",
+   "lengthKm": 4.326,
+   "turns": 10,
+   "direction": "cw",
+   "kind": "road",
+   "rain": true,
+   "iracing": {
+    "name": "Red Bull Ring – Spielberg",
+    "url": "https://www.iracing.com/tracks/red-bull-ring-spielberg/"
+   },
+   "meta": {
+    "downforce": "medium",
+    "bumps": "smooth",
+    "kerbs": "harsh"
+   }
+  },
+  {
+   "id": "portimao",
+   "name": "Портимао",
+   "nameOriginal": "Autódromo Internacional do Algarve",
+   "country": "Португалия",
+   "layout": "Гран-при",
+   "lengthKm": 4.653,
+   "turns": 15,
+   "direction": "cw",
+   "kind": "road",
+   "rain": true,
+   "iracing": {
+    "name": "Algarve International Circuit",
+    "url": "https://www.iracing.com/tracks/algarve-international-circuit/"
+   },
+   "meta": {
+    "downforce": "medium",
+    "bumps": "medium",
+    "kerbs": "medium"
+   }
+  },
+  {
+   "id": "mugello",
+   "name": "Муджелло",
+   "nameOriginal": "Autodromo Internazionale del Mugello",
+   "country": "Италия",
+   "layout": "Гран-при",
+   "lengthKm": 5.245,
+   "turns": 15,
+   "direction": "cw",
+   "kind": "road",
+   "rain": true,
+   "iracing": {
+    "name": "Autodromo Internazionale del Mugello",
+    "url": "https://www.iracing.com/tracks/autodromo-internazionale-del-mugello/"
+   },
+   "meta": {
+    "downforce": "medium",
+    "bumps": "smooth",
+    "kerbs": "medium"
+   }
+  },
+  {
+   "id": "hockenheim",
+   "name": "Хоккенхайм",
+   "nameOriginal": "Hockenheimring",
+   "country": "Германия",
+   "layout": "Гран-при (с 2002)",
+   "lengthKm": 4.574,
+   "turns": 17,
+   "direction": "cw",
+   "kind": "road",
+   "rain": true,
+   "iracing": {
+    "name": "HockenheimRing",
+    "url": "https://www.iracing.com/tracks/hockenheimring/"
+   },
+   "meta": {
+    "downforce": "medium",
+    "bumps": "smooth",
+    "kerbs": "medium"
+   }
+  },
+  {
+   "id": "watkins-glen",
+   "name": "Уоткинс-Глен",
+   "nameOriginal": "Watkins Glen International",
+   "country": "США",
+   "layout": "Гран-при с Inner Loop",
+   "lengthKm": 5.552,
+   "turns": 11,
+   "direction": "cw",
+   "kind": "road",
+   "rain": true,
+   "iracing": {
+    "name": "Watkins Glen International",
+    "url": "https://www.iracing.com/tracks/watkins-glen-international/"
+   },
+   "meta": {
+    "downforce": "medium",
+    "bumps": "medium",
+    "kerbs": "harsh"
+   }
+  },
+  {
+   "id": "indianapolis",
+   "name": "Индианаполис",
+   "nameOriginal": "Indianapolis Motor Speedway",
+   "country": "США",
+   "layout": "Дорожная трасса (с 2014)",
+   "lengthKm": 3.925,
+   "turns": 14,
+   "direction": "cw",
+   "kind": "road",
+   "rain": true,
+   "iracing": {
+    "name": "Indianapolis Motor Speedway",
+    "url": "https://www.iracing.com/tracks/indianapolis-motor-speedway/"
+   },
+   "meta": {
+    "downforce": "medium",
+    "bumps": "smooth",
+    "kerbs": "medium"
+   }
+  },
+  {
+   "id": "brands-hatch",
+   "name": "Брэндс-Хэтч",
+   "nameOriginal": "Brands Hatch",
+   "country": "Великобритания",
+   "layout": "Гран-при",
+   "lengthKm": 3.916,
+   "turns": 9,
+   "direction": "cw",
+   "kind": "road",
+   "rain": true,
+   "iracing": {
+    "name": "Brands Hatch Circuit",
+    "url": "https://www.iracing.com/tracks/brands-hatch/"
+   },
+   "meta": {
+    "downforce": "high",
+    "bumps": "bumpy",
+    "kerbs": "medium"
+   }
+  },
+  {
+   "id": "misano",
+   "name": "Мизано",
+   "nameOriginal": "Misano World Circuit Marco Simoncelli",
+   "country": "Италия",
+   "layout": "Гран-при (с 2008)",
+   "lengthKm": 4.226,
+   "turns": 16,
+   "direction": "cw",
+   "kind": "road",
+   "rain": true,
+   "iracing": {
+    "name": "Misano World Circuit Marco Simoncelli",
+    "url": "https://www.iracing.com/tracks/misano-world-circuit-marco-simoncelli/"
+   },
+   "meta": {
+    "downforce": "high",
+    "bumps": "smooth",
+    "kerbs": "medium"
+   }
+  },
+  {
+   "id": "zolder",
+   "name": "Зольдер",
+   "nameOriginal": "Circuit Zolder",
+   "country": "Бельгия",
+   "layout": "Гран-при (с 2002)",
+   "lengthKm": 4.01,
+   "turns": 10,
+   "direction": "cw",
+   "kind": "road",
+   "rain": true,
+   "iracing": {
+    "name": "Circuit Zolder",
+    "url": "https://www.iracing.com/tracks/circuit-zolder/"
+   },
+   "meta": {
+    "downforce": "medium",
+    "bumps": "medium",
+    "kerbs": "harsh"
+   }
+  },
+  {
+   "id": "laguna-seca",
+   "name": "Лагуна-Сека",
+   "nameOriginal": "WeatherTech Raceway Laguna Seca",
+   "country": "США",
+   "layout": "Гран-при (с 1996)",
+   "lengthKm": 3.602,
+   "turns": 11,
+   "direction": "ccw",
+   "kind": "road",
+   "rain": true,
+   "iracing": {
+    "name": "WeatherTech Raceway Laguna Seca",
+    "url": "https://www.iracing.com/tracks/weathertech-raceway-laguna-seca/"
+   },
+   "meta": {
+    "downforce": "high",
+    "bumps": "medium",
+    "kerbs": "medium"
+   }
+  },
+  {
+   "id": "bathurst",
+   "name": "Маунт-Панорама",
+   "nameOriginal": "Mount Panorama Circuit",
+   "country": "Австралия",
+   "layout": "Полная трасса (с 1987)",
+   "lengthKm": 6.213,
+   "turns": 23,
+   "direction": "ccw",
+   "kind": "road",
+   "rain": true,
+   "iracing": {
+    "name": "Mount Panorama Circuit",
+    "url": "https://www.iracing.com/tracks/mount-panorama-circuit/"
+   },
+   "meta": {
+    "downforce": "medium",
+    "bumps": "bumpy",
+    "kerbs": "harsh"
+   }
+  },
+  {
+   "id": "daytona",
+   "name": "Дайтона",
+   "nameOriginal": "Daytona International Speedway",
+   "country": "США",
+   "layout": "Овал",
+   "lengthKm": 4.023,
+   "turns": 4,
+   "direction": "ccw",
+   "kind": "oval",
+   "rain": false,
+   "iracing": {
+    "name": "Daytona International Speedway",
+    "url": "https://www.iracing.com/tracks/daytona/"
+   },
+   "meta": {
+    "downforce": "low",
+    "bumps": "medium",
+    "kerbs": "soft"
+   }
+  },
+  {
+   "id": "talladega",
+   "name": "Талладега",
+   "nameOriginal": "Talladega Superspeedway",
+   "country": "США",
+   "layout": "Овал",
+   "lengthKm": 4.281,
+   "turns": 4,
+   "direction": "ccw",
+   "kind": "oval",
+   "rain": false,
+   "iracing": {
+    "name": "Talladega Superspeedway",
+    "url": "https://www.iracing.com/tracks/talladega-superspeedway/"
+   },
+   "meta": {
+    "downforce": "low",
+    "bumps": "smooth",
+    "kerbs": "soft"
+   }
+  },
+  {
+   "id": "atlanta",
+   "name": "Атланта",
+   "nameOriginal": "EchoPark Speedway (Atlanta Motor Speedway)",
+   "country": "США",
+   "layout": "Овал",
+   "lengthKm": 2.478,
+   "turns": 4,
+   "direction": "ccw",
+   "kind": "oval",
+   "rain": false,
+   "iracing": {
+    "name": "EchoPark Speedway (Atlanta)",
+    "url": "https://www.iracing.com/tracks/atlanta-motor-speedway/"
+   },
+   "meta": {
+    "downforce": "low",
+    "bumps": "smooth",
+    "kerbs": "soft"
+   }
+  },
+  {
+   "id": "charlotte",
+   "name": "Шарлотт",
+   "nameOriginal": "Charlotte Motor Speedway",
+   "country": "США",
+   "layout": "Овал",
+   "lengthKm": 2.414,
+   "turns": 4,
+   "direction": "ccw",
+   "kind": "oval",
+   "rain": false,
+   "iracing": {
+    "name": "Charlotte Motor Speedway",
+    "url": "https://www.iracing.com/tracks/charlotte-roval/"
+   },
+   "meta": {
+    "downforce": "medium",
+    "bumps": "medium",
+    "kerbs": "soft"
+   }
+  },
+  {
+   "id": "las-vegas",
+   "name": "Лас-Вегас",
+   "nameOriginal": "Las Vegas Motor Speedway",
+   "country": "США",
+   "layout": "Овал",
+   "lengthKm": 2.414,
+   "turns": 4,
+   "direction": "ccw",
+   "kind": "oval",
+   "rain": false,
+   "iracing": {
+    "name": "Las Vegas Motor Speedway",
+    "url": "https://www.iracing.com/tracks/las-vegas-motor-speedway/"
+   },
+   "meta": {
+    "downforce": "medium",
+    "bumps": "smooth",
+    "kerbs": "soft"
+   }
+  },
+  {
+   "id": "texas",
+   "name": "Техас",
+   "nameOriginal": "Texas Motor Speedway",
+   "country": "США",
+   "layout": "Овал",
+   "lengthKm": 2.414,
+   "turns": 4,
+   "direction": "ccw",
+   "kind": "oval",
+   "rain": false,
+   "iracing": {
+    "name": "Texas Motor Speedway",
+    "url": "https://www.iracing.com/tracks/texas-motor-speedway/"
+   },
+   "meta": {
+    "downforce": "medium",
+    "bumps": "medium",
+    "kerbs": "soft"
+   }
+  },
+  {
+   "id": "kansas",
+   "name": "Канзас",
+   "nameOriginal": "Kansas Speedway",
+   "country": "США",
+   "layout": "Овал",
+   "lengthKm": 2.414,
+   "turns": 4,
+   "direction": "ccw",
+   "kind": "oval",
+   "rain": false,
+   "iracing": {
+    "name": "Kansas Speedway",
+    "url": "https://www.iracing.com/tracks/kansas-speedway/"
+   },
+   "meta": {
+    "downforce": "medium",
+    "bumps": "smooth",
+    "kerbs": "soft"
+   }
+  },
+  {
+   "id": "homestead",
+   "name": "Хомстед-Майами",
+   "nameOriginal": "Homestead–Miami Speedway",
+   "country": "США",
+   "layout": "Овал",
+   "lengthKm": 2.414,
+   "turns": 4,
+   "direction": "ccw",
+   "kind": "oval",
+   "rain": false,
+   "iracing": {
+    "name": "Homestead Miami Speedway",
+    "url": "https://www.iracing.com/tracks/homestead-miami-speedway/"
+   },
+   "meta": {
+    "downforce": "medium",
+    "bumps": "medium",
+    "kerbs": "soft"
+   }
+  },
+  {
+   "id": "michigan",
+   "name": "Мичиган",
+   "nameOriginal": "Michigan International Speedway",
+   "country": "США",
+   "layout": "Овал",
+   "lengthKm": 3.219,
+   "turns": 4,
+   "direction": "ccw",
+   "kind": "oval",
+   "rain": false,
+   "iracing": {
+    "name": "Michigan International Speedway",
+    "url": "https://www.iracing.com/tracks/michigan-international-speedway/"
+   },
+   "meta": {
+    "downforce": "low",
+    "bumps": "smooth",
+    "kerbs": "soft"
+   }
+  },
+  {
+   "id": "pocono",
+   "name": "Поконо",
+   "nameOriginal": "Pocono Raceway",
+   "country": "США",
+   "layout": "Овал",
+   "lengthKm": 4.023,
+   "turns": 3,
+   "direction": "ccw",
+   "kind": "oval",
+   "rain": false,
+   "iracing": {
+    "name": "Pocono Raceway",
+    "url": "https://www.iracing.com/tracks/pocono-raceway/"
+   },
+   "meta": {
+    "downforce": "medium",
+    "bumps": "bumpy",
+    "kerbs": "soft"
+   }
+  },
+  {
+   "id": "darlington",
+   "name": "Дарлингтон",
+   "nameOriginal": "Darlington Raceway",
+   "country": "США",
+   "layout": "Овал",
+   "lengthKm": 2.198,
+   "turns": 4,
+   "direction": "ccw",
+   "kind": "oval",
+   "rain": false,
+   "iracing": {
+    "name": "Darlington Raceway",
+    "url": "https://www.iracing.com/tracks/darlington-raceway/"
+   },
+   "meta": {
+    "downforce": "medium",
+    "bumps": "medium",
+    "kerbs": "soft"
+   }
+  },
+  {
+   "id": "dover",
+   "name": "Довер",
+   "nameOriginal": "Dover Motor Speedway",
+   "country": "США",
+   "layout": "Овал",
+   "lengthKm": 1.609,
+   "turns": 4,
+   "direction": "ccw",
+   "kind": "oval",
+   "rain": false,
+   "iracing": {
+    "name": "Dover Motor Speedway",
+    "url": "https://www.iracing.com/tracks/dover-motor-speedway/"
+   },
+   "meta": {
+    "downforce": "medium",
+    "bumps": "medium",
+    "kerbs": "soft"
+   }
+  },
+  {
+   "id": "phoenix",
+   "name": "Финикс",
+   "nameOriginal": "Phoenix Raceway",
+   "country": "США",
+   "layout": "Овал",
+   "lengthKm": 1.609,
+   "turns": 4,
+   "direction": "ccw",
+   "kind": "oval",
+   "rain": false,
+   "iracing": {
+    "name": "Phoenix Raceway",
+    "url": "https://www.iracing.com/tracks/phoenix-international-raceway/"
+   },
+   "meta": {
+    "downforce": "high",
+    "bumps": "smooth",
+    "kerbs": "medium"
+   }
+  },
+  {
+   "id": "richmond",
+   "name": "Ричмонд",
+   "nameOriginal": "Richmond Raceway",
+   "country": "США",
+   "layout": "Овал",
+   "lengthKm": 1.207,
+   "turns": 4,
+   "direction": "ccw",
+   "kind": "oval",
+   "rain": false,
+   "iracing": {
+    "name": "Richmond Raceway",
+    "url": "https://www.iracing.com/tracks/richmond-raceway/"
+   },
+   "meta": {
+    "downforce": "high",
+    "bumps": "smooth",
+    "kerbs": "soft"
+   }
+  },
+  {
+   "id": "bristol",
+   "name": "Бристоль",
+   "nameOriginal": "Bristol Motor Speedway",
+   "country": "США",
+   "layout": "Овал",
+   "lengthKm": 0.858,
+   "turns": 4,
+   "direction": "ccw",
+   "kind": "oval",
+   "rain": false,
+   "iracing": {
+    "name": "Bristol Motor Speedway",
+    "url": "https://www.iracing.com/tracks/bristol-motor-speedway/"
+   },
+   "meta": {
+    "downforce": "high",
+    "bumps": "medium",
+    "kerbs": "soft"
+   }
+  },
+  {
+   "id": "martinsville",
+   "name": "Мартинсвилл",
+   "nameOriginal": "Martinsville Speedway",
+   "country": "США",
+   "layout": "Овал",
+   "lengthKm": 0.847,
+   "turns": 4,
+   "direction": "ccw",
+   "kind": "oval",
+   "rain": false,
+   "iracing": {
+    "name": "Martinsville Speedway",
+    "url": "https://www.iracing.com/tracks/martinsville-speedway/"
+   },
+   "meta": {
+    "downforce": "high",
+    "bumps": "medium",
+    "kerbs": "medium"
+   }
+  }
+ ],
+ "templates": {
+  "nascar": [
+   {
+    "id": "tyres",
+    "title": "Шины",
+    "description": "Холодное давление. Минимум Goodyear свой на каждой трассе — начните с базового сетапа iRacing для неё.",
+    "params": [
+     {
+      "id": "pressure",
+      "kind": "corners",
+      "label": "Холодное давление",
+      "hint": "На левых поворотах больше всех нагружено правое переднее колесо: после серии кругов у сбалансированной машины давление растёт сильнее всего именно там. Левые колёса обычно накачивают меньше правых.",
+      "unit": "psi",
+      "front": {
+       "min": -5,
+       "max": 5,
+       "base": 0
+      },
+      "rear": {
+       "min": -5,
+       "max": 5,
+       "base": 0
+      },
+      "step": 0.25,
+      "decimals": 2,
+      "relative": true
+     }
+    ]
+   },
+   {
+    "id": "balance",
+    "title": "Развесовка и тормоза",
+    "params": [
+     {
+      "id": "crossWeight",
+      "kind": "scalar",
+      "label": "Cross weight",
+      "hint": "Доля веса на левом заднем и правом переднем колёсах — на овале одна из главных настроек. Больше — стабильнее вход и лучше выход, меньше — машина свободнее в повороте. Слишком много — блокируется левое переднее.",
+      "unit": "%",
+      "range": {
+       "min": -2,
+       "max": 2,
+       "base": 0
+      },
+      "step": 0.1,
+      "decimals": 1,
+      "relative": true
+     },
+     {
+      "id": "noseWeight",
+      "kind": "scalar",
+      "label": "Nose weight",
+      "hint": "Доля веса на передней оси. Больше — устойчивее на скорости, меньше — легче поворачивает, полезно на коротких трассах.",
+      "unit": "%",
+      "range": {
+       "min": -1.5,
+       "max": 1.5,
+       "base": 0
+      },
+      "step": 0.1,
+      "decimals": 1,
+      "relative": true
+     },
+     {
+      "id": "brakeBias",
+      "kind": "scalar",
+      "label": "Баланс тормозов",
+      "hint": "Доля тормозного усилия на передней оси. Больше — стабильнее, но раньше блокируются передние колёса.",
+      "unit": "%",
+      "range": {
+       "min": -4,
+       "max": 4,
+       "base": 0
+      },
+      "step": 0.1,
+      "decimals": 1,
+      "relative": true
+     }
+    ]
+   },
+   {
+    "id": "arb",
+    "title": "Стабилизаторы",
+    "description": "Диаметр — Stiff (2,00″) или Soft (1,375″), плечо — от P1 (мягко) до P5 (жёстко).",
+    "params": [
+     {
+      "id": "arbFrontDiameter",
+      "kind": "choice",
+      "label": "Передний стабилизатор",
+      "hint": "Жёсткий меньше кренит машину и острее отвечает на руль, но добавляет недостаточной.",
+      "options": [
+       {
+        "value": "stiff",
+        "label": "Stiff 2,00″"
+       },
+       {
+        "value": "soft",
+        "label": "Soft 1,375″"
+       }
+      ],
+      "base": "stiff"
+     },
+     {
+      "id": "arbFrontArm",
+      "kind": "choice",
+      "label": "Плечо переднего стабилизатора",
+      "options": [
+       {
+        "value": "P1",
+        "label": "P1"
+       },
+       {
+        "value": "P2",
+        "label": "P2"
+       },
+       {
+        "value": "P3",
+        "label": "P3"
+       },
+       {
+        "value": "P4",
+        "label": "P4"
+       },
+       {
+        "value": "P5",
+        "label": "P5"
+       }
+      ],
+      "base": "P3"
+     },
+     {
+      "id": "arbFrontPreload",
+      "kind": "scalar",
+      "label": "Преднатяг переднего стабилизатора",
+      "hint": "Статическая нагрузка в стабилизаторе: добавляет или убирает его работу в поворотах и на прямых.",
+      "unit": "Н·м",
+      "range": {
+       "min": -50,
+       "max": 50,
+       "base": 0
+      },
+      "step": 5,
+      "decimals": 0,
+      "relative": true
+     },
+     {
+      "id": "arbRearDiameter",
+      "kind": "choice",
+      "label": "Задний стабилизатор",
+      "hint": "Жёсткий меньше кренит машину, но добавляет избыточной.",
+      "options": [
+       {
+        "value": "stiff",
+        "label": "Stiff 2,00″"
+       },
+       {
+        "value": "soft",
+        "label": "Soft 1,375″"
+       }
+      ],
+      "base": "soft"
+     },
+     {
+      "id": "arbRearArm",
+      "kind": "choice",
+      "label": "Плечо заднего стабилизатора",
+      "options": [
+       {
+        "value": "P1",
+        "label": "P1"
+       },
+       {
+        "value": "P2",
+        "label": "P2"
+       },
+       {
+        "value": "P3",
+        "label": "P3"
+       },
+       {
+        "value": "P4",
+        "label": "P4"
+       },
+       {
+        "value": "P5",
+        "label": "P5"
+       }
+      ],
+      "base": "P3"
+     },
+     {
+      "id": "arbRearPreload",
+      "kind": "scalar",
+      "label": "Преднатяг заднего стабилизатора",
+      "hint": "Статическая нагрузка в заднем стабилизаторе.",
+      "unit": "Н·м",
+      "range": {
+       "min": -50,
+       "max": 50,
+       "base": 0
+      },
+      "step": 5,
+      "decimals": 0,
+      "relative": true
+     }
+    ]
+   },
+   {
+    "id": "corners",
+    "title": "Углы",
+    "description": "Клиренс и вес по углам меняются Shock Collar Offset — парами, чтобы не уехал cross weight.",
+    "params": [
+     {
+      "id": "springRate",
+      "kind": "corners",
+      "label": "Жёсткость пружин",
+      "hint": "Жёстче — машина держит положение кузова и аэродинамику, мягче — больше сцепления на неровностях. На овале левую заднюю ставят мягче правой задней, иначе к концу серии кругов растёт недостаточная.",
+      "unit": "Н/мм",
+      "front": {
+       "min": -30,
+       "max": 30,
+       "base": 0
+      },
+      "rear": {
+       "min": -30,
+       "max": 30,
+       "base": 0
+      },
+      "step": 5,
+      "decimals": 0,
+      "relative": true
+     },
+     {
+      "id": "camber",
+      "kind": "corners",
+      "label": "Развал",
+      "hint": "На овале левые колёса ставят с положительным развалом, правые — с отрицательным; на дорожной трассе все четыре отрицательные.",
+      "unit": "°",
+      "front": {
+       "min": -1,
+       "max": 1,
+       "base": 0
+      },
+      "rear": {
+       "min": -1,
+       "max": 1,
+       "base": 0
+      },
+      "step": 0.1,
+      "decimals": 1,
+      "relative": true
+     },
+     {
+      "id": "casterLf",
+      "kind": "scalar",
+      "label": "Кастер, левое переднее",
+      "hint": "Меньше кастера слева, чем справа, — машину тянет влево, на овале это полезно. Больше кастера — тяжелее руль и устойчивее на прямой.",
+      "unit": "°",
+      "range": {
+       "min": -1,
+       "max": 1,
+       "base": 0
+      },
+      "step": 0.25,
+      "decimals": 2,
+      "relative": true
+     },
+     {
+      "id": "casterRf",
+      "kind": "scalar",
+      "label": "Кастер, правое переднее",
+      "hint": "Больше кастера — тяжелее руль, меньше динамический cross weight в повороте.",
+      "unit": "°",
+      "range": {
+       "min": -1,
+       "max": 1,
+       "base": 0
+      },
+      "step": 0.25,
+      "decimals": 2,
+      "relative": true
+     },
+     {
+      "id": "toe",
+      "kind": "axle",
+      "label": "Схождение",
+      "hint": "Спереди: больше расхождения — острее вход, но передние шины могут перегреться и машина внезапно уйдёт в недостаточную. Сзади: расхождение помогает повороту, схождение — устойчивости.",
+      "unit": "мм",
+      "front": {
+       "min": -3,
+       "max": 3,
+       "base": 0
+      },
+      "rear": {
+       "min": -3,
+       "max": 3,
+       "base": 0
+      },
+      "step": 0.1,
+      "decimals": 1,
+      "relative": true
+     }
+    ]
+   },
+   {
+    "id": "dampers",
+    "title": "Амортизаторы",
+    "description": "Сначала подберите наклон (slope) под трассу, потом медленное и быстрое сжатие и отбой.",
+    "params": [
+     {
+      "id": "lsComp",
+      "kind": "axle",
+      "label": "Сжатие, медленное",
+      "hint": "Больше — быстрее нагружает колесо при торможении и выходе с виража, но хуже гасит мелкие неровности.",
+      "unit": "клик",
+      "front": {
+       "min": -5,
+       "max": 5,
+       "base": 0
+      },
+      "rear": {
+       "min": -5,
+       "max": 5,
+       "base": 0
+      },
+      "step": 1,
+      "decimals": 0,
+      "relative": true
+     },
+     {
+      "id": "hsComp",
+      "kind": "axle",
+      "label": "Сжатие, быстрое",
+      "hint": "Меньше — лучше на кочках и бордюрах, больше — на гладкой трассе.",
+      "unit": "клик",
+      "front": {
+       "min": -5,
+       "max": 5,
+       "base": 0
+      },
+      "rear": {
+       "min": -5,
+       "max": 5,
+       "base": 0
+      },
+      "step": 1,
+      "decimals": 0,
+      "relative": true
+     },
+     {
+      "id": "hsCompSlope",
+      "kind": "axle",
+      "label": "Наклон быстрого сжатия",
+      "hint": "Выше — характеристика линейнее, для тряских трасс; ниже — дегрессивнее, для гладких.",
+      "unit": "клик",
+      "front": {
+       "min": -5,
+       "max": 5,
+       "base": 0
+      },
+      "rear": {
+       "min": -5,
+       "max": 5,
+       "base": 0
+      },
+      "step": 1,
+      "decimals": 0,
+      "relative": true
+     },
+     {
+      "id": "lsRebound",
+      "kind": "axle",
+      "label": "Отбой, медленный",
+      "hint": "Больше — лучше держит кузов, но колесо может разгрузиться.",
+      "unit": "клик",
+      "front": {
+       "min": -5,
+       "max": 5,
+       "base": 0
+      },
+      "rear": {
+       "min": -5,
+       "max": 5,
+       "base": 0
+      },
+      "step": 1,
+      "decimals": 0,
+      "relative": true
+     },
+     {
+      "id": "hsRebound",
+      "kind": "axle",
+      "label": "Отбой, быстрый",
+      "hint": "Больше — кузов спокойнее после кочки, слишком много — теряется сцепление.",
+      "unit": "клик",
+      "front": {
+       "min": -5,
+       "max": 5,
+       "base": 0
+      },
+      "rear": {
+       "min": -5,
+       "max": 5,
+       "base": 0
+      },
+      "step": 1,
+      "decimals": 0,
+      "relative": true
+     },
+     {
+      "id": "hsReboundSlope",
+      "kind": "axle",
+      "label": "Наклон быстрого отбоя",
+      "hint": "Выше — линейнее, для тряских трасс; ниже — для гладких.",
+      "unit": "клик",
+      "front": {
+       "min": -5,
+       "max": 5,
+       "base": 0
+      },
+      "rear": {
+       "min": -5,
+       "max": 5,
+       "base": 0
+      },
+      "step": 1,
+      "decimals": 0,
+      "relative": true
+     }
+    ]
+   },
+   {
+    "id": "rear",
+    "title": "Дифференциал и топливо",
+    "params": [
+     {
+      "id": "diffPreload",
+      "kind": "scalar",
+      "label": "Преднатяг дифференциала",
+      "hint": "Больше — сильнее блокировка в любом режиме: больше недостаточной на газу и при торможении, в том числе в середине поворота.",
+      "unit": "Н·м",
+      "range": {
+       "min": -30,
+       "max": 30,
+       "base": 0
+      },
+      "step": 5,
+      "decimals": 0,
+      "relative": true
+     },
+     {
+      "id": "fuel",
+      "kind": "scalar",
+      "label": "Топливо",
+      "hint": "Сколько залить на старт. Литр бензина весит около 0,75 кг. План на гонку — в сводке справа.",
+      "unit": "л",
+      "range": {
+       "min": 0,
+       "max": 76,
+       "base": 76
+      },
+      "step": 1,
+      "decimals": 0
+     }
+    ]
+   }
+  ],
+  "gt3": [
+   {
+    "id": "tyres",
+    "title": "Шины",
+    "description": "Как в разделе Tires & Aero гаража iRacing. Давление — холодное, на выезде из боксов.",
+    "params": [
+     {
+      "id": "compound",
+      "kind": "choice",
+      "label": "Шины",
+      "hint": "Слики — для сухой трассы, дождевые — с протектором, для воды. Дождь в iRacing бывает только на дорожных трассах.",
+      "options": [
+       {
+        "value": "dry",
+        "label": "Слики"
+       },
+       {
+        "value": "wet",
+        "label": "Дождевые"
+       }
+      ],
+      "base": "dry",
+      "requires": "rain"
+     },
+     {
+      "id": "pressure",
+      "kind": "corners",
+      "label": "Холодное давление",
+      "hint": "Давление, с которым машина выезжает из боксов. Выше — шина меньше греется, но держит хуже; ниже — больше сцепления и нагрева. У GT3 минимум 21,5 psi (148 кПа), базовые сетапы обычно стоят на нём.",
+      "unit": "psi",
+      "front": {
+       "min": -3,
+       "max": 3,
+       "base": 0
+      },
+      "rear": {
+       "min": -3,
+       "max": 3,
+       "base": 0
+      },
+      "step": 0.1,
+      "decimals": 1,
+      "relative": true
+     }
+    ]
+   },
+   {
+    "id": "dials",
+    "title": "Кнопки в кокпите",
+    "description": "In-Car Dials: их же можно крутить на ходу.",
+    "params": [
+     {
+      "id": "brakeBias",
+      "kind": "scalar",
+      "label": "Баланс тормозов",
+      "hint": "Доля тормозного усилия на передней оси. Больше — раньше блокируются передние колёса, но машина стабильнее на торможении; меньше — машина охотнее поворачивает на торможении.",
+      "unit": "%",
+      "range": {
+       "min": -4,
+       "max": 4,
+       "base": 0
+      },
+      "step": 0.1,
+      "decimals": 1,
+      "relative": true
+     },
+     {
+      "id": "abs",
+      "kind": "scalar",
+      "label": "ABS",
+      "hint": "Чем выше позиция, тем сильнее помогает ABS. У Ferrari 296 GT3 двенадцать позиций: 1 — выключено, 2–7 для сухой трассы, 8–12 для дождя.",
+      "unit": "поз.",
+      "range": {
+       "min": -6,
+       "max": 6,
+       "base": 0
+      },
+      "step": 1,
+      "decimals": 0,
+      "relative": true,
+      "requires": "abs"
+     },
+     {
+      "id": "tc",
+      "kind": "scalar",
+      "label": "Антипробуксовка",
+      "hint": "Больше — меньше пробуксовки и износа задних шин, но медленнее выход из поворота, если система режет мощность слишком сильно. Позиция 1 обычно выключает систему.",
+      "unit": "поз.",
+      "range": {
+       "min": -6,
+       "max": 6,
+       "base": 0
+      },
+      "step": 1,
+      "decimals": 0,
+      "relative": true,
+      "requires": "tc"
+     },
+     {
+      "id": "throttleShape",
+      "kind": "scalar",
+      "label": "Отклик газа",
+      "hint": "Форма отклика педали: 1 — линейная, дальше всё более S-образная, 10 — снова линейная, но резче.",
+      "unit": "поз.",
+      "range": {
+       "min": -5,
+       "max": 5,
+       "base": 0
+      },
+      "step": 1,
+      "decimals": 0,
+      "relative": true
+     }
+    ]
+   },
+   {
+    "id": "chassis",
+    "title": "Шасси",
+    "description": "Перед и зад: стабилизаторы, схождение, колодки.",
+    "params": [
+     {
+      "id": "arbFront",
+      "kind": "scalar",
+      "label": "Передний стабилизатор",
+      "hint": "Жёстче — меньше крен спереди и больше недостаточной поворачиваемости; мягче — машина охотнее поворачивает.",
+      "unit": "поз.",
+      "range": {
+       "min": -4,
+       "max": 4,
+       "base": 0
+      },
+      "step": 1,
+      "decimals": 0,
+      "relative": true
+     },
+     {
+      "id": "arbRear",
+      "kind": "scalar",
+      "label": "Задний стабилизатор",
+      "hint": "Жёстче — машина охотнее поворачивает, вплоть до избыточной; мягче — спокойнее и с недостаточной.",
+      "unit": "поз.",
+      "range": {
+       "min": -4,
+       "max": 4,
+       "base": 0
+      },
+      "step": 1,
+      "decimals": 0,
+      "relative": true
+     },
+     {
+      "id": "toe",
+      "kind": "axle",
+      "label": "Схождение",
+      "hint": "Минус — расхождение: спереди острее вход в поворот, сзади машина вертлявее. Плюс — спокойнее на прямой и меньше греет шины.",
+      "unit": "мм",
+      "front": {
+       "min": -3,
+       "max": 3,
+       "base": 0
+      },
+      "rear": {
+       "min": -3,
+       "max": 3,
+       "base": 0
+      },
+      "step": 0.1,
+      "decimals": 1,
+      "relative": true
+     },
+     {
+      "id": "brakePads",
+      "kind": "choice",
+      "label": "Тормозные колодки",
+      "hint": "Low — меньше трения и тормоза слабее, Medium и High — тормоза сильнее, но выше риск блокировки.",
+      "options": [
+       {
+        "value": "low",
+        "label": "Low"
+       },
+       {
+        "value": "medium",
+        "label": "Medium"
+       },
+       {
+        "value": "high",
+        "label": "High"
+       }
+      ],
+      "base": "medium"
+     }
+    ]
+   },
+   {
+    "id": "corners",
+    "title": "Подвеска",
+    "description": "Углы машины: клиренс, пружины, развал.",
+    "params": [
+     {
+      "id": "rideHeight",
+      "kind": "axle",
+      "label": "Клиренс",
+      "hint": "Меняется перч-оффсетом пружин. Ниже спереди — больше переднего прижима; разница перед/зад (наклон) двигает аэробаланс. Пределы проверяет техинспекция, например у Ferrari 296 GT3 сзади 50–92,5 мм.",
+      "unit": "мм",
+      "front": {
+       "min": -10,
+       "max": 10,
+       "base": 0
+      },
+      "rear": {
+       "min": -10,
+       "max": 10,
+       "base": 0
+      },
+      "step": 0.5,
+      "decimals": 1,
+      "relative": true
+     },
+     {
+      "id": "springRate",
+      "kind": "axle",
+      "label": "Жёсткость пружин",
+      "hint": "Жёстче — стабильнее клиренс и аэродинамика, мягче — больше механического сцепления на неровной трассе. После смены пружин верните клиренс перч-оффсетом.",
+      "unit": "Н/мм",
+      "front": {
+       "min": -60,
+       "max": 60,
+       "base": 0
+      },
+      "rear": {
+       "min": -60,
+       "max": 60,
+       "base": 0
+      },
+      "step": 10,
+      "decimals": 0,
+      "relative": true
+     },
+     {
+      "id": "camber",
+      "kind": "corners",
+      "label": "Развал",
+      "hint": "Больше отрицательного развала — больше сцепления в повороте, но хуже торможение и быстрее износ внутреннего края шины. Здесь минус значит «больше развала».",
+      "unit": "°",
+      "front": {
+       "min": -1,
+       "max": 1,
+       "base": 0
+      },
+      "rear": {
+       "min": -1,
+       "max": 1,
+       "base": 0
+      },
+      "step": 0.1,
+      "decimals": 1,
+      "relative": true
+     }
+    ]
+   },
+   {
+    "id": "dampers",
+    "title": "Амортизаторы",
+    "description": "Медленные скорости — реакция на руль, газ и тормоз; быстрые — бордюры и неровности. У Ferrari 296 GT3 от 0 до 11 кликов.",
+    "params": [
+     {
+      "id": "lsComp",
+      "kind": "axle",
+      "label": "Сжатие, медленное",
+      "hint": "Больше — быстрее перенос веса при торможении и перекладке; спереди добавляет недостаточной на торможении.",
+      "unit": "клик",
+      "front": {
+       "min": -5,
+       "max": 5,
+       "base": 0
+      },
+      "rear": {
+       "min": -5,
+       "max": 5,
+       "base": 0
+      },
+      "step": 1,
+      "decimals": 0,
+      "relative": true
+     },
+     {
+      "id": "hsComp",
+      "kind": "axle",
+      "label": "Сжатие, быстрое",
+      "hint": "Больше — жёстче на бордюрах и кочках, лучше аэроплатформа на гладкой трассе; меньше — лучше гасит удары.",
+      "unit": "клик",
+      "front": {
+       "min": -5,
+       "max": 5,
+       "base": 0
+      },
+      "rear": {
+       "min": -5,
+       "max": 5,
+       "base": 0
+      },
+      "step": 1,
+      "decimals": 0,
+      "relative": true
+     },
+     {
+      "id": "lsRebound",
+      "kind": "axle",
+      "label": "Отбой, медленный",
+      "hint": "Больше — дольше держит кузов: спереди при разгоне, сзади при торможении. Слишком много — колесо теряет контакт.",
+      "unit": "клик",
+      "front": {
+       "min": -5,
+       "max": 5,
+       "base": 0
+      },
+      "rear": {
+       "min": -5,
+       "max": 5,
+       "base": 0
+      },
+      "step": 1,
+      "decimals": 0,
+      "relative": true
+     },
+     {
+      "id": "hsRebound",
+      "kind": "axle",
+      "label": "Отбой, быстрый",
+      "hint": "Как быстро амортизатор разжимается после кочки или бордюра.",
+      "unit": "клик",
+      "front": {
+       "min": -5,
+       "max": 5,
+       "base": 0
+      },
+      "rear": {
+       "min": -5,
+       "max": 5,
+       "base": 0
+      },
+      "step": 1,
+      "decimals": 0,
+      "relative": true
+     }
+    ]
+   },
+   {
+    "id": "rear",
+    "title": "Аэродинамика и дифференциал",
+    "params": [
+     {
+      "id": "wing",
+      "kind": "scalar",
+      "label": "Заднее крыло",
+      "hint": "Выше — больше прижима и сопротивления: быстрее в поворотах, медленнее на прямой, баланс смещается к недостаточной. У Ferrari 296 GT3 +1 к крылу компенсируют −1 мм клиренса спереди или +3 мм сзади.",
+      "unit": "поз.",
+      "range": {
+       "min": -4,
+       "max": 4,
+       "base": 0
+      },
+      "step": 0.5,
+      "decimals": 1,
+      "relative": true
+     },
+     {
+      "id": "diffPreload",
+      "kind": "scalar",
+      "label": "Преднатяг дифференциала",
+      "hint": "Больше — меньше заноса при сбросе газа и стабильнее вход, но больше недостаточной без газа и резче избыточная на газу.",
+      "unit": "Н·м",
+      "range": {
+       "min": -60,
+       "max": 60,
+       "base": 0
+      },
+      "step": 10,
+      "decimals": 0,
+      "relative": true
+     },
+     {
+      "id": "frictionFaces",
+      "kind": "scalar",
+      "label": "Фрикционные диски",
+      "hint": "Больше дисков — сильнее блокировка: больше недостаточной без газа и избыточной на газу, меньше проворота внутреннего колеса на бордюрах.",
+      "unit": "шт.",
+      "range": {
+       "min": -6,
+       "max": 6,
+       "base": 0
+      },
+      "step": 2,
+      "decimals": 0,
+      "relative": true
+     },
+     {
+      "id": "fuel",
+      "kind": "scalar",
+      "label": "Топливо",
+      "hint": "Сколько залить на старт. Литр бензина весит около 0,75 кг. План на гонку — в сводке справа.",
+      "unit": "л",
+      "range": {
+       "min": 0,
+       "max": 120,
+       "base": 60
+      },
+      "step": 1,
+      "decimals": 0
+     }
+    ]
+   }
+  ],
+  "gt4": [
+   {
+    "id": "tyres",
+    "title": "Шины",
+    "description": "Давление — холодное, на выезде из боксов.",
+    "params": [
+     {
+      "id": "compound",
+      "kind": "choice",
+      "label": "Шины",
+      "hint": "Слики — для сухой трассы, дождевые — с протектором, для воды. Дождь в iRacing бывает только на дорожных трассах.",
+      "options": [
+       {
+        "value": "dry",
+        "label": "Слики"
+       },
+       {
+        "value": "wet",
+        "label": "Дождевые"
+       }
+      ],
+      "base": "dry",
+      "requires": "rain"
+     },
+     {
+      "id": "pressure",
+      "kind": "corners",
+      "label": "Холодное давление",
+      "hint": "Давление, с которым машина выезжает из боксов. Выше — шина меньше греется, но держит хуже; ниже — больше сцепления и нагрева.",
+      "unit": "psi",
+      "front": {
+       "min": -3,
+       "max": 3,
+       "base": 0
+      },
+      "rear": {
+       "min": -3,
+       "max": 3,
+       "base": 0
+      },
+      "step": 0.1,
+      "decimals": 1,
+      "relative": true
+     }
+    ]
+   },
+   {
+    "id": "dials",
+    "title": "Кнопки в кокпите",
+    "description": "У McLaren 570S и Porsche 718 ABS и антипробуксовка — одна общая настройка, у BMW ABS называется DSC.",
+    "params": [
+     {
+      "id": "brakeBias",
+      "kind": "scalar",
+      "label": "Баланс тормозов",
+      "hint": "Доля тормозного усилия на передней оси. Больше — раньше блокируются передние колёса, но машина стабильнее на торможении; меньше — машина охотнее поворачивает на торможении.",
+      "unit": "%",
+      "range": {
+       "min": -4,
+       "max": 4,
+       "base": 0
+      },
+      "step": 0.1,
+      "decimals": 1,
+      "relative": true
+     },
+     {
+      "id": "abs",
+      "kind": "scalar",
+      "label": "ABS",
+      "hint": "Чем выше позиция, тем сильнее помогает ABS. У Ferrari 296 GT3 двенадцать позиций: 1 — выключено, 2–7 для сухой трассы, 8–12 для дождя.",
+      "unit": "поз.",
+      "range": {
+       "min": -6,
+       "max": 6,
+       "base": 0
+      },
+      "step": 1,
+      "decimals": 0,
+      "relative": true,
+      "requires": "abs"
+     },
+     {
+      "id": "tc",
+      "kind": "scalar",
+      "label": "Антипробуксовка",
+      "hint": "Больше — меньше пробуксовки и износа задних шин, но медленнее выход из поворота, если система режет мощность слишком сильно. Позиция 1 обычно выключает систему.",
+      "unit": "поз.",
+      "range": {
+       "min": -6,
+       "max": 6,
+       "base": 0
+      },
+      "step": 1,
+      "decimals": 0,
+      "relative": true,
+      "requires": "tc"
+     },
+     {
+      "id": "brakePads",
+      "kind": "choice",
+      "label": "Тормозные колодки",
+      "hint": "Low — меньше трения и тормоза слабее, Medium и High — тормоза сильнее, но выше риск блокировки.",
+      "options": [
+       {
+        "value": "low",
+        "label": "Low"
+       },
+       {
+        "value": "medium",
+        "label": "Medium"
+       },
+       {
+        "value": "high",
+        "label": "High"
+       }
+      ],
+      "base": "medium"
+     }
+    ]
+   },
+   {
+    "id": "chassis",
+    "title": "Шасси",
+    "params": [
+     {
+      "id": "arbFront",
+      "kind": "scalar",
+      "label": "Передний стабилизатор",
+      "hint": "Жёстче — меньше крен спереди и больше недостаточной поворачиваемости; мягче — машина охотнее поворачивает.",
+      "unit": "поз.",
+      "range": {
+       "min": -4,
+       "max": 4,
+       "base": 0
+      },
+      "step": 1,
+      "decimals": 0,
+      "relative": true
+     },
+     {
+      "id": "arbRear",
+      "kind": "scalar",
+      "label": "Задний стабилизатор",
+      "hint": "Жёстче — машина охотнее поворачивает, вплоть до избыточной; мягче — спокойнее и с недостаточной.",
+      "unit": "поз.",
+      "range": {
+       "min": -4,
+       "max": 4,
+       "base": 0
+      },
+      "step": 1,
+      "decimals": 0,
+      "relative": true
+     },
+     {
+      "id": "toe",
+      "kind": "axle",
+      "label": "Схождение",
+      "hint": "Минус — расхождение: спереди острее вход в поворот, сзади машина вертлявее. Плюс — спокойнее на прямой и меньше греет шины.",
+      "unit": "мм",
+      "front": {
+       "min": -3,
+       "max": 3,
+       "base": 0
+      },
+      "rear": {
+       "min": -3,
+       "max": 3,
+       "base": 0
+      },
+      "step": 0.1,
+      "decimals": 1,
+      "relative": true
+     }
+    ]
+   },
+   {
+    "id": "corners",
+    "title": "Подвеска",
+    "description": "Жёсткость пружин меняется не у всех GT4: у Porsche 718 её нет.",
+    "params": [
+     {
+      "id": "rideHeight",
+      "kind": "axle",
+      "label": "Клиренс",
+      "hint": "Меняется перч-оффсетом пружин. Ниже спереди — больше переднего прижима; разница перед/зад (наклон) двигает аэробаланс. Пределы проверяет техинспекция, например у Ferrari 296 GT3 сзади 50–92,5 мм.",
+      "unit": "мм",
+      "front": {
+       "min": -10,
+       "max": 10,
+       "base": 0
+      },
+      "rear": {
+       "min": -10,
+       "max": 10,
+       "base": 0
+      },
+      "step": 0.5,
+      "decimals": 1,
+      "relative": true
+     },
+     {
+      "id": "springRate",
+      "kind": "axle",
+      "label": "Жёсткость пружин",
+      "hint": "Жёстче — стабильнее клиренс и аэродинамика, мягче — больше механического сцепления на неровной трассе. После смены пружин верните клиренс перч-оффсетом.",
+      "unit": "Н/мм",
+      "front": {
+       "min": -60,
+       "max": 60,
+       "base": 0
+      },
+      "rear": {
+       "min": -60,
+       "max": 60,
+       "base": 0
+      },
+      "step": 10,
+      "decimals": 0,
+      "relative": true
+     },
+     {
+      "id": "camber",
+      "kind": "corners",
+      "label": "Развал",
+      "hint": "Больше отрицательного развала — больше сцепления в повороте, но хуже торможение и быстрее износ внутреннего края шины. Здесь минус значит «больше развала».",
+      "unit": "°",
+      "front": {
+       "min": -1,
+       "max": 1,
+       "base": 0
+      },
+      "rear": {
+       "min": -1,
+       "max": 1,
+       "base": 0
+      },
+      "step": 0.1,
+      "decimals": 1,
+      "relative": true
+     },
+     {
+      "id": "bump",
+      "kind": "axle",
+      "label": "Сжатие",
+      "hint": "Больше — машина резче отвечает на руль и тормоз, но хуже глотает кочки.",
+      "unit": "клик",
+      "front": {
+       "min": -5,
+       "max": 5,
+       "base": 0
+      },
+      "rear": {
+       "min": -5,
+       "max": 5,
+       "base": 0
+      },
+      "step": 1,
+      "decimals": 0,
+      "relative": true
+     },
+     {
+      "id": "rebound",
+      "kind": "axle",
+      "label": "Отбой",
+      "hint": "Больше — кузов дольше держится после нагрузки; слишком много — колесо отрывается от асфальта.",
+      "unit": "клик",
+      "front": {
+       "min": -5,
+       "max": 5,
+       "base": 0
+      },
+      "rear": {
+       "min": -5,
+       "max": 5,
+       "base": 0
+      },
+      "step": 1,
+      "decimals": 0,
+      "relative": true
+     }
+    ]
+   },
+   {
+    "id": "rear",
+    "title": "Аэродинамика и топливо",
+    "params": [
+     {
+      "id": "wing",
+      "kind": "scalar",
+      "label": "Заднее крыло",
+      "hint": "Выше — больше прижима и сопротивления: быстрее в поворотах, медленнее на прямой, баланс смещается к недостаточной. У Ferrari 296 GT3 +1 к крылу компенсируют −1 мм клиренса спереди или +3 мм сзади.",
+      "unit": "поз.",
+      "range": {
+       "min": -4,
+       "max": 4,
+       "base": 0
+      },
+      "step": 0.5,
+      "decimals": 1,
+      "relative": true
+     },
+     {
+      "id": "fuel",
+      "kind": "scalar",
+      "label": "Топливо",
+      "hint": "Сколько залить на старт. Литр бензина весит около 0,75 кг. План на гонку — в сводке справа.",
+      "unit": "л",
+      "range": {
+       "min": 0,
+       "max": 120,
+       "base": 60
+      },
+      "step": 1,
+      "decimals": 0
+     }
+    ]
+   }
+  ],
+  "cup": [
+   {
+    "id": "tyres",
+    "title": "Шины",
+    "description": "Давление — холодное, на выезде из боксов.",
+    "params": [
+     {
+      "id": "compound",
+      "kind": "choice",
+      "label": "Шины",
+      "hint": "Слики — для сухой трассы, дождевые — с протектором, для воды. Дождь в iRacing бывает только на дорожных трассах.",
+      "options": [
+       {
+        "value": "dry",
+        "label": "Слики"
+       },
+       {
+        "value": "wet",
+        "label": "Дождевые"
+       }
+      ],
+      "base": "dry",
+      "requires": "rain"
+     },
+     {
+      "id": "pressure",
+      "kind": "corners",
+      "label": "Холодное давление",
+      "hint": "Давление, с которым машина выезжает из боксов. Выше — шина меньше греется, но держит хуже; ниже — больше сцепления и нагрева.",
+      "unit": "psi",
+      "front": {
+       "min": -3,
+       "max": 3,
+       "base": 0
+      },
+      "rear": {
+       "min": -3,
+       "max": 3,
+       "base": 0
+      },
+      "step": 0.1,
+      "decimals": 1,
+      "relative": true
+     }
+    ]
+   },
+   {
+    "id": "dials",
+    "title": "Кнопки в кокпите",
+    "description": "У Ferrari 296 Challenge две настройки антипробуксовки, TC1 и TC2.",
+    "params": [
+     {
+      "id": "brakeBias",
+      "kind": "scalar",
+      "label": "Баланс тормозов",
+      "hint": "Доля тормозного усилия на передней оси. Больше — раньше блокируются передние колёса, но машина стабильнее на торможении; меньше — машина охотнее поворачивает на торможении.",
+      "unit": "%",
+      "range": {
+       "min": -4,
+       "max": 4,
+       "base": 0
+      },
+      "step": 0.1,
+      "decimals": 1,
+      "relative": true
+     },
+     {
+      "id": "abs",
+      "kind": "scalar",
+      "label": "ABS",
+      "hint": "Чем выше позиция, тем сильнее помогает ABS. У Ferrari 296 GT3 двенадцать позиций: 1 — выключено, 2–7 для сухой трассы, 8–12 для дождя.",
+      "unit": "поз.",
+      "range": {
+       "min": -6,
+       "max": 6,
+       "base": 0
+      },
+      "step": 1,
+      "decimals": 0,
+      "relative": true,
+      "requires": "abs"
+     },
+     {
+      "id": "tc",
+      "kind": "scalar",
+      "label": "Антипробуксовка",
+      "hint": "Больше — меньше пробуксовки и износа задних шин, но медленнее выход из поворота, если система режет мощность слишком сильно. Позиция 1 обычно выключает систему.",
+      "unit": "поз.",
+      "range": {
+       "min": -6,
+       "max": 6,
+       "base": 0
+      },
+      "step": 1,
+      "decimals": 0,
+      "relative": true,
+      "requires": "tc"
+     }
+    ]
+   },
+   {
+    "id": "chassis",
+    "title": "Шасси",
+    "description": "Пружин, амортизаторов и дифференциала в гараже кубковых машин нет.",
+    "params": [
+     {
+      "id": "arbFront",
+      "kind": "scalar",
+      "label": "Передний стабилизатор",
+      "hint": "Жёстче — меньше крен спереди и больше недостаточной поворачиваемости; мягче — машина охотнее поворачивает.",
+      "unit": "поз.",
+      "range": {
+       "min": -4,
+       "max": 4,
+       "base": 0
+      },
+      "step": 1,
+      "decimals": 0,
+      "relative": true
+     },
+     {
+      "id": "arbRear",
+      "kind": "scalar",
+      "label": "Задний стабилизатор",
+      "hint": "Жёстче — машина охотнее поворачивает, вплоть до избыточной; мягче — спокойнее и с недостаточной.",
+      "unit": "поз.",
+      "range": {
+       "min": -4,
+       "max": 4,
+       "base": 0
+      },
+      "step": 1,
+      "decimals": 0,
+      "relative": true
+     },
+     {
+      "id": "toe",
+      "kind": "axle",
+      "label": "Схождение",
+      "hint": "Минус — расхождение: спереди острее вход в поворот, сзади машина вертлявее. Плюс — спокойнее на прямой и меньше греет шины.",
+      "unit": "мм",
+      "front": {
+       "min": -3,
+       "max": 3,
+       "base": 0
+      },
+      "rear": {
+       "min": -3,
+       "max": 3,
+       "base": 0
+      },
+      "step": 0.1,
+      "decimals": 1,
+      "relative": true
+     },
+     {
+      "id": "rideHeight",
+      "kind": "axle",
+      "label": "Клиренс",
+      "hint": "Меняется перч-оффсетом пружин. Ниже спереди — больше переднего прижима; разница перед/зад (наклон) двигает аэробаланс. Пределы проверяет техинспекция, например у Ferrari 296 GT3 сзади 50–92,5 мм.",
+      "unit": "мм",
+      "front": {
+       "min": -10,
+       "max": 10,
+       "base": 0
+      },
+      "rear": {
+       "min": -10,
+       "max": 10,
+       "base": 0
+      },
+      "step": 0.5,
+      "decimals": 1,
+      "relative": true
+     },
+     {
+      "id": "camber",
+      "kind": "corners",
+      "label": "Развал",
+      "hint": "Больше отрицательного развала — больше сцепления в повороте, но хуже торможение и быстрее износ внутреннего края шины. Здесь минус значит «больше развала».",
+      "unit": "°",
+      "front": {
+       "min": -1,
+       "max": 1,
+       "base": 0
+      },
+      "rear": {
+       "min": -1,
+       "max": 1,
+       "base": 0
+      },
+      "step": 0.1,
+      "decimals": 1,
+      "relative": true
+     }
+    ]
+   },
+   {
+    "id": "rear",
+    "title": "Аэродинамика и топливо",
+    "params": [
+     {
+      "id": "wing",
+      "kind": "scalar",
+      "label": "Заднее крыло",
+      "hint": "Выше — больше прижима и сопротивления: быстрее в поворотах, медленнее на прямой, баланс смещается к недостаточной. У Ferrari 296 GT3 +1 к крылу компенсируют −1 мм клиренса спереди или +3 мм сзади.",
+      "unit": "поз.",
+      "range": {
+       "min": -4,
+       "max": 4,
+       "base": 0
+      },
+      "step": 0.5,
+      "decimals": 1,
+      "relative": true
+     },
+     {
+      "id": "fuel",
+      "kind": "scalar",
+      "label": "Топливо",
+      "hint": "Сколько залить на старт. Литр бензина весит около 0,75 кг. План на гонку — в сводке справа.",
+      "unit": "л",
+      "range": {
+       "min": 0,
+       "max": 100,
+       "base": 50
+      },
+      "step": 1,
+      "decimals": 0
+     }
+    ]
+   }
+  ]
+ }
+}

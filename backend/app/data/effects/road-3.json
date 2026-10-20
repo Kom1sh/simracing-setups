@@ -1,0 +1,297 @@
+[
+ {
+  "id": "gt3-diff-up",
+  "classes": [
+   "gt3"
+  ],
+  "param": "diffPreload",
+  "slot": "all",
+  "direction": "increase",
+  "priority": 2,
+  "fixes": [
+   [
+    "oversteer",
+    "entry"
+   ]
+  ],
+  "effect": {
+   "ru": "Больше преднатяга: меньше заноса при сбросе газа, вход стабильнее.",
+   "en": "More preload: less lift-off oversteer and a more stable entry."
+  },
+  "tradeoff": {
+   "ru": "Больше недостаточной без газа и резче избыточная на газу.",
+   "en": "More off-throttle understeer and sharper on-throttle oversteer."
+  },
+  "source": {
+   "manual": "ferrari-296-gt3",
+   "quote": "More preload -> Less liftoff oversteer, more corner entry stability, more off throttle understeer, more on throttle oversteer."
+  }
+ },
+ {
+  "id": "gt3-diff-down",
+  "classes": [
+   "gt3"
+  ],
+  "param": "diffPreload",
+  "slot": "all",
+  "direction": "decrease",
+  "priority": 2,
+  "fixes": [
+   [
+    "understeer",
+    "entry"
+   ],
+   [
+    "oversteer",
+    "exit"
+   ]
+  ],
+  "effect": {
+   "ru": "Меньше преднатяга: меньше недостаточной без газа и мягче выход на газу.",
+   "en": "Less preload: less off-throttle understeer and a softer exit on the power."
+  },
+  "tradeoff": {
+   "ru": "Больше заноса при сбросе газа, вход менее стабилен.",
+   "en": "More lift-off oversteer, a less stable entry."
+  },
+  "source": {
+   "manual": "ferrari-296-gt3",
+   "quote": "Less preload -> More liftoff oversteer, less corner entry stability, less off throttle understeer, less on throttle oversteer."
+  }
+ },
+ {
+  "id": "gt3-faces-less",
+  "classes": [
+   "gt3"
+  ],
+  "param": "frictionFaces",
+  "slot": "all",
+  "direction": "decrease",
+  "priority": 3,
+  "fixes": [
+   [
+    "oversteer",
+    "exit"
+   ],
+   [
+    "understeer",
+    "entry"
+   ]
+  ],
+  "effect": {
+   "ru": "Меньше фрикционов: меньше избыточной на газу и недостаточной без газа.",
+   "en": "Fewer friction faces: less on-throttle oversteer and off-throttle understeer."
+  },
+  "tradeoff": {
+   "ru": "Внутреннее колесо чаще проворачивается на бордюрах.",
+   "en": "More inside wheelspin over kerbs."
+  },
+  "source": {
+   "manual": "ferrari-296-gt3",
+   "quote": "Less friction faces -> Less off throttle understeer, less on throttle oversteer, more inside wheelspin-up on rough surfaces and kerb strikes."
+  }
+ },
+ {
+  "id": "gt3-faces-more",
+  "classes": [
+   "gt3"
+  ],
+  "param": "frictionFaces",
+  "slot": "all",
+  "direction": "increase",
+  "priority": 3,
+  "fixes": [
+   [
+    "wheelspin",
+    "exit"
+   ]
+  ],
+  "effect": {
+   "ru": "Больше фрикционов: внутреннее колесо меньше проворачивается на бордюрах и неровностях.",
+   "en": "More friction faces: less inside wheelspin over kerbs and bumps."
+  },
+  "tradeoff": {
+   "ru": "Больше недостаточной без газа и избыточной на газу.",
+   "en": "More off-throttle understeer and on-throttle oversteer."
+  },
+  "source": {
+   "manual": "ferrari-296-gt3",
+   "quote": "More friction faces -> More off throttle understeer, more on throttle oversteer, less inside wheelspin-up on rough surfaces and kerb strikes."
+  }
+ },
+ {
+  "id": "gt3-flscomp-down",
+  "classes": [
+   "gt3"
+  ],
+  "param": "lsComp",
+  "slot": "front",
+  "direction": "decrease",
+  "priority": 3,
+  "fixes": [
+   [
+    "understeer",
+    "entry"
+   ]
+  ],
+  "effect": {
+   "ru": "Мягче медленное сжатие спереди: меньше недостаточной на торможении.",
+   "en": "Softer front low-speed bump: less understeer under braking."
+  },
+  "tradeoff": {
+   "ru": "Перед медленнее загружается при торможении.",
+   "en": "The front loads up more slowly under braking."
+  },
+  "source": {
+   "manual": "ferrari-296-gt3",
+   "quote": "On the front end of the car, increasing Low Speed Compression will induce understeer under braking and whenever the front suspension is compressing."
+  }
+ },
+ {
+  "id": "gt3-rlscomp-up",
+  "classes": [
+   "gt3"
+  ],
+  "param": "lsComp",
+  "slot": "rear",
+  "direction": "increase",
+  "priority": 3,
+  "fixes": [
+   [
+    "wheelspin",
+    "exit"
+   ],
+   [
+    "oversteer",
+    "exit"
+   ]
+  ],
+  "effect": {
+   "ru": "Жёстче медленное сжатие сзади: больше тяги на газу.",
+   "en": "Stiffer rear low-speed bump: more traction on the power."
+  },
+  "tradeoff": {
+   "ru": "В крайнем случае ощущается как недостаточная.",
+   "en": "In extreme cases it feels like understeer."
+  },
+  "source": {
+   "manual": "ferrari-296-gt3",
+   "quote": "On the rear, more compression will increase traction on throttle and when the rear suspension is in compression, which can be perceived as understeer in extreme cases."
+  }
+ },
+ {
+  "id": "gt3-flsreb-down",
+  "classes": [
+   "gt3"
+  ],
+  "param": "lsRebound",
+  "slot": "front",
+  "direction": "decrease",
+  "priority": 3,
+  "fixes": [
+   [
+    "understeer",
+    "exit"
+   ]
+  ],
+  "effect": {
+   "ru": "Мягче медленный отбой спереди: меньше недостаточной при открытии газа.",
+   "en": "Softer front low-speed rebound: less understeer as you open the throttle."
+  },
+  "tradeoff": {
+   "ru": "Перед быстрее поднимается на разгоне.",
+   "en": "The front rises faster under acceleration."
+  },
+  "source": {
+   "manual": "ferrari-296-gt3",
+   "quote": "On the front end, higher rebound settings will hold the front of the car down longer during acceleration but can induce understeer on throttle application or over crests."
+  }
+ },
+ {
+  "id": "gt3-rlsreb-up",
+  "classes": [
+   "gt3"
+  ],
+  "param": "lsRebound",
+  "slot": "rear",
+  "direction": "increase",
+  "priority": 3,
+  "fixes": [
+   [
+    "oversteer",
+    "entry"
+   ]
+  ],
+  "effect": {
+   "ru": "Жёстче медленный отбой сзади: машина стабильнее на торможении.",
+   "en": "Stiffer rear low-speed rebound: a more stable car under braking."
+  },
+  "tradeoff": {
+   "ru": "Перебор даёт недостаточную.",
+   "en": "Too much brings understeer."
+  },
+  "source": {
+   "manual": "ferrari-296-gt3",
+   "quote": "On the rear of the car, more rebound will stabilize the car under braking but can induce understeer if set too aggressively."
+  }
+ },
+ {
+  "id": "gt4-rebound-up",
+  "classes": [
+   "gt4"
+  ],
+  "param": "rebound",
+  "slot": "all",
+  "direction": "increase",
+  "priority": 3,
+  "fixes": [
+   [
+    "oversteer",
+    "entry"
+   ]
+  ],
+  "effect": {
+   "ru": "Жёстче отбой: кузов медленнее клюёт на торможении, машина стабильнее.",
+   "en": "Stiffer rebound: the body pitches more slowly under braking and the car is more stable."
+  },
+  "tradeoff": {
+   "ru": "Перебор — колесо теряет контакт на неровностях.",
+   "en": "Too much and the wheel loses contact over bumps."
+  },
+  "source": {
+   "manual": "bmw-m4-g82-gt4",
+   "quote": "an increase in rebound stiffness can help to “slow down” the change in pitch of the car as the brakes are applied, potentially increasing braking stability."
+  }
+ },
+ {
+  "id": "cup-tc2-down",
+  "classes": [
+   "cup"
+  ],
+  "cars": [
+   "ferrari-296-challenge"
+  ],
+  "param": "tc",
+  "slot": "all",
+  "direction": "decrease",
+  "priority": 2,
+  "fixes": [
+   [
+    "understeer",
+    "exit"
+   ]
+  ],
+  "effect": {
+   "ru": "TC2 ниже: система допускает больше рыскания и меньше блокирует дифференциал — машина охотнее доворачивает на газу.",
+   "en": "Lower TC2: the system allows more yaw and locks the diff less, so the car rotates more on the power."
+  },
+  "tradeoff": {
+   "ru": "Больше риск заноса на выходе.",
+   "en": "More risk of a slide on exit."
+  },
+  "source": {
+   "manual": "ferrari-296-challenge",
+   "quote": "at lower settings more yaw is permitted before the system will intervene. This setting also adjusts the differential drive side locking for more on throttle rotation at lower positions."
+  }
+ }
+]

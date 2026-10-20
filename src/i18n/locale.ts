@@ -17,8 +17,15 @@ export const locale: Locale = typeof window === 'undefined' ? 'en' : detectLocal
 
 export type Page = 'home' | 'app' | 'login' | 'signup'
 
+/**
+ * Где живёт кабинет. На GitHub Pages только лендинг (там нет API) — вход и кабинет на своём домене.
+ * На своём домене (SITE_BASE=/) всё на одном адресе.
+ */
+export const APP_ORIGIN: string | null = BASE === '/' ? null : ((import.meta.env.VITE_APP_ORIGIN as string | undefined) ?? 'https://simracing.egorprotasov.ru')
+
 export function pagePath(page: Page, lang: Locale = locale): string {
-  return page === 'home' ? `${BASE}${lang}/` : `${BASE}${lang}/${page}/`
+  if (page === 'home') return `${BASE}${lang}/`
+  return APP_ORIGIN ? `${APP_ORIGIN}/${lang}/${page}/` : `${BASE}${lang}/${page}/`
 }
 
 export function absoluteUrl(path: string): string {

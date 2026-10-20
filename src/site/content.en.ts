@@ -53,7 +53,7 @@ export const en: LandingContent = {
     paragraphs: [
       'A setup is the car’s settings in the iRacing garage: tyre pressures, anti-roll bars, springs, brake bias, differential, rear wing. They decide how the car turns, brakes and leaves a corner.',
       'A ready-made setup from a shop or a friend rarely fits perfectly: you have to tune it to your driving, the track and the weather. And with dozens of adjustments, it is hard to know which one to touch.',
-      'The assistant helps with that step: you describe what the car does wrong, and it suggests one specific change from a base of rules reviewed by the team’s expert.',
+      'The assistant helps with that step: you describe what the car does wrong, and it suggests a specific change from a table built from the official iRacing manuals and explains why.',
     ],
     photoAlt: 'Gloved hands on a sim racing wheel',
     card: { label: 'One change at a time', text: 'Change it, run 3–5 laps, compare' },
@@ -97,9 +97,9 @@ export const en: LandingContent = {
     title: 'Rules, not guesses',
     intro: 'Generic chatbots happily suggest setups that break the car’s limits or fix the wrong thing. The assistant works differently.',
     items: [
-      { title: 'Only rules with a source', text: 'Every answer comes from a rule with a source and a review status. Rules nobody has checked do not reach you.' },
-      { title: '“No match” is an answer too', text: 'If no rule fits your car and symptom, the assistant says so instead of inventing a tip.' },
-      { title: 'Every answer is traceable', text: 'Each recommendation comes with its rule ID and basis, so you can see where it came from.' },
+      { title: 'Only changes with a source', text: 'Every change comes from a table built from the official iRacing manuals, with a quote. The model picks from it but cannot invent an adjustment.' },
+      { title: '“No match” is an answer too', text: 'If the manuals have no matching change, the assistant says so instead of inventing a tip.' },
+      { title: 'Every answer is traceable', text: 'Each change comes with a quote from the iRacing manual and a link to it, so you can see where it came from.' },
     ],
   },
   numbers: {
@@ -124,9 +124,9 @@ export const en: LandingContent = {
     items: [
       { q: 'What is understeer, and what is oversteer?', a: 'Understeer is when the front tyres lose grip first and the car runs wide of the line you steer. Oversteer is when the rear tyres lose grip first and the back of the car slides out. Where in the corner it happens, on entry, mid-corner or on exit, points to different setup changes.' },
       { q: 'Which sims and cars does it support?', a: 'iRacing only. The dashboard has 22 cars in four classes (NASCAR Next Gen, GT3, GT4 and Cup) on 37 tracks: 21 road courses and 16 ovals. The settings follow the iRacing garage of each class and are counted from the baseline setup. The assistant rules cover the NASCAR Next Gen on ovals for now.' },
-      { q: 'Is this an AI chatbot?', a: 'No. The assistant looks for a rule whose condition matches your complaint, and only rules that passed a review are used. No language model writes the advice, and if no rule fits, it tells you so.' },
+      { q: 'Is this an AI chatbot?', a: 'Yes, within limits. A language model understands your complaint and picks a change from a table built from the official iRacing manuals, with a quote for each change. It cannot suggest an adjustment the garage does not have or one that goes the wrong way. If the model is unavailable, the advice comes from the same table.' },
       { q: 'Will it edit my .sto setup file?', a: 'Not yet. You get the change to make in the garage: which adjustment, which way and by how much.' },
-      { q: 'Where are my account and setups stored?', a: 'For now, in your browser: the account in a cookie and setups in local storage. Clearing site data removes them. Server accounts will arrive with the backend.' },
+      { q: 'Where are my account and setups stored?', a: 'On our server: your account (the password only as a hash) and your saved setups. The draft of the current setup is also kept in your browser so nothing gets lost.' },
       { q: 'How much does it cost?', a: 'Nothing while we are testing it.' },
       { q: 'Who is building it?', a: 'A student team of six, sim racers, developers and analysts, as a university product project. The code is open on GitHub.' },
     ],

@@ -26,11 +26,12 @@ const ru = {
     nameRequired: 'Впишите имя или ник.',
     emailInvalid: 'Впишите почту в виде name@example.com.',
     passwordShort: 'Пароль — не меньше 8 знаков.',
-    exists: 'Аккаунт с этой почтой уже есть в этом браузере. Войдите в него.',
-    not_found: 'В этом браузере нет аккаунта с такой почтой. Создайте его или проверьте адрес.',
+    exists: 'Аккаунт с этой почтой уже есть. Войдите в него.',
+    not_found: 'Аккаунта с такой почтой нет. Создайте его или проверьте адрес.',
     wrong_password: 'Пароль не подходит. Попробуйте ещё раз.',
-    storage: 'Браузер не сохранил куку. Разрешите куки для этого сайта и попробуйте снова.',
-    crypto: 'Браузер не может безопасно обработать пароль на этой странице. Откройте сайт по https.',
+    invalid: 'Сервер не принял данные. Проверьте имя, почту и пароль.',
+    rate: 'Слишком много попыток. Подождите несколько минут.',
+    network: 'Сервер не отвечает. Проверьте интернет и попробуйте ещё раз.',
   },
 }
 
@@ -60,11 +61,12 @@ const en: typeof ru = {
     nameRequired: 'Enter a name or nickname.',
     emailInvalid: 'Enter an email like name@example.com.',
     passwordShort: 'The password needs at least 8 characters.',
-    exists: 'This browser already has an account with this email. Log in instead.',
-    not_found: 'This browser has no account with this email. Create one or check the address.',
+    exists: 'An account with this email already exists. Log in instead.',
+    not_found: 'There is no account with this email. Create one or check the address.',
     wrong_password: 'Wrong password. Try again.',
-    storage: 'The browser did not save the cookie. Allow cookies for this site and try again.',
-    crypto: 'The browser cannot handle the password securely on this page. Open the site over https.',
+    invalid: 'The server did not accept the details. Check the name, email and password.',
+    rate: 'Too many attempts. Wait a few minutes.',
+    network: 'The server is not responding. Check your connection and try again.',
   },
 }
 

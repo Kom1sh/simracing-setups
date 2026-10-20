@@ -7,7 +7,7 @@ import './site-sections-2.css'
 
 /** Шапка для вошедших: вместо «Войти» и «Создать аккаунт» — «Открыть кабинет» */
 function applySession() {
-  const signedIn = document.cookie.split('; ').some((c) => c.startsWith('srs_session='))
+  const signedIn = document.cookie.split('; ').some((c) => c.startsWith('srs_in='))
   if (!signedIn) return
   document.querySelectorAll<HTMLElement>('[data-guest]').forEach((el) => (el.hidden = true))
   document.querySelectorAll<HTMLElement>('[data-user]').forEach((el) => (el.hidden = false))
