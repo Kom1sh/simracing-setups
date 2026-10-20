@@ -2,10 +2,12 @@ import type { assistantRu } from './assistant.ru'
 
 
 export const assistantEn: typeof assistantRu = {
-  intro: 'Tell us which car and track you drive and what the car does. The assistant finds a checked rule and tells you which adjustment to change.',
+  intro: 'Tell us what the car does. The assistant finds a checked rule for your car and track and tells you which adjustment to change.',
   car: 'Car',
   track: 'Track',
-  scope: 'For now the assistant knows one car on iRacing ovals; the list will grow.',
+  contextLabel: 'Car and track',
+  scope: 'Chosen at the top of the dashboard. For now the assistant has rules for the NASCAR Next Gen on ovals; the list will grow.',
+  scopeOther: 'For now the assistant only has rules for the NASCAR Next Gen on ovals, so for this pair the answer will most likely be “no matching rule”. You can change the car and track at the top of the dashboard.',
   symptomLabel: 'What is the car doing?',
   symptomRequired: 'Choose what the car is doing.',
   symptoms: {

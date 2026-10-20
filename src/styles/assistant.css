@@ -391,22 +391,26 @@
 }
 
 /* ALE-03: машина и трасса, номер запроса */
-/* Машина и трасса друг под другом: названия длинные («Daytona International Speedway») и в две колонки обрезаются */
-.ask__pair {
+/* Машина и трасса — из шапки кабинета, здесь только для сверки */
+.ask__context {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 12px;
+  gap: 6px;
+  padding: 12px 14px;
+  border-left: 3px solid var(--ink);
+  background: var(--surface);
 }
 
-.ask__select {
-  width: 100%;
-  min-width: 0;
-  padding-right: 32px;
-  text-overflow: ellipsis;
+.ask__context .ask__legend {
+  margin: 0;
 }
 
-.ask__note + .ask__field {
-  margin-top: calc(var(--s-sm) * -1);
+.ask__context-value {
+  color: var(--body);
+  font-size: 15px;
+}
+
+.ask__note--warn {
+  color: var(--body);
 }
 
 .answer__meta {

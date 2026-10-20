@@ -461,6 +461,9 @@
 
 .facts--car dd {
   font-size: 20px;
+  /* «Без ABS и антипробуксовки» в узкой колонке на телефоне — переносим по слогам */
+  hyphens: auto;
+  overflow-wrap: break-word;
 }
 
 .car-card {

@@ -29,26 +29,57 @@ await page.goto(BASE)
 await page.evaluate(() => localStorage.clear())
 await page.reload()
 
-await step('по умолчанию GT3 и первая машина', async () => {
-  expect((await page.getByRole('radio', { name: 'GT3' }).getAttribute('aria-checked')) === 'true', 'GT3 не выбрана')
-  expect(await page.getByRole('button', { name: /^Машина/ }).first().textContent().then((t) => t.includes('Ferrari 296 GT3')), 'не Ferrari 296 GT3')
+await step('по умолчанию NASCAR Next Gen в Дайтоне', async () => {
+  expect((await page.getByRole('radio', { name: 'NASCAR' }).getAttribute('aria-checked')) === 'true', 'NASCAR не выбран')
+  const car = await page.getByRole('button', { name: /^Машина/ }).first().textContent()
+  expect(car.includes('Camaro ZL1 (Next Gen)'), `машина ${car}`)
+  const track = await page.getByRole('button', { name: /^Трасса/ }).first().textContent()
+  expect(track.includes('Дайтона'), `трасса ${track}`)
 })
 
-await step('кубковый Porsche без ABS и антипробуксовки', async () => {
-  await page.getByRole('radio', { name: 'Кубковые' }).click()
-  const trigger = await page.getByRole('button', { name: /^Машина/ }).first().textContent()
-  expect(trigger.includes('911 GT3 Cup'), `выбрана ${trigger}`)
+await step('гараж NASCAR: cross weight есть, ABS, крыла и дождевых шин нет', async () => {
   await page.getByRole('tab', { name: /Машина/ }).click()
+  expect((await page.getByRole('group', { name: 'Cross weight' }).count()) === 1, 'нет cross weight')
   expect((await page.getByRole('group', { name: 'ABS' }).count()) === 0, 'строка ABS видна')
-  expect((await page.getByRole('group', { name: 'Антипробуксовка' }).count()) === 0, 'строка антипробуксовки видна')
-  expect((await page.getByRole('group', { name: 'Карта двигателя' }).count()) === 1, 'нет карты двигателя')
-  expect(await page.getByText('шаблон регулировок GT3').first().isVisible(), 'нет пометки о шаблоне GT3')
+  expect((await page.getByRole('group', { name: 'Заднее крыло' }).count()) === 0, 'крыло видно')
+  expect((await page.getByRole('group', { name: 'Шины' }).count()) === 0, 'выбор шин виден')
 })
 
-await step('возврат в GT3 возвращает прежнюю машину', async () => {
+await step('у NASCAR в выборе трассы есть овалы', async () => {
+  await page.evaluate(() => window.scrollTo(0, 0))
+  await page.getByRole('button', { name: /^Трасса/ }).first().click()
+  await page.keyboard.type('талладега')
+  expect((await page.getByRole('option').count()) >= 1, 'Талладеги нет')
+  await page.keyboard.press('Escape')
+})
+
+await step('GT3 уходит на дорожную трассу со своим гаражом', async () => {
   await page.getByRole('radio', { name: 'GT3' }).click()
-  const trigger = await page.getByRole('button', { name: /^Машина/ }).first().textContent()
-  expect(trigger.includes('Ferrari 296 GT3'), `выбрана ${trigger}`)
+  const track = await page.getByRole('button', { name: /^Трасса/ }).first().textContent()
+  expect(track.includes('Спа'), `трасса ${track}`)
+  expect(await page.getByText('свой гараж').first().isVisible(), 'нет сообщения о смене гаража')
+  await page.getByRole('tab', { name: /Машина/ }).click()
+  expect((await page.getByRole('group', { name: 'ABS' }).count()) === 1, 'нет ABS')
+  expect((await page.getByRole('group', { name: 'Заднее крыло' }).count()) === 1, 'нет крыла')
+  expect((await page.getByRole('group', { name: 'Cross weight' }).count()) === 0, 'cross weight у GT3')
+})
+
+await step('у GT3 овалов в выборе нет', async () => {
+  await page.evaluate(() => window.scrollTo(0, 0))
+  await page.getByRole('button', { name: /^Трасса/ }).first().click()
+  await page.keyboard.type('дайтона')
+  expect(await page.getByText('Трассы «дайтона» в списке нет').isVisible(), 'Дайтона нашлась у GT3')
+  await page.keyboard.press('Escape')
+})
+
+await step('возврат в NASCAR возвращает Дайтону и прежнюю машину, снова GT3 — Спа', async () => {
+  await page.getByRole('radio', { name: 'NASCAR' }).click()
+  let track = await page.getByRole('button', { name: /^Трасса/ }).first().textContent()
+  const car = await page.getByRole('button', { name: /^Машина/ }).first().textContent()
+  expect(track.includes('Дайтона') && car.includes('Camaro'), `${track} / ${car}`)
+  await page.getByRole('radio', { name: 'GT3' }).click()
+  track = await page.getByRole('button', { name: /^Трасса/ }).first().textContent()
+  expect(track.includes('Спа'), `трасса ${track}`)
 })
 
 await step('поиск трассы по стране и выбор с клавиатуры', async () => {
@@ -81,30 +112,37 @@ await step('Монца подставляет низкий прижим', async 
 })
 
 await step('слики под дождём дают замечание', async () => {
-  const rain = page.getByRole('slider', { name: 'Дождь' })
+  const rain = page.getByRole('slider', { name: 'Шанс дождя' })
   await rain.focus()
   for (let i = 0; i < 10; i++) await page.keyboard.press('ArrowRight')
   expect(await page.getByText('На трассе вода, а стоят слики').isVisible(), 'нет замечания')
 })
 
-await step('симметрия: без неё правое колесо не меняется', async () => {
+await step('симметрия: без неё правое колесо не меняется, значения — от базы', async () => {
   await page.getByRole('tab', { name: /Машина/ }).click()
-  const group = page.getByRole('group', { name: 'Давление в шинах' })
+  const group = page.getByRole('group', { name: 'Холодное давление' })
   await group.getByRole('switch', { name: 'Слева и справа одинаково' }).uncheck()
-  await group.getByRole('button', { name: 'Давление в шинах, передняя левая: больше' }).click()
-  const left = await group.getByRole('textbox', { name: 'Давление в шинах, передняя левая' }).inputValue()
-  const right = await group.getByRole('textbox', { name: 'Давление в шинах, передняя правая' }).inputValue()
-  expect(left === '26,1' && right === '26,0', `ПЛ ${left}, ПП ${right}`)
+  await group.getByRole('button', { name: 'Холодное давление, передняя левая: больше' }).click()
+  const left = await group.getByRole('textbox', { name: 'Холодное давление, передняя левая' }).inputValue()
+  const right = await group.getByRole('textbox', { name: 'Холодное давление, передняя правая' }).inputValue()
+  expect(left === '+0,1' && right === '0,0', `ПЛ ${left}, ПП ${right}`)
 })
 
 await step('ввод числа руками с запятой и зажимом в диапазон', async () => {
   const field = page.getByRole('textbox', { name: 'Баланс тормозов' })
   await field.fill('99')
   await field.press('Enter')
-  expect((await field.inputValue()) === '70,0', `значение ${await field.inputValue()}`)
-  await field.fill('56,3')
+  expect((await field.inputValue()) === '+4,0', `значение ${await field.inputValue()}`)
+  await field.fill('-1,5')
   await field.press('Tab')
-  expect((await field.inputValue()) === '56,3', `значение ${await field.inputValue()}`)
+  expect((await field.inputValue()) === '−1,5', `значение ${await field.inputValue()}`)
+})
+
+await step('ассистент берёт машину и трассу из шапки и предупреждает, что правил нет', async () => {
+  await page.getByRole('tab', { name: 'Ассистент' }).click()
+  expect(await page.locator('.ask__context').getByText('Монца').isVisible(), 'нет трассы из шапки')
+  expect(await page.getByText('Правила ассистента пока написаны только для NASCAR Next Gen').isVisible(), 'нет предупреждения')
+  await page.getByRole('tab', { name: /Машина/ }).click()
 })
 
 await step('сохранение переживает перезагрузку', async () => {
@@ -116,19 +154,19 @@ await step('сохранение переживает перезагрузку',
   expect((await page.locator('.saved__item').count()) === 1, 'в списке не один сетап')
   await page.getByRole('button', { name: 'Закрыть' }).click()
   await page.getByRole('tab', { name: /Машина/ }).click()
-  expect((await page.getByRole('textbox', { name: 'Баланс тормозов' }).inputValue()) === '56,3', 'баланс тормозов не сохранился')
+  expect((await page.getByRole('textbox', { name: 'Баланс тормозов' }).inputValue()) === '−1,5', 'баланс тормозов не сохранился')
 })
 
 await step('файл: скачать и загрузить обратно', async () => {
   const [download] = await Promise.all([page.waitForEvent('download'), page.getByRole('button', { name: 'Скачать файл' }).click()])
   const path = await download.path()
   const data = JSON.parse(readFileSync(path, 'utf8'))
-  expect(data.format === 'simracing-setups/v1' && data.track.id && data.setup.brakeBias === 56.3, 'содержимое файла не то')
+  expect(data.format === 'simracing-setups/v1' && data.track.id === 'monza' && data.setup.brakeBias === -1.5, 'содержимое файла не то')
   await page.getByRole('button', { name: 'Вернуть всё к базе' }).click()
   await page.locator('input[type=file]').setInputFiles(path)
   await page.waitForTimeout(200)
   const field = page.getByRole('textbox', { name: 'Баланс тормозов' })
-  expect((await field.inputValue()) === '56,3', `после загрузки ${await field.inputValue()}`)
+  expect((await field.inputValue()) === '−1,5', `после загрузки ${await field.inputValue()}`)
 })
 
 await step('битый файл даёт понятную ошибку', async () => {

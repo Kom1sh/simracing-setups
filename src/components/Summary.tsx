@@ -3,7 +3,7 @@ import type { Check } from '../lib/checks'
 import type { FuelPlan } from '../lib/fuel'
 import type { Change } from '../lib/params'
 import { slotName } from '../lib/params'
-import { formatDuration, formatNumber } from '../lib/format'
+import { formatDuration, formatNumber, formatSigned } from '../lib/format'
 import { w } from '../i18n/dashboard'
 
 interface Props {
@@ -93,7 +93,13 @@ export function Summary(props: Props) {
                         {c.index !== undefined && <span className="changes__slot">{slotName(c.param, c.index)}</span>}
                       </span>
                       <span className="changes__values">
-                        <s>{label(c.from)}</s> {label(c.to)}
+                        {c.param.relative ? (
+                          `${formatSigned(c.to as number, decimals)}${c.param.unit ? ` ${c.param.unit}` : ''}`
+                        ) : (
+                          <>
+                            <s>{label(c.from)}</s> {label(c.to)}
+                          </>
+                        )}
                       </span>
                     </button>
                   </li>

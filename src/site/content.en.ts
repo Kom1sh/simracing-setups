@@ -114,16 +114,16 @@ export const en: LandingContent = {
   },
   preview: {
     title: 'The dashboard behind it',
-    text: 'Track and weather, every GT3 adjustment grouped like the garage, a race fuel plan and a check for contradictions such as slicks in the rain. The assistant has its own tab next to it.',
-    points: ['28 circuits with real track maps', 'GT3, GT4, GT2 and cup cars', 'Fuel plan for races up to 24 hours', 'Setups saved to your account and as files'],
-    alt: 'The setup dashboard: Spa-Francorchamps track map, car choice and the tyre adjustments',
+    text: 'Track and weather, the iRacing garage of your class (NASCAR Next Gen, GT3, GT4 or Cup) with changes counted from the baseline setup, a race fuel plan and a check for contradictions such as slicks in the rain. The assistant sits in the next tab and knows what you drive.',
+    points: ['37 iRacing tracks with maps: 21 road courses and 16 ovals', '22 iRacing cars: NASCAR Next Gen, GT3, GT4 and Cup', 'Fuel plan for races up to 24 hours', 'Setups saved to your account and as files'],
+    alt: 'The setup dashboard: the Daytona oval, the NASCAR Next Gen and its garage settings',
     cta: 'Open the dashboard',
   },
   faq: {
     title: 'Common questions',
     items: [
       { q: 'What is understeer, and what is oversteer?', a: 'Understeer is when the front tyres lose grip first and the car runs wide of the line you steer. Oversteer is when the rear tyres lose grip first and the back of the car slides out. Where in the corner it happens, on entry, mid-corner or on exit, points to different setup changes.' },
-      { q: 'Which sims and cars does it support?', a: 'The dashboard covers GT3, GT4, GT2 and cup cars on 28 circuits with a general GT3 adjustment template, so there are no separate LMU or ACC setups yet. The first assistant rules cover one car on iRacing ovals.' },
+      { q: 'Which sims and cars does it support?', a: 'iRacing only. The dashboard has 22 cars in four classes (NASCAR Next Gen, GT3, GT4 and Cup) on 37 tracks: 21 road courses and 16 ovals. The settings follow the iRacing garage of each class and are counted from the baseline setup. The assistant rules cover the NASCAR Next Gen on ovals for now.' },
       { q: 'Is this an AI chatbot?', a: 'No. The assistant looks for a rule whose condition matches your complaint, and only rules that passed a review are used. No language model writes the advice, and if no rule fits, it tells you so.' },
       { q: 'Will it edit my .sto setup file?', a: 'Not yet. You get the change to make in the garage: which adjustment, which way and by how much.' },
       { q: 'Where are my account and setups stored?', a: 'For now, in your browser: the account in a cookie and setups in local storage. Clearing site data removes them. Server accounts will arrive with the backend.' },

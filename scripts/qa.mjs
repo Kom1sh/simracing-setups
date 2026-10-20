@@ -122,9 +122,9 @@ for (const vp of viewports) {
   await check('car-tab')
 
   // Меняем значения, чтобы проверить отметки изменений и сводку
-  const pressure = page.getByRole('button', { name: 'Давление в шинах, передняя левая: больше' })
+  const pressure = page.getByRole('button', { name: 'Холодное давление, передняя левая: больше' })
   for (let i = 0; i < 5; i++) await pressure.click()
-  await page.getByRole('button', { name: 'Антикрыло: больше' }).click()
+  await page.getByRole('button', { name: 'Cross weight: больше' }).click()
   await page.getByPlaceholder('1:58,400').fill('2:18,500')
   await page.getByPlaceholder('3,2').fill('3,4')
   await page.waitForTimeout(150)

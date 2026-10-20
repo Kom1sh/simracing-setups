@@ -21,7 +21,13 @@
       "https://en.wikipedia.org/wiki/List_of_Formula_One_circuits",
       "https://fr.wikipedia.org/wiki/Autodromo_nazionale_di_Monza"
     ],
-    "notes": ""
+    "notes": "",
+    "kind": "road",
+    "rain": true,
+    "iracing": {
+      "name": "Autodromo Nazionale Monza",
+      "url": "https://www.iracing.com/tracks/autodromo-nazionale-monza/"
+    }
   },
   {
     "id": "spa",
@@ -45,7 +51,13 @@
       "https://en.wikipedia.org/wiki/List_of_Formula_One_circuits",
       "https://fr.wikipedia.org/wiki/Circuit_de_Spa-Francorchamps"
     ],
-    "notes": "Число поворотов по инфобоксу Wikipedia (19); в списке трасс Ф1 указано 20."
+    "notes": "Число поворотов по инфобоксу Wikipedia (19); в списке трасс Ф1 указано 20.",
+    "kind": "road",
+    "rain": true,
+    "iracing": {
+      "name": "Circuit de Spa-Francorchamps",
+      "url": "https://www.iracing.com/tracks/circuit-de-spa-francorchamps/"
+    }
   },
   {
     "id": "silverstone",
@@ -69,7 +81,13 @@
       "https://en.wikipedia.org/wiki/List_of_Formula_One_circuits",
       "https://fr.wikipedia.org/wiki/Circuit_de_Silverstone"
     ],
-    "notes": ""
+    "notes": "",
+    "kind": "road",
+    "rain": true,
+    "iracing": {
+      "name": "Silverstone Circuit",
+      "url": "https://www.iracing.com/tracks/silverstone-circuit/"
+    }
   },
   {
     "id": "nurburgring",
@@ -93,7 +111,13 @@
       "https://en.wikipedia.org/wiki/List_of_Formula_One_circuits",
       "https://fr.wikipedia.org/wiki/N%C3%BCrburgring"
     ],
-    "notes": "Только GP-Strecke, без Нордшляйфе."
+    "notes": "Только GP-Strecke, без Нордшляйфе.",
+    "kind": "road",
+    "rain": true,
+    "iracing": {
+      "name": "Nurburgring Grand-Prix-Strecke",
+      "url": "https://www.iracing.com/tracks/nurburgring-grand-prix-strecke/"
+    }
   },
   {
     "id": "hungaroring",
@@ -117,7 +141,13 @@
       "https://en.wikipedia.org/wiki/List_of_Formula_One_circuits",
       "https://fr.wikipedia.org/wiki/Hungaroring"
     ],
-    "notes": ""
+    "notes": "",
+    "kind": "road",
+    "rain": true,
+    "iracing": {
+      "name": "Hungaroring",
+      "url": "https://www.iracing.com/tracks/hungaroring/"
+    }
   },
   {
     "id": "zandvoort",
@@ -141,7 +171,13 @@
       "https://en.wikipedia.org/wiki/List_of_Formula_One_circuits",
       "https://fr.wikipedia.org/wiki/Circuit_de_Zandvoort"
     ],
-    "notes": ""
+    "notes": "",
+    "kind": "road",
+    "rain": true,
+    "iracing": {
+      "name": "Circuit Park Zandvoort",
+      "url": "https://www.iracing.com/tracks/circuit-park-zandvoort/"
+    }
   },
   {
     "id": "barcelona",
@@ -166,31 +202,13 @@
       "https://fr.wikipedia.org/wiki/Circuit_de_Barcelone-Catalogne",
       "https://github.com/bacinger/f1-circuits/commits/master/circuits/es-1991.geojson"
     ],
-    "notes": "Геометрия — конфигурация без шиканы перед последним поворотом (Ф1 с 2023 г.); сверено наложением на OSM. Поле length в bacinger (4655 м) осталось от версии с шиканой 2007–2020."
-  },
-  {
-    "id": "paul-ricard",
-    "name": "Поль Рикар",
-    "nameOriginal": "Circuit Paul Ricard",
-    "country": "Франция",
-    "layout": "Гран-при 1C-V2 (с шиканой на прямой Mistral)",
-    "lengthKm": 5.842,
-    "turns": 15,
-    "direction": "cw",
-    "altitudeM": 408,
-    "viewBox": "0 0 1000 654",
-    "path": "M522.5 367.5L360 243.8L349.1 241.8L343.6 241.8L335.5 243.8L322 258.5L312.3 263.4L301.6 263.7L294.6 260.8L260.9 241.3L242.8 222.6L214.9 201L194.2 187L178.3 178.6L146.3 165.1L104.6 140.9L98.2 135.3L96.2 129.5L98.6 111.6L97.7 105.5L94.3 98.5L87.9 92.4L83 90.4L71.5 89.7L45.8 93.1L40.9 90.4L40 85.9L41.1 82L52.4 49.4L61.1 41.9L69.6 39.8L79.4 41.9L91.8 48.2L108.2 63.1L119.9 81.3L132 108.6L135.7 113.6L142.7 118.1L572.6 279L580 279L600.9 260.6L604.3 259L611.7 259.7L619 265L633.4 285.8L684.8 320.5L878.6 393.6L926.6 413.2L937.4 421.3L947.4 432.3L953.8 442.8L959.1 460.7L960 570.2L957.9 584.4L953 594.2L946.4 602.1L938.3 607.9L926.8 612.5L914.6 614.2L902.1 611.6L889.1 604L880.8 595.6L877.2 588.1L876.5 583.9L878.4 575.3L888 555.7L901.4 535.7L924.4 505.2L929.1 494.7L930.4 482.1L928.3 472.1L924.2 465.1L915.9 459.1L911.2 458.1L902.3 459.8L884 470L854.6 479.6L844.6 481L820 480L799 474.7L778.7 464.4L769.2 457.2L747.9 436L742.5 432.7L735.7 430.4L721.7 430.4L709.3 435.6L704.2 440L698.2 447.9L696.1 457.2L694.6 488.6L690.6 492.1L687.4 492.4L683.9 491.2Z",
-    "geometrySource": {
-      "name": "bacinger/f1-circuits",
-      "url": "https://github.com/bacinger/f1-circuits",
-      "license": "MIT"
-    },
-    "factSources": [
-      "https://en.wikipedia.org/wiki/Circuit_Paul_Ricard",
-      "https://en.wikipedia.org/wiki/List_of_Formula_One_circuits",
-      "https://fr.wikipedia.org/wiki/Circuit_Paul-Ricard"
-    ],
-    "notes": "У трассы много конфигураций; геометрия — вариант 1C-V2, который использовала Ф1. Другие серии могут ездить по иной конфигурации."
+    "notes": "Геометрия — конфигурация без шиканы перед последним поворотом (Ф1 с 2023 г.); сверено наложением на OSM. Поле length в bacinger (4655 м) осталось от версии с шиканой 2007–2020.",
+    "kind": "road",
+    "rain": true,
+    "iracing": {
+      "name": "Circuit de Barcelona-Catalunya",
+      "url": "https://www.iracing.com/tracks/circuit-de-barcelona-catalunya/"
+    }
   },
   {
     "id": "imola",
@@ -214,7 +232,13 @@
       "https://en.wikipedia.org/wiki/List_of_Formula_One_circuits",
       "https://fr.wikipedia.org/wiki/Autodromo_Enzo_e_Dino_Ferrari"
     ],
-    "notes": ""
+    "notes": "",
+    "kind": "road",
+    "rain": true,
+    "iracing": {
+      "name": "Autodromo Internazionale Enzo e Dino Ferrari",
+      "url": "https://www.iracing.com/tracks/autodromo-enzo-e-dino-ferrari/"
+    }
   },
   {
     "id": "suzuka",
@@ -237,7 +261,13 @@
       "https://en.wikipedia.org/wiki/Suzuka_Circuit",
       "https://en.wikipedia.org/wiki/List_of_Formula_One_circuits"
     ],
-    "notes": "Трасса-«восьмёрка»: прямая проходит по путепроводу над другим участком, на рисунке линии пересекаются."
+    "notes": "Трасса-«восьмёрка»: прямая проходит по путепроводу над другим участком, на рисунке линии пересекаются.",
+    "kind": "road",
+    "rain": true,
+    "iracing": {
+      "name": "Suzuka International Racing Course",
+      "url": "https://www.iracing.com/tracks/suzuka-international-racing-course/"
+    }
   },
   {
     "id": "cota",
@@ -261,7 +291,13 @@
       "https://en.wikipedia.org/wiki/List_of_Formula_One_circuits",
       "https://fr.wikipedia.org/wiki/Circuit_des_Am%C3%A9riques"
     ],
-    "notes": "В bacinger длина 5514 м; взята длина из Wikipedia — 5.513 км."
+    "notes": "В bacinger длина 5514 м; взята длина из Wikipedia — 5.513 км.",
+    "kind": "road",
+    "rain": true,
+    "iracing": {
+      "name": "Circuit of the Americas",
+      "url": "https://www.iracing.com/tracks/circuit-of-the-americas/"
+    }
   },
   {
     "id": "red-bull-ring",
@@ -285,7 +321,13 @@
       "https://en.wikipedia.org/wiki/List_of_Formula_One_circuits",
       "https://fr.wikipedia.org/wiki/Circuit_de_Spielberg"
     ],
-    "notes": "Конфигурация та же, что в 2016–2024 гг.; с 2025 г. официальная длина — 4.326 км (раньше 4.318, это значение стоит в bacinger и в списке трасс Ф1)."
+    "notes": "Конфигурация та же, что в 2016–2024 гг.; с 2025 г. официальная длина — 4.326 км (раньше 4.318, это значение стоит в bacinger и в списке трасс Ф1).",
+    "kind": "road",
+    "rain": true,
+    "iracing": {
+      "name": "Red Bull Ring – Spielberg",
+      "url": "https://www.iracing.com/tracks/red-bull-ring-spielberg/"
+    }
   },
   {
     "id": "portimao",
@@ -309,55 +351,13 @@
       "https://en.wikipedia.org/wiki/List_of_Formula_One_circuits",
       "https://fr.wikipedia.org/wiki/Aut%C3%B3dromo_Internacional_do_Algarve"
     ],
-    "notes": ""
-  },
-  {
-    "id": "sepang",
-    "name": "Сепанг",
-    "nameOriginal": "Sepang International Circuit",
-    "country": "Малайзия",
-    "layout": "Гран-при",
-    "lengthKm": 5.543,
-    "turns": 15,
-    "direction": "cw",
-    "altitudeM": 39,
-    "viewBox": "0 0 1000 834",
-    "path": "M309.4 447.8L71.7 467.3L60.8 466.5L50.9 461.5L44.1 454.4L40.4 444.7L40 433.7L44 422.3L53.2 413.7L65.7 409.7L80.3 412.6L107.5 422.3L116.5 420.8L124.2 413.2L126.6 404L124.2 391.8L116.1 379.4L97.6 356.8L89.8 342.9L84.6 326.6L82.2 310.1L82.2 291.4L86.7 245.4L93.9 223.8L105.2 201.7L116.7 187.5L134.3 171.6L152.8 159.4L281 116.7L362.5 84.6L464.2 40.1L473.3 40.5L481.2 45.4L484 55.3L499.1 139.8L508.4 183.4L521.4 236.2L530.9 256.6L541.6 271.1L559.9 285.7L578 295.4L596.1 299.9L613.8 300.7L633.9 297.6L654.5 289.6L669.2 279.1L697.7 248.5L711.7 240.1L733.7 232.5L752.5 231.9L770.9 234.3L785.9 240.5L799.3 251.2L959.1 433.5L960 442.4L929.1 513.6L920.9 519.4L911.2 521.6L765.3 530.1L628.3 546.2L553.2 558.5L546.1 564.3L543.8 573.9L550.1 584.7L603.6 614.3L615.4 626.1L623.5 643.6L627.7 661.7L627.1 687.6L618.7 730.7L605.9 757.8L586.8 785.6L576.3 792.2L566.3 793.9L554.9 791.8L545.9 785.9L378.5 647.9L366.8 643.6L351.7 642.7L335.2 646.8L274.2 678.1L257.9 683.2L238.6 685.9L221.6 685.7L189.9 680L168.3 671.1L154.3 660L135.5 635.3L128.9 616.8L128 605.5L135.8 592.8L152.6 585.8L816.5 463.7L826 455.3L832.9 439.3L829.4 425.9L817.4 413.4L797.5 410.3Z",
-    "geometrySource": {
-      "name": "bacinger/f1-circuits",
-      "url": "https://github.com/bacinger/f1-circuits",
-      "license": "MIT"
-    },
-    "factSources": [
-      "https://en.wikipedia.org/wiki/Sepang_International_Circuit",
-      "https://en.wikipedia.org/wiki/List_of_Formula_One_circuits",
-      "https://fr.wikipedia.org/wiki/Circuit_international_de_Sepang"
-    ],
-    "notes": ""
-  },
-  {
-    "id": "yas-marina",
-    "name": "Яс-Марина",
-    "nameOriginal": "Yas Marina Circuit",
-    "country": "ОАЭ",
-    "layout": "Гран-при (с 2021)",
-    "lengthKm": 5.281,
-    "turns": 16,
-    "direction": "ccw",
-    "altitudeM": 9,
-    "viewBox": "0 0 512 1000",
-    "path": "M250.6 555.4L378.6 538.1L385.4 535.8L390.4 530.5L394 523.2L394.6 516L372.2 421.3L368.7 411.8L363.9 404.8L355.9 398.1L349.2 394.8L312.9 383.5L291.9 371.2L283.8 363.6L273.1 350.4L267.6 337.2L265.6 327.2L265.5 316.2L267.7 303.3L280.8 255.1L284 229.4L284.3 211.2L264.8 57L263.5 52.2L259.7 47.2L253.1 41.8L244.6 40L235.7 42.6L232.2 46.1L227.5 54.8L219.5 78.4L211.9 112.6L109.1 418.6L98.7 450.5L87.9 490.2L65.1 563.3L40.7 635.5L40.1 640.3L43.2 645.9L73.6 643.6L77.2 647.9L91.1 700.2L98.4 718.4L105.1 731.5L119.4 752.3L135.7 771.3L156.3 788.9L263.2 873.8L299.7 898.4L317.6 908.7L412.2 953.2L429 959.9L438.5 960L448.5 958L457.6 952.7L465.7 943.4L469 936.5L471.9 923.7L471 913.5L466.1 898.9L461.8 892.5L455.7 886.6L440.3 878.1L337 869.1L320.9 866.5L315.7 864.7L266.5 833.9L258.2 825.9L254.6 816.7L243.1 763.1L243.9 758.9L246.5 756L250.5 754.9L291.4 748.8L299.3 745.2L302.5 741.8L305.8 735.7L306.5 728.2L306.7 691.1L303.7 684.7L300 680.9L286.8 677.1L271.3 675.9L177.2 689.7L160.5 689.9L145.1 686.2L136.6 677.8L98.6 609.9L96.8 602.3L96.1 587.9L97.4 582.6L100.5 578.7L104.4 576.7Z",
-    "geometrySource": {
-      "name": "bacinger/f1-circuits",
-      "url": "https://github.com/bacinger/f1-circuits",
-      "license": "MIT"
-    },
-    "factSources": [
-      "https://en.wikipedia.org/wiki/Yas_Marina_Circuit",
-      "https://en.wikipedia.org/wiki/List_of_Formula_One_circuits",
-      "https://fr.wikipedia.org/wiki/Circuit_Yas_Marina"
-    ],
-    "notes": "Конфигурация после перестройки 2021 г."
+    "notes": "",
+    "kind": "road",
+    "rain": true,
+    "iracing": {
+      "name": "Algarve International Circuit",
+      "url": "https://www.iracing.com/tracks/algarve-international-circuit/"
+    }
   },
   {
     "id": "mugello",
@@ -381,7 +381,13 @@
       "https://en.wikipedia.org/wiki/List_of_Formula_One_circuits",
       "https://fr.wikipedia.org/wiki/Circuit_du_Mugello"
     ],
-    "notes": ""
+    "notes": "",
+    "kind": "road",
+    "rain": true,
+    "iracing": {
+      "name": "Autodromo Internazionale del Mugello",
+      "url": "https://www.iracing.com/tracks/autodromo-internazionale-del-mugello/"
+    }
   },
   {
     "id": "hockenheim",
@@ -405,55 +411,13 @@
       "https://en.wikipedia.org/wiki/List_of_Formula_One_circuits",
       "https://fr.wikipedia.org/wiki/Hockenheimring"
     ],
-    "notes": "Число поворотов по инфобоксу Wikipedia (17); в списке трасс Ф1 указано 16."
-  },
-  {
-    "id": "bahrain",
-    "name": "Бахрейн",
-    "nameOriginal": "Bahrain International Circuit",
-    "country": "Бахрейн",
-    "layout": "Гран-при",
-    "lengthKm": 5.412,
-    "turns": 15,
-    "direction": "cw",
-    "altitudeM": -16,
-    "viewBox": "0 0 701 1000",
-    "path": "M60.1 476.1L67.3 217.9L74.1 48.8L77.3 41.2L84.1 40L91.3 42L96.8 46L131.7 81.3L141.2 84.9L151.6 84.1L212.3 64.5L226.8 62.8L240 63.7L638.2 140.8L651.8 144.8L659.1 152.4L660.9 162.1L659.5 171.3L655 181.7L646.4 192.2L636.5 200.6L574.8 246.8L526.8 296.2L519.1 309.4L501.9 348.4L496 356.8L477.8 367.7L463.4 369.3L419.8 362L408 362.5L395.9 364.8L385.8 370L373.7 381.3L285.2 493.3L276.7 501L264.4 502.9L256.8 497L254 484.9L254.5 466.5L275.7 339.5L289.8 244.4L284.4 219.1L278 208.3L241.8 176.9L236.8 174.5L231.3 176.1L228.2 181.7L215 279.7L205.1 462.8L196 697.8L197.8 716.2L205.1 727.1L216.4 733L232.3 736.3L248.6 735.1L268.9 731.1L289.8 721L307.4 708.6L324.7 691L335.2 673.7L354.6 623.1L365.5 601.8L375.9 589.3L389.5 578.1L405.8 568L428.5 562.4L453.3 562L471 566.1L556.7 608.2L569.4 617.4L580.3 628.3L592.4 649.6L592.4 659.6L587 670L576.1 680.5L561.2 691.7L82.3 959.6L68.7 960L62.8 954.4L42 910.2L40.1 892.5L46.5 676.5Z",
-    "geometrySource": {
-      "name": "bacinger/f1-circuits",
-      "url": "https://github.com/bacinger/f1-circuits",
-      "license": "MIT"
-    },
-    "factSources": [
-      "https://en.wikipedia.org/wiki/Bahrain_International_Circuit",
-      "https://en.wikipedia.org/wiki/List_of_Formula_One_circuits",
-      "https://fr.wikipedia.org/wiki/Circuit_international_de_Sakhir"
-    ],
-    "notes": "Высота −16 м взята из bacinger как есть, другим источником не проверялась."
-  },
-  {
-    "id": "kyalami",
-    "name": "Кьялами",
-    "nameOriginal": "Kyalami Grand Prix Circuit",
-    "country": "ЮАР",
-    "layout": "Гран-при (с 2015)",
-    "lengthKm": 4.529,
-    "turns": 16,
-    "direction": "ccw",
-    "altitudeM": 1753,
-    "viewBox": "0 0 1000 592",
-    "path": "M642.6 426.7L747.1 310.7L761.1 300.1L936.7 185.7L956.6 169.2L960 161.2L957.6 151.2L946.4 141.8L884.7 129.6L875.2 124.7L866.8 117.3L844.8 74.6L831 62.6L795.2 41.4L788 39.9L779.2 41.4L773 46.4L604.4 280.5L592.4 292.1L576.6 301.1L558.5 307.4L542.3 308.9L525.5 306.6L508.6 300.7L495.7 292.1L484.7 281.7L416.5 185.5L408.5 180.6L399.4 177.5L388.9 177.5L378.7 181.6L371.4 189L290.1 301.1L286.2 309.8L284.7 318.2L285.8 338.1L288.8 346.5L298.3 362.4L301.3 372.4L302 382.8L297.6 403.6L292.4 413.8L280.4 428.9L261.2 441.6L178.8 474.2L120.9 480.2L51.3 501.4L43.5 507.2L40 516.3L40.4 524.9L45.9 533.7L71.5 548.2L86.7 552.1L99.8 550.8L279.5 469.7L293.1 461.5L308.4 448.1L320.7 432.4L330 412.3L334.1 396.5L342.1 332.9L349.4 306.4L368.8 262.3L379.4 255.6L391.7 257L402.7 266L417.4 297.5L430.8 317.2L445 332.5L471.3 355.6L497.2 374.1L500.3 382.3L514.3 530.5L518.8 539.8L527.2 542.4L536.7 541.3L548.3 531.4Z",
-    "geometrySource": {
-      "name": "bacinger/f1-circuits",
-      "url": "https://github.com/bacinger/f1-circuits",
-      "license": "MIT"
-    },
-    "factSources": [
-      "https://en.wikipedia.org/wiki/Kyalami",
-      "https://fr.wikipedia.org/wiki/Circuit_du_Kyalami",
-      "https://motorsportguides.com/kyalami-grand-prix-circuit/"
-    ],
-    "notes": "Конфигурация после перестройки 2015 г. Направление взято из французской Wikipedia и Motorsport Guides; список трасс Ф1 описывает старые версии (1967–1985 по часовой, 1992–1993 против)."
+    "notes": "Число поворотов по инфобоксу Wikipedia (17); в списке трасс Ф1 указано 16.",
+    "kind": "road",
+    "rain": true,
+    "iracing": {
+      "name": "HockenheimRing",
+      "url": "https://www.iracing.com/tracks/hockenheimring/"
+    }
   },
   {
     "id": "watkins-glen",
@@ -478,7 +442,13 @@
       "https://en.wikipedia.org/wiki/List_of_IndyCar_Series_racetracks",
       "https://en.wikipedia.org/wiki/List_of_NASCAR_tracks"
     ],
-    "notes": "Кольцо собрано из 19 линий отношения OSM «Watkins Glen Long Course» (relation 4872324), две линии пит-лейна исключены; шикана Inner Loop и петля Boot входят, перемычка короткой трассы — нет. Длина кольца 5473 м при официальных 5.552 км. Сверено наложением на OSM и со схемой Wikipedia «Watkins Glen International Long Circuit 2024». Направление — по спискам трасс IndyCar и NASCAR в Wikipedia. Высота (altitudeM) — из bacinger/f1-circuits."
+    "notes": "Кольцо собрано из 19 линий отношения OSM «Watkins Glen Long Course» (relation 4872324), две линии пит-лейна исключены; шикана Inner Loop и петля Boot входят, перемычка короткой трассы — нет. Длина кольца 5473 м при официальных 5.552 км. Сверено наложением на OSM и со схемой Wikipedia «Watkins Glen International Long Circuit 2024». Направление — по спискам трасс IndyCar и NASCAR в Wikipedia. Высота (altitudeM) — из bacinger/f1-circuits.",
+    "kind": "road",
+    "rain": true,
+    "iracing": {
+      "name": "Watkins Glen International",
+      "url": "https://www.iracing.com/tracks/watkins-glen-international/"
+    }
   },
   {
     "id": "indianapolis",
@@ -504,31 +474,13 @@
       "https://en.wikipedia.org/wiki/2014_Grand_Prix_of_Indianapolis",
       "https://www.indycar.com/Schedule/2025/Indianapolis"
     ],
-    "notes": "Кольцо — отношение OSM «Indianapolis RC 2026» (relation 20573734) из 6 линий; от овала взяты только передняя прямая и часть виражей 1–2, пит-лейн не входит. Длина кольца 3911 м. Сверено наложением на OSM и со схемой Wikipedia «Indianapolis Motor Speedway Grand Prix Road Course 2024». Высота (altitudeM) — из bacinger/f1-circuits."
-  },
-  {
-    "id": "lusail",
-    "name": "Лусаил",
-    "nameOriginal": "Lusail International Circuit",
-    "country": "Катар",
-    "layout": "Гран-при (с 2023)",
-    "lengthKm": 5.419,
-    "turns": 16,
-    "direction": "cw",
-    "altitudeM": 5,
-    "viewBox": "0 0 859 1000",
-    "path": "M176.6 596.8L42.4 351.8L39.9 339L41.5 325.7L46.3 315.4L53.9 307.8L65.5 301L78.8 298.9L91.4 301.2L187.6 359.6L196.8 362.1L208.9 362.6L222.9 358.5L234.1 347.9L240.6 336.4L242.2 324.8L240 240.9L241.3 229.5L249.4 210.2L393.3 50.3L400.9 44.2L412.6 40.9L423.8 40L435.3 43L444.2 48.2L485 87.2L489.5 95.4L491.6 106.7L491.2 116.6L488.4 126.2L482.5 134.8L393.3 232.8L389.4 239.9L389.2 247.7L391.2 254.6L395.6 259.6L402 263.7L410.9 264.9L417.1 263.1L581 197.1L591.1 195.9L603.7 197.7L614.3 202.5L622.5 210.8L627.6 221.4L629.6 231.8L629.4 240.9L626.4 249.6L620 259.7L602.6 274.6L589.1 290.2L577.8 305.7L568.4 322.4L556.6 355.1L551.9 378.5L548.1 388.5L541.4 396.9L534.3 402.2L524.7 406.5L436.2 428.1L428.4 432.7L422.5 437.9L419.1 446.7L417.7 455.1L419.2 467.9L428.9 480.5L445.4 497.2L470.8 516.6L497.4 531.7L524.4 541.3L551.4 547L577.8 549.3L739 531.9L751.1 534.4L765.1 541.1L775.9 549.3L785.9 563L816.6 620.1L819.1 630L819.1 638.9L817.8 648.3L811.4 660.2L763.7 737.1L757.7 742.8L748.9 746.9L739.7 749.7L727.3 749.2L575.1 718.5L564.3 718.5L553.6 721.7L544.4 727.9L538 735.9L432.1 941.9L423.6 951.8L413.9 957.7L400 960L389.4 958.8L379.1 954.5L368.6 945.3Z",
-    "geometrySource": {
-      "name": "bacinger/f1-circuits",
-      "url": "https://github.com/bacinger/f1-circuits",
-      "license": "MIT"
-    },
-    "factSources": [
-      "https://en.wikipedia.org/wiki/Lusail_International_Circuit",
-      "https://en.wikipedia.org/wiki/List_of_Formula_One_circuits",
-      "https://github.com/bacinger/f1-circuits/commits/master/circuits/qa-2004.geojson"
-    ],
-    "notes": "Длина кольца (5421 м) совпадает с версией после реконфигурации 2023 г. (5.419 км). Поле length в bacinger (5380 м) — от версии 2004–2022. Во французской Wikipedia тоже ещё стоит 5.380."
+    "notes": "Кольцо — отношение OSM «Indianapolis RC 2026» (relation 20573734) из 6 линий; от овала взяты только передняя прямая и часть виражей 1–2, пит-лейн не входит. Длина кольца 3911 м. Сверено наложением на OSM и со схемой Wikipedia «Indianapolis Motor Speedway Grand Prix Road Course 2024». Высота (altitudeM) — из bacinger/f1-circuits.",
+    "kind": "road",
+    "rain": true,
+    "iracing": {
+      "name": "Indianapolis Motor Speedway",
+      "url": "https://www.iracing.com/tracks/indianapolis-motor-speedway/"
+    }
   },
   {
     "id": "brands-hatch",
@@ -551,7 +503,13 @@
       "https://en.wikipedia.org/wiki/Brands_Hatch",
       "https://fr.wikipedia.org/wiki/Circuit_de_Brands_Hatch"
     ],
-    "notes": "Кольцо собрано из 25 линий отношения OSM «Brands Hatch Grand Prix» (relation 7218462), пит-лейн исключён. Длина кольца 3895 м при официальных 3.916 км."
+    "notes": "Кольцо собрано из 25 линий отношения OSM «Brands Hatch Grand Prix» (relation 7218462), пит-лейн исключён. Длина кольца 3895 м при официальных 3.916 км.",
+    "kind": "road",
+    "rain": true,
+    "iracing": {
+      "name": "Brands Hatch Circuit",
+      "url": "https://www.iracing.com/tracks/brands-hatch/"
+    }
   },
   {
     "id": "misano",
@@ -574,7 +532,13 @@
       "https://en.wikipedia.org/wiki/Misano_World_Circuit",
       "https://fr.wikipedia.org/wiki/Misano_World_Circuit_Marco_Simoncelli"
     ],
-    "notes": "Кольцо собрано из 18 линий отношения OSM relation 8671383 без пит-лейна; длина кольца 4218 м. По часовой — с перестройки 2006 г."
+    "notes": "Кольцо собрано из 18 линий отношения OSM relation 8671383 без пит-лейна; длина кольца 4218 м. По часовой — с перестройки 2006 г.",
+    "kind": "road",
+    "rain": true,
+    "iracing": {
+      "name": "Misano World Circuit Marco Simoncelli",
+      "url": "https://www.iracing.com/tracks/misano-world-circuit-marco-simoncelli/"
+    }
   },
   {
     "id": "zolder",
@@ -597,7 +561,13 @@
       "https://en.wikipedia.org/wiki/Circuit_Zolder",
       "https://fr.wikipedia.org/wiki/Circuit_de_Zolder"
     ],
-    "notes": "Кольцо собрано из 22 линий отношения OSM relation 6006460 без пит-лейна и полосы машины безопасности; длина кольца 4001 м. Во французской Wikipedia длина 4.011 км."
+    "notes": "Кольцо собрано из 22 линий отношения OSM relation 6006460 без пит-лейна и полосы машины безопасности; длина кольца 4001 м. Во французской Wikipedia длина 4.011 км.",
+    "kind": "road",
+    "rain": true,
+    "iracing": {
+      "name": "Circuit Zolder",
+      "url": "https://www.iracing.com/tracks/circuit-zolder/"
+    }
   },
   {
     "id": "laguna-seca",
@@ -621,7 +591,13 @@
       "https://fr.wikipedia.org/wiki/Circuit_de_Laguna_Seca",
       "https://trackmanual.com/laguna-seca-raceway"
     ],
-    "notes": "Кольцо собрано из 8 линий OSM (highway=raceway) без пит-лейна; длина кольца 3601 м."
+    "notes": "Кольцо собрано из 8 линий OSM (highway=raceway) без пит-лейна; длина кольца 3601 м.",
+    "kind": "road",
+    "rain": true,
+    "iracing": {
+      "name": "WeatherTech Raceway Laguna Seca",
+      "url": "https://www.iracing.com/tracks/weathertech-raceway-laguna-seca/"
+    }
   },
   {
     "id": "bathurst",
@@ -645,30 +621,460 @@
       "https://www.aeroleagueracing.com/2024/04/02/mount-panorama-track-guide/",
       "https://fastrackexperiences.com.au/the-ultimate-guide-to-mount-panorama-bathurst/"
     ],
-    "notes": "Вне гонок это дорога общего пользования; в OSM трасса не размечена как highway=raceway. Кольцо собрано из 17 линий с ролью circuit в отношении OSM relation 6942508, пит-лейн исключён; длина кольца 6197 м."
+    "notes": "Вне гонок это дорога общего пользования; в OSM трасса не размечена как highway=raceway. Кольцо собрано из 17 линий с ролью circuit в отношении OSM relation 6942508, пит-лейн исключён; длина кольца 6197 м.",
+    "kind": "road",
+    "rain": true,
+    "iracing": {
+      "name": "Mount Panorama Circuit",
+      "url": "https://www.iracing.com/tracks/mount-panorama-circuit/"
+    }
   },
   {
-    "id": "valencia",
-    "name": "Валенсия",
-    "nameOriginal": "Circuit Ricardo Tormo",
-    "country": "Испания",
-    "layout": "Гран-при",
-    "lengthKm": 4.005,
-    "turns": 14,
+    "id": "daytona",
+    "name": "Дайтона",
+    "nameOriginal": "Daytona International Speedway",
+    "country": "США",
+    "layout": "Овал",
+    "lengthKm": 4.023,
+    "turns": 4,
     "direction": "ccw",
-    "viewBox": "0 0 906 1000",
-    "path": "M451.9 703.3L837.2 436.1L854.6 417.6L859.5 408.7L865.1 391.6L865.9 382.7L864.9 365.8L849.4 317.9L747.6 60.3L739.1 48.1L727 41.7L720.8 40L715.2 40.2L709.2 41.5L704.1 44.4L694.7 52.2L687.6 65.7L667.1 193.7L666.9 207.6L671.3 218.9L766.4 334.3L770.4 344L771.3 354.2L768.2 362.9L763.2 369.9L667 437.9L647.4 443.1L633.6 442.2L619.3 437.5L609.4 429.8L598 416.2L591.5 392.6L590 185.2L588 173.3L581.8 163.2L563.1 149.8L550.4 147.1L539.4 148.4L517.3 158.9L274.9 328.1L264.2 337.5L255.1 351.4L177.9 485.9L177.2 503.6L179.4 520.5L186.8 534.3L195.6 544.4L206.6 551.5L221.4 556.7L233.4 556.4L244.7 554.6L254.9 549L350.3 482.8L361.9 468.4L367.4 455.3L386.3 360.8L398.4 342.1L407 334.3L460.4 294.1L473.5 290.4L487.7 289.7L498.4 293.1L507 299.9L512.8 308.7L516.9 318.5L517.5 332L513.5 344.8L357.2 605.2L351.6 611.6L343.5 616.2L273.5 610.4L232.9 614.1L202.4 621.7L183.3 628.7L157.9 641.4L129.7 662.6L107 684.6L94.7 699.6L69.5 738L55.5 767.7L48.2 796.8L42.1 830.1L40.1 868.8L48.5 936.6L54 947.5L65.5 956.8L73.2 960L82.4 959.6L89.9 955.1Z",
+    "viewBox": "0 0 858 1000",
+    "path": "M96.3 499.1L84.7 548.7L51.1 679.9L44.7 712.1L42.5 730.2L40.3 752.9L40 762.9L40.2 774.1L41.3 792.9L42.3 801.2L47.1 821.5L51.4 833.9L56 845.5L61.4 855.7L69.2 868.3L77.7 880.5L85.6 890.2L95.3 900.7L105.4 910.4L116.6 919.7L127.3 927.2L138.2 933.7L153.9 941.9L163.8 946.1L176 950.3L190.5 954.5L206.6 957.7L219.7 959.4L234.1 960.0L248.2 959.5L262.3 958.0L276.1 955.4L289.5 952.0L306 946.5L322.5 939.3L336.7 931.4L346.1 925.4L355.7 918.3L365 910.4L386.4 889.7L399.7 874.5L413.4 856.6L481.6 763.7L724.5 430.1L771.8 365.9L785.1 344.3L799.5 317.8L809.5 289.8L813.1 275.8L816.7 257.0L817.5 249.9L818 228.6L817.3 215.0L815.2 200.4L812.3 188.2L806.9 169.2L802.2 158.0L796 145.5L787.5 131.0L779.2 118.4L770.7 107.5L760.6 96.5L751.5 88.5L739.4 78.8L725.7 69.4L714.3 62.6L693.4 53.0L679.6 48.4L667.8 45.2L653.2 42.3L640.1 40.7L621 40.0L607.7 40.7L588.4 43.6L568.5 48.4L545.9 56.3L526 64.8L514.3 70.8L472.4 94.3L289.9 209.0L272.6 220.3L256.8 231.5L244 239.4L222.2 257.3L204.7 274.1L193 286.5L181.1 300.5L171 313.8L160.9 328.3L156.2 335.7L152.6 343.6L140.2 365.9L133.6 379.2L127.4 395.9L116.8 429.1L106.6 462.2Z",
     "geometrySource": {
       "name": "OpenStreetMap",
-      "url": "https://www.openstreetmap.org/way/51765219",
+      "url": "https://www.openstreetmap.org/way/11371365",
       "license": "ODbL",
       "attribution": "© участники OpenStreetMap"
     },
     "factSources": [
-      "https://en.wikipedia.org/wiki/Circuit_Ricardo_Tormo",
-      "https://de.wikipedia.org/wiki/Circuit_Ricardo_Tormo",
-      "https://motorsportguides.com/circuit-ricardo-tormo-valencia/"
+      "https://www.iracing.com/tracks/daytona/",
+      "https://en.wikipedia.org/wiki/Daytona_International_Speedway"
     ],
-    "notes": "Кольцо собрано из 3 линий OSM «Circuit Ricardo Tormo» без пит-лейна, срезок, трассы Formula E и петли long lap; длина кольца 4000 м."
+    "kind": "oval",
+    "rain": false,
+    "iracing": {
+      "name": "Daytona International Speedway",
+      "url": "https://www.iracing.com/tracks/daytona/"
+    }
+  },
+  {
+    "id": "talladega",
+    "name": "Талладега",
+    "nameOriginal": "Talladega Superspeedway",
+    "country": "США",
+    "layout": "Овал",
+    "lengthKm": 4.281,
+    "turns": 4,
+    "direction": "ccw",
+    "viewBox": "0 0 613 1000",
+    "path": "M154.4 752.7L256.1 891.4L271.7 906.5L288.6 921.3L304.3 932.3L319.1 940.8L334 947.7L349.7 953.0L362.6 956.2L379.2 959.2L396 960.0L408.5 959.6L424.9 957.9L437.4 955.7L451.2 951.6L466 946.5L479 940.8L489.8 934.7L501.4 927.2L510.6 920.2L523.9 907.0L534.3 894.6L543.7 882.2L551.9 869.8L558.2 855.9L562.6 844.3L566.2 833.0L569.8 819.1L571.9 803.5L573.2 787.5L572.8 767.3L571.5 748.1L567.6 723.3L449.9 208.9L440 173.8L432.2 152.4L422.3 132.8L412.9 118.0L407.5 110.4L399.5 100.7L387.4 87.5L374.5 76.3L360.7 66.9L348.7 60.1L336.6 54.5L322 48.5L307.4 44.7L288 41.7L266.5 40.0L241.6 40.5L216.5 46.4L187.2 57.5L156.2 76.3L136 95.1L119.9 114.4L102.4 144.3L93.4 170.8L86.9 202.9L46 428.6L41.3 461.1L40 486.3L41.3 514.1L44.7 544.0L48.8 566.4L58.5 597.9L68.8 624.4L80.9 647.0L104.2 684.2Z",
+    "geometrySource": {
+      "name": "OpenStreetMap",
+      "url": "https://www.openstreetmap.org/way/8835825",
+      "license": "ODbL",
+      "attribution": "© участники OpenStreetMap"
+    },
+    "factSources": [
+      "https://www.iracing.com/tracks/talladega-superspeedway/",
+      "https://en.wikipedia.org/wiki/Talladega_Superspeedway"
+    ],
+    "kind": "oval",
+    "rain": false,
+    "iracing": {
+      "name": "Talladega Superspeedway",
+      "url": "https://www.iracing.com/tracks/talladega-superspeedway/"
+    }
+  },
+  {
+    "id": "atlanta",
+    "name": "Атланта",
+    "nameOriginal": "EchoPark Speedway (Atlanta Motor Speedway)",
+    "country": "США",
+    "layout": "Овал",
+    "lengthKm": 2.478,
+    "turns": 4,
+    "direction": "ccw",
+    "viewBox": "0 0 1000 691",
+    "path": "M202.4 482.7L247.5 502.1L271.2 511.1L567.2 615.8L610.6 629.8L653 640.5L687.3 646.9L722.5 650.6L750.5 649.9L776.3 646.5L804.8 640.1L816.8 636.3L839.9 626.3L861.6 614.4L871.3 608.4L880.7 601.2L897.2 587.1L912.7 570.4L925.7 552.1L936.5 533.2L945.7 513.3L952.2 493.7L956.5 473.1L959.4 449.8L960 426.6L958.6 408.7L955.8 390.8L952.1 374.4L941.4 347.1L935.3 334.0L927.8 321.2L909.6 294.5L873.7 253.1L838.3 223.0L746.5 149.1L732.6 140.1L716.1 131.6L651.7 108.3L488.4 51.6L463.8 44.1L446.7 41.2L428.7 40.1L406.2 40.0L254.4 44.8L233.5 46.9L216.8 50.7L201.5 54.9L173.8 65.1L148.7 77.1L121.7 95.8L109.5 105.8L98.7 116.2L81 138.0L66.6 160.7L60.7 172.4L55.4 185.1L47.2 209.3L42.7 230.8L41.2 242.1L40 263.8L41.4 285.8L42.8 297.0L47.3 318.4L54.5 340.0L59.3 350.3L70.1 371.2L77.3 382.7L85 393.9L103 415.6L124.3 435.1L136.2 444.2L161.8 461.5L174.2 468.9Z",
+    "geometrySource": {
+      "name": "OpenStreetMap",
+      "url": "https://www.openstreetmap.org/way/288848526",
+      "license": "ODbL",
+      "attribution": "© участники OpenStreetMap"
+    },
+    "factSources": [
+      "https://www.iracing.com/tracks/atlanta-motor-speedway/",
+      "https://en.wikipedia.org/wiki/Atlanta_Motor_Speedway"
+    ],
+    "kind": "oval",
+    "rain": false,
+    "iracing": {
+      "name": "EchoPark Speedway (Atlanta)",
+      "url": "https://www.iracing.com/tracks/atlanta-motor-speedway/"
+    }
+  },
+  {
+    "id": "charlotte",
+    "name": "Шарлотт",
+    "nameOriginal": "Charlotte Motor Speedway",
+    "country": "США",
+    "layout": "Овал",
+    "lengthKm": 2.414,
+    "turns": 4,
+    "direction": "ccw",
+    "viewBox": "0 0 630 1000",
+    "path": "M211.7 151.9L169.9 214.3L119.8 286.1L113.6 296.7L105.5 313.8L102.3 323.1L45.4 529.3L41.9 547.2L40 568.0L43.6 637.8L52.7 750.1L59 791.6L63.8 812.4L80.4 856.4L93.5 878.6L104.9 893.3L122 910.5L136.3 921.8L149.2 930.8L161.9 938.3L179.9 947.0L196.9 952.5L220 957.4L245.3 960.0L266.2 959.8L284.4 958.1L305.1 954.0L329.7 946.0L347.9 937.8L367.4 926.0L385.6 912.9L400 899.4L412.9 884.2L431.9 852.8L441.3 833.2L456.2 795.5L462.3 777.9L468.3 755.4L492.2 658.6L520.9 546.5L582.4 310.0L586.1 290.7L589.7 255.7L590 233.9L588.7 208.6L585.1 187.6L578.5 163.7L572 149.2L563.4 132.5L551.8 116.1L542.8 105.0L528.7 90.0L516.3 79.6L501.7 69.7L482.2 58.8L459.1 49.7L439.6 44.3L424.3 41.9L388.6 40.0L371.3 41.4L347 46.8L332.1 51.1L314.6 57.6L285.9 73.6L269.4 86.1L240.4 115.4Z",
+    "geometrySource": {
+      "name": "OpenStreetMap",
+      "url": "https://www.openstreetmap.org/way/116034341",
+      "license": "ODbL",
+      "attribution": "© участники OpenStreetMap"
+    },
+    "factSources": [
+      "https://www.iracing.com/tracks/charlotte-roval/",
+      "https://en.wikipedia.org/wiki/Charlotte_Motor_Speedway"
+    ],
+    "kind": "oval",
+    "rain": false,
+    "iracing": {
+      "name": "Charlotte Motor Speedway",
+      "url": "https://www.iracing.com/tracks/charlotte-roval/"
+    }
+  },
+  {
+    "id": "las-vegas",
+    "name": "Лас-Вегас",
+    "nameOriginal": "Las Vegas Motor Speedway",
+    "country": "США",
+    "layout": "Овал",
+    "lengthKm": 2.414,
+    "turns": 4,
+    "direction": "ccw",
+    "viewBox": "0 0 1000 930",
+    "path": "M543.4 767.3L843.4 521.1L867.7 498.5L893.3 470.2L906.6 453.2L918.9 435.5L935.3 406.2L942.1 390.9L947.8 375.1L952.5 359.0L958.6 326.1L960 309.5L959.6 276.0L957.7 259.3L950.7 226.6L939.5 195.1L932.3 179.9L915.2 151.2L905.3 137.8L894.6 125.1L870.8 101.8L857.7 91.4L829.8 73.1L799.8 58.6L784.1 52.8L751.8 44.3L735.3 41.6L718.6 40.0L685.2 40.0L652 44.3L494.3 77.4L447.8 89.5L425.1 97.1L380.7 115.4L338.2 137.6L298 163.5L260.8 192.5L227 224.0L211.1 240.9L181.8 276.6L168.3 295.4L155.2 315.8L133.1 355.0L53.6 550.1L48.7 566.3L44.9 582.7L42.2 599.4L40.5 616.2L40 633.0L40.6 649.9L42.3 666.7L45.1 683.3L49 699.7L53.9 715.9L60 731.6L67 747.0L75 761.9L84 776.2L93.9 789.9L116.1 814.9L141.3 836.9L154.9 846.6L183.9 863.4L199.1 870.3L230.8 881.2L263.7 888.0L280.4 889.8L313.9 890.1L330.6 888.7L363.6 882.6L379.7 878.0L410.9 865.7L440.2 849.6L467.2 829.8Z",
+    "geometrySource": {
+      "name": "OpenStreetMap",
+      "url": "https://www.openstreetmap.org/way/27545411",
+      "license": "ODbL",
+      "attribution": "© участники OpenStreetMap"
+    },
+    "factSources": [
+      "https://www.iracing.com/tracks/las-vegas-motor-speedway/",
+      "https://en.wikipedia.org/wiki/Las_Vegas_Motor_Speedway"
+    ],
+    "kind": "oval",
+    "rain": false,
+    "iracing": {
+      "name": "Las Vegas Motor Speedway",
+      "url": "https://www.iracing.com/tracks/las-vegas-motor-speedway/"
+    }
+  },
+  {
+    "id": "texas",
+    "name": "Техас",
+    "nameOriginal": "Texas Motor Speedway",
+    "country": "США",
+    "layout": "Овал",
+    "lengthKm": 2.414,
+    "turns": 4,
+    "direction": "ccw",
+    "viewBox": "0 0 680 1000",
+    "path": "M231.4 129.8L122.7 280.1L110.4 302.6L103.9 321.9L47.8 517.0L42.2 540.1L40.7 551.0L40 559.2L40.4 577.5L52.4 749.5L56.3 777.2L63.5 805.1L72.4 829.3L84.8 851.8L97.2 870.5L113 888.6L128.1 902.9L143.8 915.2L160.2 926.8L199.3 945.4L221.4 952.7L235.9 956.4L266.7 959.9L295.3 960.0L312.3 958.3L329.4 955.2L348 949.7L364.4 944.0L395.8 928.2L425.9 908.2L446.8 888.1L469.9 859.1L481.8 839.7L495.4 811.4L505.7 783.2L628.3 356.6L635.4 321.5L638 302.5L639.7 280.3L640 261.6L638.8 244.4L633.6 211.3L623.1 179.1L617.2 165.1L610.2 151.9L600 136.4L589.5 123.2L577.6 110.0L556.4 90.8L542.8 80.3L528.9 71.2L516.6 64.4L501.7 57.0L489 52.1L455.5 43.6L439.9 41.2L425.4 40.0L393.4 41.0L366.9 45.1L344 50.8L323.8 58.7L302.1 69.0L276.9 85.3L258.6 100.5L246.7 112.2Z",
+    "geometrySource": {
+      "name": "OpenStreetMap",
+      "url": "https://www.openstreetmap.org/way/104503520",
+      "license": "ODbL",
+      "attribution": "© участники OpenStreetMap"
+    },
+    "factSources": [
+      "https://www.iracing.com/tracks/texas-motor-speedway/",
+      "https://en.wikipedia.org/wiki/Texas_Motor_Speedway"
+    ],
+    "kind": "oval",
+    "rain": false,
+    "iracing": {
+      "name": "Texas Motor Speedway",
+      "url": "https://www.iracing.com/tracks/texas-motor-speedway/"
+    }
+  },
+  {
+    "id": "kansas",
+    "name": "Канзас",
+    "nameOriginal": "Kansas Speedway",
+    "country": "США",
+    "layout": "Овал",
+    "lengthKm": 2.414,
+    "turns": 4,
+    "direction": "ccw",
+    "viewBox": "0 0 719 1000",
+    "path": "M60.9 404.6L53.1 432.1L47.9 457.7L43.5 486.6L40.9 513.7L40 540.0L41.1 569.0L43.8 598.9L47.3 620.1L78.9 781.8L86 803.9L94.2 824.0L104.4 844.4L118.6 866.4L136.3 886.9L156.6 905.7L177.2 921.1L198 933.5L221 943.7L245.2 952.0L266.8 956.6L289.7 959.7L316.4 960.0L344.6 956.7L372.9 949.6L399.7 940.0L424.1 927.6L446.9 912.5L467.2 894.7L487 874.7L504.2 850.6L517.3 826.9L529.6 800.0L543.3 765.9L556.2 728.2L608.1 563.2L658.9 391.5L671.9 338.1L675.8 312.6L677.7 290.6L678.7 265.6L677 245.1L673.6 224.6L668.9 205.3L661.7 186.0L651.5 163.9L640.7 145.3L629 128.6L613.3 111.1L595.7 94.0L574.7 78.9L553 65.6L530.6 56.0L507.8 47.6L484.7 43.1L461.6 40.2L437.2 40.0L415.5 41.7L394.8 45.5L376 50.6L356 57.5L336.6 66.6L313 80.7L289 99.8L266.6 121.2L179.9 207.8L154.8 234.5L133 261.7L118.1 283.1L105.9 302.1L93.2 325.2L80.9 350.3L69.5 378.3Z",
+    "geometrySource": {
+      "name": "OpenStreetMap",
+      "url": "https://www.openstreetmap.org/way/37552701",
+      "license": "ODbL",
+      "attribution": "© участники OpenStreetMap"
+    },
+    "factSources": [
+      "https://www.iracing.com/tracks/kansas-speedway/",
+      "https://en.wikipedia.org/wiki/Kansas_Speedway"
+    ],
+    "kind": "oval",
+    "rain": false,
+    "iracing": {
+      "name": "Kansas Speedway",
+      "url": "https://www.iracing.com/tracks/kansas-speedway/"
+    }
+  },
+  {
+    "id": "homestead",
+    "name": "Хомстед-Майами",
+    "nameOriginal": "Homestead–Miami Speedway",
+    "country": "США",
+    "layout": "Овал",
+    "lengthKm": 2.414,
+    "turns": 4,
+    "direction": "ccw",
+    "viewBox": "0 0 1000 739",
+    "path": "M821.4 443.6L847.6 424.9L869.5 407.6L896.1 380.5L914.2 358.1L938.5 319.7L949.6 291.3L956.3 265.5L959.7 244.8L960 214.8L954.3 184.7L944.5 159.6L931.1 131.6L915.2 109.5L899.4 92.1L880.6 76.8L861.4 65.4L838.2 53.7L788.7 42.0L751 40.0L712.3 41.0L679.4 48.0L645.7 57.7L208.6 270.9L186.7 283.3L159.5 300.3L135.9 317.3L108.6 339.7L95.2 353.8L80.7 372.5L67.9 392.9L57.5 413.6L50.4 434.6L43.4 466.0L40 491.8L41.3 512.1L44 532.2L50.8 554.9L66.9 596.0L78.7 614.1L91.5 629.8L106.6 646.5L142.6 670.9L161.8 679.9L186 688.6L215 695.3L258.1 698.6L296.4 694.6L342.5 680.9L374.1 669.2L420.2 646.9Z",
+    "geometrySource": {
+      "name": "OpenStreetMap",
+      "url": "https://www.openstreetmap.org/way/108159182",
+      "license": "ODbL",
+      "attribution": "© участники OpenStreetMap"
+    },
+    "factSources": [
+      "https://www.iracing.com/tracks/homestead-miami-speedway/",
+      "https://en.wikipedia.org/wiki/Homestead%E2%80%93Miami_Speedway"
+    ],
+    "kind": "oval",
+    "rain": false,
+    "iracing": {
+      "name": "Homestead Miami Speedway",
+      "url": "https://www.iracing.com/tracks/homestead-miami-speedway/"
+    }
+  },
+  {
+    "id": "michigan",
+    "name": "Мичиган",
+    "nameOriginal": "Michigan International Speedway",
+    "country": "США",
+    "layout": "Овал",
+    "lengthKm": 3.219,
+    "turns": 4,
+    "direction": "ccw",
+    "viewBox": "0 0 604 1000",
+    "path": "M63.7 439.2L57.5 467.5L52.1 496.0L47.6 524.7L44.2 553.5L40.9 596.9L40.3 611.4L40 655.0L41.1 684.0L44.9 731.4L52.8 784.8L61.6 827.5L69.7 847.2L76.9 861.9L85.4 875.9L95 889.1L105.8 901.5L117.6 912.9L130.4 923.2L144.1 932.3L158.5 940.3L173.5 946.9L189.1 952.3L205 956.3L221.3 958.8L237.7 960.0L254.2 959.7L270.6 958.1L286.7 955.0L299.4 951.5L314.9 945.9L326.9 940.5L341.3 932.6L364.8 915.0L376 903.6L387.2 891.0L396.4 878.8L404.6 866.7L423.9 827.2L433.9 801.9L446.2 761.4L468.7 672.1L545.6 358.0L555.3 314.4L560.1 290.5L564 255.3L564 223.3L563.3 210.2L561.1 194.0L558.3 181.2L553.6 165.5L548.9 153.3L541.7 138.5L535.1 127.1L525.8 113.7L517.4 103.5L506.1 91.6L496.3 82.9L483.2 72.9L472.1 65.8L457.6 58.0L442.4 51.5L426.8 46.3L414 43.2L397.7 40.5L381.4 40.0L364.8 40.8L350.5 42.5L335.2 45.6L319.4 50.1L307.5 54.7L279.9 68.6L266.4 77.2L244 95.2L233.6 105.5L222.9 117.4L205.6 139.0L188.6 162.6L172.5 186.8L157.2 211.6L149.9 224.1L129.3 262.5L116.6 288.7L99.4 328.7L94.2 342.2L79.8 383.4L71.4 411.2Z",
+    "geometrySource": {
+      "name": "OpenStreetMap",
+      "url": "https://www.openstreetmap.org/way/205025109",
+      "license": "ODbL",
+      "attribution": "© участники OpenStreetMap"
+    },
+    "factSources": [
+      "https://www.iracing.com/tracks/michigan-international-speedway/",
+      "https://en.wikipedia.org/wiki/Michigan_International_Speedway"
+    ],
+    "kind": "oval",
+    "rain": false,
+    "iracing": {
+      "name": "Michigan International Speedway",
+      "url": "https://www.iracing.com/tracks/michigan-international-speedway/"
+    }
+  },
+  {
+    "id": "pocono",
+    "name": "Поконо",
+    "nameOriginal": "Pocono Raceway",
+    "country": "США",
+    "layout": "Овал",
+    "lengthKm": 4.023,
+    "turns": 3,
+    "direction": "ccw",
+    "viewBox": "0 0 1000 801",
+    "path": "M286.2 127.5L109.5 222.8L94.1 233.6L80.8 245.2L66.5 262.5L58.8 274.9L51.2 290.2L46.2 304.0L43.3 317.2L40.9 331.4L40 345.0L40.2 363.0L44.6 387.6L51 409.2L60.8 428.4L74.9 448.5L88.6 461.5L106.1 475.9L114.8 481.2L128.6 488.2L150.7 498.0L630.7 690.1L762.5 744.0L783.6 752.1L802.7 758.1L825.3 760.6L843.7 760.0L864.6 756.3L886.5 746.9L901 739.5L911.7 731.9L920.2 724.4L931.7 710.9L939.4 700.3L948.6 683.2L955.4 662.9L958.8 645.8L960 628.7L958.3 610.9L955.6 597.9L952.8 589.9L945.2 572.8L931.5 550.1L798.7 372.9L590.3 92.1L576.9 78.2L566.7 69.6L553.8 60.9L542.1 54.6L529.5 49.1L511.3 43.4L499.2 41.3L482.4 40.0L464.3 41.2L446.6 44.7L426.9 52.2Z",
+    "geometrySource": {
+      "name": "OpenStreetMap",
+      "url": "https://www.openstreetmap.org/way/109767460",
+      "license": "ODbL",
+      "attribution": "© участники OpenStreetMap"
+    },
+    "factSources": [
+      "https://www.iracing.com/tracks/pocono-raceway/",
+      "https://en.wikipedia.org/wiki/Pocono_Raceway"
+    ],
+    "kind": "oval",
+    "rain": false,
+    "iracing": {
+      "name": "Pocono Raceway",
+      "url": "https://www.iracing.com/tracks/pocono-raceway/"
+    }
+  },
+  {
+    "id": "darlington",
+    "name": "Дарлингтон",
+    "nameOriginal": "Darlington Raceway",
+    "country": "США",
+    "layout": "Овал",
+    "lengthKm": 2.198,
+    "turns": 4,
+    "direction": "ccw",
+    "viewBox": "0 0 1000 571",
+    "path": "M463.9 466.9L699.1 523.8L738.8 530.1L766.8 531.5L781 529.7L797.8 525.9L814.8 520.2L834.3 512.2L853.2 501.8L873.1 488.5L893.8 470.8L908 455.1L923.5 433.8L932.4 419.0L942.6 397.6L949.8 377.5L954.8 358.9L959 333.9L960 303.1L958.4 283.1L952.3 253.2L947.3 237.4L939.2 217.2L922.1 187.8L913.9 177.1L895.2 155.6L875.2 138.1L864.3 130.2L841.2 117.6L826.2 111.1L812.7 106.5L796.8 103.0L250.6 40.2L213.6 40.0L198.2 41.1L178.9 44.2L153.9 52.2L131.7 62.7L110.1 76.3L97.1 87.3L88.7 95.4L71.4 117.3L57 142.0L50 159.2L46.2 171.1L41.3 194.5L40 208.4L40.7 236.7L45.2 263.6L48.4 274.6L53.5 288.8L59.3 301.2L72.8 323.4L83.2 336.7L92.6 346.5L106 358.5L124.9 371.8L143.4 381.7L164.7 390.0L192.4 399.1L223.7 407.4Z",
+    "geometrySource": {
+      "name": "OpenStreetMap",
+      "url": "https://www.openstreetmap.org/way/104277971",
+      "license": "ODbL",
+      "attribution": "© участники OpenStreetMap"
+    },
+    "factSources": [
+      "https://www.iracing.com/tracks/darlington-raceway/",
+      "https://en.wikipedia.org/wiki/Darlington_Raceway"
+    ],
+    "kind": "oval",
+    "rain": false,
+    "iracing": {
+      "name": "Darlington Raceway",
+      "url": "https://www.iracing.com/tracks/darlington-raceway/"
+    }
+  },
+  {
+    "id": "dover",
+    "name": "Довер",
+    "nameOriginal": "Dover Motor Speedway",
+    "country": "США",
+    "layout": "Овал",
+    "lengthKm": 1.609,
+    "turns": 4,
+    "direction": "ccw",
+    "viewBox": "0 0 615 1000",
+    "path": "M141.4 834.8L149.6 851.6L163.5 873.1L183.6 895.1L210.9 916.5L243.3 936.0L274.2 948.8L305.1 955.9L333.9 960.0L365.8 960.0L402.4 954.9L435.3 944.2L465.7 928.8L492.4 910.4L515.1 887.9L534.1 864.4L549.1 840.9L560.9 815.3L569.7 788.8L573.8 758.6L574.8 725.4L569.1 681.4L530.5 462.7L491.4 229.1L486.8 208.1L474.9 173.9L459 141.2L447.6 125.6L438.4 114.6L412.1 90.1L381.8 70.2L346.3 53.8L310.7 44.6L273.2 40.0L233.5 42.0L192.4 51.7L153.2 70.2L118.2 93.1L86.8 124.8L63.7 160.1L50.3 193.8L42.6 225.0L40 260.8L43.1 304.7L79.1 511.2L115.2 727.4L125.5 782.6L132.7 809.7Z",
+    "geometrySource": {
+      "name": "OpenStreetMap",
+      "url": "https://www.openstreetmap.org/way/350676133",
+      "license": "ODbL",
+      "attribution": "© участники OpenStreetMap"
+    },
+    "factSources": [
+      "https://www.iracing.com/tracks/dover-motor-speedway/",
+      "https://en.wikipedia.org/wiki/Dover_Motor_Speedway"
+    ],
+    "kind": "oval",
+    "rain": false,
+    "iracing": {
+      "name": "Dover Motor Speedway",
+      "url": "https://www.iracing.com/tracks/dover-motor-speedway/"
+    }
+  },
+  {
+    "id": "phoenix",
+    "name": "Финикс",
+    "nameOriginal": "Phoenix Raceway",
+    "country": "США",
+    "layout": "Овал",
+    "lengthKm": 1.609,
+    "turns": 4,
+    "direction": "ccw",
+    "viewBox": "0 0 1000 701",
+    "path": "M625.1 589.8L511.7 648.8L472.2 657.9L428.7 661.2L397.9 657.7L204 600.0L166.6 584.9L136.9 568.5L107.7 546.4L81 518.4L58.8 484.2L44.7 446.0L40 410.7L40.4 372.9L47.4 334.4L62.3 306.0L90.5 271.7L120.1 247.3L164.2 228.1L693 45.2L729.4 40.0L773.8 43.4L810.4 51.8L853 74.3L894.5 106.4L920 135.1L941.6 169.7L955.3 218.7L960 266.5L956 307.5L948.7 335.2L936.6 363.7L921.6 392.5L898.7 419.9L877.7 440.4L851.6 460.3Z",
+    "geometrySource": {
+      "name": "OpenStreetMap",
+      "url": "https://www.openstreetmap.org/way/1177494773",
+      "license": "ODbL",
+      "attribution": "© участники OpenStreetMap"
+    },
+    "factSources": [
+      "https://www.iracing.com/tracks/phoenix-international-raceway/",
+      "https://en.wikipedia.org/wiki/Phoenix_Raceway"
+    ],
+    "kind": "oval",
+    "rain": false,
+    "iracing": {
+      "name": "Phoenix Raceway",
+      "url": "https://www.iracing.com/tracks/phoenix-international-raceway/"
+    }
+  },
+  {
+    "id": "richmond",
+    "name": "Ричмонд",
+    "nameOriginal": "Richmond Raceway",
+    "country": "США",
+    "layout": "Овал",
+    "lengthKm": 1.207,
+    "turns": 4,
+    "direction": "ccw",
+    "viewBox": "0 0 1000 646",
+    "path": "M940.8 156.6L924.6 128.4L910.7 111.0L894.2 93.5L868.4 72.8L843.9 59.4L810.1 47.5L793.6 43.3L766.5 40.0L744 40.6L717.8 44.6L186.2 185.5L159.8 194.7L129 213.1L105.2 232.1L84.7 251.9L62.5 286.7L49.6 319.9L42.6 352.4L40 379.3L43 411.9L48.9 439.1L60.5 471.0L85.3 512.4L128.3 551.5L150.8 564.0L189.2 578.7L252 593.5L339.7 604.7L386.7 606.0L454.5 603.7L498.8 597.1L586.8 577.1L698.6 532.4L745 510.7L832 452.6L901.1 390.2L923.9 363.9L939.8 336.0L948.7 311.0L959 260.4L960 233.8L956.7 205.2L952.4 186.5Z",
+    "geometrySource": {
+      "name": "OpenStreetMap",
+      "url": "https://www.openstreetmap.org/way/452377296",
+      "license": "ODbL",
+      "attribution": "© участники OpenStreetMap"
+    },
+    "factSources": [
+      "https://www.iracing.com/tracks/richmond-raceway/",
+      "https://en.wikipedia.org/wiki/Richmond_Raceway"
+    ],
+    "kind": "oval",
+    "rain": false,
+    "iracing": {
+      "name": "Richmond Raceway",
+      "url": "https://www.iracing.com/tracks/richmond-raceway/"
+    }
+  },
+  {
+    "id": "bristol",
+    "name": "Бристоль",
+    "nameOriginal": "Bristol Motor Speedway",
+    "country": "США",
+    "layout": "Овал",
+    "lengthKm": 0.858,
+    "turns": 4,
+    "direction": "ccw",
+    "viewBox": "0 0 814 1000",
+    "path": "M607.6 943.3L636.8 931.5L680.6 904.4L726.9 857.7L758.6 799.6L770.8 741.8L773.6 715.0L770.8 683.0L754.8 620.6L731 569.9L508.5 189.6L468.2 130.5L429.3 88.7L387.1 65.3L353.1 52.8L322 44.4L295.9 41.5L262.5 40.0L233.2 42.1L204.4 49.1L170.7 64.0L123.1 95.8L99.2 118.4L78.3 144.3L63.9 169.8L54.2 193.0L45.7 224.1L41.2 252.6L40 282.2L42.3 309.9L47.5 332.9L54.8 359.8L64.8 384.2L298.7 828.8L314.8 854.7L336.3 881.3L391.4 925.1L421.9 940.2L462.6 953.3L497.7 959.9L533.8 960.0L569.7 955.7Z",
+    "geometrySource": {
+      "name": "OpenStreetMap",
+      "url": "https://www.openstreetmap.org/way/116606212",
+      "license": "ODbL",
+      "attribution": "© участники OpenStreetMap"
+    },
+    "factSources": [
+      "https://www.iracing.com/tracks/bristol-motor-speedway/",
+      "https://en.wikipedia.org/wiki/Bristol_Motor_Speedway"
+    ],
+    "kind": "oval",
+    "rain": false,
+    "iracing": {
+      "name": "Bristol Motor Speedway",
+      "url": "https://www.iracing.com/tracks/bristol-motor-speedway/"
+    }
+  },
+  {
+    "id": "martinsville",
+    "name": "Мартинсвилл",
+    "nameOriginal": "Martinsville Speedway",
+    "country": "США",
+    "layout": "Овал",
+    "lengthKm": 0.847,
+    "turns": 4,
+    "direction": "ccw",
+    "viewBox": "0 0 645 1000",
+    "path": "M497.1 488.9L591.4 266.3L602.7 216.2L605.2 178.7L593.9 140.0L577.5 106.3L551.1 73.8L510.8 51.2L476.8 41.3L437.8 40.0L388.7 56.3L353.4 78.8L318.2 112.5L293 152.5L177.2 455.0L46.3 763.8L40 807.5L41.3 845.0L50.1 880.0L65.2 907.5L91.6 932.5L121.8 951.3L154.6 960.0L196.1 960.0L233.9 953.7L275.4 937.5L305.6 913.7L333.3 875Z",
+    "geometrySource": {
+      "name": "OpenStreetMap",
+      "url": "https://www.openstreetmap.org/way/402168721",
+      "license": "ODbL",
+      "attribution": "© участники OpenStreetMap"
+    },
+    "factSources": [
+      "https://www.iracing.com/tracks/martinsville-speedway/",
+      "https://en.wikipedia.org/wiki/Martinsville_Speedway"
+    ],
+    "kind": "oval",
+    "rain": false,
+    "iracing": {
+      "name": "Martinsville Speedway",
+      "url": "https://www.iracing.com/tracks/martinsville-speedway/"
+    }
   }
 ]

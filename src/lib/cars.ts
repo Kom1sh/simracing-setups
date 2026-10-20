@@ -6,7 +6,7 @@ import { formatNumber } from './format'
 export function engineText(car: Car): string {
   const { litres, layout, aspiration } = car.engine
   const parts: string[] = []
-  if (litres !== null) parts.push(formatNumber(litres, 1))
+  if (litres !== null) parts.push(formatNumber(litres, Number.isInteger(litres * 10) ? 1 : 2))
   if (layout) parts.push(ENGINE_LAYOUT[layout] ?? layout)
   if (aspiration) parts.push(ASPIRATION[aspiration])
   return parts.join(' ')

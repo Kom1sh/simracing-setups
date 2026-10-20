@@ -28,7 +28,7 @@ function Delta({ value, base, decimals }: { value: number; base: number; decimal
 
 function scalarText(p: Param & { kind: 'scalar' }, v: number) {
   if (p.format === 'time') return formatTimeOfDay(v)
-  const num = `${formatNumber(v, p.decimals)}${p.unit ? ` ${p.unit}` : ''}`
+  const num = `${p.relative ? formatSigned(v, p.decimals) : formatNumber(v, p.decimals)}${p.unit ? ` ${p.unit}` : ''}`
   if (p.format === 'percent-rain') return `${num}, ${rainLabel(v)}`
   return num
 }
@@ -39,6 +39,9 @@ export function ParamRow({ param: p, value, onChange, symmetric = true, onSymmet
   const [focusedWheel, setFocusedWheel] = useState<number | null>(null)
   const base = baseValue(p)
   const changed = !sameValue(base, value)
+  // Значение «от базы iRacing» уже и есть разница — отдельную дельту не показываем
+  const signed = p.relative ? ('signed' as const) : undefined
+  const delta = showDelta && !p.relative
 
   const header = (
     <div className="param__head">
@@ -81,11 +84,11 @@ export function ParamRow({ param: p, value, onChange, symmetric = true, onSymmet
             step={p.step}
             decimals={p.decimals}
             unit={p.format === 'time' ? undefined : p.unit}
-            format={p.format === 'time' ? 'time' : undefined}
+            format={p.format === 'time' ? 'time' : signed}
             label={p.label}
             onChange={onChange}
           />
-          {showDelta && <Delta value={v} base={p.range.base} decimals={p.decimals} />}
+          {delta && <Delta value={v} base={p.range.base} decimals={p.decimals} />}
           {p.format === 'percent-rain' && <span className="scalar__note">{rainLabel(v)}</span>}
           {p.id === 'duration' && <span className="scalar__note">{formatDuration(v)}</span>}
         </div>
@@ -120,13 +123,13 @@ export function ParamRow({ param: p, value, onChange, symmetric = true, onSymmet
           return (
             <div className="axle__row" key={name}>
               <span className="axle__name">{name}</span>
-              <NumberField value={arr[i]} min={r.min} max={r.max} step={p.step} decimals={p.decimals} unit={p.unit} label={`${p.label}, ${name.toLowerCase()}`} onChange={set} />
-              {showDelta && <Delta value={arr[i]} base={bases[i]} decimals={p.decimals} />}
+              <NumberField value={arr[i]} min={r.min} max={r.max} step={p.step} decimals={p.decimals} unit={p.unit} format={signed} label={`${p.label}, ${name.toLowerCase()}`} onChange={set} />
+              {delta && <Delta value={arr[i]} base={bases[i]} decimals={p.decimals} />}
               <Slider value={arr[i]} min={r.min} max={r.max} step={p.step} label={`${p.label}, ${name.toLowerCase()}`} onChange={set} />
             </div>
           )
         })}
-        {p.id === 'rideHeight' && (
+        {p.id === 'rideHeight' && !p.relative && (
           <p className="axle__derived">
             {w.rake} <strong>{formatSigned(arr[1] - arr[0])} {w.mm}</strong>
           </p>
@@ -157,8 +160,8 @@ export function ParamRow({ param: p, value, onChange, symmetric = true, onSymmet
           <span className="corner__name" aria-hidden="true">
             {short[i]}
           </span>
-          <NumberField compact value={arr[i]} min={r.min} max={r.max} step={p.step} decimals={p.decimals} label={`${p.label}, ${names[i].toLowerCase()}`} onChange={(x) => set(i, x)} />
-          {showDelta && <Delta value={arr[i]} base={bases[i]} decimals={p.decimals} />}
+          <NumberField compact value={arr[i]} min={r.min} max={r.max} step={p.step} decimals={p.decimals} format={signed} label={`${p.label}, ${names[i].toLowerCase()}`} onChange={(x) => set(i, x)} />
+          {delta && <Delta value={arr[i]} base={bases[i]} decimals={p.decimals} />}
         </div>
       )
     }

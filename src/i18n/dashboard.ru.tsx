@@ -14,7 +14,7 @@ export const ru = {
   layout: 'Конфигурация',
   altitude: 'Над уровнем моря',
   m: 'м',
-  carCategory: 'Категория машины',
+  carCategory: 'Класс машины в iRacing',
   engine: 'Двигатель',
   enginePos: 'Где двигатель',
   debut: 'Дебют в классе',
@@ -38,7 +38,7 @@ export const ru = {
   ),
   carIntro: (name: string) => (
     <>
-      Регулировки <strong>{name}</strong>. Диапазоны и база — общий шаблон класса GT3: у машины в конкретном симуляторе границы свои.
+      Гараж iRacing для <strong>{name}</strong>. Загрузите в iRacing базовый сетап (iRacing Setups → baseline) и записывайте здесь правки от него: 0 — как в базе, «+1» — на клик или единицу больше. Топливо — в литрах.
     </>
   ),
   toast: {
@@ -52,6 +52,7 @@ export const ru = {
     partly: (track: boolean, car: boolean) =>
       `Сетап загружен, но ${[track ? 'трассы' : '', car ? 'машины' : ''].filter(Boolean).join(' и ')} из файла здесь нет — оставили текущие.`,
     loaded: (n: string) => `Загружен сетап «${n}»`,
+    category: (label: string, track: string | null) => `Класс ${label}: у него свой гараж, правки начаты с базы${track ? `. Трасса — ${track}` : ''}.`,
   },
   trackGone: 'трасса удалена',
   carGone: 'машина удалена',

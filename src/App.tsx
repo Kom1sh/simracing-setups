@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react'
 import carsData from './data/cars.json'
 import { trackMeta } from './data/trackMeta'
-import { carSetupGroups, categories, conditionGroups, ENGINE_POSITION, trackSearchTerms, tracks, WIND_NAMES } from './data/localized'
-import type { Car, CategoryId, Param, ParamValue, Values } from './data/types'
+import { categories, conditionGroups, ENGINE_POSITION, setupGroupsFor, trackSearchTerms, tracks, WIND_NAMES } from './data/localized'
+import type { Car, CategoryId, Param, ParamValue, Track, TrackKind, Values } from './data/types'
 import { baseValues, countParams, listChanges, sanitize } from './lib/params'
 import { formatNumber, parseLapTime } from './lib/format'
 import { planFuel } from './lib/fuel'
@@ -27,7 +27,6 @@ const cars = carsData as Car[]
 const LEGACY_DRAFT_KEY = 'simracing-setups:draft:v1'
 const LEGACY_SAVED_KEY = 'simracing-setups:saved:v1'
 const FILE_FORMAT = 'simracing-setups/v1'
-const TANK_MAX = 120
 
 type Tab = 'track' | 'car' | 'assistant'
 const TABS: Tab[] = ['track', 'car', 'assistant']
@@ -52,6 +51,12 @@ interface Saved extends Draft {
 
 const trackById = (id: string) => tracks.find((t) => t.id === id)
 const carById = (id: string) => cars.find((c) => c.id === id)
+const categoryOf = (id: CategoryId) => categories.find((c) => c.id === id)!
+
+/** Трасса подходит классу: NASCAR — овалы и дорожные, GT и кубковые — только дорожные */
+function trackFits(track: Track | undefined, category: CategoryId): track is Track {
+  return !!track && categoryOf(category).tracks.includes(track.kind)
+}
 
 function conditionsForTrack(trackId: string, current?: Values): Values {
   const meta = trackMeta[trackId]
@@ -63,9 +68,10 @@ function autoName(track: { name: string }, car: Car) {
   return `${track.name}, ${car.brand} ${car.model}`
 }
 
+/** По умолчанию — NASCAR Next Gen в Дайтоне: под эту пару сделаны правила ассистента */
 function freshDraft(): Draft {
-  const track = trackById('spa') ?? tracks[0]
-  const car = carById('ferrari-296-gt3') ?? cars.find((c) => c.category === 'gt3') ?? cars[0]
+  const car = carById('nascar-next-gen-chevrolet-camaro') ?? cars[0]
+  const track = trackById(categoryOf(car.category).defaultTrack) ?? tracks[0]
   return {
     savedId: null,
     name: autoName(track, car),
@@ -73,7 +79,7 @@ function freshDraft(): Draft {
     trackId: track.id,
     carId: car.id,
     conditions: conditionsForTrack(track.id),
-    setup: baseValues(carSetupGroups),
+    setup: baseValues(setupGroupsFor(car.category)),
     symmetric: {},
     lapTime: '',
     perLap: '',
@@ -84,8 +90,9 @@ function freshDraft(): Draft {
 function repairDraft(raw: Partial<Draft> | null): Draft | null {
   if (!raw || typeof raw !== 'object') return null
   const fresh = freshDraft()
-  const track = (raw.trackId && trackById(raw.trackId)) || trackById(fresh.trackId)!
   const car = (raw.carId && carById(raw.carId)) || carById(fresh.carId)!
+  const saved = raw.trackId ? trackById(raw.trackId) : undefined
+  const track = trackFits(saved, car.category) ? saved : trackById(categoryOf(car.category).defaultTrack)!
   return {
     savedId: typeof raw.savedId === 'string' ? raw.savedId : null,
     name: typeof raw.name === 'string' && raw.name.trim() ? raw.name : autoName(track, car),
@@ -93,7 +100,7 @@ function repairDraft(raw: Partial<Draft> | null): Draft | null {
     trackId: track.id,
     carId: car.id,
     conditions: sanitize(conditionGroups, raw.conditions),
-    setup: sanitize(carSetupGroups, raw.setup),
+    setup: sanitize(setupGroupsFor(car.category), raw.setup),
     symmetric: raw.symmetric && typeof raw.symmetric === 'object' ? raw.symmetric : {},
     lapTime: typeof raw.lapTime === 'string' ? raw.lapTime : '',
     perLap: typeof raw.perLap === 'string' ? raw.perLap : '',
@@ -120,12 +127,16 @@ export default function App({ session, onSignOut }: { session: Session; onSignOu
   const [dialogOpen, setDialogOpen] = useState(false)
   const [toast, setToast] = useState<{ text: string; key: number } | null>(null)
   const lastCarByCategory = useRef<Partial<Record<CategoryId, string>>>({})
+  const lastTrackByKind = useRef<Partial<Record<TrackKind, string>>>({})
   const tabsRef = useRef<HTMLDivElement>(null)
 
   const track = trackById(draft.trackId)!
   const car = carById(draft.carId)!
   const category = car.category
-  const categoryInfo = categories.find((c) => c.id === category)!
+  const categoryInfo = categoryOf(category)
+  const groups = useMemo(() => setupGroupsFor(category), [category])
+  const classTracks = useMemo(() => tracks.filter((x) => categoryInfo.tracks.includes(x.kind)), [categoryInfo])
+  const rainPossible = car.rain && track.rain
 
   useEffect(() => {
     writeJSON(DRAFT_KEY, draft)
@@ -156,20 +167,23 @@ export default function App({ session, onSignOut }: { session: Session; onSignOu
     (p: Param) => {
       if (p.requires === 'abs') return car.abs !== false
       if (p.requires === 'tc') return car.tc !== false
+      if (p.requires === 'rain') return rainPossible
       return true
     },
-    [car],
+    [car, rainPossible],
   )
 
-  const changes = useMemo(() => listChanges(carSetupGroups, draft.setup, visible), [draft.setup, visible])
-  const totalParams = useMemo(() => countParams(carSetupGroups, visible), [visible])
+  const changes = useMemo(() => listChanges(groups, draft.setup, visible), [groups, draft.setup, visible])
+  const totalParams = useMemo(() => countParams(groups, visible), [groups, visible])
 
   const lapSeconds = parseLapTime(draft.lapTime)
   const perLap = parseLitres(draft.perLap)
-  const plan = lapSeconds && perLap ? planFuel(draft.conditions.duration as number, lapSeconds, perLap, draft.conditions.pitStops as number, TANK_MAX) : null
-  const checks = runChecks(draft.conditions, draft.setup, plan, plan !== null)
+  const plan = lapSeconds && perLap ? planFuel(draft.conditions.duration as number, lapSeconds, perLap, draft.conditions.pitStops as number, categoryInfo.tankL) : null
+  const checks = runChecks(draft.conditions, draft.setup, plan, plan !== null, rainPossible)
 
   const chooseTrack = (id: string) => {
+    const next = trackById(id)
+    if (next) lastTrackByKind.current[next.kind] = id
     update((d) => ({ trackId: id, conditions: conditionsForTrack(id, d.conditions) }))
   }
 
@@ -180,12 +194,26 @@ export default function App({ session, onSignOut }: { session: Session; onSignOu
     update({ carId: id })
   }
 
+  /** У класса свой гараж: правки начинаются с базы. NASCAR уходит на овал, GT и кубковые — на дорожную трассу */
   const chooseCategory = (id: string) => {
     const cat = id as CategoryId
     if (cat === category) return
     lastCarByCategory.current[category] = car.id
+    lastTrackByKind.current[track.kind] = track.id
     const next = lastCarByCategory.current[cat] ?? cars.find((c) => c.category === cat)?.id
-    if (next) update({ carId: next })
+    if (!next) return
+    const info = categoryOf(cat)
+    const preferred: TrackKind = info.tracks[0]
+    const keep = track.kind === preferred
+    const nextTrack = keep ? track : (trackById(lastTrackByKind.current[preferred] ?? info.defaultTrack) ?? track)
+    update((d) => ({
+      carId: next,
+      trackId: nextTrack.id,
+      conditions: keep ? d.conditions : conditionsForTrack(nextTrack.id, d.conditions),
+      setup: baseValues(setupGroupsFor(cat)),
+      symmetric: {},
+    }))
+    say(t.toast.category(info.label, keep ? null : nextTrack.name))
   }
 
   const switchTab = (next: Tab, focus = false) => {
@@ -343,7 +371,7 @@ export default function App({ session, onSignOut }: { session: Session; onSignOu
       <section className="band" aria-label={t.bandLabel}>
         <div className="band__inner">
           <div className="band__track">
-            <TrackPicker tracks={tracks} aliases={trackSearchTerms} value={track} onChange={chooseTrack} />
+            <TrackPicker tracks={classTracks} aliases={trackSearchTerms} value={track} onChange={chooseTrack} />
             <TrackMap track={track} variant="hero" wind={{ from: windFrom, speed: draft.conditions.windSpeed as number, name: WIND_NAMES[String(windFrom)] }} />
             <dl className="facts">
               <div>
@@ -448,6 +476,7 @@ export default function App({ session, onSignOut }: { session: Session; onSignOu
               groups={conditionGroups}
               values={draft.conditions}
               onChange={setValue('conditions')}
+              visible={visible}
               intro={
                 <p className="settings__intro">
                   {t.trackIntro(track.name)}
@@ -459,7 +488,7 @@ export default function App({ session, onSignOut }: { session: Session; onSignOu
             <SettingsPanel
               key="car"
               idPrefix="car"
-              groups={carSetupGroups}
+              groups={groups}
               values={draft.setup}
               onChange={setValue('setup')}
               visible={visible}
@@ -473,7 +502,7 @@ export default function App({ session, onSignOut }: { session: Session; onSignOu
               }
             />
           )}
-          {tab === 'assistant' && <AssistantPanel />}
+          {tab === 'assistant' && <AssistantPanel car={car} track={track} />}
         </div>
 
         {tab !== 'assistant' && (
@@ -482,7 +511,7 @@ export default function App({ session, onSignOut }: { session: Session; onSignOu
           onNameChange={(v) => update({ name: v, nameEdited: v.trim().length > 0 })}
           changes={changes}
           totalParams={totalParams}
-          onResetAll={() => update({ setup: baseValues(carSetupGroups) })}
+          onResetAll={() => update({ setup: baseValues(groups) })}
           onOpenChange={openGroup}
           lapTime={draft.lapTime}
           perLap={draft.perLap}
@@ -512,13 +541,14 @@ export default function App({ session, onSignOut }: { session: Session; onSignOu
         items={saved.map((s) => {
           const tr = trackById(s.trackId)
           const c = carById(s.carId)
+          const g = setupGroupsFor(c?.category ?? category)
           return {
             id: s.id,
             name: s.name,
             trackName: tr?.name ?? t.trackGone,
             carName: c ? `${c.brand} ${c.model}` : t.carGone,
             savedAt: s.savedAt,
-            changes: listChanges(carSetupGroups, sanitize(carSetupGroups, s.setup)).length,
+            changes: listChanges(g, sanitize(g, s.setup)).length,
           }
         })}
       />

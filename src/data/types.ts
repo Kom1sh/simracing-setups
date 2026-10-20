@@ -15,9 +15,16 @@ export interface Track {
   geometrySource: { name: string; url: string; license: string }
   factSources: string[]
   notes?: string
+  /** Дорожная трасса или овал: от этого зависит, какие классы на ней ездят */
+  kind: TrackKind
+  /** Дождь в iRacing разрешён на этой конфигурации */
+  rain: boolean
+  iracing: { name: string; url: string }
 }
 
-export type CategoryId = 'gt3' | 'gt4' | 'gt2' | 'cup'
+export type TrackKind = 'road' | 'oval'
+
+export type CategoryId = 'nascar' | 'gt3' | 'gt4' | 'cup'
 
 export type EnginePosition = 'front' | 'front-mid' | 'mid' | 'rear'
 
@@ -31,6 +38,9 @@ export interface Car {
   enginePosition: EnginePosition | null
   abs: boolean | null
   tc: boolean | null
+  /** У машины в iRacing есть дождевые шины */
+  rain: boolean
+  iracing: { name: string; url: string }
   sources: string[]
   notes?: string
 }
@@ -49,8 +59,10 @@ interface ParamBase {
   label: string
   hint?: string
   unit?: string
-  /** Что нужно машине, чтобы регулировка была: например, ABS */
-  requires?: 'abs' | 'tc'
+  /** Что нужно, чтобы регулировка была: ABS или антипробуксовка у машины, дождь у машины и трассы */
+  requires?: 'abs' | 'tc' | 'rain'
+  /** Значение — разница с базовым сетапом iRacing: показывается со знаком, база — 0 */
+  relative?: boolean
 }
 
 export interface ScalarParam extends ParamBase {

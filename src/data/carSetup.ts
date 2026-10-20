@@ -1,312 +1,231 @@
-import type { ParamGroup } from './types'
+import type { CategoryId, Param, ParamGroup, Range } from './types'
 
 /**
- * Шаблон регулировок класса GT3.
- * Состав групп повторяет гаражное меню GT3-машин в симуляторах.
- * Диапазоны и базовые значения общие для класса: у конкретной машины границы свои.
+ * Регулировки гаража iRacing по классам. Состав и смысл — по руководствам iRacing
+ * (Ferrari 296 GT3, BMW M4 G82 GT4, Mercedes-AMG GT4, Porsche 718 Cayman GT4, Porsche 911 Cup 992.2,
+ * Ferrari 296 Challenge, NASCAR Next Gen): https://www.iracing.com/resources/user-manuals/
+ *
+ * Пределы у каждой машины свои и публично не описаны, поэтому почти всё считается от базового сетапа
+ * iRacing (baseline.sto): 0 — как в базе, «+1 клик», «−0,5 psi». Абсолютное только топливо — от него план на гонку.
  */
-export const carSetupGroups: ParamGroup[] = [
+
+const around = (half: number): Range => ({ min: -half, max: half, base: 0 })
+
+function rel(id: string, label: string, hint: string, unit: string, half: number, step: number, decimals = 0, requires?: Param['requires']): Param {
+  return { id, kind: 'scalar', label, hint, unit, range: around(half), step, decimals, relative: true, requires }
+}
+
+function relAxle(id: string, label: string, hint: string, unit: string, half: number, step: number, decimals = 0): Param {
+  return { id, kind: 'axle', label, hint, unit, front: around(half), rear: around(half), step, decimals, relative: true }
+}
+
+function relCorners(id: string, label: string, hint: string, unit: string, half: number, step: number, decimals = 0): Param {
+  return { id, kind: 'corners', label, hint, unit, front: around(half), rear: around(half), step, decimals, relative: true }
+}
+
+function fuel(max: number, base: number): Param {
+  return { id: 'fuel', kind: 'scalar', label: 'Топливо', hint: 'Сколько залить на старт. Литр бензина весит около 0,75 кг. План на гонку — в сводке справа.', unit: 'л', range: { min: 0, max, base }, step: 1, decimals: 0 }
+}
+
+const compound: Param = {
+  id: 'compound',
+  kind: 'choice',
+  label: 'Шины',
+  hint: 'Слики — для сухой трассы, дождевые — с протектором, для воды. Дождь в iRacing бывает только на дорожных трассах.',
+  options: [
+    { value: 'dry', label: 'Слики' },
+    { value: 'wet', label: 'Дождевые' },
+  ],
+  base: 'dry',
+  requires: 'rain',
+}
+
+const pressureRoad = relCorners(
+  'pressure',
+  'Холодное давление',
+  'Давление, с которым машина выезжает из боксов. Выше — шина меньше греется, но держит хуже; ниже — больше сцепления и нагрева. У GT3 минимум 21,5 psi (148 кПа), базовые сетапы обычно стоят на нём.',
+  'psi',
+  3,
+  0.1,
+  1,
+)
+
+const brakeBias = rel('brakeBias', 'Баланс тормозов', 'Доля тормозного усилия на передней оси. Больше — раньше блокируются передние колёса, но машина стабильнее на торможении; меньше — машина охотнее поворачивает на торможении.', '%', 4, 0.1, 1)
+const abs = rel('abs', 'ABS', 'Чем выше позиция, тем сильнее помогает ABS. У Ferrari 296 GT3 двенадцать позиций: 1 — выключено, 2–7 для сухой трассы, 8–12 для дождя.', 'поз.', 6, 1, 0, 'abs')
+const tc = rel('tc', 'Антипробуксовка', 'Больше — меньше пробуксовки и износа задних шин, но медленнее выход из поворота, если система режет мощность слишком сильно. Позиция 1 обычно выключает систему.', 'поз.', 6, 1, 0, 'tc')
+const brakePads: Param = {
+  id: 'brakePads',
+  kind: 'choice',
+  label: 'Тормозные колодки',
+  hint: 'Low — меньше трения и тормоза слабее, Medium и High — тормоза сильнее, но выше риск блокировки.',
+  options: [
+    { value: 'low', label: 'Low' },
+    { value: 'medium', label: 'Medium' },
+    { value: 'high', label: 'High' },
+  ],
+  base: 'medium',
+}
+const arbFront = rel('arbFront', 'Передний стабилизатор', 'Жёстче — меньше крен спереди и больше недостаточной поворачиваемости; мягче — машина охотнее поворачивает.', 'поз.', 4, 1)
+const arbRear = rel('arbRear', 'Задний стабилизатор', 'Жёстче — машина охотнее поворачивает, вплоть до избыточной; мягче — спокойнее и с недостаточной.', 'поз.', 4, 1)
+const toe = relAxle('toe', 'Схождение', 'Минус — расхождение: спереди острее вход в поворот, сзади машина вертлявее. Плюс — спокойнее на прямой и меньше греет шины.', 'мм', 3, 0.1, 1)
+const rideHeight = relAxle('rideHeight', 'Клиренс', 'Меняется перч-оффсетом пружин. Ниже спереди — больше переднего прижима; разница перед/зад (наклон) двигает аэробаланс. Пределы проверяет техинспекция, например у Ferrari 296 GT3 сзади 50–92,5 мм.', 'мм', 10, 0.5, 1)
+const springRate = relAxle('springRate', 'Жёсткость пружин', 'Жёстче — стабильнее клиренс и аэродинамика, мягче — больше механического сцепления на неровной трассе. После смены пружин верните клиренс перч-оффсетом.', 'Н/мм', 60, 10)
+const camber = relCorners('camber', 'Развал', 'Больше отрицательного развала — больше сцепления в повороте, но хуже торможение и быстрее износ внутреннего края шины. Здесь минус значит «больше развала».', '°', 1, 0.1, 1)
+const wing = rel('wing', 'Заднее крыло', 'Выше — больше прижима и сопротивления: быстрее в поворотах, медленнее на прямой, баланс смещается к недостаточной. У Ferrari 296 GT3 +1 к крылу компенсируют −1 мм клиренса спереди или +3 мм сзади.', 'поз.', 4, 0.5, 1)
+
+const dampers = (id: string, label: string, hint: string) => relAxle(id, label, hint, 'клик', 5, 1)
+
+const GT3: ParamGroup[] = [
+  { id: 'tyres', title: 'Шины', description: 'Как в разделе Tires & Aero гаража iRacing. Давление — холодное, на выезде из боксов.', params: [compound, pressureRoad] },
+  {
+    id: 'dials',
+    title: 'Кнопки в кокпите',
+    description: 'In-Car Dials: их же можно крутить на ходу.',
+    params: [brakeBias, abs, tc, rel('throttleShape', 'Отклик газа', 'Форма отклика педали: 1 — линейная, дальше всё более S-образная, 10 — снова линейная, но резче.', 'поз.', 5, 1)],
+  },
+  { id: 'chassis', title: 'Шасси', description: 'Перед и зад: стабилизаторы, схождение, колодки.', params: [arbFront, arbRear, toe, brakePads] },
+  { id: 'corners', title: 'Подвеска', description: 'Углы машины: клиренс, пружины, развал.', params: [rideHeight, springRate, camber] },
+  { id: 'dampers', title: 'Амортизаторы', description: 'Медленные скорости — реакция на руль, газ и тормоз; быстрые — бордюры и неровности. У Ferrari 296 GT3 от 0 до 11 кликов.', params: [
+    dampers('lsComp', 'Сжатие, медленное', 'Больше — быстрее перенос веса при торможении и перекладке; спереди добавляет недостаточной на торможении.'),
+    dampers('hsComp', 'Сжатие, быстрое', 'Больше — жёстче на бордюрах и кочках, лучше аэроплатформа на гладкой трассе; меньше — лучше гасит удары.'),
+    dampers('lsRebound', 'Отбой, медленный', 'Больше — дольше держит кузов: спереди при разгоне, сзади при торможении. Слишком много — колесо теряет контакт.'),
+    dampers('hsRebound', 'Отбой, быстрый', 'Как быстро амортизатор разжимается после кочки или бордюра.'),
+  ] },
+  { id: 'rear', title: 'Аэродинамика и дифференциал', params: [
+    wing,
+    rel('diffPreload', 'Преднатяг дифференциала', 'Больше — меньше заноса при сбросе газа и стабильнее вход, но больше недостаточной без газа и резче избыточная на газу.', 'Н·м', 60, 10),
+    rel('frictionFaces', 'Фрикционные диски', 'Больше дисков — сильнее блокировка: больше недостаточной без газа и избыточной на газу, меньше проворота внутреннего колеса на бордюрах.', 'шт.', 6, 2),
+    fuel(120, 60),
+  ] },
+]
+
+const GT4: ParamGroup[] = [
+  { id: 'tyres', title: 'Шины', description: 'Давление — холодное, на выезде из боксов.', params: [compound, { ...pressureRoad, hint: 'Давление, с которым машина выезжает из боксов. Выше — шина меньше греется, но держит хуже; ниже — больше сцепления и нагрева.' } as Param] },
+  { id: 'dials', title: 'Кнопки в кокпите', description: 'У McLaren 570S и Porsche 718 ABS и антипробуксовка — одна общая настройка, у BMW ABS называется DSC.', params: [brakeBias, abs, tc, brakePads] },
+  { id: 'chassis', title: 'Шасси', params: [arbFront, arbRear, toe] },
+  { id: 'corners', title: 'Подвеска', description: 'Жёсткость пружин меняется не у всех GT4: у Porsche 718 её нет.', params: [
+    rideHeight,
+    springRate,
+    camber,
+    dampers('bump', 'Сжатие', 'Больше — машина резче отвечает на руль и тормоз, но хуже глотает кочки.'),
+    dampers('rebound', 'Отбой', 'Больше — кузов дольше держится после нагрузки; слишком много — колесо отрывается от асфальта.'),
+  ] },
+  { id: 'rear', title: 'Аэродинамика и топливо', params: [wing, fuel(120, 60)] },
+]
+
+const CUP: ParamGroup[] = [
+  { id: 'tyres', title: 'Шины', description: 'Давление — холодное, на выезде из боксов.', params: [compound, { ...pressureRoad, hint: 'Давление, с которым машина выезжает из боксов. Выше — шина меньше греется, но держит хуже; ниже — больше сцепления и нагрева.' } as Param] },
+  { id: 'dials', title: 'Кнопки в кокпите', description: 'У Ferrari 296 Challenge две настройки антипробуксовки, TC1 и TC2.', params: [brakeBias, abs, tc] },
+  { id: 'chassis', title: 'Шасси', description: 'Пружин, амортизаторов и дифференциала в гараже кубковых машин нет.', params: [arbFront, arbRear, toe, rideHeight, camber] },
+  { id: 'rear', title: 'Аэродинамика и топливо', params: [wing, fuel(100, 50)] },
+]
+
+const ovalShock = (id: string, label: string, hint: string) => relAxle(id, label, hint, 'клик', 5, 1)
+
+const NASCAR: ParamGroup[] = [
   {
     id: 'tyres',
     title: 'Шины',
-    description: 'Давление и геометрия колёс. Значения на холодных шинах, до выезда из боксов.',
+    description: 'Холодное давление. Минимум Goodyear свой на каждой трассе — начните с базового сетапа iRacing для неё.',
+    params: [
+      relCorners(
+        'pressure',
+        'Холодное давление',
+        'На левых поворотах больше всех нагружено правое переднее колесо: после серии кругов у сбалансированной машины давление растёт сильнее всего именно там. Левые колёса обычно накачивают меньше правых.',
+        'psi',
+        5,
+        0.25,
+        2,
+      ),
+    ],
+  },
+  {
+    id: 'balance',
+    title: 'Развесовка и тормоза',
+    params: [
+      rel('crossWeight', 'Cross weight', 'Доля веса на левом заднем и правом переднем колёсах — на овале одна из главных настроек. Больше — стабильнее вход и лучше выход, меньше — машина свободнее в повороте. Слишком много — блокируется левое переднее.', '%', 2, 0.1, 1),
+      rel('noseWeight', 'Nose weight', 'Доля веса на передней оси. Больше — устойчивее на скорости, меньше — легче поворачивает, полезно на коротких трассах.', '%', 1.5, 0.1, 1),
+      { ...brakeBias, hint: 'Доля тормозного усилия на передней оси. Больше — стабильнее, но раньше блокируются передние колёса.' } as Param,
+    ],
+  },
+  {
+    id: 'arb',
+    title: 'Стабилизаторы',
+    description: 'Диаметр — Stiff (2,00″) или Soft (1,375″), плечо — от P1 (мягко) до P5 (жёстко).',
     params: [
       {
-        id: 'compound',
+        id: 'arbFrontDiameter',
         kind: 'choice',
-        label: 'Резина',
-        hint: 'Дождевые нужны, когда на трассе вода. На сухом асфальте они быстро перегреваются.',
+        label: 'Передний стабилизатор',
+        hint: 'Жёсткий меньше кренит машину и острее отвечает на руль, но добавляет недостаточной.',
         options: [
-          { value: 'dry', label: 'Слики' },
-          { value: 'wet', label: 'Дождевые' },
+          { value: 'stiff', label: 'Stiff 2,00″' },
+          { value: 'soft', label: 'Soft 1,375″' },
         ],
-        base: 'dry',
+        base: 'stiff',
       },
       {
-        id: 'pressure',
-        kind: 'corners',
-        label: 'Давление в шинах',
-        hint: 'Выше давление — меньше пятно контакта и быстрее прогрев. Ниже — больше сцепления, но шина перегревается.',
-        unit: 'psi',
-        front: { min: 20.3, max: 35, base: 26 },
-        rear: { min: 20.3, max: 35, base: 26 },
-        step: 0.1,
-        decimals: 1,
+        id: 'arbFrontArm',
+        kind: 'choice',
+        label: 'Плечо переднего стабилизатора',
+        options: ['P1', 'P2', 'P3', 'P4', 'P5'].map((v) => ({ value: v, label: v })),
+        base: 'P3',
+      },
+      rel('arbFrontPreload', 'Преднатяг переднего стабилизатора', 'Статическая нагрузка в стабилизаторе: добавляет или убирает его работу в поворотах и на прямых.', 'Н·м', 50, 5),
+      {
+        id: 'arbRearDiameter',
+        kind: 'choice',
+        label: 'Задний стабилизатор',
+        hint: 'Жёсткий меньше кренит машину, но добавляет избыточной.',
+        options: [
+          { value: 'stiff', label: 'Stiff 2,00″' },
+          { value: 'soft', label: 'Soft 1,375″' },
+        ],
+        base: 'soft',
       },
       {
-        id: 'camber',
-        kind: 'corners',
-        label: 'Развал',
-        hint: 'Отрицательный развал добавляет сцепления в повороте, но ухудшает торможение и изнашивает внутренний край шины.',
-        unit: '°',
-        front: { min: -4, max: -1.5, base: -3.5 },
-        rear: { min: -3.5, max: -1, base: -3 },
-        step: 0.1,
-        decimals: 1,
+        id: 'arbRearArm',
+        kind: 'choice',
+        label: 'Плечо заднего стабилизатора',
+        options: ['P1', 'P2', 'P3', 'P4', 'P5'].map((v) => ({ value: v, label: v })),
+        base: 'P3',
       },
-      {
-        id: 'toe',
-        kind: 'corners',
-        label: 'Схождение',
-        hint: 'Минус — колёса смотрят наружу, машина острее входит в поворот. Плюс — внутрь, машина спокойнее на прямой.',
-        unit: '°',
-        front: { min: -0.4, max: 0.4, base: -0.05 },
-        rear: { min: -0.4, max: 0.4, base: 0.1 },
-        step: 0.01,
-        decimals: 2,
-      },
-      {
-        id: 'caster',
-        kind: 'scalar',
-        label: 'Кастер',
-        hint: 'Больше кастер — тяжелее руль и сильнее развал в повороте.',
-        unit: '°',
-        range: { min: 5, max: 14, base: 10 },
-        step: 0.1,
-        decimals: 1,
-      },
+      rel('arbRearPreload', 'Преднатяг заднего стабилизатора', 'Статическая нагрузка в заднем стабилизаторе.', 'Н·м', 50, 5),
     ],
   },
   {
-    id: 'electronics',
-    title: 'Электроника',
-    description: 'Помощники водителя и карта двигателя. У машин без ABS и антипробуксовки этих строк нет.',
+    id: 'corners',
+    title: 'Углы',
+    description: 'Клиренс и вес по углам меняются Shock Collar Offset — парами, чтобы не уехал cross weight.',
     params: [
-      {
-        id: 'tc',
-        kind: 'scalar',
-        label: 'Антипробуксовка',
-        hint: 'Выше — реже срывы на выходе из поворота, но разгон медленнее.',
-        range: { min: 0, max: 11, base: 3 },
-        step: 1,
-        decimals: 0,
-        requires: 'tc',
-      },
-      {
-        id: 'tc2',
-        kind: 'scalar',
-        label: 'Срез мощности при пробуксовке',
-        hint: 'Насколько резко антипробуксовка убирает мощность. Отдельной ручкой есть не у всех машин.',
-        range: { min: 0, max: 11, base: 3 },
-        step: 1,
-        decimals: 0,
-        requires: 'tc',
-      },
-      {
-        id: 'abs',
-        kind: 'scalar',
-        label: 'ABS',
-        hint: 'Выше — колёса реже блокируются, но тормозной путь длиннее.',
-        range: { min: 0, max: 11, base: 3 },
-        step: 1,
-        decimals: 0,
-        requires: 'abs',
-      },
-      {
-        id: 'ecu',
-        kind: 'scalar',
-        label: 'Карта двигателя',
-        hint: 'Карты отличаются отдачей и расходом топлива. Что делает каждая, у каждой машины описано отдельно.',
-        range: { min: 1, max: 8, base: 1 },
-        step: 1,
-        decimals: 0,
-      },
-    ],
-  },
-  {
-    id: 'fuel',
-    title: 'Топливо и тормоза',
-    description: 'Сколько заливать и какими колодками ехать. Расчёт топлива на гонку — в сводке справа.',
-    params: [
-      {
-        id: 'fuel',
-        kind: 'scalar',
-        label: 'Топливо',
-        hint: 'Десять литров бензина весят около 7,5 кг.',
-        unit: 'л',
-        range: { min: 2, max: 120, base: 60 },
-        step: 1,
-        decimals: 0,
-      },
-      {
-        id: 'pads',
-        kind: 'axle',
-        label: 'Тормозные колодки',
-        hint: 'Меньше номер — сильнее торможение и быстрее износ.',
-        front: { min: 1, max: 4, base: 1 },
-        rear: { min: 1, max: 4, base: 1 },
-        step: 1,
-        decimals: 0,
-      },
-      {
-        id: 'brakePower',
-        kind: 'scalar',
-        label: 'Тормозное усилие',
-        hint: 'Меньше — легче дозировать педаль и не блокировать колёса, но тормозной путь длиннее.',
-        unit: '%',
-        range: { min: 80, max: 100, base: 90 },
-        step: 1,
-        decimals: 0,
-      },
-      {
-        id: 'brakeBias',
-        kind: 'scalar',
-        label: 'Баланс тормозов',
-        hint: 'Доля усилия на передней оси. Больше — стабильнее, но передние колёса блокируются раньше.',
-        unit: '% вперёд',
-        range: { min: 45, max: 70, base: 57.5 },
-        step: 0.1,
-        decimals: 1,
-      },
-    ],
-  },
-  {
-    id: 'mechanics',
-    title: 'Механика',
-    description: 'Механическое сцепление: стабилизаторы, пружины, отбойники, дифференциал.',
-    params: [
-      {
-        id: 'arb',
-        kind: 'axle',
-        label: 'Стабилизатор поперечной устойчивости',
-        hint: 'Жёстче спереди — машина сильнее недоворачивает. Жёстче сзади — охотнее поворачивает.',
-        front: { min: 1, max: 10, base: 5 },
-        rear: { min: 1, max: 10, base: 3 },
-        step: 1,
-        decimals: 0,
-      },
-      {
-        id: 'wheelRate',
-        kind: 'corners',
-        label: 'Жёсткость пружин',
-        hint: 'Жёстче — быстрее отклик и меньше крены, но хуже на неровностях и бордюрах.',
-        unit: 'Н/м',
-        front: { min: 110000, max: 200000, base: 150000 },
-        rear: { min: 90000, max: 190000, base: 130000 },
-        step: 5000,
-        decimals: 0,
-      },
-      {
-        id: 'bumpstopRate',
-        kind: 'corners',
-        label: 'Жёсткость отбойников',
-        hint: 'Как резко подвеска упирается в конец хода. Мягче — плавнее на бордюрах.',
-        unit: 'Н',
-        front: { min: 300, max: 2500, base: 500 },
-        rear: { min: 300, max: 2500, base: 500 },
-        step: 100,
-        decimals: 0,
-      },
-      {
-        id: 'bumpstopRange',
-        kind: 'corners',
-        label: 'Ход до отбойника',
-        hint: 'Меньше ход — машина раньше садится на отбойник под нагрузкой.',
-        unit: 'мм',
-        front: { min: 0, max: 30, base: 12 },
-        rear: { min: 0, max: 60, base: 20 },
-        step: 1,
-        decimals: 0,
-      },
-      {
-        id: 'diffPreload',
-        kind: 'scalar',
-        label: 'Преднатяг дифференциала',
-        hint: 'Больше — стабильнее на входе и выходе, но машина неохотнее поворачивает.',
-        unit: 'Нм',
-        range: { min: 20, max: 300, base: 80 },
-        step: 10,
-        decimals: 0,
-      },
+      relCorners('springRate', 'Жёсткость пружин', 'Жёстче — машина держит положение кузова и аэродинамику, мягче — больше сцепления на неровностях. На овале левую заднюю ставят мягче правой задней, иначе к концу серии кругов растёт недостаточная.', 'Н/мм', 30, 5),
+      relCorners('camber', 'Развал', 'На овале левые колёса ставят с положительным развалом, правые — с отрицательным; на дорожной трассе все четыре отрицательные.', '°', 1, 0.1, 1),
+      rel('casterLf', 'Кастер, левое переднее', 'Меньше кастера слева, чем справа, — машину тянет влево, на овале это полезно. Больше кастера — тяжелее руль и устойчивее на прямой.', '°', 1, 0.25, 2),
+      rel('casterRf', 'Кастер, правое переднее', 'Больше кастера — тяжелее руль, меньше динамический cross weight в повороте.', '°', 1, 0.25, 2),
+      relAxle('toe', 'Схождение', 'Спереди: больше расхождения — острее вход, но передние шины могут перегреться и машина внезапно уйдёт в недостаточную. Сзади: расхождение помогает повороту, схождение — устойчивости.', 'мм', 3, 0.1, 1),
     ],
   },
   {
     id: 'dampers',
     title: 'Амортизаторы',
-    description: 'Медленные ходы отвечают за крены и перенос веса, быстрые — за бордюры и неровности. Значения в щелчках.',
+    description: 'Сначала подберите наклон (slope) под трассу, потом медленное и быстрое сжатие и отбой.',
     params: [
-      {
-        id: 'bumpSlow',
-        kind: 'corners',
-        label: 'Сжатие, медленное',
-        front: { min: 0, max: 20, base: 8 },
-        rear: { min: 0, max: 20, base: 8 },
-        step: 1,
-        decimals: 0,
-      },
-      {
-        id: 'bumpFast',
-        kind: 'corners',
-        label: 'Сжатие, быстрое',
-        front: { min: 0, max: 20, base: 10 },
-        rear: { min: 0, max: 20, base: 10 },
-        step: 1,
-        decimals: 0,
-      },
-      {
-        id: 'reboundSlow',
-        kind: 'corners',
-        label: 'Отбой, медленный',
-        front: { min: 0, max: 20, base: 10 },
-        rear: { min: 0, max: 20, base: 10 },
-        step: 1,
-        decimals: 0,
-      },
-      {
-        id: 'reboundFast',
-        kind: 'corners',
-        label: 'Отбой, быстрый',
-        front: { min: 0, max: 20, base: 12 },
-        rear: { min: 0, max: 20, base: 12 },
-        step: 1,
-        decimals: 0,
-      },
+      ovalShock('lsComp', 'Сжатие, медленное', 'Больше — быстрее нагружает колесо при торможении и выходе с виража, но хуже гасит мелкие неровности.'),
+      ovalShock('hsComp', 'Сжатие, быстрое', 'Меньше — лучше на кочках и бордюрах, больше — на гладкой трассе.'),
+      ovalShock('hsCompSlope', 'Наклон быстрого сжатия', 'Выше — характеристика линейнее, для тряских трасс; ниже — дегрессивнее, для гладких.'),
+      ovalShock('lsRebound', 'Отбой, медленный', 'Больше — лучше держит кузов, но колесо может разгрузиться.'),
+      ovalShock('hsRebound', 'Отбой, быстрый', 'Больше — кузов спокойнее после кочки, слишком много — теряется сцепление.'),
+      ovalShock('hsReboundSlope', 'Наклон быстрого отбоя', 'Выше — линейнее, для тряских трасс; ниже — для гладких.'),
     ],
   },
   {
-    id: 'aero',
-    title: 'Аэродинамика',
-    description: 'Клиренс, прижим и охлаждение тормозов.',
+    id: 'rear',
+    title: 'Дифференциал и топливо',
     params: [
-      {
-        id: 'rideHeight',
-        kind: 'axle',
-        label: 'Клиренс',
-        hint: 'Разница заднего и переднего клиренса — наклон кузова. Больше наклон — больше прижима спереди.',
-        unit: 'мм',
-        front: { min: 50, max: 80, base: 58 },
-        rear: { min: 55, max: 95, base: 70 },
-        step: 1,
-        decimals: 0,
-      },
-      {
-        id: 'splitter',
-        kind: 'scalar',
-        label: 'Сплиттер',
-        hint: 'Выше — больше прижима на передней оси.',
-        range: { min: 0, max: 10, base: 0 },
-        step: 1,
-        decimals: 0,
-      },
-      {
-        id: 'rearWing',
-        kind: 'scalar',
-        label: 'Антикрыло',
-        hint: 'Выше — больше прижима и сопротивления: быстрее в поворотах, медленнее на прямых.',
-        range: { min: 0, max: 15, base: 6 },
-        step: 1,
-        decimals: 0,
-      },
-      {
-        id: 'brakeDucts',
-        kind: 'axle',
-        label: 'Охлаждение тормозов',
-        hint: 'Шире открыто — тормоза холоднее, но немного больше сопротивление.',
-        front: { min: 0, max: 6, base: 3 },
-        rear: { min: 0, max: 6, base: 3 },
-        step: 1,
-        decimals: 0,
-      },
+      rel('diffPreload', 'Преднатяг дифференциала', 'Больше — сильнее блокировка в любом режиме: больше недостаточной на газу и при торможении, в том числе в середине поворота.', 'Н·м', 30, 5),
+      fuel(76, 76),
     ],
   },
 ]
+
+export const setupTemplates: Record<CategoryId, ParamGroup[]> = { nascar: NASCAR, gt3: GT3, gt4: GT4, cup: CUP }

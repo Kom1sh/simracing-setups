@@ -3,11 +3,16 @@ import { a } from '../i18n/dashboard'
 import { checkHealth, customApi, requestRecommendations } from './api'
 import { AssistantForm, type AskDraft, type AskErrors } from './AssistantForm'
 import { AssistantResults, type Health } from './AssistantResults'
-import { CARS, COMMENT_MAX, COMMENT_MIN, TRACKS, type ApiResult, type RecommendationRequest } from './types'
+import type { Car, Track } from '../data/types'
+import { COMMENT_MAX, COMMENT_MIN, NEXT_GEN_RULES_NAME, type ApiResult, type RecommendationRequest } from './types'
 
-/** EGO-04: форма → POST /api/v1/recommendations (ALE-03) → состояния ответа и карточки рекомендаций */
-export function AssistantPanel() {
-  const [draft, setDraft] = useState<AskDraft>({ car: CARS[0], track: TRACKS[0], symptom: null, phase: null, stint: 'any', comment: '' })
+/** EGO-04: машина и трасса из шапки + форма → POST /api/v1/recommendations (ALE-03) → состояния ответа и карточки */
+export function AssistantPanel({ car, track }: { car: Car; track: Track }) {
+  const [draft, setDraft] = useState<AskDraft>({ symptom: null, phase: null, stint: 'any', comment: '' })
+  // Имена, по которым бэкенд ищет правило: класс Next Gen целиком, остальные машины и трассы — как в iRacing
+  const carForRules = car.category === 'nascar' ? NEXT_GEN_RULES_NAME : car.iracing.name
+  const trackForRules = track.iracing.name
+  const covered = car.category === 'nascar' && track.kind === 'oval'
   const [errors, setErrors] = useState<AskErrors>({})
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState<ApiResult | null>(null)
@@ -64,8 +69,8 @@ export function AssistantPanel() {
       return
     }
     void send({
-      car: draft.car,
-      track: draft.track,
+      car: carForRules,
+      track: trackForRules,
       symptom_type: draft.symptom,
       corner_phase: draft.phase,
       comment,
@@ -79,6 +84,9 @@ export function AssistantPanel() {
     <div className="assistant">
       <div className="assistant__form" ref={formRef}>
         <AssistantForm
+          carName={`${car.brand} ${car.model}`}
+          trackName={track.name}
+          covered={covered}
           draft={draft}
           onChange={(patch) => {
             setDraft((d) => ({ ...d, ...patch }))

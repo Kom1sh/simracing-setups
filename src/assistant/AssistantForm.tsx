@@ -1,11 +1,9 @@
 import { useId } from 'react'
 import { a } from '../i18n/dashboard'
 import { Segmented } from '../components/controls'
-import { CARS, COMMENT_MAX, CORNER_PHASES, STINT_MOMENTS, SYMPTOM_TYPES, TRACKS, type CornerPhase, type StintMoment, type SymptomType } from './types'
+import { COMMENT_MAX, CORNER_PHASES, STINT_MOMENTS, SYMPTOM_TYPES, type CornerPhase, type StintMoment, type SymptomType } from './types'
 
 export interface AskDraft {
-  car: string
-  track: string
   symptom: SymptomType | null
   phase: CornerPhase | null
   stint: StintMoment | 'any'
@@ -15,6 +13,11 @@ export interface AskDraft {
 export type AskErrors = { symptom?: string; phase?: string; comment?: string }
 
 interface Props {
+  /** Машина и трасса из шапки кабинета */
+  carName: string
+  trackName: string
+  /** Есть ли под эту пару правила (NASCAR Next Gen на овале) */
+  covered: boolean
   draft: AskDraft
   onChange: (patch: Partial<AskDraft>) => void
   errors: AskErrors
@@ -23,8 +26,8 @@ interface Props {
 }
 
 /** EGO-01: поля формы → тело POST /api/v1/recommendations по контракту ALE-03 */
-export function AssistantForm({ draft, onChange, errors, loading, onSubmit }: Props) {
-  const ids = { car: useId(), track: useId(), symptom: useId(), phase: useId(), comment: useId(), count: useId(), commentError: useId() }
+export function AssistantForm({ carName, trackName, covered, draft, onChange, errors, loading, onSubmit }: Props) {
+  const ids = { symptom: useId(), phase: useId(), comment: useId(), count: useId(), commentError: useId() }
 
   return (
     <form
@@ -37,33 +40,13 @@ export function AssistantForm({ draft, onChange, errors, loading, onSubmit }: Pr
     >
       <p className="ask__intro">{a.intro}</p>
 
-      <div className="ask__pair">
-        <div className="ask__field">
-          <label className="ask__legend" htmlFor={ids.car}>
-            {a.car}
-          </label>
-          <select id={ids.car} className="text-input ask__select" value={draft.car} onChange={(e) => onChange({ car: e.target.value })}>
-            {CARS.map((c) => (
-              <option key={c} value={c}>
-                {c}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="ask__field">
-          <label className="ask__legend" htmlFor={ids.track}>
-            {a.track}
-          </label>
-          <select id={ids.track} className="text-input ask__select" value={draft.track} onChange={(e) => onChange({ track: e.target.value })}>
-            {TRACKS.map((t) => (
-              <option key={t} value={t}>
-                {t}
-              </option>
-            ))}
-          </select>
-        </div>
+      <div className="ask__context">
+        <p className="ask__legend">{a.contextLabel}</p>
+        <p className="ask__context-value">
+          <strong>{carName}</strong> · {trackName}
+        </p>
+        <p className={covered ? 'ask__note' : 'ask__note ask__note--warn'}>{covered ? a.scope : a.scopeOther}</p>
       </div>
-      <p className="ask__note">{a.scope}</p>
 
       <fieldset className="ask__field" aria-describedby={errors.symptom ? ids.symptom : undefined}>
         <legend className="ask__legend">{a.symptomLabel}</legend>

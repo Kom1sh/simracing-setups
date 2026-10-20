@@ -20,26 +20,11 @@ export type StintMoment = (typeof STINT_MOMENTS)[number]
  * Машины и трассы MVP: одна машина на овалах iRacing. Строки должны буквально совпадать
  * с applicability в правилах базы — менять только вместе со справочником команды (VAR-02).
  */
-export const CARS = ['NASCAR Cup Series Next Gen (Gen 7)'] as const
-
-export const TRACKS = [
-  'Daytona International Speedway',
-  'Talladega Superspeedway',
-  'Atlanta Motor Speedway',
-  'Charlotte Motor Speedway',
-  'Las Vegas Motor Speedway',
-  'Texas Motor Speedway',
-  'Kansas Speedway',
-  'Homestead-Miami Speedway',
-  'Michigan International Speedway',
-  'Pocono Raceway',
-  'Darlington Raceway',
-  'Dover Motor Speedway',
-  'Phoenix Raceway',
-  'Richmond Raceway',
-  'Bristol Motor Speedway',
-  'Martinsville Speedway',
-] as const
+/**
+ * Как машина называется в правилах бэкенда (applicability.car). Правила пишутся на класс NASCAR Next Gen,
+ * а не на каждую из трёх машин; для остальных — имя машины в iRacing. Трасса — имя трассы в iRacing.
+ */
+export const NEXT_GEN_RULES_NAME = 'NASCAR Cup Series Next Gen (Gen 7)'
 
 export interface RecommendationRequest {
   car: string

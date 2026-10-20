@@ -2,7 +2,7 @@ import { locale } from '../i18n/locale'
 import { w } from '../i18n/dashboard'
 import { useEffect, useId, useRef, useState, type KeyboardEvent } from 'react'
 import { clamp, snap } from '../lib/params'
-import { formatNumber, formatTimeOfDay } from '../lib/format'
+import { formatNumber, formatSigned, formatTimeOfDay } from '../lib/format'
 
 interface NumberFieldProps {
   value: number
@@ -11,17 +11,19 @@ interface NumberFieldProps {
   step: number
   decimals: number
   unit?: string
-  format?: 'time'
+  /** time — «14:30», signed — разница с базой: «+1,5», «−0,5» */
+  format?: 'time' | 'signed'
   label: string
   compact?: boolean
   onChange: (v: number) => void
 }
 
-function display(value: number, decimals: number, format?: 'time') {
-  return format === 'time' ? formatTimeOfDay(value) : formatNumber(value, decimals).replace(/ /g, ' ')
+function display(value: number, decimals: number, format?: 'time' | 'signed') {
+  if (format === 'time') return formatTimeOfDay(value)
+  return (format === 'signed' ? formatSigned(value, decimals) : formatNumber(value, decimals)).replace(/ /g, ' ')
 }
 
-function parse(text: string, format?: 'time'): number | null {
+function parse(text: string, format?: 'time' | 'signed'): number | null {
   const t = text.trim()
   if (format === 'time') {
     const m = t.match(/^(\d{1,2})(?::(\d{2}))?$/)
@@ -31,7 +33,7 @@ function parse(text: string, format?: 'time'): number | null {
     if (h > 23 || min > 59) return null
     return h * 60 + min
   }
-  const n = Number(t.replace(/\s/g, '').replace(locale === 'ru' ? ',' : /,/g, locale === 'ru' ? '.' : '').replace('−', '-'))
+  const n = Number(t.replace(/\s/g, '').replace(locale === 'ru' ? ',' : /,/g, locale === 'ru' ? '.' : '').replace('−', '-').replace(/^\+/, ''))
   return Number.isFinite(n) ? n : null
 }
 

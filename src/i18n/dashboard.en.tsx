@@ -13,7 +13,7 @@ export const en: typeof ru = {
   layout: 'Layout',
   altitude: 'Altitude',
   m: 'm',
-  carCategory: 'Car category',
+  carCategory: 'iRacing car class',
   engine: 'Engine',
   enginePos: 'Engine position',
   debut: 'Class debut',
@@ -37,7 +37,7 @@ export const en: typeof ru = {
   ),
   carIntro: (name: string) => (
     <>
-      Adjustments for the <strong>{name}</strong>. Ranges and baseline are a general GT3 template: each car in a given sim has its own limits.
+      The iRacing garage for the <strong>{name}</strong>. Load the baseline setup in iRacing (iRacing Setups → baseline) and record your changes from it here: 0 is the baseline, “+1” is one click or unit more. Fuel is in litres.
     </>
   ),
   toast: {
@@ -51,6 +51,7 @@ export const en: typeof ru = {
     partly: (track: boolean, car: boolean) =>
       `Setup loaded, but the ${[track ? 'track' : '', car ? 'car' : ''].filter(Boolean).join(' and ')} from the file is not available here, so the current one stays.`,
     loaded: (n: string) => `Loaded “${n}”`,
+    category: (label: string, track: string | null) => `${label} has its own garage, changes start from the baseline${track ? `. Track: ${track}` : ''}.`,
   },
   trackGone: 'track removed',
   carGone: 'car removed',
