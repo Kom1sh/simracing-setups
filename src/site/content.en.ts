@@ -114,7 +114,7 @@ export const en: LandingContent = {
   },
   preview: {
     title: 'The dashboard behind it',
-    text: 'Track and weather, the iRacing garage of your class (NASCAR Next Gen, GT3, GT4 or Cup) with changes counted from the baseline setup, a race fuel plan and a check for contradictions such as slicks in the rain. The assistant sits in the next tab and knows what you drive.',
+    text: 'The dashboard opens on the assistant, which knows your car, track and weather. Changes from the iRacing baseline and the history of advice marked “helped / worse” live in the My setup tab, with the full NASCAR Next Gen, GT3, GT4 or Cup garage one click away. On the right: a race fuel plan and a check for contradictions such as slicks in the rain.',
     points: ['37 iRacing tracks with maps: 21 road courses and 16 ovals', '22 iRacing cars: NASCAR Next Gen, GT3, GT4 and Cup', 'Fuel plan for races up to 24 hours', 'Setups saved to your account and as files'],
     alt: 'The setup dashboard: the Daytona oval, the NASCAR Next Gen and its garage settings',
     cta: 'Open the dashboard',

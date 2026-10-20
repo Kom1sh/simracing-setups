@@ -53,7 +53,7 @@ function geometry() {
     }
   }
 
-  const containers = '.param, .corner, .numfield, .summary__block, .facts > div, .car-card, .picker__trigger, .scalar__top, .axle__row, .corners__foot, .saved__item, .changes__item, .track-tile, .tab, .segmented'
+  const containers = '.param, .corner, .numfield, .summary__block, .facts > div, .car-card, .picker__trigger, .scalar__top, .axle__row, .corners__foot, .saved__item, .changes__item, .edits__row, .history__item, .chip, .track-tile, .tab, .segmented'
   for (const parent of document.querySelectorAll(containers)) {
     if (!visible(parent)) continue
     const pr = parent.getBoundingClientRect()
@@ -68,7 +68,7 @@ function geometry() {
     }
   }
 
-  const overlapGroups = ['.corners__grid > *', '.facts > div', '.topbar__actions > *, .wordmark', '.scalar__top > *', '.summary__row > *']
+  const overlapGroups = ['.corners__grid > *', '.facts > div', '.topbar__actions > *, .wordmark', '.scalar__top > *', '.summary__row > *', '.edits__row > *', '.history__rate > *']
   for (const sel of overlapGroups) {
     const groups = new Map()
     for (const el of document.querySelectorAll(sel)) {
@@ -116,8 +116,14 @@ for (const vp of viewports) {
     failures += problems.filter((p) => !p.startsWith('многоточие')).length
   }
 
-  await check('track-tab')
-  await page.getByRole('tab', { name: /Машина/ }).click()
+  await check('assistant-tab')
+  await page.getByRole('tab', { name: 'Условия' }).click()
+  await page.waitForTimeout(150)
+  await check('conditions-tab')
+  await page.getByRole('tab', { name: /Мой сетап/ }).click()
+  await page.waitForTimeout(300)
+  await check('setup-tab')
+  await page.getByRole('button', { name: /^Весь гараж/ }).click()
   await page.waitForTimeout(150)
   await check('car-tab')
 

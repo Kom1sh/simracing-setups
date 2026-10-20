@@ -15,16 +15,8 @@ function arrows(track: Track, pts: Pt[]) {
   return pointsAlong(pts, [0.12, 0.37, 0.62, 0.87]).map((a) => ({ ...a, angle: a.angle + (flip ? 180 : 0) }))
 }
 
-/** Схема трассы с названием поверх. В полосе — крупно, со стрелками движения, стартом/финишем и номерами поворотов */
-export function TrackMap({
-  track,
-  variant,
-  wind,
-}: {
-  track: Track
-  variant: 'hero' | 'tile'
-  wind?: { from: number; speed: number; name: string }
-}) {
+/** Схема трассы с названием под ней. В полосе — крупно, со стрелками движения, стартом/финишем и номерами поворотов */
+export function TrackMap({ track, variant }: { track: Track; variant: 'hero' | 'tile' }) {
   const hero = variant === 'hero'
   const geo = useMemo(() => {
     if (!hero) return null
@@ -85,19 +77,6 @@ export function TrackMap({
         <span className="track-map__name">{track.name}</span>
         {variant === 'tile' && <span className="track-map__country">{track.country}</span>}
       </figcaption>
-      {hero && wind && wind.speed > 0 && (
-        <div className="wind" aria-label={w.windLabel(wind.speed, wind.name)}>
-          {/* Стрелка нарисована вниз (на юг); ветер «откуда» X дует в сторону X + 180°, поэтому поворот ровно на X */}
-          <svg viewBox="0 0 40 40" aria-hidden="true" style={{ transform: `rotate(${wind.from}deg)` }}>
-            <path d="M20 6v26M12 24l8 8 8-8" />
-          </svg>
-          <span>
-            {wind.speed} {w.kmh}
-            <br />
-            {wind.name}
-          </span>
-        </div>
-      )}
       {hero && <span className="track-map__north" aria-hidden="true">{w.north}</span>}
     </figure>
   )

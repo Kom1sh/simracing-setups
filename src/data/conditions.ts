@@ -3,52 +3,9 @@ import type { ParamGroup } from './types'
 /** Условия заезда: характер трассы, сессия, погода, покрытие */
 export const conditionGroups: ParamGroup[] = [
   {
-    id: 'character',
-    title: 'Характер трассы',
-    description: 'Оценка для сетапа по трассе в целом. Если едете иначе, поправьте.',
-    params: [
-      {
-        id: 'downforce',
-        kind: 'choice',
-        label: 'Нужный прижим',
-        hint: 'Быстрые трассы с длинными прямыми просят меньше антикрыла, медленные и извилистые — больше.',
-        options: [
-          { value: 'low', label: 'Низкий' },
-          { value: 'medium', label: 'Средний' },
-          { value: 'high', label: 'Высокий' },
-        ],
-        base: 'medium',
-      },
-      {
-        id: 'bumps',
-        kind: 'choice',
-        label: 'Неровности',
-        hint: 'На тряском покрытии нужны клиренс повыше и мягкие быстрые ходы амортизаторов.',
-        options: [
-          { value: 'smooth', label: 'Ровная' },
-          { value: 'medium', label: 'Средние' },
-          { value: 'bumpy', label: 'Тряская' },
-        ],
-        base: 'medium',
-      },
-      {
-        id: 'kerbs',
-        kind: 'choice',
-        label: 'Бордюры',
-        hint: 'Если по бордюрам приходится ехать много и они высокие, подвеске нужен запас хода.',
-        options: [
-          { value: 'soft', label: 'Мягкие' },
-          { value: 'medium', label: 'Средние' },
-          { value: 'harsh', label: 'Жёсткие' },
-        ],
-        base: 'medium',
-      },
-    ],
-  },
-  {
     id: 'session',
     title: 'Сессия',
-    description: 'Тип заезда и его длина. От длины гонки считается топливо.',
+    description: 'От длины гонки и пит-стопов считается топливо в сводке справа.',
     params: [
       {
         id: 'sessionType',
@@ -86,35 +43,13 @@ export const conditionGroups: ParamGroup[] = [
         step: 1,
         decimals: 0,
       },
-      {
-        id: 'startTime',
-        kind: 'scalar',
-        label: 'Время старта',
-        hint: 'Время суток на трассе. Ночью асфальт остывает.',
-        range: { min: 0, max: 1425, base: 840 },
-        step: 15,
-        decimals: 0,
-        format: 'time',
-      },
     ],
   },
   {
     id: 'weather',
     title: 'Погода',
-    description: 'Как в настройках погоды iRacing. Дождь бывает только на дорожных трассах и у машин с дождевыми шинами.',
+    description: 'Ассистент учитывает температуру, облака и дождь. Дождь в iRacing бывает только на дорожных трассах и у машин с дождевыми шинами.',
     params: [
-      {
-        id: 'weatherType',
-        kind: 'choice',
-        label: 'Погода в сессии',
-        hint: 'Статичная не меняется. По прогнозу — с шансом дождя и сменой облачности. По таймлайну — вы сами расписываете погоду по минутам.',
-        options: [
-          { value: 'static', label: 'Статичная' },
-          { value: 'forecast', label: 'По прогнозу' },
-          { value: 'timeline', label: 'По таймлайну' },
-        ],
-        base: 'static',
-      },
       {
         id: 'airTemp',
         kind: 'scalar',
@@ -150,57 +85,12 @@ export const conditionGroups: ParamGroup[] = [
         id: 'rain',
         kind: 'scalar',
         label: 'Шанс дождя',
-        hint: 'Для дождя нужна погода по прогнозу или по таймлайну.',
         unit: '%',
         range: { min: 0, max: 100, base: 0 },
         step: 5,
         decimals: 0,
         format: 'percent-rain',
         requires: 'rain',
-      },
-      {
-        id: 'humidity',
-        kind: 'scalar',
-        label: 'Влажность воздуха',
-        unit: '%',
-        range: { min: 10, max: 100, base: 50 },
-        step: 5,
-        decimals: 0,
-      },
-      {
-        id: 'fog',
-        kind: 'scalar',
-        label: 'Туман',
-        unit: '%',
-        range: { min: 0, max: 100, base: 0 },
-        step: 5,
-        decimals: 0,
-      },
-      {
-        id: 'windSpeed',
-        kind: 'scalar',
-        label: 'Ветер',
-        hint: 'Направление ветра показано стрелкой на схеме трассы.',
-        unit: 'км/ч',
-        range: { min: 0, max: 60, base: 8 },
-        step: 1,
-        decimals: 0,
-      },
-      {
-        id: 'windFrom',
-        kind: 'choice',
-        label: 'Откуда дует',
-        options: [
-          { value: '0', label: 'С' },
-          { value: '45', label: 'СВ' },
-          { value: '90', label: 'В' },
-          { value: '135', label: 'ЮВ' },
-          { value: '180', label: 'Ю' },
-          { value: '225', label: 'ЮЗ' },
-          { value: '270', label: 'З' },
-          { value: '315', label: 'СЗ' },
-        ],
-        base: '270',
       },
     ],
   },
@@ -224,7 +114,7 @@ export const conditionGroups: ParamGroup[] = [
         id: 'wetness',
         kind: 'choice',
         label: 'Вода на трассе',
-        hint: 'Мокрую трассу можно задать и при статичной погоде, но падающий дождь — только по прогнозу.',
+        hint: 'Сколько воды на трассе в начале сессии. Ассистент учитывает её вместе с шансом дождя.',
         options: [
           { value: 'dry', label: 'Сухо' },
           { value: 'damp', label: 'Влажно' },
@@ -237,13 +127,3 @@ export const conditionGroups: ParamGroup[] = [
   },
 ]
 
-export const WIND_NAMES: Record<string, string> = {
-  '0': 'северный',
-  '45': 'северо-восточный',
-  '90': 'восточный',
-  '135': 'юго-восточный',
-  '180': 'южный',
-  '225': 'юго-западный',
-  '270': 'западный',
-  '315': 'северо-западный',
-}

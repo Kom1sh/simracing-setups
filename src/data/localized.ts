@@ -1,6 +1,6 @@
 import tracksData from './tracks.json'
 import { setupTemplates } from './carSetup'
-import { conditionGroups as conditionsSource, WIND_NAMES as windSource } from './conditions'
+import { conditionGroups as conditionsSource } from './conditions'
 import { categories as categoriesSource, ENGINE_POSITION as positionSource, ASPIRATION as aspirationSource } from './categories'
 import { trackAliases } from './trackMeta'
 import type { Category } from './categories'
@@ -65,4 +65,3 @@ export const ASPIRATION: Record<string, string> = isEn ? en.aspirationEn : aspir
 export const ENGINE_LAYOUT: Record<string, string> = isEn
   ? en.engineLayoutEn
   : { 'flat-6': 'оппозитный 6', I4: 'рядный 4', I5: 'рядный 5', I6: 'рядный 6' }
-export const WIND_NAMES: Record<string, string> = isEn ? en.windNamesEn : windSource

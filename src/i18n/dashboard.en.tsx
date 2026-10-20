@@ -27,19 +27,38 @@ export const en: typeof ru = {
     noTc: 'No traction control',
   },
   settingsTabs: 'Settings',
-  tabTrack: 'Track and weather',
-  tabCar: 'Car',
+  tabTrack: 'Conditions',
+  tabCar: 'My setup',
   tabAssistant: 'Assistant',
   trackIntro: (name: string) => (
     <>
-      Conditions for <strong>{name}</strong>. Track character is filled in when you pick the track; set the weather and session yourself.
+      Weather and session at <strong>{name}</strong>. The assistant takes temperature, clouds and rain into account; the summary on the right calculates fuel.
     </>
   ),
   carIntro: (name: string) => (
     <>
-      The iRacing garage for the <strong>{name}</strong>. Load the baseline setup in iRacing (iRacing Setups → baseline) and record your changes from it here: 0 is the baseline, “+1” is one click or unit more. Fuel is in litres.
+      Every adjustment in the <strong>{name}</strong> garage. 0 is the baseline, “+1” is one click or unit more. Fuel is in litres.
     </>
   ),
+  setupIntro: (name: string) => (
+    <>
+      Your <strong>{name}</strong> setup is a list of changes from the iRacing baseline (iRacing Setups → baseline). Apply the assistant’s advice, then after 3–5 laps mark whether it helped.
+    </>
+  ),
+  changesTitle: 'Changes from the baseline',
+  changesEmpty: 'Everything is still as in the baseline. Apply the assistant’s advice or change a value in the garage below.',
+  resetShort: 'Undo',
+  resetOne: (name: string) => `Return ${name} to the baseline`,
+  historyTitle: 'Assistant advice',
+  historyIntro: (car: string, track: string) => `${car} at ${track}: what the assistant suggested and whether it helped.`,
+  historyLoading: 'Loading advice…',
+  historyFailed: 'Could not load advice. Reload the page.',
+  historyEmpty: 'No advice for this car and track yet.',
+  askAssistant: 'Ask the assistant',
+  rated: 'Your rating:',
+  garageTitle: 'Full garage',
+  garageHint: (n: number) => `${n} adjustments — open`,
+  garageHide: 'Collapse',
   toast: {
     saved: (n: string) => `Setup “${n}” saved`,
     saveFailed: 'The server did not save the setup. Check your connection or download it as a file from the summary.',

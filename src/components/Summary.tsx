@@ -1,18 +1,12 @@
-import { useId, useRef, useState } from 'react'
+import { useId, useRef } from 'react'
 import type { Check } from '../lib/checks'
 import type { FuelPlan } from '../lib/fuel'
-import type { Change } from '../lib/params'
-import { slotName } from '../lib/params'
-import { formatDuration, formatNumber, formatSigned } from '../lib/format'
+import { formatDuration, formatNumber } from '../lib/format'
 import { w } from '../i18n/dashboard'
 
 interface Props {
   name: string
   onNameChange: (v: string) => void
-  changes: Change[]
-  totalParams: number
-  onResetAll: () => void
-  onOpenChange: (groupId: string) => void
   lapTime: string
   perLap: string
   onLapTime: (v: string) => void
@@ -31,10 +25,6 @@ interface Props {
   onImport: (file: File) => void
 }
 
-function valueText(v: unknown, decimals: number) {
-  return typeof v === 'number' ? formatNumber(v, decimals) : String(v)
-}
-
 /** «За 1 ч — 30 кругов…»: числа жирным, порядок слов задаёт словарь */
 function FuelPlanText({ parts }: { parts: string[] }) {
   return (
@@ -49,11 +39,9 @@ function FuelPlanText({ parts }: { parts: string[] }) {
 }
 
 export function Summary(props: Props) {
-  const { changes, plan } = props
+  const { plan } = props
   const nameId = useId()
   const fileRef = useRef<HTMLInputElement>(null)
-  const [showAll, setShowAll] = useState(false)
-  const visibleChanges = showAll ? changes : changes.slice(0, 6)
 
   return (
     <aside className="summary" aria-label={w.summary}>
@@ -70,54 +58,6 @@ export function Summary(props: Props) {
           onChange={(e) => props.onNameChange(e.target.value.replace(/\n/g, ' '))}
           onKeyDown={(e) => e.key === 'Enter' && e.preventDefault()}
         />
-      </div>
-
-      <div className="summary__block">
-        <h3 className="summary__title">
-          {changes.length === 0 ? w.asBase : w.changedOf(changes.length, props.totalParams)}
-        </h3>
-        {changes.length === 0 ? (
-          <p className="summary__muted">{w.noChanges}</p>
-        ) : (
-          <>
-            <ul className="changes">
-              {visibleChanges.map((c) => {
-                const decimals = 'decimals' in c.param ? c.param.decimals : 0
-                const choice = c.param.kind === 'choice' ? c.param.options : null
-                const label = (v: unknown) => (choice ? (choice.find((o) => o.value === v)?.label ?? String(v)) : valueText(v, decimals))
-                return (
-                  <li key={`${c.param.id}-${c.index ?? 0}`}>
-                    <button type="button" className="changes__item" onClick={() => props.onOpenChange(c.group.id)}>
-                      <span className="changes__name">
-                        {c.param.label}
-                        {c.index !== undefined && <span className="changes__slot">{slotName(c.param, c.index)}</span>}
-                      </span>
-                      <span className="changes__values">
-                        {c.param.relative ? (
-                          `${formatSigned(c.to as number, decimals)}${c.param.unit ? ` ${c.param.unit}` : ''}`
-                        ) : (
-                          <>
-                            <s>{label(c.from)}</s> {label(c.to)}
-                          </>
-                        )}
-                      </span>
-                    </button>
-                  </li>
-                )
-              })}
-            </ul>
-            <div className="summary__row">
-              {changes.length > 6 && (
-                <button type="button" className="text-button" onClick={() => setShowAll(!showAll)}>
-                  {showAll ? w.collapse : w.showAll(changes.length)}
-                </button>
-              )}
-              <button type="button" className="text-button" onClick={props.onResetAll}>
-                {w.resetAll}
-              </button>
-            </div>
-          </>
-        )}
       </div>
 
       <div className="summary__block">

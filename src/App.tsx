@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react'
 import carsData from './data/cars.json'
 import { trackMeta } from './data/trackMeta'
-import { categories, conditionGroups, ENGINE_POSITION, setupGroupsFor, trackSearchTerms, tracks, WIND_NAMES } from './data/localized'
+import { categories, conditionGroups, ENGINE_POSITION, setupGroupsFor, trackSearchTerms, tracks } from './data/localized'
 import type { Car, CategoryId, Param, ParamValue, Track, TrackKind, Values } from './data/types'
-import { baseValues, countParams, listChanges, sanitize } from './lib/params'
+import { baseValues, countParams, listChanges, sanitize, type Change } from './lib/params'
 import { formatNumber, parseLapTime } from './lib/format'
 import { planFuel } from './lib/fuel'
 import { runChecks } from './lib/checks'
@@ -16,6 +16,7 @@ import { CarPicker } from './components/CarPicker'
 import { CarGlyph, Segmented } from './components/controls'
 import { SettingsPanel } from './components/SettingsPanel'
 import { Summary } from './components/Summary'
+import { SetupTab } from './components/SetupTab'
 import { SetupsDialog } from './components/SetupsDialog'
 import { UserMenu } from './components/UserMenu'
 import { AssistantPanel } from './assistant/AssistantPanel'
@@ -31,8 +32,8 @@ const LEGACY_DRAFT_KEY = 'simracing-setups:draft:v1'
 const LEGACY_SAVED_KEY = 'simracing-setups:saved:v1'
 const FILE_FORMAT = 'simracing-setups/v1'
 
-type Tab = 'track' | 'car' | 'assistant'
-const TABS: Tab[] = ['track', 'car', 'assistant']
+type Tab = 'assistant' | 'track' | 'car'
+const TABS: Tab[] = ['assistant', 'track', 'car']
 
 interface Draft {
   savedId: string | null
@@ -61,12 +62,6 @@ function trackFits(track: Track | undefined, category: CategoryId): track is Tra
   return !!track && categoryOf(category).tracks.includes(track.kind)
 }
 
-function conditionsForTrack(trackId: string, current?: Values): Values {
-  const meta = trackMeta[trackId]
-  const base = current ?? baseValues(conditionGroups)
-  return meta ? { ...base, downforce: meta.downforce, bumps: meta.bumps, kerbs: meta.kerbs } : base
-}
-
 function autoName(track: { name: string }, car: Car) {
   return `${track.name}, ${car.brand} ${car.model}`
 }
@@ -81,7 +76,7 @@ function freshDraft(): Draft {
     nameEdited: false,
     trackId: track.id,
     carId: car.id,
-    conditions: conditionsForTrack(track.id),
+    conditions: baseValues(conditionGroups),
     setup: baseValues(setupGroupsFor(car.category)),
     symmetric: {},
     lapTime: '',
@@ -142,7 +137,8 @@ export default function App({ session, onSignOut }: { session: Session; onSignOu
   const SAVED_KEY = `${LEGACY_SAVED_KEY}:${session.email}`
   const [draft, setDraft] = useState<Draft>(() => repairDraft(readJSON<Draft>(DRAFT_KEY) ?? readJSON<Draft>(LEGACY_DRAFT_KEY)) ?? freshDraft())
   const [saved, setSaved] = useState<Saved[]>([])
-  const [tab, setTab] = useState<Tab>('track')
+  const [tab, setTab] = useState<Tab>('assistant')
+  const [garageOpen, setGarageOpen] = useState(false)
   const [dialogOpen, setDialogOpen] = useState(false)
   const [toast, setToast] = useState<{ text: string; key: number } | null>(null)
   const lastCarByCategory = useRef<Partial<Record<CategoryId, string>>>({})
@@ -225,12 +221,12 @@ export default function App({ session, onSignOut }: { session: Session; onSignOu
   const lapSeconds = parseLapTime(draft.lapTime)
   const perLap = parseLitres(draft.perLap)
   const plan = lapSeconds && perLap ? planFuel(draft.conditions.duration as number, lapSeconds, perLap, draft.conditions.pitStops as number, categoryInfo.tankL) : null
-  const checks = runChecks(draft.conditions, draft.setup, plan, plan !== null, rainPossible)
+  const checks = runChecks({ ...draft.conditions, ...trackMeta[track.id] }, draft.setup, plan, plan !== null, rainPossible)
 
   const chooseTrack = (id: string) => {
     const next = trackById(id)
     if (next) lastTrackByKind.current[next.kind] = id
-    update((d) => ({ trackId: id, conditions: conditionsForTrack(id, d.conditions) }))
+    update({ trackId: id })
   }
 
   const chooseCar = (id: string) => {
@@ -252,13 +248,12 @@ export default function App({ session, onSignOut }: { session: Session; onSignOu
     const preferred: TrackKind = info.tracks[0]
     const keep = track.kind === preferred
     const nextTrack = keep ? track : (trackById(lastTrackByKind.current[preferred] ?? info.defaultTrack) ?? track)
-    update((d) => ({
+    update({
       carId: next,
       trackId: nextTrack.id,
-      conditions: keep ? d.conditions : conditionsForTrack(nextTrack.id, d.conditions),
       setup: baseValues(setupGroupsFor(cat)),
       symmetric: {},
-    }))
+    })
     say(t.toast.category(info.label, keep ? null : nextTrack.name))
   }
 
@@ -277,8 +272,10 @@ export default function App({ session, onSignOut }: { session: Session; onSignOu
     }
   }
 
+  /** Группа полного гаража на вкладке «Мой сетап»: открыть гараж и прокрутить к ней */
   const openGroup = (groupId: string) => {
     setTab('car')
+    setGarageOpen(true)
     requestAnimationFrame(() => {
       const el = document.getElementById(`car-${groupId}`)
       el?.scrollIntoView({ block: 'start' })
@@ -402,6 +399,14 @@ export default function App({ session, onSignOut }: { session: Session; onSignOu
     say(at.appliedToast(`${labels[c.param] ?? c.label} ${c.text}`))
   }
 
+  /** Вернуть одну правку к базе: у колёс и осей — только её позицию */
+  const resetChange = (c: Change) =>
+    update((d) => {
+      const cur = d.setup[c.param.id]
+      const next = c.index !== undefined && Array.isArray(cur) ? cur.map((v, i) => (i === c.index ? (c.from as number) : v)) : c.from
+      return { setup: { ...d.setup, [c.param.id]: next } }
+    })
+
   const setValue = (key: 'conditions' | 'setup') => (id: string, v: ParamValue) => update((d) => ({ [key]: { ...d[key], [id]: v } }))
 
   const electronics =
@@ -419,7 +424,6 @@ export default function App({ session, onSignOut }: { session: Session; onSignOu
               : t.elec.noTc
             : null
 
-  const windFrom = Number(draft.conditions.windFrom)
   const altitude = track.altitudeM
 
   return (
@@ -449,7 +453,7 @@ export default function App({ session, onSignOut }: { session: Session; onSignOu
         <div className="band__inner">
           <div className="band__track">
             <TrackPicker tracks={classTracks} aliases={trackSearchTerms} value={track} onChange={chooseTrack} />
-            <TrackMap track={track} variant="hero" wind={{ from: windFrom, speed: draft.conditions.windSpeed as number, name: WIND_NAMES[String(windFrom)] }} />
+            <TrackMap track={track} variant="hero" />
             <dl className="facts">
               <div>
                 <dt>{t.lapLength}</dt>
@@ -562,20 +566,33 @@ export default function App({ session, onSignOut }: { session: Session; onSignOu
             />
           )}
           {tab === 'car' && (
-            <SettingsPanel
-              key="car"
-              idPrefix="car"
-              groups={groups}
-              values={draft.setup}
-              onChange={setValue('setup')}
-              visible={visible}
-              showDelta
-              symmetric={draft.symmetric}
-              onSymmetricChange={(id, v) => update((d) => ({ symmetric: { ...d.symmetric, [id]: v } }))}
-              intro={
-                <p className="settings__intro">
-                  {t.carIntro(`${car.brand} ${car.model}`)}
-                </p>
+            <SetupTab
+              carId={car.id}
+              trackId={track.id}
+              carName={`${car.brand} ${car.model}`}
+              trackName={track.name}
+              changes={changes}
+              totalParams={totalParams}
+              labels={labels}
+              onReset={resetChange}
+              onResetAll={() => update({ setup: baseValues(groups) })}
+              onOpenGroup={openGroup}
+              onAsk={() => switchTab('assistant')}
+              garageOpen={garageOpen}
+              onGarageToggle={() => setGarageOpen((v) => !v)}
+              garage={
+                <SettingsPanel
+                  key="car"
+                  idPrefix="car"
+                  groups={groups}
+                  values={draft.setup}
+                  onChange={setValue('setup')}
+                  visible={visible}
+                  showDelta
+                  symmetric={draft.symmetric}
+                  onSymmetricChange={(id, v) => update((d) => ({ symmetric: { ...d.symmetric, [id]: v } }))}
+                  intro={<p className="settings__intro">{t.carIntro(`${car.brand} ${car.model}`)}</p>}
+                />
               }
             />
           )}
@@ -586,10 +603,6 @@ export default function App({ session, onSignOut }: { session: Session; onSignOu
         <Summary
           name={draft.name}
           onNameChange={(v) => update({ name: v, nameEdited: v.trim().length > 0 })}
-          changes={changes}
-          totalParams={totalParams}
-          onResetAll={() => update({ setup: baseValues(groups) })}
-          onOpenChange={openGroup}
           lapTime={draft.lapTime}
           perLap={draft.perLap}
           onLapTime={(v) => update({ lapTime: v })}

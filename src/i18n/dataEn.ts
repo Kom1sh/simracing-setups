@@ -34,9 +34,8 @@ export const groupsEn: Record<string, { title: string; description?: string }> =
   balance: { title: 'Weight and brakes' },
   arb: { title: 'Anti-roll bars', description: 'Diameter is Stiff (2.00″) or Soft (1.375″), the arm goes from P1 (soft) to P5 (stiff).' },
   // Трасса и погода
-  character: { title: 'Track character', description: 'An estimate for the whole lap. Adjust it if you drive the track differently.' },
-  session: { title: 'Session', description: 'Session type and length. Fuel is calculated from the race length.' },
-  weather: { title: 'Weather', description: 'As in the iRacing weather settings. Rain only falls on road courses and only for cars with wet tyres.' },
+  session: { title: 'Session', description: 'Fuel in the summary is calculated from the race length and pit stops.' },
+  weather: { title: 'Weather', description: 'The assistant takes temperature, clouds and rain into account. In iRacing rain only falls on road courses and only for cars with wet tyres.' },
   surface: { title: 'Surface' },
 }
 
@@ -93,40 +92,22 @@ export const paramsEn: Record<string, ParamEn> = {
   arbRearPreload: { label: 'Rear bar preload', hint: 'Static load in the rear bar.' },
   casterLf: { label: 'Caster, left front', hint: 'Less caster on the left than on the right pulls the car left, which helps on ovals. More caster means heavier steering and more straight-line stability.' },
   casterRf: { label: 'Caster, right front', hint: 'More caster means heavier steering and less dynamic cross weight in the corner.' },
-  // Характер трассы
-  downforce: {
-    label: 'Downforce needed',
-    hint: 'Fast tracks with long straights want less wing, slow and twisty ones want more.',
-    options: { low: 'Low', medium: 'Medium', high: 'High' },
-  },
-  bumps: { label: 'Bumps', hint: 'A bumpy surface needs more ride height and soft fast damping.', options: { smooth: 'Smooth', medium: 'Some', bumpy: 'Bumpy' } },
-  kerbs: { label: 'Kerbs', hint: 'If you ride a lot of high kerbs, the suspension needs travel in reserve.', options: { soft: 'Gentle', medium: 'Medium', harsh: 'Harsh' } },
   // Сессия
   sessionType: { label: 'Session', options: { practice: 'Practice', qualifying: 'Qualifying', race: 'Race' } },
   duration: { label: 'Length', presets: ['20 minutes', '1 hour', '3 hours', '6 hours', '24 hours'] },
   pitStops: { label: 'Mandatory pit stops', hint: 'How many times the rules make you stop.' },
-  startTime: { label: 'Start time', hint: 'Time of day on track. The tarmac cools down at night.' },
   // Погода
-  weatherType: {
-    label: 'Session weather',
-    hint: 'Static never changes. Forecasted adds a chance of rain and changing clouds. Timeline lets you plan the weather minute by minute.',
-    options: { static: 'Static', forecast: 'Forecasted', timeline: 'Timeline' },
-  },
   airTemp: { label: 'Air' },
   trackTemp: { label: 'Track', hint: 'In iRacing the sun heats the tarmac: on a clear day it is much warmer than the air, under clouds the gap is smaller. This is your estimate for tyre pressures.' },
   sky: { label: 'Clouds', options: { clear: 'Clear', partly: 'Partly cloudy', mostly: 'Mostly cloudy', overcast: 'Overcast' } },
-  rain: { label: 'Chance of rain', hint: 'Rain needs forecasted or timeline weather.' },
-  humidity: { label: 'Humidity' },
-  fog: { label: 'Fog' },
-  windSpeed: { label: 'Wind', hint: 'The arrow on the track map shows the wind direction.' },
-  windFrom: { label: 'Wind from', options: { '0': 'N', '45': 'NE', '90': 'E', '135': 'SE', '180': 'S', '225': 'SW', '270': 'W', '315': 'NW' } },
+  rain: { label: 'Chance of rain' },
   // Покрытие
   rubber: {
     label: 'Rubber on track',
     hint: 'iRacing lays down rubber through the session: the more there is, the more grip on the racing line. Marbles build up off line.',
     options: { low: 'Clean', moderate: 'Rubbered in', high: 'Heavily rubbered' },
   },
-  wetness: { label: 'Water on track', hint: 'You can set a wet track with static weather too, but falling rain needs a forecast.', options: { dry: 'Dry', damp: 'Damp', wet: 'Wet' } },
+  wetness: { label: 'Water on track', hint: 'How much water is on the track at the start of the session. The assistant weighs it together with the chance of rain.', options: { dry: 'Dry', damp: 'Damp', wet: 'Wet' } },
 }
 
 export const unitsEn: Record<string, string> = {
@@ -141,16 +122,6 @@ export const unitsEn: Record<string, string> = {
   'км/ч': 'km/h',
 }
 
-export const windNamesEn: Record<string, string> = {
-  '0': 'northerly',
-  '45': 'north-easterly',
-  '90': 'easterly',
-  '135': 'south-easterly',
-  '180': 'southerly',
-  '225': 'south-westerly',
-  '270': 'westerly',
-  '315': 'north-westerly',
-}
 
 export const trackNamesEn: Record<string, string> = {
   monza: 'Monza',

@@ -25,6 +25,13 @@ const expect = (cond, msg) => {
   if (!cond) throw new Error(msg)
 }
 
+/** Вкладка «Мой сетап» с раскрытым полным гаражом */
+async function openGarage() {
+  await page.getByRole('tab', { name: /Мой сетап/ }).click()
+  const toggle = page.getByRole('button', { name: /^Весь гараж/ })
+  if ((await toggle.getAttribute('aria-expanded')) !== 'true') await toggle.click()
+}
+
 await page.goto(BASE)
 await page.evaluate(() => localStorage.clear())
 await page.reload()
@@ -37,8 +44,16 @@ await step('по умолчанию NASCAR Next Gen в Дайтоне', async ()
   expect(track.includes('Дайтона'), `трасса ${track}`)
 })
 
-await step('гараж NASCAR: cross weight есть, ABS, крыла и дождевых шин нет', async () => {
-  await page.getByRole('tab', { name: /Машина/ }).click()
+await step('кабинет открывается на ассистенте, вкладки: Ассистент, Условия, Мой сетап', async () => {
+  const names = (await page.getByRole('tab').allTextContents()).map((x) => x.replace(/\d+$/, '').trim())
+  expect(names.join(' / ') === 'Ассистент / Условия / Мой сетап', `вкладки ${names.join(' / ')}`)
+  expect((await page.getByRole('tab', { name: 'Ассистент' }).getAttribute('aria-selected')) === 'true', 'открыта не вкладка ассистента')
+})
+
+await step('гараж NASCAR: свёрнут по умолчанию; cross weight есть, ABS, крыла и дождевых шин нет', async () => {
+  await page.getByRole('tab', { name: /Мой сетап/ }).click()
+  expect((await page.getByRole('group', { name: 'Cross weight' }).count()) === 0, 'гараж раскрыт сразу')
+  await openGarage()
   expect((await page.getByRole('group', { name: 'Cross weight' }).count()) === 1, 'нет cross weight')
   expect((await page.getByRole('group', { name: 'ABS' }).count()) === 0, 'строка ABS видна')
   expect((await page.getByRole('group', { name: 'Заднее крыло' }).count()) === 0, 'крыло видно')
@@ -58,7 +73,7 @@ await step('GT3 уходит на дорожную трассу со своим 
   const track = await page.getByRole('button', { name: /^Трасса/ }).first().textContent()
   expect(track.includes('Спа'), `трасса ${track}`)
   expect(await page.getByText('свой гараж').first().isVisible(), 'нет сообщения о смене гаража')
-  await page.getByRole('tab', { name: /Машина/ }).click()
+  await openGarage()
   expect((await page.getByRole('group', { name: 'ABS' }).count()) === 1, 'нет ABS')
   expect((await page.getByRole('group', { name: 'Заднее крыло' }).count()) === 1, 'нет крыла')
   expect((await page.getByRole('group', { name: 'Cross weight' }).count()) === 0, 'cross weight у GT3')
@@ -102,13 +117,14 @@ await step('поиск по-латински и пустой результат'
   expect((await page.getByRole('dialog', { name: 'Выбор трассы' }).count()) === 0, 'панель не закрылась')
 })
 
-await step('Монца подставляет низкий прижим', async () => {
+await step('Монца: в «Условиях» погода и сессия, без прижима и ветра', async () => {
   await page.getByRole('button', { name: /^Трасса/ }).first().click()
   await page.keyboard.type('monza')
   await page.keyboard.press('Enter')
-  await page.getByRole('tab', { name: /Трасса и погода/ }).click()
-  const low = page.getByRole('radiogroup', { name: 'Нужный прижим' }).getByRole('radio', { name: 'Низкий' })
-  expect((await low.getAttribute('aria-checked')) === 'true', 'прижим не низкий')
+  await page.getByRole('tab', { name: 'Условия' }).click()
+  expect((await page.getByRole('radiogroup', { name: 'Нужный прижим' }).count()) === 0, 'прижим остался')
+  expect((await page.getByText('Ветер', { exact: true }).count()) === 0, 'ветер остался')
+  expect(await page.getByRole('slider', { name: 'Шанс дождя' }).isVisible(), 'нет шанса дождя')
 })
 
 await step('слики под дождём дают замечание', async () => {
@@ -119,13 +135,25 @@ await step('слики под дождём дают замечание', async (
 })
 
 await step('симметрия: без неё правое колесо не меняется, значения — от базы', async () => {
-  await page.getByRole('tab', { name: /Машина/ }).click()
+  await openGarage()
   const group = page.getByRole('group', { name: 'Холодное давление' })
   await group.getByRole('switch', { name: 'Слева и справа одинаково' }).uncheck()
   await group.getByRole('button', { name: 'Холодное давление, передняя левая: больше' }).click()
   const left = await group.getByRole('textbox', { name: 'Холодное давление, передняя левая' }).inputValue()
   const right = await group.getByRole('textbox', { name: 'Холодное давление, передняя правая' }).inputValue()
   expect(left === '+0,1' && right === '0,0', `ПЛ ${left}, ПП ${right}`)
+})
+
+await step('Мой сетап: правка в списке, «Вернуть» сбрасывает её, в сводке дубля нет', async () => {
+  expect((await page.locator('.edits__row', { hasText: 'Холодное давление' }).count()) === 1, 'правки нет в списке')
+  expect((await page.locator('.summary .changes__item').count()) === 0, 'список правок остался в сводке')
+  await page.getByRole('button', { name: 'Вернуть «Холодное давление ПЛ» к базе' }).click()
+  await page.locator('.edits__row').first().waitFor({ state: 'detached' })
+  // Текст поля обновляется эффектом после отрисовки — ждём его, а не читаем в тот же кадр
+  const field = page.getByRole('textbox', { name: 'Холодное давление, передняя левая' })
+  for (let i = 0; i < 20 && (await field.inputValue()) !== '0,0'; i++) await page.waitForTimeout(50)
+  const left = await field.inputValue()
+  expect(left === '0,0' && (await page.locator('.edits__row').count()) === 0, `ПЛ ${left}`)
 })
 
 await step('ввод числа руками с запятой и зажимом в диапазон', async () => {
@@ -138,10 +166,19 @@ await step('ввод числа руками с запятой и зажимом
   expect((await field.inputValue()) === '−1,5', `значение ${await field.inputValue()}`)
 })
 
+await step('характер трассы из каталога: поднятое крыло на Монце даёт замечание', async () => {
+  const wing = page.getByRole('textbox', { name: 'Заднее крыло' })
+  await wing.fill('2')
+  await wing.press('Enter')
+  expect(await page.getByText('Трасса быстрая, а заднее крыло поднято').isVisible(), 'нет замечания про крыло')
+  await wing.fill('0')
+  await wing.press('Enter')
+})
+
 await step('ассистент берёт машину и трассу из шапки', async () => {
   await page.getByRole('tab', { name: 'Ассистент' }).click()
   expect(await page.locator('.ask__context').getByText('Монца').isVisible(), 'нет трассы из шапки')
-  await page.getByRole('tab', { name: /Машина/ }).click()
+  await openGarage()
 })
 
 await step('сохранение переживает перезагрузку', async () => {
@@ -153,7 +190,7 @@ await step('сохранение переживает перезагрузку',
   await page.locator('.saved__item').first().waitFor()
   expect((await page.locator('.saved__item').count()) === 1, 'в списке не один сетап')
   await page.getByRole('button', { name: 'Закрыть' }).click()
-  await page.getByRole('tab', { name: /Машина/ }).click()
+  await openGarage()
   expect((await page.getByRole('textbox', { name: 'Баланс тормозов' }).inputValue()) === '−1,5', 'баланс тормозов не сохранился')
 })
 

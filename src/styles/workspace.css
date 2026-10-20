@@ -27,6 +27,7 @@
   font-size: 23px;
   font-weight: 700;
   font-stretch: 64%;
+  white-space: nowrap;
 }
 
 .tab:hover {
@@ -148,7 +149,8 @@
   line-height: 1;
 }
 
-.group__title:focus {
+.group__title:focus,
+.my-setup__title:focus {
   outline: none;
 }
 
@@ -625,10 +627,12 @@
 }
 
 @media (max-width: 720px) {
+  /* Ширина по подписи: «Мой сетап» со счётчиком длиннее остальных и не должен переноситься */
   .tab {
-    flex: 1;
+    flex: 1 1 auto;
     justify-content: center;
-    padding: 0 10px;
+    gap: 6px;
+    padding: 0 8px;
     font-size: 20px;
   }
 
@@ -661,5 +665,194 @@
   .summary {
     margin-inline: calc(-1 * var(--gutter));
     padding: 20px var(--gutter);
+  }
+}
+
+/* Мой сетап: правки от базы, советы ассистента, полный гараж по кнопке */
+.my-setup__block {
+  max-width: 820px;
+  padding-top: 36px;
+}
+
+/* Гараж — во всю ширину панели: у него своя навигация по группам слева */
+.my-setup__block--garage {
+  max-width: none;
+}
+
+.my-setup__title {
+  display: block;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--ink);
+  color: var(--ink);
+  font-size: 32px;
+  font-weight: 740;
+  font-stretch: 58%;
+  line-height: 1;
+}
+
+.my-setup__sub {
+  margin-top: 10px;
+  color: var(--mute);
+  font-size: 14px;
+}
+
+.my-setup__more {
+  margin-top: 12px;
+}
+
+.my-setup__empty {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 20px;
+  margin-top: 12px;
+  color: var(--body);
+  font-size: 14px;
+}
+
+.edits {
+  display: grid;
+  margin-top: 8px;
+}
+
+.edits__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 14.5px;
+}
+
+.edits__name {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--body);
+  font: inherit;
+  text-align: left;
+}
+
+.edits__name:hover {
+  text-decoration: underline;
+}
+
+.history {
+  display: grid;
+  margin-top: 8px;
+  padding-left: 0;
+  list-style: none;
+}
+
+.history__item {
+  display: grid;
+  gap: 8px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.history__meta {
+  color: var(--mute);
+  font-size: 13px;
+}
+
+.history__changes {
+  display: grid;
+  gap: 4px;
+  padding-left: 18px;
+  color: var(--body);
+  font-size: 14.5px;
+}
+
+.history__changes strong {
+  color: var(--ink);
+  font-weight: 650;
+}
+
+.history__text {
+  color: var(--body);
+  font-size: 14.5px;
+}
+
+.history__rate {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.history__q {
+  margin-right: 6px;
+  color: var(--mute);
+  font-size: 13px;
+}
+
+.chip {
+  min-height: 32px;
+  padding: 0 12px;
+  border: 1px solid var(--control-border);
+  border-radius: var(--r-control);
+  background: var(--canvas);
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.chip:hover {
+  border-color: var(--ink);
+}
+
+.chip.is-on {
+  border-color: var(--ink);
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: 650;
+}
+
+.garage-toggle {
+  max-width: 820px;
+  display: grid;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  text-align: left;
+}
+
+.garage-toggle__hint {
+  margin-top: 10px;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.garage-toggle:hover .garage-toggle__hint {
+  text-decoration-thickness: 2px;
+}
+
+.my-setup__block--garage .settings__intro {
+  padding-top: 16px;
+}
+
+@media (max-width: 720px) {
+  .my-setup__title {
+    font-size: 28px;
+  }
+
+  .edits__row {
+    gap: 10px;
+    font-size: 14px;
+  }
+}
+
+/* Самые узкие телефоны: три вкладки со счётчиком помещаются в строку */
+@media (max-width: 380px) {
+  .tab {
+    gap: 4px;
+    padding: 0 5px;
+    font-size: 17px;
   }
 }

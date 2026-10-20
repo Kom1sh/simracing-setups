@@ -13,7 +13,11 @@ page.setDefaultTimeout(15000)
 const errors = []
 page.on('pageerror', (e) => errors.push(String(e)))
 const results = []
+// На сервере nginx пускает 30 запросов к API в минуту с одного адреса (запас 20) — весь набор подряд в него не влезает.
+// Пауза между проверками даёт лимиту восстановиться; локально без паузы
+const PACE_MS = /\/\/(localhost|127\.0\.0\.1)[:/]/.test(BASE) ? 0 : 4000
 const check = async (name, fn) => {
+  if (PACE_MS && results.length) await new Promise((r) => setTimeout(r, PACE_MS))
   try {
     await fn()
     results.push(['ok  ', name])
@@ -80,6 +84,12 @@ await check('выход, неверный пароль, вход', async () => {
   await page.waitForURL(/\/en\/app\/$/)
 })
 
+await check('кабинет открывается на вкладке ассистента', async () => {
+  await page.goto(`${BASE}en/app/`)
+  const first = page.getByRole('tab').first()
+  expect((await first.textContent()) === 'Assistant' && (await first.getAttribute('aria-selected')) === 'true', 'первая вкладка не Assistant')
+})
+
 await check('ассистент: пустую форму не отправляет', async () => {
   await openAssistant()
   await page.getByRole('button', { name: 'Get advice' }).click()
@@ -99,7 +109,7 @@ await check('ассистент: «Применить в гараж» меняе
   await page.locator('.rec').first().getByRole('button', { name: 'Apply to garage' }).click()
   await page.getByText(/^Applied: /).waitFor()
   await page.locator('.rec').first().getByRole('button', { name: 'Applied in the garage' }).waitFor()
-  const badge = await page.getByRole('tab', { name: /Car/ }).locator('.tab__count').textContent()
+  const badge = await page.getByRole('tab', { name: /My setup/ }).locator('.tab__count').textContent()
   expect(Number(badge) >= 1, `в гараже ${badge} правок`)
 })
 
@@ -111,6 +121,18 @@ await check('ассистент: отзыв «Лучше» сохраняетс�
   expect(list.advice[0].feedback === 'better', JSON.stringify(list.advice[0].feedback))
 })
 
+await check('мой сетап: правка от совета и совет в истории, отзыв можно поменять', async () => {
+  await page.getByRole('tab', { name: /My setup/ }).click()
+  const item = page.locator('.history__item').first()
+  await item.waitFor()
+  expect((await page.locator('.edits__row').count()) >= 1, 'нет правки от совета')
+  expect((await item.getByRole('button', { name: 'Better' }).getAttribute('aria-pressed')) === 'true', 'отзыв «Лучше» не отмечен')
+  await item.getByRole('button', { name: 'Worse' }).click()
+  await page.waitForTimeout(300)
+  const list = await (await api('api/v2/advice')).json()
+  expect(list.advice[0].feedback === 'worse', JSON.stringify(list.advice[0].feedback))
+})
+
 await check('ассистент: только текст — совет или уточняющий вопрос', async () => {
   await openAssistant()
   await page.getByLabel('What is happening').fill('Something feels off with the car')
@@ -120,7 +142,8 @@ await check('ассистент: только текст — совет или �
 
 await check('сетап сохраняется на сервере и виден после перезагрузки', async () => {
   await page.goto(`${BASE}en/app/`)
-  await page.getByRole('button', { name: 'Save setup' }).click()
+  // Кабинет открывается на ассистенте, где сводки нет: сохраняем кнопкой в шапке
+  await page.getByRole('button', { name: 'Save', exact: true }).click()
   await page.waitForTimeout(500)
   const list = await (await api('api/v2/setups')).json()
   expect(list.setups.length === 1, `на сервере ${list.setups.length}`)
