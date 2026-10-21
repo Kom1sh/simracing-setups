@@ -30,7 +30,7 @@ def track_speed(track: dict) -> str:
 
 def find_candidates(catalog: Catalog, car: dict, track: dict, d: Diagnosis, worse: set[str], limit: int = 7) -> list[Effect]:
     class_id = car["category"]
-    params = catalog.params(class_id)
+    params = catalog.car_params(car["id"])
     rain_possible = bool(car.get("rain")) and bool(track.get("rain"))
     found = [
         e

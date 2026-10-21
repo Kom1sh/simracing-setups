@@ -29,14 +29,23 @@ class Catalog:
     cars: dict[str, dict]
     tracks: dict[str, dict]
     templates: dict[str, list[dict]]
+    garages: dict[str, list[dict]]
 
-    def params(self, class_id: str) -> dict[str, dict]:
-        """Регулировки класса по id (с названием группы)."""
+    @staticmethod
+    def _by_id(groups: list[dict]) -> dict[str, dict]:
         out: dict[str, dict] = {}
-        for group in self.templates[class_id]:
+        for group in groups:
             for p in group["params"]:
                 out[p["id"]] = {**p, "group": group["id"], "group_title": group["title"]}
         return out
+
+    def params(self, class_id: str) -> dict[str, dict]:
+        """Регулировки шаблона класса по id (с названием группы)."""
+        return self._by_id(self.templates[class_id])
+
+    def car_params(self, car_id: str) -> dict[str, dict]:
+        """Регулировки гаража конкретной машины: шаблон класса с отличиями из её руководства iRacing."""
+        return self._by_id(self.garages[car_id])
 
     def car_class(self, car_id: str) -> str:
         return self.cars[car_id]["category"]
@@ -53,6 +62,7 @@ def get_catalog() -> Catalog:
         cars={c["id"]: c for c in raw["cars"]},
         tracks={t["id"]: t for t in raw["tracks"]},
         templates=raw["templates"],
+        garages=raw["garages"],
     )
 
 

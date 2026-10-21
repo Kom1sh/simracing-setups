@@ -35,8 +35,14 @@ def _range(param: dict, i: int) -> dict:
 
 
 def build_change(effect: Effect, param: dict, setup: dict, steps: int, lang: str) -> dict | None:
-    """None, если правку некуда делать: значение уже на краю диапазона."""
+    """None, если правку некуда делать: значение уже на краю диапазона.
+
+    Направление эффекта — физическое: «increase» значит жёстче, сильнее помощь. У регулировки с обратной шкалой
+    (inverted: «клики от закрытого», ABS и TC у Mercedes-AMG) это меньшее число.
+    """
     sign = 1 if effect.direction == "increase" else -1
+    if param.get("inverted"):
+        sign = -sign
     cur = _current(param, setup)
     base = {"effect_id": effect.id, "param": param["id"], "label": param["label"], "group": param["group"], "slot": effect.slot,
             "slot_label": SLOT_NAMES[lang].get(effect.slot, ""), "direction": effect.direction, "unit": param.get("unit", "")}
@@ -45,7 +51,12 @@ def build_change(effect: Effect, param: dict, setup: dict, steps: int, lang: str
         values = [o["value"] for o in param["options"]]
         labels = {o["value"]: o["label"] for o in param["options"]}
         i = values.index(cur)
-        j = max(0, min(len(values) - 1, i + sign * steps))
+        # «Как в базе» — значение базового сетапа неизвестно: больше эффекта — крайний вариант, меньше — первый
+        lo = 1 if values[0] == "base" else 0
+        if cur == "base":
+            j = len(values) - 1 if sign > 0 else lo
+        else:
+            j = max(lo, min(len(values) - 1, i + sign * steps))
         if j == i:
             return None
         return {**base, "steps": abs(j - i), "from": cur, "to": values[j], "text": f"{labels[cur]} → {labels[values[j]]}"}

@@ -271,7 +271,7 @@
   "cars": [
    "ferrari-296-challenge"
   ],
-  "param": "tc",
+  "param": "tc2",
   "slot": "all",
   "direction": "decrease",
   "priority": 2,

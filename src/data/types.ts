@@ -65,6 +65,8 @@ interface ParamBase {
   requires?: 'abs' | 'tc' | 'rain'
   /** Значение — разница с базовым сетапом iRacing: показывается со знаком, база — 0 */
   relative?: boolean
+  /** Обратная шкала этой машины: больше число — меньше эффекта (мягче амортизатор, меньше помощи ABS) */
+  inverted?: boolean
 }
 
 export interface ScalarParam extends ParamBase {

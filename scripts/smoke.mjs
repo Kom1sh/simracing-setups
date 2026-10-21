@@ -211,6 +211,37 @@ await step('битый файл даёт понятную ошибку', async (
   expect(await page.getByText('Это не сетап этого кабинета').isVisible(), 'нет сообщения')
 })
 
+await step('гараж по машине: у Ferrari 296 Challenge нет баланса тормозов, стабилизатор Soft/Stiff, есть TC2', async () => {
+  await page.evaluate(() => window.scrollTo(0, 0))
+  await page.getByRole('radio', { name: 'Cup' }).click()
+  await page.getByRole('button', { name: /^Машина/ }).first().click()
+  await page.keyboard.type('296 Challenge')
+  await page.keyboard.press('Enter')
+  await openGarage()
+  expect((await page.getByRole('group', { name: 'Баланс тормозов' }).count()) === 0, 'баланс тормозов есть')
+  expect((await page.getByRole('group', { name: 'TC2' }).count()) === 1, 'нет TC2')
+  const arb = page.getByRole('radiogroup', { name: 'Передний стабилизатор' })
+  expect((await arb.getByRole('radio', { name: 'Как в базе' }).getAttribute('aria-checked')) === 'true', 'стабилизатор не «как в базе»')
+  expect(await arb.getByRole('radio', { name: 'Stiff' }).isVisible(), 'нет положения Stiff')
+})
+
+await step('гараж по машине: у Mercedes-AMG GT3 шкала TC обратная, у Lamborghini двухрежимные амортизаторы', async () => {
+  await page.evaluate(() => window.scrollTo(0, 0))
+  await page.getByRole('radio', { name: 'GT3' }).click()
+  await page.getByRole('button', { name: /^Машина/ }).first().click()
+  await page.keyboard.type('Mercedes')
+  await page.keyboard.press('Enter')
+  await openGarage()
+  expect(await page.getByRole('group', { name: 'Антипробуксовка' }).getByText(/Обратная шкала/).isVisible(), 'нет пометки об обратной шкале')
+  await page.evaluate(() => window.scrollTo(0, 0))
+  await page.getByRole('button', { name: /^Машина/ }).first().click()
+  await page.keyboard.type('Lamborghini')
+  await page.keyboard.press('Enter')
+  await openGarage()
+  expect((await page.getByRole('group', { name: 'Сжатие, медленное' }).count()) === 0, 'четыре настройки амортизаторов')
+  expect((await page.getByRole('group', { name: 'Сжатие', exact: true }).count()) === 1, 'нет общего сжатия')
+})
+
 await step('без ошибок в консоли', async () => {
   expect(errors.length === 0, errors.join(' | '))
 })

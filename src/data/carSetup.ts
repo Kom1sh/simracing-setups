@@ -43,7 +43,7 @@ const compound: Param = {
 const pressureRoad = relCorners(
   'pressure',
   'Холодное давление',
-  'Давление, с которым машина выезжает из боксов. Выше — шина меньше греется, но держит хуже; ниже — больше сцепления и нагрева. У GT3 минимум 21,5 psi (148 кПа), базовые сетапы обычно стоят на нём.',
+  'Давление, с которым машина выезжает из боксов. Выше — шина меньше греется, но держит хуже; ниже — больше сцепления и нагрева.',
   'psi',
   3,
   0.1,
@@ -51,8 +51,8 @@ const pressureRoad = relCorners(
 )
 
 const brakeBias = rel('brakeBias', 'Баланс тормозов', 'Доля тормозного усилия на передней оси. Больше — раньше блокируются передние колёса, но машина стабильнее на торможении; меньше — машина охотнее поворачивает на торможении.', '%', 4, 0.1, 1)
-const abs = rel('abs', 'ABS', 'Чем выше позиция, тем сильнее помогает ABS. У Ferrari 296 GT3 двенадцать позиций: 1 — выключено, 2–7 для сухой трассы, 8–12 для дождя.', 'поз.', 6, 1, 0, 'abs')
-const tc = rel('tc', 'Антипробуксовка', 'Больше — меньше пробуксовки и износа задних шин, но медленнее выход из поворота, если система режет мощность слишком сильно. Позиция 1 обычно выключает систему.', 'поз.', 6, 1, 0, 'tc')
+const abs = rel('abs', 'ABS', 'Больше — ABS сильнее помогает: меньше блокировок, но система чаще вмешивается. Выше на шкале — позиции для дождя.', 'поз.', 6, 1, 0, 'abs')
+const tc = rel('tc', 'Антипробуксовка', 'Больше — меньше пробуксовки и износа задних шин, но медленнее выход из поворота, если система режет мощность слишком сильно.', 'поз.', 6, 1, 0, 'tc')
 const brakePads: Param = {
   id: 'brakePads',
   kind: 'choice',
@@ -75,17 +75,20 @@ const wing = rel('wing', 'Заднее крыло', 'Выше — больше �
 
 const dampers = (id: string, label: string, hint: string) => relAxle(id, label, hint, 'клик', 5, 1)
 
+/** Отклик газа есть не у всех GT3, и позиций у машин от 3 до 10 — подсказка и диапазон у каждой свои */
+const throttleShape = rel('throttleShape', 'Отклик газа', 'Форма отклика педали газа: какая позиция линейная, а какая резче — у каждой машины своё.', 'поз.', 5, 1)
+
 const GT3: ParamGroup[] = [
   { id: 'tyres', title: 'Шины', description: 'Как в разделе Tires & Aero гаража iRacing. Давление — холодное, на выезде из боксов.', params: [compound, pressureRoad] },
   {
     id: 'dials',
     title: 'Кнопки в кокпите',
     description: 'In-Car Dials: их же можно крутить на ходу.',
-    params: [brakeBias, abs, tc, rel('throttleShape', 'Отклик газа', 'Форма отклика педали: 1 — линейная, дальше всё более S-образная, 10 — снова линейная, но резче.', 'поз.', 5, 1)],
+    params: [brakeBias, abs, tc, throttleShape],
   },
   { id: 'chassis', title: 'Шасси', description: 'Перед и зад: стабилизаторы, схождение, колодки.', params: [arbFront, arbRear, toe, brakePads] },
   { id: 'corners', title: 'Подвеска', description: 'Углы машины: клиренс, пружины, развал.', params: [rideHeight, springRate, camber] },
-  { id: 'dampers', title: 'Амортизаторы', description: 'Медленные скорости — реакция на руль, газ и тормоз; быстрые — бордюры и неровности. У Ferrari 296 GT3 от 0 до 11 кликов.', params: [
+  { id: 'dampers', title: 'Амортизаторы', description: 'Медленные скорости — реакция на руль, газ и тормоз; быстрые — бордюры и неровности.', params: [
     dampers('lsComp', 'Сжатие, медленное', 'Больше — быстрее перенос веса при торможении и перекладке; спереди добавляет недостаточной на торможении.'),
     dampers('hsComp', 'Сжатие, быстрое', 'Больше — жёстче на бордюрах и кочках, лучше аэроплатформа на гладкой трассе; меньше — лучше гасит удары.'),
     dampers('lsRebound', 'Отбой, медленный', 'Больше — дольше держит кузов: спереди при разгоне, сзади при торможении. Слишком много — колесо теряет контакт.'),
@@ -101,9 +104,9 @@ const GT3: ParamGroup[] = [
 
 const GT4: ParamGroup[] = [
   { id: 'tyres', title: 'Шины', description: 'Давление — холодное, на выезде из боксов.', params: [compound, { ...pressureRoad, hint: 'Давление, с которым машина выезжает из боксов. Выше — шина меньше греется, но держит хуже; ниже — больше сцепления и нагрева.' } as Param] },
-  { id: 'dials', title: 'Кнопки в кокпите', description: 'У McLaren 570S и Porsche 718 ABS и антипробуксовка — одна общая настройка, у BMW ABS называется DSC.', params: [brakeBias, abs, tc, brakePads] },
+  { id: 'dials', title: 'Кнопки в кокпите', description: 'In-Car Dials: их же можно крутить на ходу.', params: [brakeBias, abs, tc, brakePads] },
   { id: 'chassis', title: 'Шасси', params: [arbFront, arbRear, toe] },
-  { id: 'corners', title: 'Подвеска', description: 'Жёсткость пружин меняется не у всех GT4: у Porsche 718 её нет.', params: [
+  { id: 'corners', title: 'Подвеска', description: 'Клиренс, пружины, развал и амортизаторы. Больше кликов — жёстче.', params: [
     rideHeight,
     springRate,
     camber,
@@ -115,7 +118,7 @@ const GT4: ParamGroup[] = [
 
 const CUP: ParamGroup[] = [
   { id: 'tyres', title: 'Шины', description: 'Давление — холодное, на выезде из боксов.', params: [compound, { ...pressureRoad, hint: 'Давление, с которым машина выезжает из боксов. Выше — шина меньше греется, но держит хуже; ниже — больше сцепления и нагрева.' } as Param] },
-  { id: 'dials', title: 'Кнопки в кокпите', description: 'У Ferrari 296 Challenge две настройки антипробуксовки, TC1 и TC2.', params: [brakeBias, abs, tc] },
+  { id: 'dials', title: 'Кнопки в кокпите', description: 'In-Car Dials: их же можно крутить на ходу.', params: [brakeBias, abs, tc] },
   { id: 'chassis', title: 'Шасси', description: 'Пружин, амортизаторов и дифференциала в гараже кубковых машин нет.', params: [arbFront, arbRear, toe, rideHeight, camber] },
   { id: 'rear', title: 'Аэродинамика и топливо', params: [wing, fuel(100, 50)] },
 ]
@@ -229,3 +232,262 @@ const NASCAR: ParamGroup[] = [
 ]
 
 export const setupTemplates: Record<CategoryId, ParamGroup[]> = { nascar: NASCAR, gt3: GT3, gt4: GT4, cup: CUP }
+
+/**
+ * Отличия гаража машины от шаблона класса — по её руководству iRacing (раздел Advanced Setup Options).
+ * У машин разная нумерация: у одних больше кликов — жёстче амортизатор, у других мягче («клики от закрытого»);
+ * у Mercedes-AMG шкалы ABS и TC идут от большей помощи к меньшей. Такие регулировки помечены inverted —
+ * ассистент поворачивает правку в нужную сторону.
+ */
+export interface CarGarage {
+  /** Регулировок нет в гараже этой машины */
+  drop?: string[]
+  /** Правки регулировки: подсказка, диапазон, обратная шкала */
+  patch?: Record<string, Partial<Param>>
+  /** Регулировка заменяется другой на том же месте */
+  replace?: Record<string, Param>
+  /** Новые регулировки в конец группы */
+  add?: Record<string, Param[]>
+  /** Описания групп */
+  groups?: Record<string, string>
+}
+
+const half = (n: number) => ({ range: around(n) })
+const softerUp = (scale: string): Partial<Param> => ({ inverted: true, hint: `Клики от закрытого: ${scale}. Здесь «+1» — мягче, «−1» — жёстче.` })
+const dampersInverted = (scale: string) => ({ lsComp: softerUp(scale), hsComp: softerUp(scale), lsRebound: softerUp(scale), hsRebound: softerUp(scale) })
+const dampersNote = (scale: string) => `Медленные скорости — реакция на руль, газ и тормоз; быстрые — бордюры и неровности. ${scale}`
+
+/** Выбор без известного значения в базе: «как в базе» и варианты по возрастанию эффекта */
+function choiceFromBase(id: string, label: string, hint: string, options: [string, string][], requires?: Param['requires']): Param {
+  return { id, kind: 'choice', label, hint, options: [{ value: 'base', label: 'Как в базе' }, ...options.map(([value, l]) => ({ value, label: l }))], base: 'base', requires }
+}
+
+export const carGarages: Record<string, CarGarage> = {
+  // GT3
+  'acura-nsx-gt3-evo22': {
+    drop: ['throttleShape'],
+    groups: { dampers: dampersNote('От 1 до 16 кликов, больше — жёстче.') },
+  },
+  'aston-martin-vantage-gt3-evo': {
+    drop: ['throttleShape'],
+    patch: {
+      // «8 being the softest option and the blades becoming stiffer as the value is decreased to 1»
+      arbFront: { inverted: true, hint: 'Обратная шкала: 8 — мягче всего, 1 — жёстче всего. Здесь «−1» — жёстче и больше недостаточной.' },
+      // «0 clicks from closed is maximum damping … and 18 clicks is minimum damping»
+      ...dampersInverted('0 — жёстче всего, 18 — мягче всего'),
+    },
+  },
+  'audi-r8-lms-evo-ii-gt3': {
+    patch: {
+      throttleShape: { ...half(2), hint: '3 позиции: 1 — «бабочка», резкий рост момента в конце хода педали; 2 — промежуточная; 3 — линейная.' },
+      // «2 clicks from closed is maximum damping … and 38 clicks is minimum damping»; быстрые — «0 … maximum damping and 40 is the minimum»
+      ...dampersInverted('медленные 2–38, быстрые 0–40; меньше — жёстче'),
+    },
+  },
+  'bmw-m4-gt3-evo': {
+    drop: ['throttleShape', 'frictionFaces'],
+    patch: {
+      // «10 positions are available. Settings 1-9 range from least … to highest … Position 10 disables»
+      tc: { hint: '10 позиций: 1–9 — от меньшей помощи к большей, 10 — выключено.' },
+    },
+    groups: { dampers: dampersNote('От 0 до 11 кликов, больше — жёстче.') },
+  },
+  'chevrolet-corvette-z06-gt3r': {
+    drop: ['throttleShape'],
+    patch: {
+      // «6 being the softest option and the blades becoming stiffer as the value is decreased to the minimum setting of 0»
+      arbFront: { inverted: true, hint: 'Обратная шкала: 6 — мягче всего, 0 — жёстче всего. Здесь «−1» — жёстче и больше недостаточной.' },
+      arbRear: { inverted: true, hint: 'Обратная шкала: 6 — мягче всего, 0 — жёстче всего. Здесь «−1» — жёстче и больше избыточной.' },
+      ...dampersInverted('медленные 0–30, быстрые 0–22; меньше — жёстче'),
+    },
+  },
+  'ferrari-296-gt3': {
+    patch: {
+      throttleShape: { hint: '10 позиций: 1 — линейная, дальше всё более S-образная, 10 — снова линейная, но резче.' },
+      abs: { hint: '12 позиций: 1 — выключено, 2–7 для сухой трассы, 8–12 для дождя. Больше — сильнее помогает.' },
+      tc: { hint: '12 позиций: 1 — выключено, 2–12 — от меньшей помощи к большей.' },
+    },
+    groups: { dampers: dampersNote('От 0 до 11 кликов, больше — жёстче.') },
+  },
+  'ford-mustang-gt3': {
+    patch: {
+      throttleShape: { hint: '10 позиций: 6 — линейная, 1–5 — мягче в начале хода педали, 7–10 — резче.' },
+      abs: { hint: '12 позиций: 1 — выключено, 2–7 для сухой трассы, 8–12 для дождя. Больше — сильнее помогает.' },
+      tc: { hint: '12 позиций: 1 — выключено, 2–12 — от меньшей помощи к большей.' },
+    },
+    groups: { dampers: dampersNote('От 0 до 11 кликов, больше — жёстче.') },
+  },
+  'lamborghini-huracan-gt3-evo': {
+    // Двухрежимные амортизаторы: «a single setting controlling both the high- and low-speed damping values»
+    drop: ['lsComp', 'hsComp', 'lsRebound', 'hsRebound'],
+    add: {
+      dampers: [
+        dampers('bump', 'Сжатие', 'Одна настройка на медленные и быстрые скорости. Ближе к нулю — жёстче: спереди больше недостаточной на торможении, сзади — на газу.'),
+        dampers('rebound', 'Отбой', 'Одна настройка на медленные и быстрые скорости. Ближе к нулю — дольше держит кузов после нагрузки.'),
+      ],
+    },
+    patch: {
+      throttleShape: { ...half(2), hint: '3 позиции: 1 — линейная, 3 — S-образная, как у тросового привода.' },
+      tc: { hint: '12 позиций, но карт 10: 1–10 — от меньшей помощи к большей, 11 — как 10, 12 — выключено.' },
+    },
+    groups: { dampers: 'Амортизаторы двухрежимные: одна настройка сжатия и одна отбоя на ось. Шкала до нуля, ближе к нулю — жёстче.' },
+  },
+  'mclaren-720s-gt3-evo': {
+    patch: {
+      throttleShape: { ...half(2), hint: '3 позиции: 1 — линейная, 2 — резче на малом газу, 3 — плавная, для дождя.' },
+      abs: { hint: '12 позиций: 1 — выключено, 2–12 — от меньшей помощи к большей.' },
+      tc: { hint: '12 позиций: 1 — выключено, 2–12 — от меньшей помощи к большей.' },
+      // «setting 40 is minimum damping … while setting 0 is maximum damping»
+      ...dampersInverted('0 — жёстче всего, 40 — мягче всего'),
+    },
+  },
+  'mercedes-amg-gt3-2020': {
+    drop: ['throttleShape'],
+    patch: {
+      // «Settings 1-5 are for wet-weather conditions with setting 1 suitable for heavy rain … Settings 7-11 are for dry»
+      abs: { inverted: true, hint: 'Обратная шкала: 1–5 — для дождя (1 — для сильного), 7–11 — для сухой трассы. Здесь «−1» — больше помощи.' },
+      // «Settings 1-11 range from least intervention/sensitivity (position 11) through to highest … (position 1). Position 12 disables»
+      tc: { inverted: true, hint: 'Обратная шкала: 1 — больше всего помощи, 11 — меньше всего, 12 — выключено. Здесь «−1» — сильнее антипробуксовка.' },
+    },
+    groups: { dampers: dampersNote('От 0 до 11 кликов, больше — жёстче.') },
+  },
+  'porsche-911-gt3-r-992': {
+    patch: {
+      throttleShape: { ...half(2), label: 'Карта газа', hint: '3 позиции: 1 — «бабочка», меньше момента на малом ходу педали, помогает против пробуксовки; 2 — промежуточная; 3 — линейная.' },
+      tc: { hint: '0 — выключено, больше — сильнее режет момент против пробуксовки.' },
+      // «Lower compression values will cause the suspension to be stiffer»
+      ...dampersInverted('меньше — жёстче, больше — мягче'),
+    },
+  },
+
+  // GT4
+  'aston-martin-vantage-gt4': {
+    patch: {
+      abs: { hint: '12 позиций: 0 — выключено, 1–11 — от меньшей помощи к большей.' },
+      tc: { hint: '12 позиций: 0 — выключено, 1–11 — от меньшей помощи к большей.' },
+    },
+    groups: { corners: 'Клиренс, пружины, развал и амортизаторы. Сжатие — от 0 до 25 кликов, больше — жёстче.' },
+  },
+  'bmw-m4-g82-gt4-evo': {
+    // «The system can be run in one of four modes: Off, On, MDM, and TC»
+    replace: {
+      abs: choiceFromBase(
+        'dsc',
+        'DSC',
+        'Режим системы стабилизации. Off — ABS и антипробуксовка выключены, On — включены, MDM — вмешиваются мягче, TC — ABS как в MDM, а антипробуксовку настраиваете сами.',
+        [
+          ['off', 'Off'],
+          ['mdm', 'MDM'],
+          ['tc', 'TC'],
+          ['on', 'On'],
+        ],
+        'abs',
+      ),
+    },
+    // Амортизатор один: «The Rebound Stiffness setting is a paired adjustment to both low and high speed rebound damping»
+    drop: ['bump'],
+    patch: {
+      tc: { ...half(4), hint: 'Работает, только когда DSC в режиме TC. 10 позиций: 1 — выключено, 2–10 — от меньшей помощи к большей.' },
+      rebound: { hint: 'Одна настройка на медленный и быстрый отбой: от −18 (мягче всего) до 0 (жёстче всего).' },
+    },
+    add: {
+      dials: [
+        choiceFromBase('throttleMap', 'Карта газа', 'Dry — больше мощности в начале хода педали, Wet — плавнее в начале, Linear — равномерно по всему ходу.', [
+          ['wet', 'Wet'],
+          ['linear', 'Linear'],
+          ['dry', 'Dry'],
+        ]),
+      ],
+    },
+    groups: { corners: 'Клиренс, пружины, развал и отбой. Сжатия в гараже этой машины нет.' },
+  },
+  'mclaren-570s-gt4': {
+    // «This option provides a combined control for the traction control (TC) and ABS … ‘Normal’ … ‘Sport’ … ‘Track’»
+    replace: {
+      abs: choiceFromBase(
+        'absTc',
+        'ABS/TC/ESC',
+        'Одна настройка на ABS и антипробуксовку. Track — меньше всего помощи (рекомендуется), Sport — средне, Normal — больше всего.',
+        [
+          ['track', 'Track'],
+          ['sport', 'Sport'],
+          ['normal', 'Normal'],
+        ],
+        'abs',
+      ),
+    },
+    drop: ['tc'],
+    groups: { corners: 'Клиренс, пружины, развал и амортизаторы. Сжатие — от 0 до 18 кликов, больше — жёстче.' },
+  },
+  'mercedes-amg-gt4': {
+    patch: {
+      // «Position 11 has the least intervention/support while position 1 has the most support. Position 12 disables»
+      abs: { inverted: true, hint: 'Обратная шкала: 1 — больше всего помощи, 11 — меньше всего, 12 — выключено. Здесь «−1» — сильнее помогает.' },
+      tc: { inverted: true, hint: 'Обратная шкала: 1 — больше всего помощи, 11 — меньше всего, 12 — выключено. Здесь «−1» — сильнее антипробуксовка.' },
+    },
+    groups: { corners: 'Клиренс, пружины, развал и амортизаторы. Сжатие — от 0 до 15 кликов, больше — жёстче.' },
+  },
+  'porsche-718-cayman-gt4-clubsport': {
+    // «combined control for the traction control (TC) and ABS … Positions 1 to 11 … Position 0 disables both»
+    replace: {
+      abs: rel('absTc', 'ABS/TC/ESC', 'Одна шкала на ABS и антипробуксовку: 0 — обе выключены, 1–11 — от меньшей помощи к большей.', 'поз.', 5, 1, 0, 'abs'),
+    },
+    drop: ['tc', 'springRate'],
+    groups: { corners: 'Клиренс, развал и амортизаторы — пружины в гараже этой машины не меняются. Сжатие — от 0 до 18 кликов, больше — жёстче.' },
+  },
+
+  // Кубковые
+  'porsche-911-cup-992-2': {
+    patch: {
+      abs: { hint: '0 — выключено, 1–11 — от меньшей помощи к большей.' },
+      tc: { hint: '0 — выключено, 1–11 — от меньшей помощи к большей. Режим Dry/Wet ставится сам по шинам.' },
+      // «Front ARB (softest to stiffest) 1-2-3-4-7-5-6», «Rear ARB (softest to stiffest) 1-2-3-4-5-7-6»
+      arbFront: { hint: 'Семь положений, по жёсткости идут 1-2-3-4-7-5-6: седьмое мягче шестого. Жёстче — больше недостаточной.' },
+      arbRear: { hint: 'Семь положений, по жёсткости идут 1-2-3-4-5-7-6: седьмое между пятым и шестым. Жёстче — больше избыточной.' },
+    },
+    add: {
+      dials: [rel('throttleShape', 'Отклик газа', 'Две позиции: 1 — мягче, 2 — резче.', 'поз.', 1, 1)],
+    },
+  },
+  'ferrari-296-challenge': {
+    // Баланса тормозов нет: его задаёт карта ABS («This setting impacts the target brake bias»)
+    drop: ['brakeBias'],
+    patch: {
+      abs: { ...half(3), hint: '4 позиции, выключить нельзя: 1–2 для сухой трассы, 3–4 для дождя. Нечётные агрессивнее: баланс тормозов дальше назад, машина охотнее поворачивает на торможении.' },
+      tc: { ...half(4), label: 'TC1', hint: 'Сколько антипробуксовка режет при пробуксовке: 0 — выключает и TC1, и TC2; 1–4 — от меньшей помощи к большей.' },
+    },
+    add: {
+      dials: [rel('tc2', 'TC2', 'Чувствительность антипробуксовки к рысканию: 1–4, ниже — больше допускается заноса и меньше блокируется дифференциал. Выключается только вместе с TC1.', 'поз.', 3, 1, 0, 'tc')],
+    },
+    replace: {
+      // «the position of the ARB linkages can be changed to one of two positions. The Soft setting … the Stiff setting»
+      arbFront: choiceFromBase('arbFront', 'Передний стабилизатор', 'Два положения тяги. Soft — меньше недостаточной на входе, Stiff — больше.', [
+        ['soft', 'Soft'],
+        ['stiff', 'Stiff'],
+      ]),
+      arbRear: choiceFromBase('arbRear', 'Задний стабилизатор', 'Два положения тяги. Soft — меньше избыточной на входе, Stiff — больше.', [
+        ['soft', 'Soft'],
+        ['stiff', 'Stiff'],
+      ]),
+    },
+  },
+}
+
+/** Гараж конкретной машины: шаблон класса с отличиями из её руководства */
+export function garageFor(carId: string, category: CategoryId): ParamGroup[] {
+  const g = carGarages[carId]
+  const groups = setupTemplates[category]
+  if (!g) return groups
+  return groups
+    .map((group) => ({
+      ...group,
+      description: g.groups?.[group.id] ?? group.description,
+      params: [
+        ...group.params
+          .filter((p) => !g.drop?.includes(p.id))
+          .map((p) => g.replace?.[p.id] ?? (g.patch?.[p.id] ? ({ ...p, ...g.patch[p.id] } as Param) : p)),
+        ...(g.add?.[group.id] ?? []),
+      ],
+    }))
+    .filter((group) => group.params.length > 0)
+}

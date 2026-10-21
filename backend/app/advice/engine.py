@@ -91,7 +91,7 @@ def advise(db: Session, llm: LLMClient | None, settings: Settings, user_id: int 
     lang = req.get("lang") if req.get("lang") in TEXT else "ru"
     catalog = get_catalog()
     car, track = catalog.cars[req["car_id"]], catalog.tracks[req["track_id"]]
-    params = catalog.params(car["category"])
+    params = catalog.car_params(car["id"])
     setup = req.get("setup") or {}
     diag, tokens = diagnose(llm, settings, req, track)
     meta = {"mode": "rules", "model": None, "tokens": tokens}

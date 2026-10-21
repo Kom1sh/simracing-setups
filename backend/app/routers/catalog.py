@@ -10,7 +10,7 @@ router = APIRouter(prefix="/api/v2")
 def catalog() -> dict:
     """Классы, машины, трассы и гаражи iRacing — тот же каталог, что в кабинете."""
     c = get_catalog()
-    return {"classes": list(c.classes.values()), "cars": list(c.cars.values()), "tracks": list(c.tracks.values()), "templates": c.templates}
+    return {"classes": list(c.classes.values()), "cars": list(c.cars.values()), "tracks": list(c.tracks.values()), "templates": c.templates, "garages": c.garages}
 
 
 @router.get("/knowledge/effects")

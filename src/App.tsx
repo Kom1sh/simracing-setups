@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react'
 import carsData from './data/cars.json'
 import { trackMeta } from './data/trackMeta'
-import { categories, conditionGroups, ENGINE_POSITION, setupGroupsFor, trackSearchTerms, tracks } from './data/localized'
+import { categories, conditionGroups, ENGINE_POSITION, garage, trackSearchTerms, tracks } from './data/localized'
 import type { Car, CategoryId, Param, ParamValue, Track, TrackKind, Values } from './data/types'
 import { baseValues, countParams, listChanges, sanitize, type Change } from './lib/params'
 import { formatNumber, parseLapTime } from './lib/format'
@@ -77,7 +77,7 @@ function freshDraft(): Draft {
     trackId: track.id,
     carId: car.id,
     conditions: baseValues(conditionGroups),
-    setup: baseValues(setupGroupsFor(car.category)),
+    setup: baseValues(garage(car)),
     symmetric: {},
     lapTime: '',
     perLap: '',
@@ -98,7 +98,7 @@ function repairDraft(raw: Partial<Draft> | null): Draft | null {
     trackId: track.id,
     carId: car.id,
     conditions: sanitize(conditionGroups, raw.conditions),
-    setup: sanitize(setupGroupsFor(car.category), raw.setup),
+    setup: sanitize(garage(car), raw.setup),
     symmetric: raw.symmetric && typeof raw.symmetric === 'object' ? raw.symmetric : {},
     lapTime: typeof raw.lapTime === 'string' ? raw.lapTime : '',
     perLap: typeof raw.perLap === 'string' ? raw.perLap : '',
@@ -149,7 +149,7 @@ export default function App({ session, onSignOut }: { session: Session; onSignOu
   const car = carById(draft.carId)!
   const category = car.category
   const categoryInfo = categoryOf(category)
-  const groups = useMemo(() => setupGroupsFor(category), [category])
+  const groups = useMemo(() => garage(car), [car])
   const classTracks = useMemo(() => tracks.filter((x) => categoryInfo.tracks.includes(x.kind)), [categoryInfo])
   const rainPossible = car.rain && track.rain
 
@@ -233,7 +233,8 @@ export default function App({ session, onSignOut }: { session: Session; onSignOu
     const c = carById(id)
     if (!c) return
     lastCarByCategory.current[c.category] = id
-    update({ carId: id })
+    // У машин класса гаражи разные: правки, которых у новой машины нет, отбрасываются
+    update((d) => ({ carId: id, setup: sanitize(garage(c), d.setup) }))
   }
 
   /** У класса свой гараж: правки начинаются с базы. NASCAR уходит на овал, GT и кубковые — на дорожную трассу */
@@ -251,7 +252,7 @@ export default function App({ session, onSignOut }: { session: Session; onSignOu
     update({
       carId: next,
       trackId: nextTrack.id,
-      setup: baseValues(setupGroupsFor(cat)),
+      setup: baseValues(garage(carById(next)!)),
       symmetric: {},
     })
     say(t.toast.category(info.label, keep ? null : nextTrack.name))
@@ -631,7 +632,7 @@ export default function App({ session, onSignOut }: { session: Session; onSignOu
         items={saved.map((s) => {
           const tr = trackById(s.trackId)
           const c = carById(s.carId)
-          const g = setupGroupsFor(c?.category ?? category)
+          const g = c ? garage(c) : groups
           return {
             id: s.id,
             name: s.name,

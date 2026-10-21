@@ -1,5 +1,5 @@
 import tracksData from './tracks.json'
-import { setupTemplates } from './carSetup'
+import { garageFor } from './carSetup'
 import { conditionGroups as conditionsSource } from './conditions'
 import { categories as categoriesSource, ENGINE_POSITION as positionSource, ASPIRATION as aspirationSource } from './categories'
 import { trackAliases } from './trackMeta'
@@ -12,31 +12,41 @@ import * as en from '../i18n/dataEn'
 
 const isEn = locale === 'en'
 
-/** Перевод по id; для регулировок класса сначала ищется «класс:id» — у NASCAR и GT3 одно и то же давление описано по-разному */
-function localizeParam(p: Param, scope?: string): Param {
-  const tr = (scope && en.paramsEn[`${scope}:${p.id}`]) || en.paramsEn[p.id]
+/**
+ * Перевод по id. Для гаража сначала ищется «машина:id», потом «класс:id»: у NASCAR и GT3 одно и то же давление
+ * описано по-разному, а у Mercedes-AMG шкала ABS обратная. Подпись берётся из первого перевода, где она есть.
+ */
+function localizeParam(p: Param, scopes: string[] = []): Param {
+  const trs = [...scopes.map((s) => en.paramsEn[`${s}:${p.id}`]), en.paramsEn[p.id]].filter((x): x is en.ParamEn => !!x)
+  const tr = trs[0]
   const unit = p.unit ? (en.unitsEn[p.unit] ?? p.unit) : undefined
-  const common = { label: tr?.label ?? p.label, hint: tr ? tr.hint : p.hint, unit }
-  if (p.kind === 'choice') return { ...p, ...common, options: p.options.map((o) => ({ ...o, label: tr?.options?.[o.value] ?? o.label })) }
+  const common = { label: trs.find((x) => x.label)?.label ?? p.label, hint: tr ? tr.hint : p.hint, unit }
+  if (p.kind === 'choice')
+    return { ...p, ...common, options: p.options.map((o) => ({ ...o, label: o.value === 'base' ? en.baseOptionEn : (trs.find((x) => x.options?.[o.value])?.options?.[o.value] ?? o.label) })) }
   if (p.kind === 'scalar') return { ...p, ...common, presets: p.presets?.map((pr, i) => ({ ...pr, label: tr?.presets?.[i] ?? pr.label })) }
   return { ...p, ...common }
 }
 
-function localizeGroups(groups: ParamGroup[], scope?: string): ParamGroup[] {
+function localizeGroups(groups: ParamGroup[], scopes: string[] = []): ParamGroup[] {
   if (!isEn) return groups
   return groups.map((g) => {
-    const tr = (scope && en.groupsEn[`${scope}:${g.id}`]) || en.groupsEn[g.id]
-    return { ...g, title: tr?.title ?? g.title, description: tr ? tr.description : g.description, params: g.params.map((p) => localizeParam(p, scope)) }
+    const tr = scopes.map((s) => en.groupsEn[`${s}:${g.id}`]).find(Boolean) ?? en.groupsEn[g.id]
+    return { ...g, title: tr?.title ?? g.title, description: tr ? tr.description : g.description, params: g.params.map((p) => localizeParam(p, scopes)) }
   })
 }
 
 export const conditionGroups = localizeGroups(conditionsSource)
 
-const setupByCategory = Object.fromEntries(Object.entries(setupTemplates).map(([id, groups]) => [id, localizeGroups(groups, id)])) as Record<CategoryId, ParamGroup[]>
+const garages = new Map<string, ParamGroup[]>()
 
-/** Регулировки гаража iRacing для класса машины */
-export function setupGroupsFor(category: CategoryId): ParamGroup[] {
-  return setupByCategory[category]
+/** Гараж iRacing конкретной машины на языке страницы: шаблон класса с отличиями из её руководства */
+export function garage(car: { id: string; category: CategoryId }): ParamGroup[] {
+  let groups = garages.get(car.id)
+  if (!groups) {
+    groups = localizeGroups(garageFor(car.id, car.category), [car.id, car.category])
+    garages.set(car.id, groups)
+  }
+  return groups
 }
 const sourceTracks = tracksData as Track[]
 
