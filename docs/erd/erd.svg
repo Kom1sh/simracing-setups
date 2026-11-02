@@ -1,0 +1,674 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2540" height="1700" viewBox="0 0 2540 1700" font-family="Helvetica Neue, Arial, sans-serif">
+<style>
+.bg { fill: #ffffff; }
+.grid { stroke: #eef0f3; stroke-width: 1; }
+.h1 { font: 700 30px 'Helvetica Neue', Arial, sans-serif; fill: #111; }
+.sub { font: 400 17px 'Helvetica Neue', Arial, sans-serif; fill: #5e5e5e; }
+.group { fill: none; stroke: #c9ced6; stroke-width: 1.5; stroke-dasharray: 8 6; }
+.groupt { font: 600 15px 'Helvetica Neue', Arial, sans-serif; fill: #7a808a; letter-spacing: .02em; }
+.shadow { fill: #000; opacity: .06; }
+.body { fill: #fff; stroke: #4a4f57; stroke-width: 1.4; }
+.head { fill: #d9dde3; stroke: #4a4f57; stroke-width: 1.4; }
+.title { font: italic 600 19px 'Helvetica Neue', Arial, sans-serif; fill: #1b1d21; }
+.caption { font: 400 13px 'Helvetica Neue', Arial, sans-serif; fill: #5e5e5e; }
+.sep { stroke: #4a4f57; stroke-width: 1.4; }
+.col { stroke: #9aa0a8; stroke-width: 1; }
+.rowsep { stroke: #e3e6ea; stroke-width: 1; }
+.field { font: 400 16px 'Helvetica Neue', Arial, sans-serif; fill: #24272c; }
+.pk { font-weight: 700; text-decoration: underline; }
+.fk { font-style: italic; fill: #1f5fa8; }
+.type { font: 400 15px 'SF Mono', Menlo, Consolas, monospace; fill: #4d535b; }
+.key { font: 700 13px 'Helvetica Neue', Arial, sans-serif; fill: #6b7079; }
+.rel { fill: none; stroke: #3b3f46; stroke-width: 1.6; }
+.dashed { stroke-dasharray: 7 5; stroke: #6b7079; }
+.mark { stroke: #3b3f46; stroke-width: 1.6; }
+.markc { fill: #fff; stroke: #3b3f46; stroke-width: 1.6; }
+.label { font: 400 15px 'Helvetica Neue', Arial, sans-serif; fill: #24272c; paint-order: stroke; stroke: #fff; stroke-width: 5px; stroke-linejoin: round; }
+.legend { font: 400 15px 'Helvetica Neue', Arial, sans-serif; fill: #24272c; }
+.pkl { font-weight: 700; text-decoration: underline; }
+.fkl { font-style: italic; fill: #1f5fa8; }
+</style>
+<rect width="2540" height="1700" class="bg"/>
+<line x1="0" y1="0" x2="0" y2="1700" class="grid"/>
+<line x1="20" y1="0" x2="20" y2="1700" class="grid"/>
+<line x1="40" y1="0" x2="40" y2="1700" class="grid"/>
+<line x1="60" y1="0" x2="60" y2="1700" class="grid"/>
+<line x1="80" y1="0" x2="80" y2="1700" class="grid"/>
+<line x1="100" y1="0" x2="100" y2="1700" class="grid"/>
+<line x1="120" y1="0" x2="120" y2="1700" class="grid"/>
+<line x1="140" y1="0" x2="140" y2="1700" class="grid"/>
+<line x1="160" y1="0" x2="160" y2="1700" class="grid"/>
+<line x1="180" y1="0" x2="180" y2="1700" class="grid"/>
+<line x1="200" y1="0" x2="200" y2="1700" class="grid"/>
+<line x1="220" y1="0" x2="220" y2="1700" class="grid"/>
+<line x1="240" y1="0" x2="240" y2="1700" class="grid"/>
+<line x1="260" y1="0" x2="260" y2="1700" class="grid"/>
+<line x1="280" y1="0" x2="280" y2="1700" class="grid"/>
+<line x1="300" y1="0" x2="300" y2="1700" class="grid"/>
+<line x1="320" y1="0" x2="320" y2="1700" class="grid"/>
+<line x1="340" y1="0" x2="340" y2="1700" class="grid"/>
+<line x1="360" y1="0" x2="360" y2="1700" class="grid"/>
+<line x1="380" y1="0" x2="380" y2="1700" class="grid"/>
+<line x1="400" y1="0" x2="400" y2="1700" class="grid"/>
+<line x1="420" y1="0" x2="420" y2="1700" class="grid"/>
+<line x1="440" y1="0" x2="440" y2="1700" class="grid"/>
+<line x1="460" y1="0" x2="460" y2="1700" class="grid"/>
+<line x1="480" y1="0" x2="480" y2="1700" class="grid"/>
+<line x1="500" y1="0" x2="500" y2="1700" class="grid"/>
+<line x1="520" y1="0" x2="520" y2="1700" class="grid"/>
+<line x1="540" y1="0" x2="540" y2="1700" class="grid"/>
+<line x1="560" y1="0" x2="560" y2="1700" class="grid"/>
+<line x1="580" y1="0" x2="580" y2="1700" class="grid"/>
+<line x1="600" y1="0" x2="600" y2="1700" class="grid"/>
+<line x1="620" y1="0" x2="620" y2="1700" class="grid"/>
+<line x1="640" y1="0" x2="640" y2="1700" class="grid"/>
+<line x1="660" y1="0" x2="660" y2="1700" class="grid"/>
+<line x1="680" y1="0" x2="680" y2="1700" class="grid"/>
+<line x1="700" y1="0" x2="700" y2="1700" class="grid"/>
+<line x1="720" y1="0" x2="720" y2="1700" class="grid"/>
+<line x1="740" y1="0" x2="740" y2="1700" class="grid"/>
+<line x1="760" y1="0" x2="760" y2="1700" class="grid"/>
+<line x1="780" y1="0" x2="780" y2="1700" class="grid"/>
+<line x1="800" y1="0" x2="800" y2="1700" class="grid"/>
+<line x1="820" y1="0" x2="820" y2="1700" class="grid"/>
+<line x1="840" y1="0" x2="840" y2="1700" class="grid"/>
+<line x1="860" y1="0" x2="860" y2="1700" class="grid"/>
+<line x1="880" y1="0" x2="880" y2="1700" class="grid"/>
+<line x1="900" y1="0" x2="900" y2="1700" class="grid"/>
+<line x1="920" y1="0" x2="920" y2="1700" class="grid"/>
+<line x1="940" y1="0" x2="940" y2="1700" class="grid"/>
+<line x1="960" y1="0" x2="960" y2="1700" class="grid"/>
+<line x1="980" y1="0" x2="980" y2="1700" class="grid"/>
+<line x1="1000" y1="0" x2="1000" y2="1700" class="grid"/>
+<line x1="1020" y1="0" x2="1020" y2="1700" class="grid"/>
+<line x1="1040" y1="0" x2="1040" y2="1700" class="grid"/>
+<line x1="1060" y1="0" x2="1060" y2="1700" class="grid"/>
+<line x1="1080" y1="0" x2="1080" y2="1700" class="grid"/>
+<line x1="1100" y1="0" x2="1100" y2="1700" class="grid"/>
+<line x1="1120" y1="0" x2="1120" y2="1700" class="grid"/>
+<line x1="1140" y1="0" x2="1140" y2="1700" class="grid"/>
+<line x1="1160" y1="0" x2="1160" y2="1700" class="grid"/>
+<line x1="1180" y1="0" x2="1180" y2="1700" class="grid"/>
+<line x1="1200" y1="0" x2="1200" y2="1700" class="grid"/>
+<line x1="1220" y1="0" x2="1220" y2="1700" class="grid"/>
+<line x1="1240" y1="0" x2="1240" y2="1700" class="grid"/>
+<line x1="1260" y1="0" x2="1260" y2="1700" class="grid"/>
+<line x1="1280" y1="0" x2="1280" y2="1700" class="grid"/>
+<line x1="1300" y1="0" x2="1300" y2="1700" class="grid"/>
+<line x1="1320" y1="0" x2="1320" y2="1700" class="grid"/>
+<line x1="1340" y1="0" x2="1340" y2="1700" class="grid"/>
+<line x1="1360" y1="0" x2="1360" y2="1700" class="grid"/>
+<line x1="1380" y1="0" x2="1380" y2="1700" class="grid"/>
+<line x1="1400" y1="0" x2="1400" y2="1700" class="grid"/>
+<line x1="1420" y1="0" x2="1420" y2="1700" class="grid"/>
+<line x1="1440" y1="0" x2="1440" y2="1700" class="grid"/>
+<line x1="1460" y1="0" x2="1460" y2="1700" class="grid"/>
+<line x1="1480" y1="0" x2="1480" y2="1700" class="grid"/>
+<line x1="1500" y1="0" x2="1500" y2="1700" class="grid"/>
+<line x1="1520" y1="0" x2="1520" y2="1700" class="grid"/>
+<line x1="1540" y1="0" x2="1540" y2="1700" class="grid"/>
+<line x1="1560" y1="0" x2="1560" y2="1700" class="grid"/>
+<line x1="1580" y1="0" x2="1580" y2="1700" class="grid"/>
+<line x1="1600" y1="0" x2="1600" y2="1700" class="grid"/>
+<line x1="1620" y1="0" x2="1620" y2="1700" class="grid"/>
+<line x1="1640" y1="0" x2="1640" y2="1700" class="grid"/>
+<line x1="1660" y1="0" x2="1660" y2="1700" class="grid"/>
+<line x1="1680" y1="0" x2="1680" y2="1700" class="grid"/>
+<line x1="1700" y1="0" x2="1700" y2="1700" class="grid"/>
+<line x1="1720" y1="0" x2="1720" y2="1700" class="grid"/>
+<line x1="1740" y1="0" x2="1740" y2="1700" class="grid"/>
+<line x1="1760" y1="0" x2="1760" y2="1700" class="grid"/>
+<line x1="1780" y1="0" x2="1780" y2="1700" class="grid"/>
+<line x1="1800" y1="0" x2="1800" y2="1700" class="grid"/>
+<line x1="1820" y1="0" x2="1820" y2="1700" class="grid"/>
+<line x1="1840" y1="0" x2="1840" y2="1700" class="grid"/>
+<line x1="1860" y1="0" x2="1860" y2="1700" class="grid"/>
+<line x1="1880" y1="0" x2="1880" y2="1700" class="grid"/>
+<line x1="1900" y1="0" x2="1900" y2="1700" class="grid"/>
+<line x1="1920" y1="0" x2="1920" y2="1700" class="grid"/>
+<line x1="1940" y1="0" x2="1940" y2="1700" class="grid"/>
+<line x1="1960" y1="0" x2="1960" y2="1700" class="grid"/>
+<line x1="1980" y1="0" x2="1980" y2="1700" class="grid"/>
+<line x1="2000" y1="0" x2="2000" y2="1700" class="grid"/>
+<line x1="2020" y1="0" x2="2020" y2="1700" class="grid"/>
+<line x1="2040" y1="0" x2="2040" y2="1700" class="grid"/>
+<line x1="2060" y1="0" x2="2060" y2="1700" class="grid"/>
+<line x1="2080" y1="0" x2="2080" y2="1700" class="grid"/>
+<line x1="2100" y1="0" x2="2100" y2="1700" class="grid"/>
+<line x1="2120" y1="0" x2="2120" y2="1700" class="grid"/>
+<line x1="2140" y1="0" x2="2140" y2="1700" class="grid"/>
+<line x1="2160" y1="0" x2="2160" y2="1700" class="grid"/>
+<line x1="2180" y1="0" x2="2180" y2="1700" class="grid"/>
+<line x1="2200" y1="0" x2="2200" y2="1700" class="grid"/>
+<line x1="2220" y1="0" x2="2220" y2="1700" class="grid"/>
+<line x1="2240" y1="0" x2="2240" y2="1700" class="grid"/>
+<line x1="2260" y1="0" x2="2260" y2="1700" class="grid"/>
+<line x1="2280" y1="0" x2="2280" y2="1700" class="grid"/>
+<line x1="2300" y1="0" x2="2300" y2="1700" class="grid"/>
+<line x1="2320" y1="0" x2="2320" y2="1700" class="grid"/>
+<line x1="2340" y1="0" x2="2340" y2="1700" class="grid"/>
+<line x1="2360" y1="0" x2="2360" y2="1700" class="grid"/>
+<line x1="2380" y1="0" x2="2380" y2="1700" class="grid"/>
+<line x1="2400" y1="0" x2="2400" y2="1700" class="grid"/>
+<line x1="2420" y1="0" x2="2420" y2="1700" class="grid"/>
+<line x1="2440" y1="0" x2="2440" y2="1700" class="grid"/>
+<line x1="2460" y1="0" x2="2460" y2="1700" class="grid"/>
+<line x1="2480" y1="0" x2="2480" y2="1700" class="grid"/>
+<line x1="2500" y1="0" x2="2500" y2="1700" class="grid"/>
+<line x1="2520" y1="0" x2="2520" y2="1700" class="grid"/>
+<line x1="0" y1="0" x2="2540" y2="0" class="grid"/>
+<line x1="0" y1="20" x2="2540" y2="20" class="grid"/>
+<line x1="0" y1="40" x2="2540" y2="40" class="grid"/>
+<line x1="0" y1="60" x2="2540" y2="60" class="grid"/>
+<line x1="0" y1="80" x2="2540" y2="80" class="grid"/>
+<line x1="0" y1="100" x2="2540" y2="100" class="grid"/>
+<line x1="0" y1="120" x2="2540" y2="120" class="grid"/>
+<line x1="0" y1="140" x2="2540" y2="140" class="grid"/>
+<line x1="0" y1="160" x2="2540" y2="160" class="grid"/>
+<line x1="0" y1="180" x2="2540" y2="180" class="grid"/>
+<line x1="0" y1="200" x2="2540" y2="200" class="grid"/>
+<line x1="0" y1="220" x2="2540" y2="220" class="grid"/>
+<line x1="0" y1="240" x2="2540" y2="240" class="grid"/>
+<line x1="0" y1="260" x2="2540" y2="260" class="grid"/>
+<line x1="0" y1="280" x2="2540" y2="280" class="grid"/>
+<line x1="0" y1="300" x2="2540" y2="300" class="grid"/>
+<line x1="0" y1="320" x2="2540" y2="320" class="grid"/>
+<line x1="0" y1="340" x2="2540" y2="340" class="grid"/>
+<line x1="0" y1="360" x2="2540" y2="360" class="grid"/>
+<line x1="0" y1="380" x2="2540" y2="380" class="grid"/>
+<line x1="0" y1="400" x2="2540" y2="400" class="grid"/>
+<line x1="0" y1="420" x2="2540" y2="420" class="grid"/>
+<line x1="0" y1="440" x2="2540" y2="440" class="grid"/>
+<line x1="0" y1="460" x2="2540" y2="460" class="grid"/>
+<line x1="0" y1="480" x2="2540" y2="480" class="grid"/>
+<line x1="0" y1="500" x2="2540" y2="500" class="grid"/>
+<line x1="0" y1="520" x2="2540" y2="520" class="grid"/>
+<line x1="0" y1="540" x2="2540" y2="540" class="grid"/>
+<line x1="0" y1="560" x2="2540" y2="560" class="grid"/>
+<line x1="0" y1="580" x2="2540" y2="580" class="grid"/>
+<line x1="0" y1="600" x2="2540" y2="600" class="grid"/>
+<line x1="0" y1="620" x2="2540" y2="620" class="grid"/>
+<line x1="0" y1="640" x2="2540" y2="640" class="grid"/>
+<line x1="0" y1="660" x2="2540" y2="660" class="grid"/>
+<line x1="0" y1="680" x2="2540" y2="680" class="grid"/>
+<line x1="0" y1="700" x2="2540" y2="700" class="grid"/>
+<line x1="0" y1="720" x2="2540" y2="720" class="grid"/>
+<line x1="0" y1="740" x2="2540" y2="740" class="grid"/>
+<line x1="0" y1="760" x2="2540" y2="760" class="grid"/>
+<line x1="0" y1="780" x2="2540" y2="780" class="grid"/>
+<line x1="0" y1="800" x2="2540" y2="800" class="grid"/>
+<line x1="0" y1="820" x2="2540" y2="820" class="grid"/>
+<line x1="0" y1="840" x2="2540" y2="840" class="grid"/>
+<line x1="0" y1="860" x2="2540" y2="860" class="grid"/>
+<line x1="0" y1="880" x2="2540" y2="880" class="grid"/>
+<line x1="0" y1="900" x2="2540" y2="900" class="grid"/>
+<line x1="0" y1="920" x2="2540" y2="920" class="grid"/>
+<line x1="0" y1="940" x2="2540" y2="940" class="grid"/>
+<line x1="0" y1="960" x2="2540" y2="960" class="grid"/>
+<line x1="0" y1="980" x2="2540" y2="980" class="grid"/>
+<line x1="0" y1="1000" x2="2540" y2="1000" class="grid"/>
+<line x1="0" y1="1020" x2="2540" y2="1020" class="grid"/>
+<line x1="0" y1="1040" x2="2540" y2="1040" class="grid"/>
+<line x1="0" y1="1060" x2="2540" y2="1060" class="grid"/>
+<line x1="0" y1="1080" x2="2540" y2="1080" class="grid"/>
+<line x1="0" y1="1100" x2="2540" y2="1100" class="grid"/>
+<line x1="0" y1="1120" x2="2540" y2="1120" class="grid"/>
+<line x1="0" y1="1140" x2="2540" y2="1140" class="grid"/>
+<line x1="0" y1="1160" x2="2540" y2="1160" class="grid"/>
+<line x1="0" y1="1180" x2="2540" y2="1180" class="grid"/>
+<line x1="0" y1="1200" x2="2540" y2="1200" class="grid"/>
+<line x1="0" y1="1220" x2="2540" y2="1220" class="grid"/>
+<line x1="0" y1="1240" x2="2540" y2="1240" class="grid"/>
+<line x1="0" y1="1260" x2="2540" y2="1260" class="grid"/>
+<line x1="0" y1="1280" x2="2540" y2="1280" class="grid"/>
+<line x1="0" y1="1300" x2="2540" y2="1300" class="grid"/>
+<line x1="0" y1="1320" x2="2540" y2="1320" class="grid"/>
+<line x1="0" y1="1340" x2="2540" y2="1340" class="grid"/>
+<line x1="0" y1="1360" x2="2540" y2="1360" class="grid"/>
+<line x1="0" y1="1380" x2="2540" y2="1380" class="grid"/>
+<line x1="0" y1="1400" x2="2540" y2="1400" class="grid"/>
+<line x1="0" y1="1420" x2="2540" y2="1420" class="grid"/>
+<line x1="0" y1="1440" x2="2540" y2="1440" class="grid"/>
+<line x1="0" y1="1460" x2="2540" y2="1460" class="grid"/>
+<line x1="0" y1="1480" x2="2540" y2="1480" class="grid"/>
+<line x1="0" y1="1500" x2="2540" y2="1500" class="grid"/>
+<line x1="0" y1="1520" x2="2540" y2="1520" class="grid"/>
+<line x1="0" y1="1540" x2="2540" y2="1540" class="grid"/>
+<line x1="0" y1="1560" x2="2540" y2="1560" class="grid"/>
+<line x1="0" y1="1580" x2="2540" y2="1580" class="grid"/>
+<line x1="0" y1="1600" x2="2540" y2="1600" class="grid"/>
+<line x1="0" y1="1620" x2="2540" y2="1620" class="grid"/>
+<line x1="0" y1="1640" x2="2540" y2="1640" class="grid"/>
+<line x1="0" y1="1660" x2="2540" y2="1660" class="grid"/>
+<line x1="0" y1="1680" x2="2540" y2="1680" class="grid"/>
+<text x="40" y="52" class="h1">ER-диаграмма базы данных Simracing Setups</text>
+<text x="40" y="82" class="sub">SQLite, схема из миграций Alembic · 9 таблиц и полнотекстовый индекс FTS5</text>
+<rect x="40" y="100" width="2460" height="1050" rx="10" class="group"/>
+<text x="56" y="122" class="groupt">АККАУНТЫ, СЕТАПЫ, ИИ-АССИСТЕНТ И БАЗА ЗНАНИЙ</text>
+<rect x="40" y="1160" width="1830" height="500" rx="10" class="group"/>
+<text x="56" y="1182" class="groupt">ЭКСПЕРТНЫЕ ПРАВИЛА</text>
+<path d="M265.0 590.0 L265.0 340.0" class="rel"/>
+<line x1="255.0" y1="580.0" x2="275.0" y2="580.0" class="mark"/>
+<line x1="255.0" y1="572.0" x2="275.0" y2="572.0" class="mark"/>
+<line x1="275.0" y1="340.0" x2="265.0" y2="356.0" class="mark"/>
+<line x1="255.0" y1="340.0" x2="265.0" y2="356.0" class="mark"/>
+<line x1="265.0" y1="340.0" x2="265.0" y2="356.0" class="mark"/>
+<circle cx="265.0" cy="364.0" r="7" class="markc"/>
+<text x="277" y="470.0" class="label" text-anchor="start">открывает сессии</text>
+<path d="M530.0 610.0 L620.0 610.0 L620.0 235.0 L710.0 235.0" class="rel"/>
+<line x1="540.0" y1="600.0" x2="540.0" y2="620.0" class="mark"/>
+<line x1="548.0" y1="600.0" x2="548.0" y2="620.0" class="mark"/>
+<line x1="710.0" y1="245.0" x2="694.0" y2="235.0" class="mark"/>
+<line x1="710.0" y1="225.0" x2="694.0" y2="235.0" class="mark"/>
+<line x1="710.0" y1="235.0" x2="694.0" y2="235.0" class="mark"/>
+<circle cx="686.0" cy="235.0" r="7" class="markc"/>
+<text x="620" y="427.5" class="label" text-anchor="middle">хранит</text>
+<path d="M530.0 652.0 L710.0 652.0" class="rel"/>
+<line x1="540.0" y1="642.0" x2="540.0" y2="662.0" class="mark"/>
+<circle cx="555.0" cy="652.0" r="7" class="markc"/>
+<line x1="710.0" y1="662.0" x2="694.0" y2="652.0" class="mark"/>
+<line x1="710.0" y1="642.0" x2="694.0" y2="652.0" class="mark"/>
+<line x1="710.0" y1="652.0" x2="694.0" y2="652.0" class="mark"/>
+<circle cx="686.0" cy="652.0" r="7" class="markc"/>
+<text x="620" y="678.0" class="label" text-anchor="middle">запрашивает</text>
+<path d="M1180.0 622.0 L1360.0 622.0" class="rel"/>
+<line x1="1190.0" y1="612.0" x2="1190.0" y2="632.0" class="mark"/>
+<line x1="1198.0" y1="612.0" x2="1198.0" y2="632.0" class="mark"/>
+<line x1="1350.0" y1="632.0" x2="1350.0" y2="612.0" class="mark"/>
+<circle cx="1335.0" cy="622.0" r="7" class="markc"/>
+<text x="1270.0" y="610.0" class="label" text-anchor="middle">получает отзыв</text>
+<path d="M480.0 780.0 L480.0 1072.0 L1270.0 1072.0 L1270.0 652.0 L1360.0 652.0" class="rel"/>
+<line x1="490.0" y1="790.0" x2="470.0" y2="790.0" class="mark"/>
+<circle cx="480.0" cy="805.0" r="7" class="markc"/>
+<line x1="1360.0" y1="662.0" x2="1344.0" y2="652.0" class="mark"/>
+<line x1="1360.0" y1="642.0" x2="1344.0" y2="652.0" class="mark"/>
+<line x1="1360.0" y1="652.0" x2="1344.0" y2="652.0" class="mark"/>
+<circle cx="1336.0" cy="652.0" r="7" class="markc"/>
+<text x="945.0" y="1062" class="label" text-anchor="middle">оставляет отзывы</text>
+<path d="M945.0 430.0 L945.0 567.0" class="rel dashed"/>
+<line x1="955.0" y1="440.0" x2="935.0" y2="440.0" class="mark"/>
+<circle cx="945.0" cy="455.0" r="7" class="markc"/>
+<line x1="935.0" y1="567.0" x2="945.0" y2="551.0" class="mark"/>
+<line x1="955.0" y1="567.0" x2="945.0" y2="551.0" class="mark"/>
+<line x1="945.0" y1="567.0" x2="945.0" y2="551.0" class="mark"/>
+<circle cx="945.0" cy="543.0" r="7" class="markc"/>
+<text x="957" y="503.5" class="label" text-anchor="start">по сетапу (setup_id, без FK)</text>
+<path d="M1830.0 205.0 L2010.0 205.0" class="rel"/>
+<line x1="1840.0" y1="195.0" x2="1840.0" y2="215.0" class="mark"/>
+<line x1="1848.0" y1="195.0" x2="1848.0" y2="215.0" class="mark"/>
+<line x1="2000.0" y1="215.0" x2="2000.0" y2="195.0" class="mark"/>
+<line x1="1992.0" y1="215.0" x2="1992.0" y2="195.0" class="mark"/>
+<text x="1920.0" y="193.0" class="label" text-anchor="middle">индексируется</text>
+<path d="M530.0 1255.0 L620.0 1255.0 L620.0 1405.0 L710.0 1405.0" class="rel"/>
+<line x1="540.0" y1="1245.0" x2="540.0" y2="1265.0" class="mark"/>
+<line x1="548.0" y1="1245.0" x2="548.0" y2="1265.0" class="mark"/>
+<line x1="710.0" y1="1415.0" x2="694.0" y2="1405.0" class="mark"/>
+<line x1="710.0" y1="1395.0" x2="694.0" y2="1405.0" class="mark"/>
+<line x1="710.0" y1="1405.0" x2="694.0" y2="1405.0" class="mark"/>
+<circle cx="686.0" cy="1405.0" r="7" class="markc"/>
+<text x="620" y="1335.0" class="label" text-anchor="middle">используется в</text>
+<path d="M1360.0 1495.0 L1180.0 1495.0" class="rel dashed"/>
+<line x1="1360.0" y1="1505.0" x2="1344.0" y2="1495.0" class="mark"/>
+<line x1="1360.0" y1="1485.0" x2="1344.0" y2="1495.0" class="mark"/>
+<line x1="1360.0" y1="1495.0" x2="1344.0" y2="1495.0" class="mark"/>
+<circle cx="1336.0" cy="1495.0" r="7" class="markc"/>
+<line x1="1180.0" y1="1485.0" x2="1196.0" y2="1495.0" class="mark"/>
+<line x1="1180.0" y1="1505.0" x2="1196.0" y2="1495.0" class="mark"/>
+<line x1="1180.0" y1="1495.0" x2="1196.0" y2="1495.0" class="mark"/>
+<circle cx="1204.0" cy="1495.0" r="7" class="markc"/>
+<text x="1270.0" y="1483.0" class="label" text-anchor="middle">rule_ids (JSON, без FK)</text>
+<g class="table">
+<rect x="63" y="154" width="470" height="190" rx="6" class="shadow"/>
+<rect x="60" y="150" width="470" height="190" rx="6" class="body"/>
+<path d="M60 190 V156 a6 6 0 0 1 6 -6 H524 a6 6 0 0 1 6 6 V190 Z" class="head"/>
+<text x="74" y="176" class="title">auth_sessions</text>
+<line x1="60" y1="190" x2="530" y2="190" class="sep"/>
+<line x1="260" y1="190" x2="260" y2="340" class="col"/>
+<line x1="470" y1="190" x2="470" y2="340" class="col"/>
+<text x="74" y="210" class="field pk">id</text>
+<text x="272" y="210" class="type">INTEGER</text>
+<text x="500.0" y="210" class="key" text-anchor="middle">PK</text>
+<line x1="60" y1="220" x2="530" y2="220" class="rowsep"/>
+<text x="74" y="240" class="field fk">user_id</text>
+<text x="272" y="240" class="type">INTEGER</text>
+<text x="500.0" y="240" class="key" text-anchor="middle">FK</text>
+<line x1="60" y1="250" x2="530" y2="250" class="rowsep"/>
+<text x="74" y="270" class="field">token_hash</text>
+<text x="272" y="270" class="type">VARCHAR(64)</text>
+<text x="500.0" y="270" class="key" text-anchor="middle">UQ</text>
+<line x1="60" y1="280" x2="530" y2="280" class="rowsep"/>
+<text x="74" y="300" class="field">created_at</text>
+<text x="272" y="300" class="type">DATETIME</text>
+<line x1="60" y1="310" x2="530" y2="310" class="rowsep"/>
+<text x="74" y="330" class="field">expires_at</text>
+<text x="272" y="330" class="type">DATETIME</text>
+</g>
+<g class="table">
+<rect x="63" y="594" width="470" height="190" rx="6" class="shadow"/>
+<rect x="60" y="590" width="470" height="190" rx="6" class="body"/>
+<path d="M60 630 V596 a6 6 0 0 1 6 -6 H524 a6 6 0 0 1 6 6 V630 Z" class="head"/>
+<text x="74" y="616" class="title">users</text>
+<line x1="60" y1="630" x2="530" y2="630" class="sep"/>
+<line x1="260" y1="630" x2="260" y2="780" class="col"/>
+<line x1="470" y1="630" x2="470" y2="780" class="col"/>
+<text x="74" y="650" class="field pk">id</text>
+<text x="272" y="650" class="type">INTEGER</text>
+<text x="500.0" y="650" class="key" text-anchor="middle">PK</text>
+<line x1="60" y1="660" x2="530" y2="660" class="rowsep"/>
+<text x="74" y="680" class="field">email</text>
+<text x="272" y="680" class="type">VARCHAR(254)</text>
+<text x="500.0" y="680" class="key" text-anchor="middle">UQ</text>
+<line x1="60" y1="690" x2="530" y2="690" class="rowsep"/>
+<text x="74" y="710" class="field">name</text>
+<text x="272" y="710" class="type">VARCHAR(60)</text>
+<line x1="60" y1="720" x2="530" y2="720" class="rowsep"/>
+<text x="74" y="740" class="field">password_hash</text>
+<text x="272" y="740" class="type">VARCHAR(255)</text>
+<line x1="60" y1="750" x2="530" y2="750" class="rowsep"/>
+<text x="74" y="770" class="field">created_at</text>
+<text x="272" y="770" class="type">DATETIME</text>
+</g>
+<g class="table">
+<rect x="713" y="154" width="470" height="280" rx="6" class="shadow"/>
+<rect x="710" y="150" width="470" height="280" rx="6" class="body"/>
+<path d="M710 190 V156 a6 6 0 0 1 6 -6 H1174 a6 6 0 0 1 6 6 V190 Z" class="head"/>
+<text x="724" y="176" class="title">setups</text>
+<line x1="710" y1="190" x2="1180" y2="190" class="sep"/>
+<line x1="910" y1="190" x2="910" y2="430" class="col"/>
+<line x1="1120" y1="190" x2="1120" y2="430" class="col"/>
+<text x="724" y="210" class="field pk">id</text>
+<text x="922" y="210" class="type">VARCHAR(36)</text>
+<text x="1150.0" y="210" class="key" text-anchor="middle">PK</text>
+<line x1="710" y1="220" x2="1180" y2="220" class="rowsep"/>
+<text x="724" y="240" class="field fk">user_id</text>
+<text x="922" y="240" class="type">INTEGER</text>
+<text x="1150.0" y="240" class="key" text-anchor="middle">FK</text>
+<line x1="710" y1="250" x2="1180" y2="250" class="rowsep"/>
+<text x="724" y="270" class="field">name</text>
+<text x="922" y="270" class="type">VARCHAR(120)</text>
+<line x1="710" y1="280" x2="1180" y2="280" class="rowsep"/>
+<text x="724" y="300" class="field">car_id</text>
+<text x="922" y="300" class="type">VARCHAR(80)</text>
+<line x1="710" y1="310" x2="1180" y2="310" class="rowsep"/>
+<text x="724" y="330" class="field">track_id</text>
+<text x="922" y="330" class="type">VARCHAR(80)</text>
+<line x1="710" y1="340" x2="1180" y2="340" class="rowsep"/>
+<text x="724" y="360" class="field">data</text>
+<text x="922" y="360" class="type">JSON</text>
+<line x1="710" y1="370" x2="1180" y2="370" class="rowsep"/>
+<text x="724" y="390" class="field">created_at</text>
+<text x="922" y="390" class="type">DATETIME</text>
+<line x1="710" y1="400" x2="1180" y2="400" class="rowsep"/>
+<text x="724" y="420" class="field">updated_at</text>
+<text x="922" y="420" class="type">DATETIME</text>
+</g>
+<g class="table">
+<rect x="713" y="571" width="470" height="460" rx="6" class="shadow"/>
+<rect x="710" y="567" width="470" height="460" rx="6" class="body"/>
+<path d="M710 607 V573 a6 6 0 0 1 6 -6 H1174 a6 6 0 0 1 6 6 V607 Z" class="head"/>
+<text x="724" y="593" class="title">advice</text>
+<line x1="710" y1="607" x2="1180" y2="607" class="sep"/>
+<line x1="910" y1="607" x2="910" y2="1027" class="col"/>
+<line x1="1120" y1="607" x2="1120" y2="1027" class="col"/>
+<text x="724" y="627" class="field pk">id</text>
+<text x="922" y="627" class="type">VARCHAR(36)</text>
+<text x="1150.0" y="627" class="key" text-anchor="middle">PK</text>
+<line x1="710" y1="637" x2="1180" y2="637" class="rowsep"/>
+<text x="724" y="657" class="field fk">user_id</text>
+<text x="922" y="657" class="type">INTEGER, NULL</text>
+<text x="1150.0" y="657" class="key" text-anchor="middle">FK</text>
+<line x1="710" y1="667" x2="1180" y2="667" class="rowsep"/>
+<text x="724" y="687" class="field">setup_id</text>
+<text x="922" y="687" class="type">VARCHAR(36), NULL</text>
+<line x1="710" y1="697" x2="1180" y2="697" class="rowsep"/>
+<text x="724" y="717" class="field">car_id</text>
+<text x="922" y="717" class="type">VARCHAR(80)</text>
+<line x1="710" y1="727" x2="1180" y2="727" class="rowsep"/>
+<text x="724" y="747" class="field">track_id</text>
+<text x="922" y="747" class="type">VARCHAR(80)</text>
+<line x1="710" y1="757" x2="1180" y2="757" class="rowsep"/>
+<text x="724" y="777" class="field">class_id</text>
+<text x="922" y="777" class="type">VARCHAR(20)</text>
+<line x1="710" y1="787" x2="1180" y2="787" class="rowsep"/>
+<text x="724" y="807" class="field">status</text>
+<text x="922" y="807" class="type">VARCHAR(20)</text>
+<line x1="710" y1="817" x2="1180" y2="817" class="rowsep"/>
+<text x="724" y="837" class="field">mode</text>
+<text x="922" y="837" class="type">VARCHAR(20)</text>
+<line x1="710" y1="847" x2="1180" y2="847" class="rowsep"/>
+<text x="724" y="867" class="field">model</text>
+<text x="922" y="867" class="type">VARCHAR(80), NULL</text>
+<line x1="710" y1="877" x2="1180" y2="877" class="rowsep"/>
+<text x="724" y="897" class="field">tokens</text>
+<text x="922" y="897" class="type">INTEGER</text>
+<line x1="710" y1="907" x2="1180" y2="907" class="rowsep"/>
+<text x="724" y="927" class="field">latency_ms</text>
+<text x="922" y="927" class="type">INTEGER</text>
+<line x1="710" y1="937" x2="1180" y2="937" class="rowsep"/>
+<text x="724" y="957" class="field">input</text>
+<text x="922" y="957" class="type">JSON</text>
+<line x1="710" y1="967" x2="1180" y2="967" class="rowsep"/>
+<text x="724" y="987" class="field">result</text>
+<text x="922" y="987" class="type">JSON</text>
+<line x1="710" y1="997" x2="1180" y2="997" class="rowsep"/>
+<text x="724" y="1017" class="field">created_at</text>
+<text x="922" y="1017" class="type">DATETIME</text>
+</g>
+<g class="table">
+<rect x="1363" y="541" width="470" height="310" rx="6" class="shadow"/>
+<rect x="1360" y="537" width="470" height="310" rx="6" class="body"/>
+<path d="M1360 577 V543 a6 6 0 0 1 6 -6 H1824 a6 6 0 0 1 6 6 V577 Z" class="head"/>
+<text x="1374" y="563" class="title">feedback</text>
+<line x1="1360" y1="577" x2="1830" y2="577" class="sep"/>
+<line x1="1560" y1="577" x2="1560" y2="847" class="col"/>
+<line x1="1770" y1="577" x2="1770" y2="847" class="col"/>
+<text x="1374" y="597" class="field pk">id</text>
+<text x="1572" y="597" class="type">INTEGER</text>
+<text x="1800.0" y="597" class="key" text-anchor="middle">PK</text>
+<line x1="1360" y1="607" x2="1830" y2="607" class="rowsep"/>
+<text x="1374" y="627" class="field fk">advice_id</text>
+<text x="1572" y="627" class="type">VARCHAR(36)</text>
+<text x="1800.0" y="627" class="key" text-anchor="middle">FK, UQ</text>
+<line x1="1360" y1="637" x2="1830" y2="637" class="rowsep"/>
+<text x="1374" y="657" class="field fk">user_id</text>
+<text x="1572" y="657" class="type">INTEGER, NULL</text>
+<text x="1800.0" y="657" class="key" text-anchor="middle">FK</text>
+<line x1="1360" y1="667" x2="1830" y2="667" class="rowsep"/>
+<text x="1374" y="687" class="field">result</text>
+<text x="1572" y="687" class="type">VARCHAR(10)</text>
+<line x1="1360" y1="697" x2="1830" y2="697" class="rowsep"/>
+<text x="1374" y="717" class="field">applied</text>
+<text x="1572" y="717" class="type">BOOLEAN</text>
+<line x1="1360" y1="727" x2="1830" y2="727" class="rowsep"/>
+<text x="1374" y="747" class="field">lap_before</text>
+<text x="1572" y="747" class="type">FLOAT, NULL</text>
+<line x1="1360" y1="757" x2="1830" y2="757" class="rowsep"/>
+<text x="1374" y="777" class="field">lap_after</text>
+<text x="1572" y="777" class="type">FLOAT, NULL</text>
+<line x1="1360" y1="787" x2="1830" y2="787" class="rowsep"/>
+<text x="1374" y="807" class="field">comment</text>
+<text x="1572" y="807" class="type">TEXT</text>
+<line x1="1360" y1="817" x2="1830" y2="817" class="rowsep"/>
+<text x="1374" y="837" class="field">created_at</text>
+<text x="1572" y="837" class="type">DATETIME</text>
+</g>
+<g class="table">
+<rect x="1363" y="154" width="470" height="220" rx="6" class="shadow"/>
+<rect x="1360" y="150" width="470" height="220" rx="6" class="body"/>
+<path d="M1360 190 V156 a6 6 0 0 1 6 -6 H1824 a6 6 0 0 1 6 6 V190 Z" class="head"/>
+<text x="1374" y="176" class="title">knowledge_chunks</text>
+<line x1="1360" y1="190" x2="1830" y2="190" class="sep"/>
+<line x1="1560" y1="190" x2="1560" y2="370" class="col"/>
+<line x1="1770" y1="190" x2="1770" y2="370" class="col"/>
+<text x="1374" y="210" class="field pk">id</text>
+<text x="1572" y="210" class="type">INTEGER</text>
+<text x="1800.0" y="210" class="key" text-anchor="middle">PK</text>
+<line x1="1360" y1="220" x2="1830" y2="220" class="rowsep"/>
+<text x="1374" y="240" class="field">manual_id</text>
+<text x="1572" y="240" class="type">VARCHAR(60)</text>
+<line x1="1360" y1="250" x2="1830" y2="250" class="rowsep"/>
+<text x="1374" y="270" class="field">class_id</text>
+<text x="1572" y="270" class="type">VARCHAR(20)</text>
+<line x1="1360" y1="280" x2="1830" y2="280" class="rowsep"/>
+<text x="1374" y="300" class="field">heading</text>
+<text x="1572" y="300" class="type">VARCHAR(120)</text>
+<line x1="1360" y1="310" x2="1830" y2="310" class="rowsep"/>
+<text x="1374" y="330" class="field">text</text>
+<text x="1572" y="330" class="type">TEXT</text>
+<line x1="1360" y1="340" x2="1830" y2="340" class="rowsep"/>
+<text x="1374" y="360" class="field">params</text>
+<text x="1572" y="360" class="type">JSON</text>
+</g>
+<g class="table">
+<rect x="2013" y="154" width="470" height="130" rx="6" class="shadow"/>
+<rect x="2010" y="150" width="470" height="130" rx="6" class="body"/>
+<path d="M2010 190 V156 a6 6 0 0 1 6 -6 H2474 a6 6 0 0 1 6 6 V190 Z" class="head"/>
+<text x="2024" y="176" class="title">knowledge_fts</text>
+<text x="2468" y="175" class="caption" text-anchor="end">виртуальная таблица FTS5</text>
+<line x1="2010" y1="190" x2="2480" y2="190" class="sep"/>
+<line x1="2210" y1="190" x2="2210" y2="280" class="col"/>
+<line x1="2420" y1="190" x2="2420" y2="280" class="col"/>
+<text x="2024" y="210" class="field pk">rowid</text>
+<text x="2222" y="210" class="type">INTEGER</text>
+<text x="2450.0" y="210" class="key" text-anchor="middle">PK</text>
+<line x1="2010" y1="220" x2="2480" y2="220" class="rowsep"/>
+<text x="2024" y="240" class="field">heading</text>
+<text x="2222" y="240" class="type">TEXT</text>
+<line x1="2010" y1="250" x2="2480" y2="250" class="rowsep"/>
+<text x="2024" y="270" class="field">text</text>
+<text x="2222" y="270" class="type">TEXT</text>
+</g>
+<g class="table">
+<rect x="63" y="1204" width="470" height="190" rx="6" class="shadow"/>
+<rect x="60" y="1200" width="470" height="190" rx="6" class="body"/>
+<path d="M60 1240 V1206 a6 6 0 0 1 6 -6 H524 a6 6 0 0 1 6 6 V1240 Z" class="head"/>
+<text x="74" y="1226" class="title">parameters</text>
+<line x1="60" y1="1240" x2="530" y2="1240" class="sep"/>
+<line x1="260" y1="1240" x2="260" y2="1390" class="col"/>
+<line x1="470" y1="1240" x2="470" y2="1390" class="col"/>
+<text x="74" y="1260" class="field pk">id</text>
+<text x="272" y="1260" class="type">INTEGER</text>
+<text x="500.0" y="1260" class="key" text-anchor="middle">PK</text>
+<line x1="60" y1="1270" x2="530" y2="1270" class="rowsep"/>
+<text x="74" y="1290" class="field">name</text>
+<text x="272" y="1290" class="type">VARCHAR(80)</text>
+<line x1="60" y1="1300" x2="530" y2="1300" class="rowsep"/>
+<text x="74" y="1320" class="field">unit</text>
+<text x="272" y="1320" class="type">VARCHAR(20)</text>
+<line x1="60" y1="1330" x2="530" y2="1330" class="rowsep"/>
+<text x="74" y="1350" class="field">description</text>
+<text x="272" y="1350" class="type">TEXT</text>
+<line x1="60" y1="1360" x2="530" y2="1360" class="rowsep"/>
+<text x="74" y="1380" class="field">limits</text>
+<text x="272" y="1380" class="type">TEXT</text>
+</g>
+<g class="table">
+<rect x="713" y="1204" width="470" height="430" rx="6" class="shadow"/>
+<rect x="710" y="1200" width="470" height="430" rx="6" class="body"/>
+<path d="M710 1240 V1206 a6 6 0 0 1 6 -6 H1174 a6 6 0 0 1 6 6 V1240 Z" class="head"/>
+<text x="724" y="1226" class="title">rules</text>
+<line x1="710" y1="1240" x2="1180" y2="1240" class="sep"/>
+<line x1="910" y1="1240" x2="910" y2="1630" class="col"/>
+<line x1="1120" y1="1240" x2="1120" y2="1630" class="col"/>
+<text x="724" y="1260" class="field pk">id</text>
+<text x="922" y="1260" class="type">INTEGER</text>
+<text x="1150.0" y="1260" class="key" text-anchor="middle">PK</text>
+<line x1="710" y1="1270" x2="1180" y2="1270" class="rowsep"/>
+<text x="724" y="1290" class="field">rule_id</text>
+<text x="922" y="1290" class="type">VARCHAR(40)</text>
+<text x="1150.0" y="1290" class="key" text-anchor="middle">UQ</text>
+<line x1="710" y1="1300" x2="1180" y2="1300" class="rowsep"/>
+<text x="724" y="1320" class="field">symptom_type</text>
+<text x="922" y="1320" class="type">VARCHAR(20)</text>
+<line x1="710" y1="1330" x2="1180" y2="1330" class="rowsep"/>
+<text x="724" y="1350" class="field">corner_phase</text>
+<text x="922" y="1350" class="type">VARCHAR(10)</text>
+<line x1="710" y1="1360" x2="1180" y2="1360" class="rowsep"/>
+<text x="724" y="1380" class="field">stint_moment</text>
+<text x="922" y="1380" class="type">VARCHAR(20), NULL</text>
+<line x1="710" y1="1390" x2="1180" y2="1390" class="rowsep"/>
+<text x="724" y="1410" class="field fk">parameter_id</text>
+<text x="922" y="1410" class="type">INTEGER</text>
+<text x="1150.0" y="1410" class="key" text-anchor="middle">FK</text>
+<line x1="710" y1="1420" x2="1180" y2="1420" class="rowsep"/>
+<text x="724" y="1440" class="field">direction</text>
+<text x="922" y="1440" class="type">VARCHAR(10)</text>
+<line x1="710" y1="1450" x2="1180" y2="1450" class="rowsep"/>
+<text x="724" y="1470" class="field">change_description</text>
+<text x="922" y="1470" class="type">TEXT</text>
+<line x1="710" y1="1480" x2="1180" y2="1480" class="rowsep"/>
+<text x="724" y="1500" class="field">expected_effect</text>
+<text x="922" y="1500" class="type">TEXT</text>
+<line x1="710" y1="1510" x2="1180" y2="1510" class="rowsep"/>
+<text x="724" y="1530" class="field">limitations</text>
+<text x="922" y="1530" class="type">TEXT</text>
+<line x1="710" y1="1540" x2="1180" y2="1540" class="rowsep"/>
+<text x="724" y="1560" class="field">applicability</text>
+<text x="922" y="1560" class="type">JSON</text>
+<line x1="710" y1="1570" x2="1180" y2="1570" class="rowsep"/>
+<text x="724" y="1590" class="field">verification_status</text>
+<text x="922" y="1590" class="type">VARCHAR(20)</text>
+<line x1="710" y1="1600" x2="1180" y2="1600" class="rowsep"/>
+<text x="724" y="1620" class="field">basis</text>
+<text x="922" y="1620" class="type">TEXT</text>
+</g>
+<g class="table">
+<rect x="1363" y="1204" width="470" height="340" rx="6" class="shadow"/>
+<rect x="1360" y="1200" width="470" height="340" rx="6" class="body"/>
+<path d="M1360 1240 V1206 a6 6 0 0 1 6 -6 H1824 a6 6 0 0 1 6 6 V1240 Z" class="head"/>
+<text x="1374" y="1226" class="title">request</text>
+<line x1="1360" y1="1240" x2="1830" y2="1240" class="sep"/>
+<line x1="1560" y1="1240" x2="1560" y2="1540" class="col"/>
+<line x1="1770" y1="1240" x2="1770" y2="1540" class="col"/>
+<text x="1374" y="1260" class="field pk">request_id</text>
+<text x="1572" y="1260" class="type">VARCHAR(36)</text>
+<text x="1800.0" y="1260" class="key" text-anchor="middle">PK</text>
+<line x1="1360" y1="1270" x2="1830" y2="1270" class="rowsep"/>
+<text x="1374" y="1290" class="field">car</text>
+<text x="1572" y="1290" class="type">VARCHAR(120)</text>
+<line x1="1360" y1="1300" x2="1830" y2="1300" class="rowsep"/>
+<text x="1374" y="1320" class="field">track</text>
+<text x="1572" y="1320" class="type">VARCHAR(120)</text>
+<line x1="1360" y1="1330" x2="1830" y2="1330" class="rowsep"/>
+<text x="1374" y="1350" class="field">symptom_type</text>
+<text x="1572" y="1350" class="type">VARCHAR(20)</text>
+<line x1="1360" y1="1360" x2="1830" y2="1360" class="rowsep"/>
+<text x="1374" y="1380" class="field">corner_phase</text>
+<text x="1572" y="1380" class="type">VARCHAR(10)</text>
+<line x1="1360" y1="1390" x2="1830" y2="1390" class="rowsep"/>
+<text x="1374" y="1410" class="field">stint_moment</text>
+<text x="1572" y="1410" class="type">VARCHAR(20), NULL</text>
+<line x1="1360" y1="1420" x2="1830" y2="1420" class="rowsep"/>
+<text x="1374" y="1440" class="field">comment</text>
+<text x="1572" y="1440" class="type">TEXT</text>
+<line x1="1360" y1="1450" x2="1830" y2="1450" class="rowsep"/>
+<text x="1374" y="1470" class="field">status</text>
+<text x="1572" y="1470" class="type">VARCHAR(10)</text>
+<line x1="1360" y1="1480" x2="1830" y2="1480" class="rowsep"/>
+<text x="1374" y="1500" class="field">rule_ids</text>
+<text x="1572" y="1500" class="type">JSON</text>
+<line x1="1360" y1="1510" x2="1830" y2="1510" class="rowsep"/>
+<text x="1374" y="1530" class="field">created_at</text>
+<text x="1572" y="1530" class="type">DATETIME</text>
+</g>
+<rect x="2010" y="1270" width="470" height="300" rx="6" class="body"/>
+<text x="2026" y="1300" class="title">Обозначения</text>
+<line x1="2030" y1="1334" x2="2120" y2="1334" class="rel"/>
+<line x1="2110.0" y1="1344.0" x2="2110.0" y2="1324.0" class="mark"/>
+<line x1="2102.0" y1="1344.0" x2="2102.0" y2="1324.0" class="mark"/>
+<text x="2140" y="1339" class="legend">ровно одна запись</text>
+<line x1="2030" y1="1374" x2="2120" y2="1374" class="rel"/>
+<line x1="2110.0" y1="1384.0" x2="2110.0" y2="1364.0" class="mark"/>
+<circle cx="2095.0" cy="1374.0" r="7" class="markc"/>
+<text x="2140" y="1379" class="legend">ноль или одна</text>
+<line x1="2030" y1="1414" x2="2120" y2="1414" class="rel"/>
+<line x1="2120.0" y1="1424.0" x2="2104.0" y2="1414.0" class="mark"/>
+<line x1="2120.0" y1="1404.0" x2="2104.0" y2="1414.0" class="mark"/>
+<line x1="2120.0" y1="1414.0" x2="2104.0" y2="1414.0" class="mark"/>
+<circle cx="2096.0" cy="1414.0" r="7" class="markc"/>
+<text x="2140" y="1419" class="legend">ноль или много</text>
+<line x1="2030" y1="1454" x2="2120" y2="1454" class="rel dashed"/>
+<text x="2140" y="1459" class="legend">связь без внешнего ключа</text>
+<text x="2030" y="1498" class="legend"><tspan class="pkl">PK</tspan> первичный ключ, <tspan class="fkl">FK</tspan> внешний ключ,</text>
+<text x="2030" y="1524" class="legend">UQ уникальное, NULL необязательное</text>
+</svg>
